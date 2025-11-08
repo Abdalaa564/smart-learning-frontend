@@ -1,1 +1,28 @@
-<p>instructors works!</p>
+<h1 class="page-title">Instructors</h1>
+
+<div class="grid">
+  @for (ins of instructors; track ins.id) {
+    <app-card
+      [img]="ins.avatarUrl"
+      [title]="ins.name"
+      [subtitle]="ins.title"
+      [clickable]="true">
+
+      @if (ins.verified) {
+        <p class="badge">✔ Verified</p>
+      }
+
+      <p class="meta">
+        ⭐ {{ ins.rating }} ({{ ins.reviewsCount | number }}) • {{ ins.studentsTotal | number }} students
+      </p>
+
+      <app-button
+        variant="primary"
+        size="sm"
+        [routerLink]="['/instructors', ins.id]">
+        View Profile
+      </app-button>
+
+    </app-card>
+  }
+</div>
