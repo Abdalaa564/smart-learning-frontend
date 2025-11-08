@@ -1,0 +1,27 @@
+<a routerLink="/instructors" class="back-link">← Back to Instructors</a>
+
+@if (instructor; as ins) {
+  <div class="hero">
+    @if (ins.heroImageUrl) {
+      <img class="hero-img" [src]="ins.heroImageUrl" alt="hero" />
+    }
+    <div class="hero-content">
+      <img class="avatar" [src]="ins.avatarUrl" alt="avatar" />
+      <div class="info">
+        <h1 class="name">
+          {{ ins.name }}
+          @if (ins.verified) { <span class="badge">✔ Verified</span> }
+        </h1>
+        <div class="title">{{ ins.title }}</div>
+        <div class="rating">⭐ {{ ins.rating }} • {{ ins.reviewsCount | number }} reviews</div>
+        @if (ins.credentials.length) {
+          <div class="creds">
+            @for (c of ins.credentials; track $index) { <span class="cred">{{ c }}</span> }
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+} @else {
+  <p>Instructor not found.</p>
+}
