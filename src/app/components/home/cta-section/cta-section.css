@@ -1,0 +1,214 @@
+
+/*--------------------------------------------------------------
+# Cta Section
+--------------------------------------------------------------*/
+.cta {
+  position: relative;
+  overflow: hidden;
+  padding: 4rem 0;
+}
+
+.cta::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  /* background: url("public\assets\img\bg\abstract-bg-3.webp") center/cover; */
+  opacity: 0.03;
+  z-index: 1;
+}
+
+.cta .container {
+  position: relative;
+  z-index: 2;
+}
+
+.cta .cta-content {
+  padding-right: 30px;
+}
+
+@media (max-width: 991px) {
+  .cta .cta-content {
+    padding-right: 0;
+    margin-bottom: 40px;
+  }
+}
+
+.cta .cta-content h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 24px;
+  line-height: 1.2;
+}
+
+@media (max-width: 768px) {
+  .cta .cta-content h2 {
+    font-size: 2rem;
+  }
+}
+
+.cta .cta-content p {
+  font-size: 1.1rem;
+  margin-bottom: 32px;
+  color: color-mix(in srgb, var(--default-color), transparent 20%);
+  line-height: 1.6;
+}
+
+.cta .features-list {
+  margin-bottom: 32px;
+}
+
+.cta .features-list .feature-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.cta .features-list .feature-item i {
+  font-size: 1.2rem;
+  color: var(--accent-color);
+  margin-right: 12px;
+  flex-shrink: 0;
+}
+
+.cta .features-list .feature-item span {
+  font-weight: 500;
+  color: var(--default-color);
+}
+
+.cta .cta-actions {
+  margin-bottom: 40px;
+}
+
+.cta .cta-actions .btn {
+  padding: 12px 30px;
+  border-radius: 25px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-right: 16px;
+  margin-bottom: 12px;
+  transition: all 0.3s ease;
+}
+
+.cta .cta-actions .btn.btn-primary {
+  background: var(--accent-color);
+  border: 2px solid var(--accent-color);
+  color: var(--contrast-color);
+}
+
+.cta .cta-actions .btn.btn-primary:hover {
+  background: color-mix(in srgb, var(--accent-color), black 10%);
+  border-color: color-mix(in srgb, var(--accent-color), black 10%);
+  transform: translateY(-2px);
+}
+
+.cta .cta-actions .btn.btn-outline {
+  background: transparent;
+  border: 2px solid var(--accent-color);
+  color: var(--accent-color);
+}
+
+.cta .cta-actions .btn.btn-outline:hover {
+  background: var(--accent-color);
+  color: var(--contrast-color);
+  transform: translateY(-2px);
+}
+
+.cta .stats-row {
+  display: flex;
+  gap: 40px;
+}
+
+@media (max-width: 576px) {
+  .cta .stats-row {
+    flex-direction: column;
+    gap: 24px;
+  }
+}
+
+.cta .stats-row .stat-item h3 {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--accent-color);
+  margin-bottom: 8px;
+  line-height: 1;
+}
+
+.cta .stats-row .stat-item p {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--heading-color);
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.cta .cta-image {
+  position: relative;
+}
+
+.cta .cta-image img {
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+}
+
+.cta .cta-image .floating-element {
+  position: absolute;
+  background: var(--surface-color);
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+.cta .cta-image .floating-element.student-card {
+  top: 20px;
+  right: -20px;
+}
+
+@media (max-width: 576px) {
+  .cta .cta-image .floating-element.student-card {
+    right: 10px;
+    padding: 15px;
+  }
+}
+
+.cta .cta-image .floating-element.course-card {
+  bottom: 30px;
+  left: -20px;
+}
+
+@media (max-width: 576px) {
+  .cta .cta-image .floating-element.course-card {
+    left: 10px;
+    padding: 15px;
+  }
+}
+
+.cta .cta-image .floating-element .card-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.cta .cta-image .floating-element .card-content i {
+  font-size: 2rem;
+  color: var(--accent-color);
+}
+
+.cta .cta-image .floating-element .card-content .text .number {
+  display: block;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--heading-color);
+  line-height: 1;
+}
+
+.cta .cta-image .floating-element .card-content .text .label {
+  font-size: 0.8rem;
+  color: color-mix(in srgb, var(--default-color), transparent 30%);
+  font-weight: 500;
+}

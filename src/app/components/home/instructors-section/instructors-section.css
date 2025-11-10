@@ -1,0 +1,280 @@
+
+/*--------------------------------------------------------------
+# Featured Instructors Section
+--------------------------------------------------------------*/
+.featured-instructors .instructor-card {
+  background: var(--surface-color);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px color-mix(in srgb, var(--default-color), transparent 94%);
+  border: 1px solid color-mix(in srgb, var(--default-color), transparent 92%);
+  transition: all 0.3s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.featured-instructors .instructor-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 30px color-mix(in srgb, var(--default-color), transparent 88%);
+}
+
+.featured-instructors .instructor-card:hover .instructor-image .overlay-content {
+  opacity: 1;
+}
+
+.featured-instructors .instructor-card:hover .instructor-image img {
+  transform: scale(1.05);
+}
+
+.featured-instructors .instructor-image {
+  position: relative;
+  height: 250px;
+  overflow: hidden;
+}
+
+.featured-instructors .instructor-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.featured-instructors .instructor-image .overlay-content {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  right: 15px;
+  display: flex;
+  justify-content: space-between;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.featured-instructors .instructor-image .rating-stars {
+  background: var(--surface-color);
+  padding: 8px 12px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  box-shadow: 0 2px 10px color-mix(in srgb, var(--default-color), transparent 90%);
+}
+
+.featured-instructors .instructor-image .rating-stars i {
+  color: #ffc107;
+  font-size: 12px;
+}
+
+.featured-instructors .instructor-image .rating-stars i.bi-star {
+  color: color-mix(in srgb, var(--default-color), transparent 80%);
+}
+
+.featured-instructors .instructor-image .rating-stars span {
+  font-size: 12px;
+  font-weight: 600;
+  margin-left: 4px;
+  color: var(--heading-color);
+}
+
+.featured-instructors .instructor-image .course-count {
+  background: var(--accent-color);
+  color: var(--contrast-color);
+  padding: 8px 12px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 2px 10px color-mix(in srgb, var(--accent-color), transparent 60%);
+}
+
+.featured-instructors .instructor-image .course-count i {
+  font-size: 14px;
+}
+
+.featured-instructors .instructor-image .course-count span {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.featured-instructors .instructor-info {
+  padding: 24px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.featured-instructors .instructor-info h5 {
+  margin: 0 0 8px 0;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--heading-color);
+}
+
+.featured-instructors .instructor-info .specialty {
+  color: var(--accent-color);
+  font-weight: 600;
+  font-size: 14px;
+  margin: 0 0 12px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.featured-instructors .instructor-info .description {
+  color: color-mix(in srgb, var(--default-color), transparent 30%);
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 20px;
+  flex-grow: 1;
+}
+
+.featured-instructors .stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 20px;
+  padding: 16px;
+  background: color-mix(in srgb, var(--accent-color), transparent 95%);
+  border-radius: 12px;
+}
+
+.featured-instructors .stats-grid .stat {
+  text-align: center;
+}
+
+.featured-instructors .stats-grid .stat .number {
+  display: block;
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--heading-color);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.featured-instructors .stats-grid .stat .label {
+  font-size: 11px;
+  color: color-mix(in srgb, var(--default-color), transparent 50%);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+}
+
+.featured-instructors .action-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.featured-instructors .action-buttons .btn-view {
+  background: var(--accent-color);
+  color: var(--contrast-color);
+  padding: 10px 20px;
+  border-radius: 25px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 13px;
+  transition: all 0.3s ease;
+}
+
+.featured-instructors .action-buttons .btn-view:hover {
+  transform: translateY(-2px);
+}
+
+.featured-instructors .action-buttons .social-links {
+  display: flex;
+  gap: 6px;
+}
+
+.featured-instructors .action-buttons .social-links a {
+  width: 32px;
+  height: 32px;
+  border: 1px solid color-mix(in srgb, var(--default-color), transparent 85%);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: color-mix(in srgb, var(--default-color), transparent 40%);
+  transition: all 0.3s ease;
+}
+
+.featured-instructors .action-buttons .social-links a:hover {
+  background-color: var(--accent-color);
+  border-color: var(--accent-color);
+  color: var(--contrast-color);
+  transform: scale(1.1);
+}
+
+.featured-instructors .action-buttons .social-links a i {
+  font-size: 14px;
+}
+
+@media (max-width: 1399px) {
+  .featured-instructors .col-xl-3 {
+    flex: 0 0 auto;
+    width: 25%;
+  }
+}
+
+@media (max-width: 1199px) {
+  .featured-instructors .col-lg-4 {
+    flex: 0 0 auto;
+    width: 33.333333%;
+  }
+}
+
+@media (max-width: 991px) {
+  .featured-instructors .instructor-card {
+    margin-bottom: 20px;
+  }
+
+  .featured-instructors .instructor-image {
+    height: 220px;
+  }
+
+  .featured-instructors .instructor-info {
+    padding: 20px;
+  }
+
+  .featured-instructors .instructor-info h5 {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 767px) {
+  .featured-instructors .col-md-6 {
+    flex: 0 0 auto;
+    width: 50%;
+  }
+
+  .featured-instructors .instructor-image {
+    height: 200px;
+  }
+
+  .featured-instructors .instructor-info {
+    padding: 18px;
+  }
+}
+
+@media (max-width: 575px) {
+  .featured-instructors .row>* {
+    width: 100% !important;
+  }
+
+  .featured-instructors .instructor-image {
+    height: 250px;
+  }
+
+  .featured-instructors .instructor-image .overlay-content {
+    opacity: 1;
+  }
+
+  .featured-instructors .action-buttons {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .featured-instructors .action-buttons .btn-view {
+    width: 100%;
+    text-align: center;
+  }
+}
