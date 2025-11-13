@@ -1,0 +1,57 @@
+<body class="bg-light d-flex align-items-center justify-content-center vh-100">
+  <div class="card shadow-sm p-4" style="width: 100%; max-width: 400px">
+    <h3 class="text-center mb-4">Login</h3>
+    <form #loginForm="ngForm" (ngSubmit)="onSubmit()">
+      <!-- Email input -->
+      <div class="mb-3">
+        <label for="email" class="form-label">Email address</label>
+        <input
+          [(ngModel)]="loginData.email"
+          type="email"
+          name="email"
+          id="email"
+          class="form-control"
+          placeholder="Enter email"
+           pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+          #email="ngModel"
+          required
+          
+        />
+        <div *ngIf="email.invalid && email.touched" class="text-danger mt-1">
+         <small *ngIf="email.errors?.['required']">Email is required.</small>
+            <small *ngIf="email.errors?.['email']">Enter a valid email.</small>
+         </div> 
+      </div>
+
+      <!-- Password input -->
+      <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input
+          type="password"
+          id="password"
+          class="form-control"
+          placeholder="Enter password"
+          #password="ngModel"
+          [(ngModel)]="loginData.password"
+          minlength="6"
+            name="password"
+          required
+        />
+        <div *ngIf="password.invalid && password.touched" class="text-danger mt-1">
+          <small *ngIf="password.errors?.['required']">Password is required.</small>
+            <small *ngIf="password.errors?.['minlength']">Password must be at least 6 characters.</small>
+        </div>
+      </div>
+
+ 
+
+      <!-- Submit button -->
+      <button type="submit" class="btn btn-primary w-100"  [disabled]="loginForm.invalid">Login</button>
+    </form>
+
+    <!-- Register link -->
+    <p class="text-center mt-3 mb-0">
+      Don’t have an account? <a class="text-decoration-none"  routerLink="/register" routerLinkActive="active-link">Sign up</a>
+    </p>
+  </div>
+</body>
