@@ -1,104 +1,109 @@
- <div class="meeting-container">
-        <header class="meeting-header">
-            <div class="meeting-title">
-                <h1>Advanced Mathematics - Lecture 5: Calculus Fundamentals</h1>
-            </div>
-            <div class="meeting-info">
-                <span><i class="fas fa-users"></i> 12 Participants</span>
-                <span><i class="fas fa-clock"></i> 45:22</span>
-                <span><i class="fas fa-unlock"></i> Meeting ID: 874 3295 1256</span>
-            </div>
-        </header>
+<div class="page">
 
-        <div class="meeting-main">
-            <div class="video-section">
-                <div class="video-container">
-                    <video class="main-video" poster="https://placehold.co/800x450/1a1a2e/ffffff?text=Instructor+Video" muted></video>
-                    <div class="video-overlay">
-                        <h3>Dr. Sarah Johnson - Calculus Fundamentals</h3>
-                    </div>
-                </div>
-                <div class="video-controls">
-                    <button class="control-btn" id="mic-toggle">
-                        <i class="fas fa-microphone"></i>
-                    </button>
-                    <button class="control-btn" id="camera-toggle">
-                        <i class="fas fa-video"></i>
-                    </button>
-                    <button class="control-btn" id="screen-share">
-                        <i class="fas fa-desktop"></i>
-                    </button>
-                    <button class="control-btn" id="raise-hand">
-                        <i class="fas fa-hand-paper"></i>
-                    </button>
-                    <button class="control-btn leave" id="leave-meeting">
-                        <i class="fas fa-phone-slash"></i>
-                    </button>
-                </div>
-            </div>
+  <!-- Left Section -->
+  <div class="left">
 
-            <div class="sidebar">
-                <div class="participants-panel">
-                    <div class="panel-header">
-                        <h3 class="panel-title">Participants (12)</h3>
-                        <button class="control-btn" style="width: 35px; height: 35px;">
-                            <i class="fas fa-ellipsis-v"></i>
-                        </button>
-                    </div>
-                    <div class="participants-list" id="participants-list">
-                        <!-- Participants will be dynamically added here -->
-                    </div>
-                </div>
+    <div class="meeting-header">
+      <button class="back-btn">←</button>
+      <div>
+        <h2>UX/UI Design Conference Meeting</h2>
+        <p>8 Lessons • 6h 30min</p>
+      </div>
+      <div class="icons">
+        <span>⚙️</span>
+        <span>🔔</span>
+      </div>
+    </div>
 
-                <div class="chat-panel">
-                    <div class="panel-header">
-                        <h3 class="panel-title">Chat</h3>
-                        <button class="control-btn" style="width: 35px; height: 35px;">
-                            <i class="fas fa-ellipsis-v"></i>
-                        </button>
-                    </div>
-                    <div class="chat-messages" id="chat-messages">
-                        <!-- Chat messages will be dynamically added here -->
-                    </div>
-                    <div class="chat-input">
-                        <input type="text" placeholder="Type a message..." id="chat-input">
-                        <button id="send-message"><i class="fas fa-paper-plane"></i></button>
-                    </div>
-                </div>
-            </div>
+    <div class="video-section">
+      <img src="https://i.imgur.com/GQyQ5nP.jpeg" class="main-video">
+
+      <div class="small-videos">
+        <img src="https://i.imgur.com/jQ5mI0E.png">
+        <img src="https://i.imgur.com/8Km9tLL.png">
+        <img src="https://i.imgur.com/QrKMA1g.png">
+        <img src="https://i.imgur.com/VuZP2gK.png">
+      </div>
+    </div>
+
+    <div class="controls">
+      <button class="btn red">🎤</button>
+      <button class="btn red">📷</button>
+      <button class="btn blue">📞</button>
+      <button class="btn">💬</button>
+      <button class="btn">📁</button>
+    </div>
+
+  </div>
+
+  <!-- Right Section -->
+  <div class="right">
+
+    <div class="course-box">
+      <h3>Course Contents</h3>
+      <p class="progress">25% COMPLETED</p>
+
+      <ul class="chapters">
+        <li>
+          <div>
+            <h4>Get Started</h4>
+            <p>1 Hour • 5 Lessons</p>
+          </div>
+          <span>✔</span>
+        </li>
+
+        <li>
+          <div>
+            <h4>Illustrator Structures</h4>
+            <p>2 Hours • 6 Lessons</p>
+          </div>
+          <span>▶</span>
+        </li>
+
+        <li>
+          <div>
+            <h4>Using Illustrator</h4>
+            <p>1 Hour • 3 Lessons</p>
+          </div>
+          <span>▶</span>
+        </li>
+
+        <li>
+          <div>
+            <h4>What is Panda?</h4>
+            <p>1 Hour • 5 Lessons</p>
+          </div>
+          <span>▶</span>
+        </li>
+
+        <li>
+          <div>
+            <h4>Work with Numpy</h4>
+            <p>1 Hour • 4 Lessons</p>
+          </div>
+          <span>▶</span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="book-section">
+      <h3>Book for you</h3>
+
+      <div class="cards">
+        <div class="card">
+          <img src="https://i.imgur.com/8Km9tLL.png">
+          <h4>All Benefits of PLUS</h4>
+          <p>$24</p>
         </div>
 
-        <div class="resources-panel">
-            <div class="panel-header">
-                <h3 class="panel-title">Learning Resources</h3>
-                <button class="control-btn" style="width: 35px; height: 35px;">
-                    <i class="fas fa-plus"></i>
-                </button>
-            </div>
-            <div class="resources-list">
-                <div class="resource-item">
-                    <div class="resource-icon">
-                        <i class="fas fa-file-pdf"></i>
-                    </div>
-                    <div class="resource-name">Lecture Notes</div>
-                </div>
-                <div class="resource-item">
-                    <div class="resource-icon">
-                        <i class="fas fa-file-alt"></i>
-                    </div>
-                    <div class="resource-name">Worksheet</div>
-                </div>
-                <div class="resource-item">
-                    <div class="resource-icon">
-                        <i class="fas fa-external-link-alt"></i>
-                    </div>
-                    <div class="resource-name">External Links</div>
-                </div>
-                <div class="resource-item">
-                    <div class="resource-icon">
-                        <i class="fas fa-video"></i>
-                    </div>
-                    <div class="resource-name">Recordings</div>
-                </div>
-            </div>
+        <div class="card">
+          <img src="https://i.imgur.com/QrKMA1g.png">
+          <h4>All Benefits of PLUS</h4>
+          <p>$24</p>
         </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>

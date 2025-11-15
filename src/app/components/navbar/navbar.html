@@ -1,91 +1,41 @@
-<header class="modern-header" >
+<header class="modern-header">
   <div class="header-container">
-    
+
     <!-- Logo -->
-    <a routerLink="/" class="logo" >
+    <a routerLink="/" class="logo">
       <div class="logo-image logo-circle">
-        <img src="assets\img\logo-removebg-preview.png" alt="Logo">
-       
+        <img src="assets/img/logo-removebg-preview.png" alt="Logo">
       </div>
       <span class="logo-text">Elearning</span>
     </a>
 
-    <!-- Desktop Navigation -->
-    <nav class="nav-menu" >
+    <!-- Navigation -->
+    <nav class="nav-menu">
       <ul>
-        <li>
-          <a routerLink="/Home" 
-             routerLinkActive="active" 
-           
-             >
-            Home
-      <a href="index.html" class="logo d-flex align-items-center me-auto">
-        <!-- Uncomment the line below if you also wish to use an image logo -->
-        <!-- <img src="assets/img/logo.webp" alt=""> -->
-        <h1 class="sitename">Learner</h1>
-      </a>
+        <li><a routerLink="/Home" routerLinkActive="active">Home</a></li>
+        <!-- <li><a href="about.html">About</a></li> -->
+        <li><a routerLink="/Courses">Courses</a></li>
+        <li><a routerLink="/instructors">Instructors</a></li>
+        <!-- <li><a routerLink="/exam" routerLinkActive="active">Exam</a></li>
+        <li><a routerLink="/meeting">Meeting</a></li>
+        <li><a routerLink="/chatRome">ChatRome</a></li> -->
 
-      <nav id="navmenu" class="navmenu">
-        <ul>
-          <li><a routerLink="/Home">Home</a></li>
-          <li><a href="about.html">About</a></li>
-          <li><a routerLink="/Courses">Courses</a></li>
-          <li><a routerLink="/instructors">Instructors</a></li>
-          <li><a routerLink="/exam">Exam</a></li>
-          <li><a href="/meeting">Meeting</a></li>
-          <li><a href="/chatRome">ChatRome</a></li>
-           <li class="nav-item">
-          <a class="nav-link" routerLink="login" routerLinkActive="active-link">
-            <i class="bi bi-box-arrow-in-right"></i> Login
-          </a>
-        </li>
-        <li>
-          <a routerLink="/Courses" 
-             routerLinkActive="active" >
-            All Courses
-          </a>
-        </li>
-       
-        <li>
-          <a routerLink="/instructors" 
-             routerLinkActive="active" 
-            >
-            Instructors
-          </a>
-        </li>
-        <li>
-          <a routerLink="/blog" 
-             routerLinkActive="active" 
-            >
-            Blog
-          </a>
-        </li>
       </ul>
     </nav>
 
-    <!-- Action Buttons -->
+    <!-- Buttons -->
     <div class="header-actions">
-      <a routerLink="/register" class="btn-signup" >
-        Sign up
-      </a>
-      <a routerLink="/login" class="btn-login" >
-        Login
-      </a>
-      
-      <!-- Theme Toggle -->
-      <button class="theme-toggle" 
-             >
-        <i class="bi bi-sun-fill" ></i>
+      <a routerLink="/register" class="btn-signup">Sign up</a>
+      <a routerLink="/login" class="btn-login">Login</a>
+
+      <button class="theme-toggle">
+        <i class="bi bi-sun-fill"></i>
       </button>
-      
-      <!-- Language Selector -->
-      <button class="language-selector" >
+
+      <button class="language-selector">
         <i class="bi bi-globe"></i>
-      
       </button>
     </div>
 
-   
-    
   </div>
 </header>
