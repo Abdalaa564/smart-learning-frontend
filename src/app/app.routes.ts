@@ -10,6 +10,7 @@ import { Exam } from './components/exam/exam';
 import { Meeting } from './components/meeting/meeting';
 
 export const routes: Routes = [
+
     {path: '', redirectTo: 'instructors', pathMatch: 'full' },
     {path:"Home", component: Home, title: 'Home' },
     {path:"instructors", component: Instructors, title: 'Instructors' },

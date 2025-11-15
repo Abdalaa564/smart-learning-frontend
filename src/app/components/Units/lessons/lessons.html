@@ -1,0 +1,45 @@
+<div class="cards-grid">
+  <!-- Video Card -->
+  <app-card
+    [img]="video.thumbnail"
+    [title]="video.title"
+    [subtitle]="video.subtitle"
+    [clickable]="true"
+  >
+    <button (click)="openVideo(video.videoUrl)" class="btn">
+      Watch Video
+    </button>
+  </app-card>
+
+  <!-- PDF Card -->
+  <app-card
+    [img]="pdf.thumbnail"
+    [title]="pdf.title"
+    [subtitle]="pdf.subtitle"
+    [clickable]="true"
+  >
+    <button (click)="openPdf(pdf.pdfUrl)" class="btn">
+      Open PDF
+    </button>
+  </app-card>
+
+  <!-- Card 3 -->
+  <app-card
+    img="assets/img3.jpg"
+    title="Card 3"
+    subtitle="More Content"
+    [clickable]="true"
+  >
+    <button class="btn">Open</button>
+  </app-card>
+
+  <!-- Card 4 -->
+  <app-card
+    img="assets/img4.jpg"
+    title="Card 4"
+    subtitle="Another Content"
+    [clickable]="true"
+  >
+    <button class="btn">Open</button>
+  </app-card>
+</div>

@@ -1,61 +1,64 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
 import { Iinstructor } from '../../models/iinstructor';
+import { Card } from '../../shared/card/card';
+import { Button } from '../../shared/button/button';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-instructor-profile',
-   standalone: true,
-  imports: [CommonModule,RouterLink],
+  standalone: true,
+  imports: [CommonModule, Card, Button, RouterLink],
   templateUrl: './instructor-profile.html',
-  styleUrls: ['./instructor-profile.css'],
+  styleUrls: ['./instructor-profile.css']
 })
-export class InstructorProfile implements OnInit{
+export class InstructorProfile implements OnInit {
 
- instructor: Iinstructor | null = null;
+  instructor?: Iinstructor;
 
-  private readonly instructors: Iinstructor[] = [
+  instructors: Iinstructor[] = [
     {
       id: 'alexandra-chen',
       name: 'Prof. Alexandra Chen',
       title: 'Machine Learning & AI Specialist',
-      avatarUrl: 'assets/img/education/teacher-7.webp',
+      avatarUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-ebczbJCPjGAIx3eXTU5zphGoJe68qLsGAg&s',
       verified: true,
-      credentials: ['Ph.D. MIT', '10+ Years', '15,247 Students'],
+      credentials: ['Ph.D. MIT', '10+ Years Experience'],
       rating: 4.9,
       reviewsCount: 3821,
       studentsTotal: 15247,
-      coursesActive: 18,
-      completionRate: 94,
-      yearsTeaching: 10,
-      socials: { linkedin: '#', twitter: '#', youtube: '#' },
       bio: [
-        'Sed ut perspiciatis unde omnis iste natus error sit voluptatem...',
-        'At vero eos et accusamus et iusto odio dignissimos...'
+        'Experienced ML & AI specialist with focus on deep learning and neural networks.',
+        'Lecturer at MIT and author of multiple AI publications.'
       ],
-      expertise: ['Artificial Intelligence', 'Neural Networks', 'Data Science', 'Python & R', 'Cloud Computing', 'Machine Learning'],
-      experience: [
-        { year: 2019, role: 'Lead AI Researcher', institution: 'TechForward Institute', description: '...' },
-        { year: 2016, role: 'Senior Data Scientist', institution: 'InnovateLabs Corp', description: '...' },
-        { year: 2014, role: 'Research Fellow', institution: 'MIT Computer Science Lab', description: '...' }
-      ],
-      heroImageUrl: 'assets/img/education/showcase-4.webp',
-      reviews: [
-        { id: 'r1', reviewerName: 'Sarah Williams', reviewerRole: 'Data Scientist at Amazon', reviewerAvatarUrl: 'assets/img/person/person-f-12.webp', rating: 5, comment: 'Hands-on approach and real projects.' },
-        { id: 'r2', reviewerName: 'David Martinez', reviewerRole: 'ML Engineer at Tesla', reviewerAvatarUrl: 'assets/img/person/person-m-8.webp', rating: 5, comment: "Professor Chen's expertise is unmatched." }
-      ],
-      contact: { email: 'alexandra.chen@university.edu', phone: '+1 (555) 789-0123', address: 'Room 304, CS Building', officeHours: 'Tue & Thu 2-4 PM' }
+      contact: {
+        email: 'alexandra.chen@university.edu',
+        phone: '+1 (555) 789-0123',
+        address: 'Room 304, Computer Science Building',
+        officeHours: 'Tue & Thu, 2:00 PM - 4:00 PM'
+      }
     },
     {
-      id: 'kevin-taylor',
-      name: 'Kevin Taylor',
-      title: 'Cloud Computing',
-      avatarUrl: 'assets/img/education/teacher-10.webp',
-      credentials: ['MSc Stanford', '7+ Years', '3,800 Students'],
-      rating: 4.9,
-      reviewsCount: 2145,
-      expertise: ['Cloud', 'Kubernetes', 'DevOps'],
-      heroImageUrl: 'assets/img/education/showcase-4.webp'
+      id: 'michael-chen',
+      name: 'Michael Chen',
+      title: 'Data Science',
+      avatarUrl: 'assets/img/education/teacher-7.webp',
+      verified: true,
+      credentials: ['MSc Stanford'],
+      rating: 4.8,
+      reviewsCount: 2500,
+      studentsTotal: 3500,
+      bio: [
+        'Data scientist with expertise in Python, R, and ML Ops.',
+        'Experience in large-scale data projects and ML pipelines.'
+      ],
+      contact: {
+        email: 'michael.chen@university.edu',
+        phone: '+1 (555) 123-4567',
+        address: 'Room 210, Data Science Building',
+        officeHours: 'Mon & Wed, 1:00 PM - 3:00 PM'
+      }
     }
   ];
 
@@ -63,6 +66,6 @@ export class InstructorProfile implements OnInit{
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
-    this.instructor = this.instructors.find(i => i.id === id) ?? null;
+    this.instructor = this.instructors.find(i => i.id === id);
   }
 }

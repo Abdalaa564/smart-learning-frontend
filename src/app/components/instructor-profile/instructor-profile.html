@@ -1,27 +1,36 @@
-<a routerLink="/instructors" class="back-link">← Back to Instructors</a>
+<div class="instructor-profile" *ngIf="instructor">
 
-@if (instructor; as ins) {
-  <div class="hero">
-    @if (ins.heroImageUrl) {
-      <img class="hero-img" [src]="ins.heroImageUrl" alt="hero" />
-    }
-    <div class="hero-content">
-      <img class="avatar" [src]="ins.avatarUrl" alt="avatar" />
-      <div class="info">
-        <h1 class="name">
-          {{ ins.name }}
-          @if (ins.verified) { <span class="badge">✔ Verified</span> }
-        </h1>
-        <div class="title">{{ ins.title }}</div>
-        <div class="rating">⭐ {{ ins.rating }} • {{ ins.reviewsCount | number }} reviews</div>
-        @if (ins.credentials.length) {
-          <div class="creds">
-            @for (c of ins.credentials; track $index) { <span class="cred">{{ c }}</span> }
-          </div>
-        }
-      </div>
-    </div>
+  <img  alt="" [src]="instructor.avatarUrl" [alt]="instructor.name" class="avatar">
+  <h1>{{ instructor.name }}</h1>
+  <h3>{{ instructor.title }}</h3>
+
+  <p *ngIf="instructor.verified" class="badge">✔ Verified Instructor</p>
+
+  <p>Rating: {{ instructor.rating }}</p>
+  <p>Reviews: {{ instructor.reviewsCount }}</p>
+  <p>Students: {{ instructor.studentsTotal }}</p>
+
+  <p>Credentials: {{ instructor.credentials.join(', ') }}</p>
+
+  <div *ngIf="instructor.bio?.length">
+    <h4>Bio:</h4>
+    <ul>
+      <li *ngFor="let line of instructor.bio">{{ line }}</li>
+    </ul>
   </div>
-} @else {
+
+  <div *ngIf="instructor.contact">
+    <h4>Contact:</h4>
+    <p *ngIf="instructor.contact.email">📧 {{ instructor.contact.email }}</p>
+    <p *ngIf="instructor.contact.phone">📞 {{ instructor.contact.phone }}</p>
+    <p *ngIf="instructor.contact.address">📍 {{ instructor.contact.address }}</p>
+    <p *ngIf="instructor.contact.officeHours"><strong>Office Hours:</strong> {{ instructor.contact.officeHours }}</p>
+  </div>
+
+  <app-button variant="secondary" [routerLink]="['/Instructors']">Back to Instructors</app-button>
+
+</div>
+
+<div *ngIf="!instructor">
   <p>Instructor not found.</p>
-}
+</div>
