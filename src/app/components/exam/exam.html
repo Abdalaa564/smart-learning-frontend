@@ -1,0 +1,38 @@
+<div class="exam-container" *ngIf="!isSubmitted">
+
+  <div class="exam-header">
+    <h2>Exam</h2>
+
+    <div class="timer">
+      {{ minutes }}:{{ seconds < 10 ? '0' + seconds : seconds }}
+    </div>
+
+    <div class="progress">
+      Question {{ currentIndex + 1 }} of {{ questions.length }}
+    </div>
+  </div>
+
+  <div class="question-box" *ngIf="questions.length > 0">
+    <h3>{{ questions[currentIndex].text }}</h3>
+
+    <div class="choice"
+         *ngFor="let ch of questions[currentIndex].choices; let i = index"
+         [class.selected]="questions[currentIndex].selectedIndex === i"
+         (click)="selectChoice(i)">
+      {{ ch }}
+    </div>
+  </div>
+
+  <div class="actions">
+    <button (click)="previous()" [disabled]="currentIndex===0">Previous</button>
+    <button (click)="next()" *ngIf="currentIndex < questions.length - 1">Next</button>
+    <button (click)="submitExam()" *ngIf="currentIndex === questions.length - 1">Submit</button>
+  </div>
+
+</div>
+
+<!-- النتائج -->
+<div class="result" *ngIf="isSubmitted">
+  <h2>Exam Submitted</h2>
+  <h3>Your Score: {{ score }} / {{ questions.length }}</h3>
+</div>
