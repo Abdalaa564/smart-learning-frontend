@@ -65,6 +65,21 @@ export class InstructorsSection {
         yearsTeaching: 7,
         socials: { github: 'https://github.com/m-chen', linkedin: 'https://linkedin.com/michael' },
         expertise: ['Data Science', 'Pandas', 'R', 'ML Ops']
+      },
+      {
+        id: 'michael-chen',
+        name: 'Michael Chen',
+        title: 'Data Science',
+        avatarUrl: 'assets/img/education/teacher-7.webp',
+        verified: true,
+        credentials: ['MSc Stanford'],
+        rating: 4.9,
+        reviewsCount: 2500,
+        studentsTotal: 3500,
+        coursesActive: 24,
+        yearsTeaching: 7,
+        socials: { github: 'https://github.com/m-chen', linkedin: 'https://linkedin.com/michael' },
+        expertise: ['Data Science', 'Pandas', 'R', 'ML Ops']
       }
     ];
   }
