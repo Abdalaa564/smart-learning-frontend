@@ -83,10 +83,14 @@
             ],
             "styles": [
               "src/styles.css"
+             
             ]
           }
         }
       }
     }
+  },
+  "cli": {
+    "analytics": false
   }
 }

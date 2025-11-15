@@ -1,1 +1,43 @@
-<p>courses works!</p>
+<div class="courses-grid" data-aos="fade-up" data-aos-delay="200">
+  <div class="row">
+    <div class="col-lg-6 col-md-6" *ngFor="let course of courses">
+      <div class="course-card">
+        <div class="course-image">
+          <img [src]="course.image" alt="Course" class="img-fluid">
+          <div class="course-badge" *ngIf="course.badge" [ngClass]="course.badgeClass">{{ course.badge }}</div>
+          <div class="course-price" *ngIf="course.price">{{ course.price }}</div>
+        </div>
+        <div class="course-content">
+          <div class="course-meta">
+            <span class="category">{{ course.category }}</span>
+            <span class="level">{{ course.level }}</span>
+          </div>
+          <h3>{{ course.title }}</h3>
+          <p>{{ course.description }}</p>
+          <div class="course-stats">
+            <div class="stat">
+              <i class="bi bi-clock"></i> <span>{{ course.hours }}</span>
+            </div>
+            <div class="stat">
+              <i class="bi bi-people"></i> <span>{{ course.students }}</span>
+            </div>
+            <div class="rating">
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-half"></i>
+              <span>{{ course.rating }}</span>
+            </div>
+          </div>
+          <div class="instructor-info">
+            <img [src]="course.instructorImg" alt="Instructor" class="instructor-avatar">
+            <span class="instructor-name">{{ course.instructorName }}</span>
+          </div>
+          <a href="enroll.html" class="btn-course">{{ course.btnText }}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

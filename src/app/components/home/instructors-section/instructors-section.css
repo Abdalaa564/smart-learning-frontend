@@ -1,0 +1,83 @@
+.featured-instructors .instructor-card {
+  background: var(--surface-color);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.05);
+  transition: transform 0.3s, box-shadow 0.3s;
+  display: flex;
+  flex-direction: column;
+}
+
+.featured-instructors .instructor-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+}
+
+.featured-instructors .instructor-image {
+  position: relative;
+  height: 260px;
+  overflow: hidden;
+}
+
+.featured-instructors .instructor-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.featured-instructors .instructor-card:hover .instructor-image img {
+  transform: scale(1.05);
+}
+
+.featured-instructors .badge {
+  display: inline-block;
+  background: #4caf50;
+  color: #fff;
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 12px;
+  margin-bottom: 8px;
+}
+
+.featured-instructors .meta {
+  font-size: 13px;
+  margin-bottom: 12px;
+  color: rgba(0,0,0,0.7);
+}
+
+.featured-instructors .social-links {
+  display: flex;
+  gap: 6px;
+  margin-top: 12px;
+}
+
+.featured-instructors .social-links a {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  border: 1px solid rgba(0,0,0,0.1);
+  color: rgba(0,0,0,0.6);
+  transition: all 0.3s;
+}
+
+.featured-instructors .social-links a:hover {
+  background-color: var(--accent-color);
+  color: var(--contrast-color);
+  transform: scale(1.1);
+}
+
+@media (max-width: 991px) {
+  .featured-instructors .instructor-card {
+    margin-bottom: 20px;
+  }
+}
+
+@media (max-width: 575px) {
+  .featured-instructors .row > * {
+    width: 100% !important;
+  }
+}

@@ -1,0 +1,30 @@
+<section id="featured-instructors" class="featured-instructors section">
+  <div class="container section-title" data-aos="fade-up">
+    <h2>Featured Instructors</h2>
+    <p>Learn from the best instructors in the industry</p>
+  </div>
+
+  <div class="container" data-aos="fade-up" data-aos-delay="100">
+    <div class="row gy-4">
+      <div class="col-xl-3 col-lg-4 col-md-6" *ngFor="let ins of instructors">
+        <app-card [img]="ins.avatarUrl" [title]="ins.name" [subtitle]="ins.title" [clickable]="true">
+          <p class="badge" *ngIf="ins.verified">✔ Verified</p>
+
+          <p class="meta">
+            ⭐ {{ ins.rating }} ({{ ins.reviewsCount | number }}) • {{ ins.studentsTotal | number }} students
+          </p>
+
+          <app-button variant="primary" size="sm" [routerLink]="['/instructors', ins.id]">
+            View Profile
+          </app-button>
+
+          <div class="social-links" *ngIf="ins.socials">
+            <a *ngFor="let key of (ins.socials | keyvalue)" [href]="key.value" target="_blank">
+              <i class="bi" [ngClass]="'bi-' + key.key"></i>
+            </a>
+          </div>
+        </app-card>
+      </div>
+    </div>
+  </div>
+</section>

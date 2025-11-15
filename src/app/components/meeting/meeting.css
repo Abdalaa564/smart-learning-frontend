@@ -1,0 +1,158 @@
+body {
+  background: #eaf4ff;
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+}
+
+.page {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+}
+
+/* LEFT SECTION */
+.left {
+  flex: 2.2;
+}
+
+.meeting-header {
+  background: white;
+  padding: 15px;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  box-shadow: 0 4px 15px #ccd8e6;
+}
+
+.back-btn {
+  background: #dff2ff;
+  border: none;
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 20px;
+}
+
+.icons span {
+  margin-left: 10px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* Video Section */
+.video-section {
+  position: relative;
+  margin-top: 20px;
+}
+
+.main-video {
+  width: 100%;
+  height: 380px;
+  border-radius: 15px;
+  object-fit: cover;
+}
+
+.small-videos {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.small-videos img {
+  width: 70px;
+  height: 70px;
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+/* Controls */
+.controls {
+  margin-top: 20px;
+  background: white;
+  padding: 15px;
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  box-shadow: 0 4px 10px #ccd8e6;
+}
+
+.btn {
+  background: #d3e7f8;
+  border: none;
+  padding: 12px;
+  width: 45px;
+  height: 45px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.btn.red {
+  background: #ffd5d0;
+}
+
+.btn.blue {
+  background: #bfe8ff;
+}
+
+/* RIGHT SECTION */
+.right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.course-box,
+.book-section {
+  background: white;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px #ccd8e6;
+}
+
+.chapters {
+  list-style: none;
+  padding: 0;
+  margin-top: 20px;
+}
+
+.chapters li {
+  display: flex;
+  justify-content: space-between;
+  background: #f5fbff;
+  padding: 12px;
+  border-radius: 12px;
+  margin-bottom: 12px;
+}
+
+.chapters li span {
+  font-size: 20px;
+  color: #008cff;
+}
+
+/* Cards */
+.cards {
+  display: flex;
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.card {
+  background: #f5fbff;
+  padding: 15px;
+  border-radius: 12px;
+  flex: 1;
+  text-align: center;
+}
+
+.card img {
+  width: 60px;
+  height: 60px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+}
