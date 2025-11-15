@@ -1,99 +1,67 @@
-<section id="courses-hero" class="courses-hero section light-background">
-    <div class="hero-content">
-        <div class="container">
-          <div class="row align-items-center">
+<section class="hero-section">
+  <div class="hero-content">
+    <div class="container">
+      <div class="row align-items-center">
+        
+        <!-- Left Content -->
+        <div class="col-lg-6">
+          <div class="hero-text">
+            <h3 class="hero-subtitle"></h3>
+            <h1>{{title}}</h1>
+            <p>{{description}}</p>
 
-            <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
-              <div class="hero-text">
-                <h1>Transform Your Future with Expert-Led Online Courses</h1>
-                <p>Discover thousands of high-quality courses designed by industry professionals. Learn at your own pace, gain in-demand skills, and advance your career from anywhere in the world.</p>
+         
 
-                <div class="hero-stats">
-                  <div class="stat-item">
-                    <span class="number purecounter" data-purecounter-start="0" data-purecounter-end="50000" data-purecounter-duration="2"></span>
-                    <span class="label">Students Enrolled</span>
-                  </div>
-                  <div class="stat-item">
-                    <span class="number purecounter" data-purecounter-start="0" data-purecounter-end="1200" data-purecounter-duration="2"></span>
-                    <span class="label">Expert Courses</span>
-                  </div>
-                  <div class="stat-item">
-                    <span class="number purecounter" data-purecounter-start="0" data-purecounter-end="98" data-purecounter-duration="2"></span>
-                    <span class="label">Success Rate %</span>
-                  </div>
-                </div>
-
-                <div class="hero-buttons">
-                  <a href="#courses" class="btn btn-primary">Browse Courses</a>
-                  <a href="#about" class="btn btn-outline">Learn More</a>
-                </div>
-
-                <div class="hero-features">
-                  <div class="feature">
-                    <i class="bi bi-shield-check"></i>
-                    <span>Certified Programs</span>
-                  </div>
-                  <div class="feature">
-                    <i class="bi bi-clock"></i>
-                    <span>Lifetime Access</span>
-                  </div>
-                  <div class="feature">
-                    <i class="bi bi-people"></i>
-                    <span>Expert Instructors</span>
-                  </div>
-                </div>
-              </div>
+            <!-- Buttons -->
+            <div class="hero-buttons">
+              <button class="btn btn-primary" >
+                Get Started <i class="bi bi-arrow-right"></i>
+              </button>
+              <button class="btn btn-outline" >
+                Learn More
+              </button>
             </div>
 
-            <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
-              <div class="hero-image">
-                <div class="main-image">
-                  <img src="assets/img/education/courses-3.webp" alt="Online Learning" class="img-fluid">
-                </div>
-
-                <div class="floating-cards">
-                  <div class="course-card" data-aos="fade-up" data-aos-delay="300">
-                    <div class="card-icon">
-                      <i class="bi bi-code-slash"></i>
-                    </div>
-                    <div class="card-content">
-                      <h6>Web Development</h6>
-                      <span>2,450 Students</span>
-                    </div>
-                  </div>
-
-                  <div class="course-card" data-aos="fade-up" data-aos-delay="400">
-                    <div class="card-icon">
-                      <i class="bi bi-palette"></i>
-                    </div>
-                    <div class="card-content">
-                      <h6>UI/UX Design</h6>
-                      <span>1,890 Students</span>
-                    </div>
-                  </div>
-
-                  <div class="course-card" data-aos="fade-up" data-aos-delay="500">
-                    <div class="card-icon">
-                      <i class="bi bi-graph-up"></i>
-                    </div>
-                    <div class="card-content">
-                      <h6>Digital Marketing</h6>
-                      <span>3,200 Students</span>
-                    </div>
-                  </div>
-                </div>
+            <!-- Features -->
+            <div class="hero-features">
+              <div class="feature">
+                <i class="bi bi-shield-check"></i>
+                <span>Certified Programs</span>
+              </div>
+              <div class="feature">
+                <i class="bi bi-clock"></i>
+                <span>Lifetime Access</span>
+              </div>
+              <div class="feature">
+                <i class="bi bi-people"></i>
+                <span>Expert Instructors</span>
               </div>
             </div>
-
           </div>
         </div>
-    </div>
 
-    <div class="hero-background">
-        <div class="bg-shapes">
-          <div class="shape shape-1"></div>
-          <div class="shape shape-2"></div>
-          <div class="shape shape-3"></div>
+        <!-- Right Image -->
+        <div class="col-lg-6">
+          <div class="hero-image">
+            <div class="main-image">
+              <img [src]="heroImage" alt="Online Learning" class="img-fluid">
+            </div>
+
+            <!-- Floating Cards -->
+            
+          </div>
         </div>
+        
+      </div>
     </div>
+  </div>
+
+  <!-- Background Shapes -->
+  <div class="hero-background">
+    <div class="bg-shapes">
+      <div class="shape shape-1"></div>
+      <div class="shape shape-2"></div>
+      <div class="shape shape-3"></div>
+    </div>
+  </div>
 </section>
