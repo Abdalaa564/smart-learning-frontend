@@ -1,1 +1,66 @@
-<p>navbar works!</p>
+<header id="header" class="header d-flex align-items-center sticky-top">
+    <div class="container-fluid container-xl position-relative d-flex align-items-center">
+
+      <a href="index.html" class="logo d-flex align-items-center me-auto">
+        <!-- Uncomment the line below if you also wish to use an image logo -->
+        <!-- <img src="assets/img/logo.webp" alt=""> -->
+        <h1 class="sitename">Learner</h1>
+      </a>
+
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <li><a routerLink="/Home">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a routerLink="/Courses">Courses</a></li>
+          <li><a routerLink="/instructors">Instructors</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="blog.html">Blog</a></li>
+           <li class="nav-item">
+          <a class="nav-link" routerLink="login" routerLinkActive="active-link">
+            <i class="bi bi-box-arrow-in-right"></i> Login
+          </a>
+        </li>
+        <!-- Registration -->
+        <li class="nav-item">
+          <a class="nav-link" routerLink="register" routerLinkActive="active-link">
+            <i class="bi bi-person-plus-fill"></i> Register
+          </a>
+        </li>
+          <li class="dropdown"><a href="#"><span>More Pages</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+            <ul>
+              <li><a href="course-details.html">Course Details</a></li>
+              <li><a href="instructor-profile.html">Instructor Profile</a></li>
+              <li><a href="events.html">Events</a></li>
+              <li><a href="blog-details.html">Blog Details</a></li>
+              <li><a href="terms.html">Terms</a></li>
+              <li><a href="privacy.html">Privacy</a></li>
+              <li><a href="404.html">404</a></li>
+            </ul>
+          </li>
+
+          <li class="dropdown"><a href="#"><span>Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+            <ul>
+              <li><a href="#">Dropdown 1</a></li>
+              <li class="dropdown"><a href="#"><span>Deep Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+                <ul>
+                  <li><a href="#">Deep Dropdown 1</a></li>
+                  <li><a href="#">Deep Dropdown 2</a></li>
+                  <li><a href="#">Deep Dropdown 3</a></li>
+                  <li><a href="#">Deep Dropdown 4</a></li>
+                  <li><a href="#">Deep Dropdown 5</a></li>
+                </ul>
+              </li>
+              <li><a href="#">Dropdown 2</a></li>
+              <li><a href="#">Dropdown 3</a></li>
+              <li><a href="#">Dropdown 4</a></li>
+            </ul>
+          </li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+
+      <a class="btn-getstarted" href="enroll.html">Enroll Now</a>
+
+    </div>
+  </header>

@@ -8,7 +8,7 @@ type Size = 'sm' | 'md' | 'lg';
   selector: 'app-button',
   imports: [CommonModule,RouterLink],
   templateUrl: './button.html',
-  styleUrl: './button.css',
+  styleUrls: ['./button.css'],
 })
 export class Button {
  @Input() variant: Variant = 'primary';
@@ -17,6 +17,5 @@ export class Button {
   @Input() disabled = false;
   @Input() type: 'button'|'submit'|'reset' = 'button';
 
-  // اختيارية: لو عايز تستخدمه كرابط راوتر
   @Input() routerLink?: any[] | string;
 }

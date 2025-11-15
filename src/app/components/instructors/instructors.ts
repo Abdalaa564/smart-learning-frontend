@@ -1,23 +1,20 @@
-import { Component, OnInit } from '@angular/core';
-import { Iinstructor } from '../../models/iinstructor';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Card } from '../../shared/card/card';
-import { RouterLink } from '@angular/router';
 import { Button } from '../../shared/button/button';
+import { RouterLink } from '@angular/router';
+import { Iinstructor } from '../../models/iinstructor';
 
 @Component({
   selector: 'app-instructors',
   standalone: true,
-  imports: [CommonModule,RouterLink ,Card],
+  imports: [CommonModule, Card, Button, RouterLink],
   templateUrl: './instructors.html',
-   styleUrls: ['./instructors.css'],
+  styleUrls: ['./instructors.css'],
 })
-export class Instructors implements OnInit {
- instructors: Iinstructor[] = [];
-  ngOnInit(): void {
-
-  this.instructors = [
-      {
+export class Instructors {
+  instructors: Iinstructor[] = [
+        {
         id: 'alexandra-chen',
         name: 'Prof. Alexandra Chen',
         title: 'Machine Learning & AI Specialist',
@@ -68,6 +65,8 @@ export class Instructors implements OnInit {
         socials: { github: 'https://github.com/m-chen', linkedin: 'https://linkedin.com/michael' },
         expertise: ['Data Science', 'Pandas', 'R', 'ML Ops']
       }
-    ];
+  ];
+  trackById(index: number, instructor: Iinstructor): string {
+    return instructor.id;
   }
 }

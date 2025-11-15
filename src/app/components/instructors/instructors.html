@@ -16,12 +16,7 @@
         ⭐ {{ ins.rating }} ({{ ins.reviewsCount | number }}) • {{ ins.studentsTotal | number }} students
       </p>
 
-      <app-button
-        variant="primary"
-        size="sm"
-        [routerLink]="['/instructors', ins.id]">
-        View Profile
-      </app-button>
+      <button [routerLink]="['/instructors', ins.id]" >view profile</button>
 
     </app-card>
   }
