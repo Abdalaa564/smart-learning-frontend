@@ -395,3 +395,139 @@
     }
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Profile Dropdown */
+.profile-dropdown-container {
+  position: relative;
+}
+
+.profile-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  color: var(--default-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-dropdown {
+  position: absolute;
+  top: 50px;
+  right: 0;
+  width: 200px;
+  background: var(--surface-color);
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  opacity: 0;
+  text-align: center;
+  overflow: hidden;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.3s ease;
+  z-index: 1000;
+  padding: 15px;
+}
+
+.profile-dropdown.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.profile-dropdown .profile-info {
+  display: flex;
+  gap: 15px;
+  align-items: flex-start;
+  margin-bottom: 10px;
+  height: 80px;
+  width: 185px;
+  z-index: 1;
+  position: relative;
+}
+
+
+.profile-dropdown:hover .profile-info::before {
+  height: 100%;
+}
+
+.profile-dropdown .profile-info::after {
+  content: "";
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #1369ce;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  transform: scale(0);
+  opacity: 0.3;
+  transition: all 0.4s ease;
+}
+
+.profile-dropdown .profile-info:hover::after {
+  transform: scale(1.5);
+  opacity: 0.6;
+}
+
+.profile-dropdown .profile-info img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  transform: scale(1);
+  transition: all 0.9s ease 0s;
+}
+
+.profile-dropdown .profile-info img:hover {
+  box-shadow: 0 0 0 14px #f7f5ec;
+  transform: scale(0.9);
+}
+
+.profile-dropdown a {
+  display: block;
+  padding: 5px 0;
+  color: var(--nav-color);
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.profile-dropdown a:hover {
+  color: var(--accent-color);
+}
+
+
+.profile-dropdown .profile-info h4 {
+  font-size: 15px;
+  font-weight: 500;
+  color: #333;
+  margin: 0;
+}
+
+
+.profile-dropdown hr {
+  margin: 10px 0;
+  border: 0;
+  height: 1px;
+  background-color: #ccc;
+}

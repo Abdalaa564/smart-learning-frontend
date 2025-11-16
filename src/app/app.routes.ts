@@ -1,3 +1,5 @@
+import { Lessons } from './components/Units/lessons/lessons';
+import { UserProfile } from './components/user-profile/user-profile';
 import { ChatRome } from './components/chat-rome/chat-rome';
 import { Routes } from '@angular/router';
 import { Home } from './components/home/home';
@@ -19,6 +21,8 @@ export const routes: Routes = [
     {path:'exam', component: Exam, title: 'Exam' },
     {path:'meeting', component: Meeting, title: 'Meeting' },
     {path:'chatRome', component: ChatRome, title: 'ChatRome' },
+    {path:'userProfile', component: UserProfile, title: 'UserProfile' },
+    {path:'lessons', component: Lessons, title: 'Lessons' },
      {path: 'login', component: Login, title: 'Login'},
     {path: 'register', component: Register, title: 'Register'},
     
