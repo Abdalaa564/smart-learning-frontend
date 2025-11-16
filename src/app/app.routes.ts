@@ -10,6 +10,7 @@ import { Login } from './components/login/login';
 import { Register } from './components/register/register';
 import { Exam } from './components/exam/exam';
 import { Meeting } from './components/meeting/meeting';
+import { ErrorPage } from './components/error-page/error-page';
 
 export const routes: Routes = [
 
@@ -25,5 +26,6 @@ export const routes: Routes = [
     {path:'lessons', component: Lessons, title: 'Lessons' },
      {path: 'login', component: Login, title: 'Login'},
     {path: 'register', component: Register, title: 'Register'},
+    {path: '**', component:ErrorPage, title: 'Not Found'}
     
 ];
