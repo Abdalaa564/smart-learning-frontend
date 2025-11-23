@@ -1,0 +1,39 @@
+<div *ngIf="callTimeNotArrived">
+  <app-alert
+    [title]="'Your Meeting has not started yet. It is scheduled for ' + callStartsAt"
+  ></app-alert>
+</div>
+
+<div *ngIf="callHasEnded">
+  <app-alert
+    [title]="'The call has been ended by the host'"
+    iconUrl="assets/icons/call-ended.svg"
+  ></app-alert>
+</div>
+
+<div *ngIf="!callTimeNotArrived && !callHasEnded" class="setup-container">
+  <h1 class="title">Setup</h1>
+
+  <!-- Video Preview -->
+  <div id="video-preview">
+    <!-- هنا هتحط Stream Video JS SDK VideoPreview -->
+  </div>
+
+  <div class="controls">
+    <label class="mic-cam-toggle">
+      <input
+        type="checkbox"
+        [checked]="isMicCamToggled"
+        (change)="toggleMicCam()"
+      />
+      Join with mic and camera off
+    </label>
+
+    <!-- Device Settings -->
+    <div id="device-settings">
+      <!-- هنا ممكن تحط DeviceSettings Component من JS SDK -->
+    </div>
+  </div>
+
+  <button class="join-btn" (click)="joinMeeting()">Join meeting</button>
+</div>

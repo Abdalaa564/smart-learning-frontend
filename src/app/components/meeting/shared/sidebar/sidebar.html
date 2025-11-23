@@ -1,0 +1,14 @@
+<section class="sidebar-container">
+  <div class="links-container">
+    <ng-container *ngFor="let item of sidebarLinks">
+      <a 
+        [routerLink]="item.route"
+        class="link"
+        [ngClass]="{'active': isActive(item.route)}"
+      >
+        <img [src]="item.imgURL" [alt]="item.label" width="24" height="24" />
+        <p class="label">{{ item.label }}</p>
+      </a>
+    </ng-container>
+  </div>
+</section>

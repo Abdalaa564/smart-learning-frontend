@@ -1,6 +1,6 @@
 .modern-header {
   background: var(--surface-color);
-  padding: 7px 0;
+  padding: 10px 0;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
   position: sticky;
   top: 0;
@@ -80,7 +80,7 @@
   a {
     text-decoration: none;
     color: var(--nav-color);
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 600;
     transition: color 0.3s;
     position: relative;
@@ -180,7 +180,7 @@
   border: 2px solid var(--border-color);
   border-radius: 8px;
   color: var(--default-color);
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s;
@@ -199,7 +199,7 @@
   border: 2px solid var(--accent-color);
   border-radius: 8px;
   color: var(--contrast-color);
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s;

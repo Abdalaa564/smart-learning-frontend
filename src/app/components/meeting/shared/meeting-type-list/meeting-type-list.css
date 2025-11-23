@@ -1,0 +1,64 @@
+/* Container grid */
+.meeting-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+}
+
+@media (min-width: 768px) {
+  .meeting-grid {
+    grid-template-columns: repeat(2, 1fr); /* md:grid-cols-2 */
+  }
+}
+
+@media (min-width: 1280px) {
+  .meeting-grid {
+    grid-template-columns: repeat(4, 1fr); /* xl:grid-cols-4 */
+  }
+}
+
+.home-card {
+  cursor: pointer;
+}
+
+.bg-blue-1 {
+  background-color: #3b82f6;
+}
+
+.bg-purple-1 {
+  background-color: #a855f7;
+}
+
+.bg-yellow-1 {
+  background-color: #facc15;
+}
+
+.modal-input,
+.modal-textarea {
+  width: 100%;
+  padding: 0.5rem;
+  background-color: #1f1f1f; 
+  border: none;
+  color: white;
+  border-radius: 4px;
+  font-size: 1rem;
+  box-sizing: border-box;
+  resize: vertical;
+}
+
+/* Modal container spacing */
+.modal-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem; /* 2.5 spacing */
+}
+
+.modal-section label {
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+}
+
+/* Optional: adjust buttons inside modal */
+.modal-button {
+  margin-top: 1rem;
+}

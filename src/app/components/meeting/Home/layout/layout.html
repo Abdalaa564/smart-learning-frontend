@@ -1,0 +1,14 @@
+<main class="relative">
+  <!-- <app-navbar></app-navbar> -->
+
+  <div class="flex">
+    <app-sidebar  [sidebarLinks]="sidebarLinks"></app-sidebar>
+
+    <section class="flex min-h-screen flex-1 flex-col px-6 pb-6 pt-28 sm:px-14 max-md:pb-14">
+      <div class="w-full">
+        <ng-content></ng-content>
+        <app-meetingHome></app-meetingHome>
+      </div>
+    </section>
+  </div>
+</main>
