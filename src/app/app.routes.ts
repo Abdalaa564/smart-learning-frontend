@@ -9,6 +9,10 @@ import { Register } from './components/register/register';
 import { Exam } from './components/exam/exam';
 import { Meeting } from './components/meeting/meeting';
 import { ErrorPage } from './components/error-page/error-page';
+import { CreateQuizComponent } from './components/create-quiz-component/create-quiz-component';
+import { TakeQuizComponent } from './components/take-quiz-component/take-quiz-component';
+import { QuizResultComponent } from './components/quiz-result-component/quiz-result-component';
+import { QuizListComponent } from './components/quiz-list-component/quiz-list-component';
 
 export const routes: Routes = [
 
@@ -20,6 +24,18 @@ export const routes: Routes = [
     {path:'exam', component: Exam, title: 'Exam' },
     {path:'meeting', component: Meeting, title: 'Meeting' },
     {path:'chatRome', component: ChatRome, title: 'ChatRome' },
+<<<<<<< Updated upstream
+=======
+    {path:'lesson/:lessonId/quizzes', component: QuizListComponent, title: 'Quiz Result' },
+    {path:'quiz/take/:quizId', component: TakeQuizComponent, title: 'Take Quiz' },
+    
+    {path:'quiz/result/:quizId', component: QuizResultComponent, title: 'Quiz Result' },
+    {path:'lesson/:lessonId/create-quiz', component: CreateQuizComponent, title: 'CreateQuiz' },
+
+   
+    {path:'userProfile', component: UserProfile, title: 'UserProfile' },
+    {path:'lessons', component: Lessons, title: 'Lessons' },
+>>>>>>> Stashed changes
      {path: 'login', component: Login, title: 'Login'},
     {path: 'register', component: Register, title: 'Register'},
     {path: '**', component:ErrorPage, title: 'Not Found'}

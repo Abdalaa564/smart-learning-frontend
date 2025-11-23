@@ -1,0 +1,145 @@
+* src/app/components/quiz-list/quiz-list.component.css */
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: none;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
+.card-title {
+  color: #2c3e50;
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.card-text {
+  font-size: 0.95rem;
+  color: #7f8c8d;
+}
+
+.quiz-info {
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+
+.quiz-info i {
+  color: #3498db;
+  margin-right: 5px;
+}
+
+.quiz-info strong {
+  color: #2c3e50;
+  font-weight: 600;
+}
+
+.card-footer {
+  padding: 15px 20px;
+  border-top: 1px solid #e9ecef;
+}
+
+.btn {
+  border-radius: 8px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  padding: 8px 16px;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+  transform: scale(1.02);
+}
+
+.btn-outline-info {
+  border: 2px solid #3498db;
+  color: #3498db;
+}
+
+.btn-outline-info:hover {
+  background: #3498db;
+  color: white;
+}
+
+.btn-outline-danger {
+  border: 2px solid #e74c3c;
+  color: #e74c3c;
+}
+
+.btn-outline-danger:hover {
+  background: #e74c3c;
+  color: white;
+}
+
+.spinner-border {
+  width: 3rem;
+  height: 3rem;
+  border-width: 0.3em;
+}
+
+.alert {
+  border-radius: 8px;
+  border: none;
+  padding: 15px 20px;
+}
+
+.alert-danger {
+  background: #fee;
+  color: #c00;
+}
+
+.alert-info {
+  background: #e7f3ff;
+  color: #0066cc;
+}
+
+h2 {
+  color: #2c3e50;
+  font-weight: 700;
+  margin-bottom: 30px;
+  position: relative;
+  padding-bottom: 15px;
+}
+
+h2::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 60px;
+  height: 4px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 2px;
+}
+
+@media (max-width: 768px) {
+  .card-title {
+    font-size: 1.1rem;
+  }
+  
+  .quiz-info {
+    font-size: 0.85rem;
+  }
+  
+  h2 {
+    font-size: 1.5rem;
+  }
+}
