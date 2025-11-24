@@ -1,48 +1,57 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
+import { MeetingRoomService } from '../../Services/meeting-room-service';
+import { Loader } from "./shared/meeting-room/loader/loader";
+import { EndCallButton } from "./shared/end-call-button/end-call-button";
+import { CallControls } from "./AngSDK/call-controls/call-controls";
+import { CallStatsButton } from "./AngSDK/call-stats-button/call-stats-button";
+import { CallParticipantsList } from "./AngSDK/call-participants-list/call-participants-list";
+import { SpeakerLayout } from "./AngSDK/speaker-layout/speaker-layout";
+import { PaginatedGridLayout } from "./AngSDK/paginated-grid-layout/paginated-grid-layout";
+
+type CallLayoutType = 'grid' | 'speaker-left' | 'speaker-right';
 
 @Component({
   selector: 'app-meeting',
-  imports: [RouterLink],
+  imports: [ CommonModule, Loader, EndCallButton, CallControls, CallStatsButton, CallParticipantsList, SpeakerLayout, PaginatedGridLayout],
   templateUrl: './meeting.html',
   styleUrl: './meeting.css',
 })
 export class Meeting implements OnInit {
+  layout: CallLayoutType = 'speaker-left';
+  showParticipants = false;
+  callingState: 'loading' | 'joined' | 'error' = 'loading';
 
-  meeting = {
-    title: 'Live Angular Session',
-    instructor: 'Eng. Abdalla',
-    date: new Date(),
-    startTime: "7:00 PM",
-    duration: 90,
-    description: "A live session to explain Angular components and project structure.",
-    files: [
-      { name: "Session Notes.pdf", url: "#" },
-      { name: "Slides.pptx", url: "#" }
-    ]
-  };
+  constructor(
+    private router: Router,
+    private meetingService: MeetingRoomService
+  ) {}
 
-  countdown = "";
-  messages = [];
-  newMessage = "";
-
-  ngOnInit() {
-    this.startCountdown();
+  ngOnInit(): void {
+    this.initializeCall();
   }
 
-  startCountdown() {
-    setInterval(() => {
-      this.countdown = "01:25:12 (example)";
-    }, 1000);
+  async initializeCall() {
+    try {
+      await this.meetingService.connectToCall();
+      this.callingState = 'joined';
+    } catch (error) {
+      console.error(error);
+      this.callingState = 'error';
+    }
   }
 
-  joinMeeting() {
-    window.open("https://zoom.com/example", "_blank");
+  changeLayout(type: CallLayoutType) {
+    this.layout = type;
   }
 
-  sendMessage() {
-    // this.messages.push({ user: "You", text: this.newMessage });
-    this.newMessage = "";
+  leaveCall() {
+    this.meetingService.disconnect();
+    this.router.navigate(['/']);
   }
 
+  toggleParticipants() {
+    this.showParticipants = !this.showParticipants;
+  }
 }

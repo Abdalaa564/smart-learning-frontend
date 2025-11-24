@@ -1,0 +1,89 @@
+<section class="meeting-grid">
+
+  <!-- Home Cards -->
+  <app-home-card
+    img="assets/icons/add-meeting.svg"
+    title="New Meeting"
+    description="Start an instant meeting"
+    class="home-card"
+    (click)="meetingState='isInstantMeeting'">
+  </app-home-card>
+
+  <app-home-card
+    img="assets/icons/join-meeting.svg"
+    title="Join Meeting"
+    description="via invitation link"
+    class="home-card bg-blue-1"
+    (click)="meetingState='isJoiningMeeting'">
+  </app-home-card>
+
+  <app-home-card
+    img="assets/icons/schedule.svg"
+    title="Schedule Meeting"
+    description="Plan your meeting"
+    class="home-card bg-purple-1"
+    (click)="meetingState='isScheduleMeeting'">
+  </app-home-card>
+
+  <app-home-card
+    img="assets/icons/recordings.svg"
+    title="View Recordings"
+    description="Meeting Recordings"
+    class="home-card bg-yellow-1"
+    (click)="router.navigate(['/recordings'])">
+  </app-home-card>
+
+  <!-- Schedule Meeting Modal -->
+  <app-meeting-modal
+    [isOpen]="meetingState==='isScheduleMeeting' && !callDetail"
+    [title]="'Create Meeting'"
+    (onClose)="meetingState = undefined"
+    (handleClick)="createMeeting()">
+
+    <div class="modal-section">
+      <label>Add a description</label>
+      <textarea
+        [(ngModel)]="values.description"
+        class="modal-textarea"></textarea>
+    </div>
+
+    <div class="modal-section">
+      <label>Select Date and Time</label>
+      <input type="datetime-local" [(ngModel)]="values.dateTime" class="modal-input"/>
+    </div>
+  </app-meeting-modal>
+
+  <!-- Meeting Created Modal  -->
+  <app-meeting-modal
+    [isOpen] ="!!(callDetail && meetingState==='isScheduleMeeting')"
+    [title]="'Meeting Created'"
+    (onClose)="meetingState = undefined"
+    (handleClick)="copyMeetingLink()"
+    [buttonText]="'Copy Meeting Link'">
+  </app-meeting-modal>
+
+  <!-- Join Meeting Modal -->
+  <app-meeting-modal
+    [isOpen]="meetingState==='isJoiningMeeting'"
+    [title]="'Type the link here'"
+    (onClose)="meetingState = undefined"
+    (handleClick)="joinMeeting()"
+    [buttonText]="'Join Meeting'">
+
+    <input
+      placeholder="Meeting link"
+      [(ngModel)]="values.link"
+      class="modal-input"
+    />
+  </app-meeting-modal>
+
+  <!-- Instant Meeting Modal -->
+  <app-meeting-modal
+    [isOpen] ="meetingState==='isInstantMeeting'"
+    [title]="'Start an Instant Meeting'"
+    (onClose)="meetingState = undefined"
+    (handleClick)="createMeeting()"
+    [buttonText]="'Start Meeting'">
+  </app-meeting-modal>
+
+</section>

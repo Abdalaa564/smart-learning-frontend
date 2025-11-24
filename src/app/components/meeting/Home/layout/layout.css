@@ -1,0 +1,5 @@
+main.relative { position: relative; }
+section { display: flex; flex-direction: column; flex: 1; }
+.w-full { width: 100%; }
+.flex { display: flex; }
+.min-h-screen { min-height: 100vh; }

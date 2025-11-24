@@ -1,0 +1,4 @@
+.speaker-layout { display: flex; height: 100%; }
+.main-video { flex: 3; background-color: #000; }
+.participants-bar { flex: 1; background-color: #111; overflow-y: auto; }
+.participant { padding: 5px; color: #fff; border-bottom: 1px solid #222; }
