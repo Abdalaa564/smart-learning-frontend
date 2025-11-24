@@ -1,0 +1,214 @@
+<!-- src/app/components/create-quiz/create-quiz.component.html -->
+
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-lg-10">
+      <!-- Header -->
+      <div class="card shadow-sm mb-4">
+        <div class="card-body">
+          <h3 class="mb-3">
+            <i class="bi bi-plus-circle"></i> Create New Quiz
+          </h3>
+          
+          <!-- Progress Steps -->
+          <div class="steps-indicator">
+            <div class="step" [class.active]="currentStep === 1" [class.completed]="currentStep > 1">
+              <div class="step-number">1</div>
+              <div class="step-label">Quiz Details</div>
+            </div>
+            <div class="step-line" [class.completed]="currentStep > 1"></div>
+            <div class="step" [class.active]="currentStep === 2">
+              <div class="step-number">2</div>
+              <div class="step-label">Add Questions</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <form [formGroup]="quizForm">
+        <!-- Step 1: Quiz Details -->
+        <div *ngIf="currentStep === 1" class="card shadow-sm mb-4">
+          <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">Step 1: Quiz Information</h5>
+          </div>
+          
+          <div class="card-body">
+            <div class="mb-3">
+              <label class="form-label">Quiz Name <span class="text-danger">*</span></label>
+              <input 
+                type="text" 
+                class="form-control" 
+                formControlName="quiz_Name"
+                placeholder="Enter quiz name">
+              <div *ngIf="quizForm.get('quiz_Name')?.invalid && quizForm.get('quiz_Name')?.touched" 
+                   class="text-danger small mt-1">
+                Quiz name is required
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Duration (minutes) <span class="text-danger">*</span></label>
+                <input 
+                  type="number" 
+                  class="form-control" 
+                  formControlName="duration"
+                  min="1"
+                  placeholder="30">
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Total Marks <span class="text-danger">*</span></label>
+                <input 
+                  type="number" 
+                  class="form-control" 
+                  formControlName="totalMarks"
+                  min="1"
+                  placeholder="100">
+              </div>
+            </div>
+          </div>
+
+          <div class="card-footer bg-transparent">
+            <div class="d-flex justify-content-between">
+              <button type="button" class="btn btn-outline-secondary" (click)="cancel()">
+                Cancel
+              </button>
+              <button 
+                type="button" 
+                class="btn btn-primary" 
+                (click)="nextStep()"
+                [disabled]="submitting">
+                Next: Add Questions <i class="bi bi-arrow-right"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 2: Add Questions -->
+        <div *ngIf="currentStep === 2">
+          <!-- Questions List -->
+          <div formArrayName="questions">
+            <div *ngFor="let question of questions.controls; let qi = index" 
+                 class="card shadow-sm mb-3"
+                 [formGroupName]="qi">
+              
+              <div class="card-header bg-light">
+                <div class="d-flex justify-content-between align-items-center">
+                  <h6 class="mb-0">Question {{ qi + 1 }}</h6>
+                  <button 
+                    type="button" 
+                    class="btn btn-sm btn-outline-danger"
+                    (click)="removeQuestion(qi)">
+                    <i class="bi bi-trash"></i> Remove
+                  </button>
+                </div>
+              </div>
+
+              <div class="card-body">
+                <!-- Question Text -->
+                <div class="mb-3">
+                  <label class="form-label">Question <span class="text-danger">*</span></label>
+                  <textarea 
+                    class="form-control" 
+                    formControlName="question_Text"
+                    rows="2"
+                    placeholder="Enter your question"></textarea>
+                </div>
+
+                <div class="row mb-3">
+                  <!-- Question Type -->
+                  <div class="col-md-6">
+                    <label class="form-label">Question Type</label>
+                    <select class="form-select" formControlName="question_Type">
+                      <option [value]="QuestionType.MultipleChoice">Multiple Choice</option>
+                      <option [value]="QuestionType.TrueFalse">True/False</option>
+                    </select>
+                  </div>
+
+                  <!-- Grade Points -->
+                  <div class="col-md-6">
+                    <label class="form-label">Points <span class="text-danger">*</span></label>
+                    <input 
+                      type="number" 
+                      class="form-control" 
+                      formControlName="grade_Point"
+                      min="1">
+                  </div>
+                </div>
+
+                <!-- Choices -->
+                <div formArrayName="choices">
+                  <label class="form-label">Answer Choices <span class="text-danger">*</span></label>
+                  
+                  <div *ngFor="let choice of getChoices(qi).controls; let ci = index"
+                       class="choice-group mb-2"
+                       [formGroupName]="ci">
+                    
+                    <div class="input-group">
+                      <div class="input-group-text">
+                        <input 
+                          type="radio" 
+                          [name]="'correct-' + qi"
+                          [checked]="choice.get('isCorrect')?.value"
+                          (change)="setCorrectChoice(qi, ci)"
+                          title="Mark as correct answer">
+                      </div>
+                      <input 
+                        type="text" 
+                        class="form-control" 
+                        formControlName="choiceText"
+                        placeholder="Enter choice text">
+                      <button 
+                        type="button" 
+                        class="btn btn-outline-danger"
+                        (click)="removeChoice(qi, ci)"
+                        *ngIf="getChoices(qi).length > 2">
+                        <i class="bi bi-x"></i>
+                      </button>
+                    </div>
+                  </div>
+
+                  <button 
+                    type="button" 
+                    class="btn btn-sm btn-outline-primary mt-2"
+                    (click)="addChoice(qi)">
+                    <i class="bi bi-plus"></i> Add Choice
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Add Question Button -->
+          <div class="text-center mb-3">
+            <button 
+              type="button" 
+              class="btn btn-outline-primary btn-lg"
+              (click)="addQuestion()">
+              <i class="bi bi-plus-circle"></i> Add Another Question
+            </button>
+          </div>
+
+          <!-- Submit Buttons -->
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <div class="d-flex justify-content-between">
+                <button type="button" class="btn btn-outline-secondary" (click)="cancel()">
+                  Cancel
+                </button>
+                <button 
+                  type="button" 
+                  class="btn btn-success btn-lg"
+                  (click)="submitQuestions()"
+                  [disabled]="submitting || questions.length === 0">
+                  <i class="bi bi-check-circle"></i> Create Quiz
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
