@@ -36,7 +36,7 @@ export const routes: Routes = [
     {path:'lesson/:lessonId/create-quiz', component: CreateQuizComponent, title: 'CreateQuiz' },
     {path:'userProfile', component: UserProfile, title: 'UserProfile' },
     {path:'lessons', component: Lessons, title: 'Lessons' },
-     {path: 'login', component: Login, title: 'Login'},
+    {path: 'login', component: Login, title: 'Login'},
     {path: 'register', component: Register, title: 'Register'},
     {path: '**', component:ErrorPage, title: 'Not Found'}
     
