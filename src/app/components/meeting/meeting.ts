@@ -1,9 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { MeetingRoomService } from '../../Services/meeting-room-service';
 import { Loader } from "./shared/meeting-room/loader/loader";
-import { Sidebar } from "./shared/sidebar/sidebar";
 import { EndCallButton } from "./shared/end-call-button/end-call-button";
 import { CallControls } from "./AngSDK/call-controls/call-controls";
 import { CallStatsButton } from "./AngSDK/call-stats-button/call-stats-button";
@@ -15,7 +14,7 @@ type CallLayoutType = 'grid' | 'speaker-left' | 'speaker-right';
 
 @Component({
   selector: 'app-meeting',
-  imports: [ CommonModule, Loader, Sidebar, EndCallButton, CallControls, CallStatsButton, CallParticipantsList, SpeakerLayout, PaginatedGridLayout],
+  imports: [ CommonModule, Loader, EndCallButton, CallControls, CallStatsButton, CallParticipantsList, SpeakerLayout, PaginatedGridLayout],
   templateUrl: './meeting.html',
   styleUrl: './meeting.css',
 })

@@ -1,7 +1,12 @@
-<div class="modal-backdrop" *ngIf="isOpen" (click)="closeModal()"></div>
+<div class="modal-backdrop" *ngIf="isOpen" (click)="closeModal()"><i class="fa-solid fa-xmark"></i></div>
 
 <div class="modal-container" *ngIf="isOpen">
   <div class="modal-content" (click)="$event.stopPropagation()">
+
+    <button class="close-btn" (click)="closeModal()">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+
     <div class="modal-body">
       <div *ngIf="image" class="image-wrapper">
         <img [src]="image" alt="checked" width="72" height="72" />

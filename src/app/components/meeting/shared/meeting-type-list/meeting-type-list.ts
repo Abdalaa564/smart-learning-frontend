@@ -5,6 +5,7 @@ import { HomeCard } from "../home-card/home-card";
 import { MeetingModal } from "../meeting-modal/meeting-modal";
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { CallService } from '../../../../Services/call-service';
 
 interface CallDetail {
   id: string;
@@ -33,7 +34,7 @@ export class MeetingTypeList {
     { label: 'Dashboard', route: '/dashboard', imgURL: 'assets/icons/dashboard.svg' }
   ];
 
-  constructor(public router: Router) {}
+  constructor(public router: Router, private callService: CallService) {}
 
   async createMeeting() {
     try {
@@ -41,16 +42,17 @@ export class MeetingTypeList {
         alert('Please select a date and time');
         return;
       }
-
-      const id = crypto.randomUUID();
-      // استخدام Stream Video JS SDK هنا لإنشاء الاجتماع
-      const call = { id, startsAt: this.values.dateTime.toISOString(), description: this.values.description };
-      this.callDetail = call;
-
-      
-      alert('Meeting Created');
-      this.router.navigate([`/meeting-setup`]);
-      // this.router.navigate([`/meeting-setup/${call.id}`]);
+      this.callService.createMeeting(
+          this.values.dateTime.toISOString(),
+          this.values.description
+        ).subscribe({
+          next: (meeting) => {
+            this.callDetail = meeting;
+          
+          alert('Meeting Created');
+          this.router.navigate([`/meeting-setup/${meeting.id}`]);
+        }
+      })
     } catch (error) {
       console.error(error);
       alert('Failed to create Meeting');
@@ -74,3 +76,32 @@ export class MeetingTypeList {
     }
   }
 }
+
+
+
+// async createMeeting() {
+//     try {
+//       if (!this.values.dateTime) {
+//         alert('Please select a date and time');
+//         return;
+//       }
+
+//       this.callService.createMeeting(
+//           this.values.dateTime.toISOString(),
+//           this.values.description)
+
+//           const id = crypto.randomUUID();
+//           // استخدام Stream Video JS SDK هنا لإنشاء الاجتماع
+//           const call = { id, startsAt: this.values.dateTime.toISOString(), 
+//             description: this.values.description || 'Instant Meeting' };
+//           this.callDetail = call;
+
+          
+//           alert('Meeting Created');
+//           this.router.navigate([`/meeting-setup`]);
+//           // this.router.navigate([`/meeting-setup/${meeting.id}`]);
+//     } catch (error) {
+//       console.error(error);
+//       alert('Failed to create Meeting');
+//     }
+//   }

@@ -1,6 +1,6 @@
 // src/app/services/call.service.ts
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 export interface CallDetail {
@@ -38,5 +38,16 @@ export class CallService {
 
   endCall(callId: string) {
     return this.http.post('/api/call/end', { id: callId });
+  }
+
+
+  createMeeting(startsAt: string, description: string): Observable<any> {
+    const token = localStorage.getItem('token'); // أو أي مكان بتحفظ فيه التوكن بعد login
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    });
+    return this.http.post('http://localhost:5163/api/Meetings', 
+      {startsAt, description }, { headers });
   }
 }

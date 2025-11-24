@@ -49,3 +49,29 @@ h1 {
   align-items: center;
   justify-content: center;
 }
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: #ffffff;
+}
+
+
+.close-btn {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  background: transparent;
+  border: none;
+  font-size: 22px;
+  color: #ffffff;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.close-btn:hover {
+  color: #ff4d4d;
+}
