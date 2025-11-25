@@ -1,0 +1,38 @@
+.home-card {
+  background-color: #f97316; /* orange-1 */
+  padding: 1.5rem 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 270px;
+  min-height: 260px;
+  border-radius: 14px;
+  cursor: pointer;
+}
+
+.icon-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.1); /* تأثير glassmorphism */
+  backdrop-filter: blur(10px);
+}
+
+.text-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.text-content h1 {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.text-content p {
+  font-size: 1.125rem;
+}

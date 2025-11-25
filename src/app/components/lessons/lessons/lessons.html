@@ -1,0 +1,106 @@
+<div class="container py-4">
+
+  <!-- Header -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h3 class="fw-bold mb-1">Lessons for Unit #{{ unitId }}</h3>
+
+      <p class="text-muted mb-0" *ngIf="unit">
+        Unit: <strong>{{ unit.unit_Name }}</strong>
+        <span *ngIf="unit.crs_Id" class="text-secondary ms-2">
+          (Course #{{ unit.crs_Id }})
+        </span>
+      </p>
+    </div>
+
+    <div class="d-flex gap-2">
+      <a
+        class="btn btn-success btn-sm px-3"
+        [routerLink]="['/Courses', courseId, 'units', unitId, 'lessons', 'add']">
+        + Add Lesson
+      </a>
+
+      <a
+        class="btn btn-secondary btn-sm px-3"
+        [routerLink]="['/Courses', courseId, 'units']">
+        ← Back to Units
+      </a>
+    </div>
+  </div>
+
+  <!-- Loading -->
+  <div *ngIf="isLoading" class="text-center my-5 fw-bold fs-5">
+    Loading lessons...
+  </div>
+
+  <!-- Error -->
+  <div *ngIf="!isLoading && errorMessage" class="alert alert-danger">
+    {{ errorMessage }}
+  </div>
+
+  <!-- Empty -->
+  <div *ngIf="!isLoading && !errorMessage && lessons.length === 0"
+       class="alert alert-info text-center py-4">
+    No lessons for this unit yet.
+  </div>
+
+  <!-- Lessons Cards -->
+  <div *ngIf="!isLoading && !errorMessage && lessons.length > 0" class="row g-4">
+
+    <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12"
+         *ngFor="let lesson of lessons">
+
+      <div class="lesson-card shadow-sm rounded-3 overflow-hidden">
+
+        <!-- Image -->
+        <div class="lesson-image-wrapper text-center bg-light p-3">
+          <img
+            class="lesson-thumb"
+            [src]="getPdfThumbnail(lesson)"
+            alt="Lesson PDF thumbnail"
+          />
+        </div>
+
+        <!-- Content -->
+        <div class="lesson-content p-3">
+
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <span class="badge bg-primary">Lesson</span>
+            <span class="text-muted small">#{{ lesson.lesson_Id }}</span>
+          </div>
+
+          <h5 class="fw-semibold mb-2">
+            {{ lesson.lesson_Name }}
+          </h5>
+
+          <p class="text-muted small mb-3">
+            {{ lesson.lessonDescription }}
+          </p>
+
+          <p class="text-secondary mb-3 small">
+            <strong>Unit:</strong> {{ unit?.unit_Name }}
+          </p>
+
+          <div class="d-flex justify-content-end">
+            <a
+              *ngIf="getPdfDownloadUrl(lesson) as pdfUrl"
+              [href]="pdfUrl"
+              target="_blank"
+              class="btn btn-outline-success btn-sm px-3">
+              ⬇ Download PDF
+            </a>
+
+            <span *ngIf="!getPdfDownloadUrl(lesson)" class="text-muted small">
+              No PDF attached
+            </span>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

@@ -6,7 +6,7 @@
   top: 0;
   z-index: 1000;
   transition: all 0.3s ease;
- border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
   &.scrolled {
     padding: 15px 0;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
@@ -81,7 +81,9 @@
   a {
     text-decoration: none;
     color: var(--nav-color);
+
     font-size: 16px;
+
     font-weight: 600;
     transition: color 0.3s;
     position: relative;
@@ -181,7 +183,7 @@
   border: 2px solid var(--border-color);
   border-radius: 8px;
   color: var(--default-color);
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s;
@@ -200,7 +202,7 @@
   border: 2px solid var(--accent-color);
   border-radius: 8px;
   color: var(--contrast-color);
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s;
