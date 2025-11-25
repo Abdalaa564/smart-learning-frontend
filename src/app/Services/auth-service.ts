@@ -54,12 +54,24 @@ export class AuthService {
       );
   }
 
- logout(): void {
-    localStorage.removeItem(this.tokenKey);
-    localStorage.removeItem(this.userKey);
-    this.currentUserSubject.next(null);
-    this.isAuthenticatedSubject.next(false);
-  }
+logout(): Observable<any> {
+  return this.http.post(`${this.apiUrl}/Account/logout`, {}).pipe(
+    tap(() => {
+      this.removeToken();
+      this.removeUser();
+      this.isAuthenticatedSubject.next(false);
+      this.currentUserSubject.next(null);
+    })
+  );
+}
+
+removeToken() {
+  localStorage.removeItem(this.tokenKey);
+}
+
+removeUser() {
+  localStorage.removeItem(this.userKey);
+}
 
 
   getToken(): string | null {
