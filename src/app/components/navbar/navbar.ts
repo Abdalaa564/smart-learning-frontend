@@ -39,9 +39,20 @@ export class Navbar  {
   }
   
   // Method to handle logout
-  logout() {
-    this.authService.logout();
-    this.isDropdownOpen = false;
-    this.router.navigate(['/login']); 
-  }
+logout() {
+  this.authService.logout().subscribe({
+    next: () => {
+      this.isDropdownOpen = false;
+      this.router.navigate(['/login']);
+    },
+    error: (err) => {
+      console.error("Logout failed", err);
+      // Fallback: clear data anyway
+      this.authService.removeToken();
+      this.authService.removeUser();
+      this.router.navigate(['/login']);
+    }
+  });
+}
+
 }
