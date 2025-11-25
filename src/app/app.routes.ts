@@ -1,6 +1,5 @@
 import { MeetingSetup } from './components/meeting/shared/meeting-setup/meeting-setup';
 import { Layout } from './components/meeting/Home/layout/layout';
-
 import { UserProfile } from './components/user-profile/user-profile';
 import { ChatRome } from './components/chat-rome/chat-rome';
 import { Routes } from '@angular/router';
@@ -26,30 +25,18 @@ import { QuizListComponent } from './components/quiz-list-component/quiz-list-co
 import { Lessons } from './components/lessons/lessons/lessons';
 
 export const routes: Routes = [
-
     {path: '', redirectTo: 'instructors', pathMatch: 'full' },
     {path:"Home", component: Home, title: 'Home' },
-
-
     {path:"instructors", component: InstructorsListComponent , title: 'Instructors' },
-     { path: 'instructor/:id', component: InstructorProfile },
-
+    { path: 'instructor/:id', component: InstructorProfile },
     {path: "Courses", component: Courses },
-
-    
     { path: 'Courses/:id/units', component: Units },
-     { path: 'Courses/:id/units/add', component: AddUnit },
-      { path: 'Courses/:id/units/edit/:unitId', component: UpdateUnit },
-
-
-
-       { path: 'Courses/:courseId/units/:unitId/lessons', component: Lessons },
-        { path: 'Courses/:courseId/units/:unitId/lessons/add', component: AddLesson },
-
-
-
-     { path: 'courses/add', component: AddCourse },
-  { path: 'courses/edit/:id', component: EditCourse },
+    { path: 'Courses/:id/units/add', component: AddUnit },
+    { path: 'Courses/:id/units/edit/:unitId', component: UpdateUnit },
+    { path: 'Courses/:courseId/units/:unitId/lessons', component: Lessons },
+    { path: 'Courses/:courseId/units/:unitId/lessons/add', component: AddLesson },
+    { path: 'courses/add', component: AddCourse },
+    { path: 'courses/edit/:id', component: EditCourse },
     {path:'exam', component: Exam, title: 'Exam' },
     {path:'meeting', component: Meeting, title: 'Meeting' },
     {path:'meeting-setup/:id', component: MeetingSetup, title: 'MeetingSetup' },
@@ -65,5 +52,4 @@ export const routes: Routes = [
     {path: 'login', component: Login, title: 'Login'},
     {path: 'register', component: Register, title: 'Register'},
     {path: '**', component:ErrorPage, title: 'Not Found'}
-    
 ];
