@@ -1,109 +1,68 @@
-<div class="page">
+<section class="meeting-container">
 
-  <!-- Left Section -->
-  <div class="left">
+  <!-- Loader -->
+  <div *ngIf="callingState !== 'joined'" class="loader-container">
+    <app-loader></app-loader>
+  </div>
 
-    <div class="meeting-header">
-      <button class="back-btn">←</button>
-      <div>
-        <h2>UX/UI Design Conference Meeting</h2>
-        <p>8 Lessons • 6h 30min</p>
-      </div>
-      <div class="icons">
-        <span>⚙️</span>
-        <span>🔔</span>
-      </div>
+  <!-- Main Meeting UI -->
+  <div *ngIf="callingState === 'joined'" class="meeting-content">
+
+    <div class="video-wrapper">
+      <!-- Call Layout -->
+      <ng-container [ngSwitch]="layout">
+        
+        <!-- Grid Layout -->
+        <div *ngSwitchCase="'grid'">
+          <app-paginated-grid-layout></app-paginated-grid-layout>
+        </div>
+
+        <!-- Speaker Right -->
+        <div *ngSwitchCase="'speaker-right'">
+          <app-speaker-layout position="left"></app-speaker-layout>
+        </div>
+
+        <!-- Speaker Left -->
+        <div *ngSwitchDefault>
+          <app-speaker-layout position="right"></app-speaker-layout>
+        </div>
+
+      </ng-container>
     </div>
 
-    <div class="video-section">
-      <img src="https://i.imgur.com/GQyQ5nP.jpeg" class="main-video">
-
-      <div class="small-videos">
-        <img src="https://i.imgur.com/jQ5mI0E.png">
-        <img src="https://i.imgur.com/8Km9tLL.png">
-        <img src="https://i.imgur.com/QrKMA1g.png">
-        <img src="https://i.imgur.com/VuZP2gK.png">
-      </div>
-    </div>
-
-    <div class="controls">
-      <button class="btn red">🎤</button>
-      <button class="btn red">📷</button>
-      <button class="btn blue">📞</button>
-      <button class="btn">💬</button>
-      <button class="btn">📁</button>
+    <!-- Participants list -->
+    <div
+      class="participants"
+      [class.show-block]="showParticipants"
+    >
+      <app-call-participants-list
+        (close)="toggleParticipants()">
+      </app-call-participants-list>
     </div>
 
   </div>
 
-  <!-- Right Section -->
-  <div class="right">
+  <!-- Bottom Controls -->
+  <div class="controls">
+    <app-call-controls (leave)="leaveCall()"></app-call-controls>
 
-    <div class="course-box">
-      <h3>Course Contents</h3>
-      <p class="progress">25% COMPLETED</p>
-
-      <ul class="chapters">
-        <li>
-          <div>
-            <h4>Get Started</h4>
-            <p>1 Hour • 5 Lessons</p>
-          </div>
-          <span>✔</span>
-        </li>
-
-        <li>
-          <div>
-            <h4>Illustrator Structures</h4>
-            <p>2 Hours • 6 Lessons</p>
-          </div>
-          <span>▶</span>
-        </li>
-
-        <li>
-          <div>
-            <h4>Using Illustrator</h4>
-            <p>1 Hour • 3 Lessons</p>
-          </div>
-          <span>▶</span>
-        </li>
-
-        <li>
-          <div>
-            <h4>What is Panda?</h4>
-            <p>1 Hour • 5 Lessons</p>
-          </div>
-          <span>▶</span>
-        </li>
-
-        <li>
-          <div>
-            <h4>Work with Numpy</h4>
-            <p>1 Hour • 4 Lessons</p>
-          </div>
-          <span>▶</span>
-        </li>
-      </ul>
-    </div>
-
-    <div class="book-section">
-      <h3>Book for you</h3>
-
-      <div class="cards">
-        <div class="card">
-          <img src="https://i.imgur.com/8Km9tLL.png">
-          <h4>All Benefits of PLUS</h4>
-          <p>$24</p>
-        </div>
-
-        <div class="card">
-          <img src="https://i.imgur.com/QrKMA1g.png">
-          <h4>All Benefits of PLUS</h4>
-          <p>$24</p>
-        </div>
+    <!-- Layout Dropdown -->
+    <div class="dropdown">
+      <button class="dropdown-btn">Layout</button>
+      <div class="dropdown-menu">
+        <div (click)="changeLayout('grid')">Grid</div>
+        <div (click)="changeLayout('speaker-left')">Speaker Left</div>
+        <div (click)="changeLayout('speaker-right')">Speaker Right</div>
       </div>
     </div>
 
+    <app-call-stats-button></app-call-stats-button>
+
+    <button class="control-btn" (click)="toggleParticipants()">
+      <i class="fas fa-user-friends me-2"></i>
+    </button>
+
+    <app-end-call-button></app-end-call-button>
   </div>
 
-</div>
+</section>

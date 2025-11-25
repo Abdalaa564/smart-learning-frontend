@@ -1,0 +1,2 @@
+.grid-layout { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+.grid-item { background: #111; color: #fff; padding: 20px; border-radius: 6px; text-align: center; }

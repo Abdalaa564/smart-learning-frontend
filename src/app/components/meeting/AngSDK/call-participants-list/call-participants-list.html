@@ -1,0 +1,7 @@
+<div class="participants-list">
+    <h2>Participants</h2>
+    <ul>
+        <li *ngFor="let participant of participants">{{ participant.name }}</li>
+    </ul>
+    <button class="control-btn" (click)="close.emit()"><i class="fas fa-xmark"></i></button>
+</div>
