@@ -1,0 +1,97 @@
+<div class="container py-4">
+  <h4 class="mb-3">Add New Course</h4>
+
+  <form (ngSubmit)="onSubmit()">
+    <div class="row">
+      <div class="col-md-4 mb-3">
+        <label class="form-label">Name Of course *</label>
+        <input
+          placeholder="Name Of Course"
+          type="text"
+          class="form-control"
+          [(ngModel)]="formModel.crs_Name"
+          name="crs_Name"
+          required
+        >
+      </div>
+
+      <div class="col-md-4 mb-3">
+        <label class="form-label">Instructor *</label>
+        <select
+          class="form-select"
+          [(ngModel)]="formModel.instructorId"
+          name="instructorId"
+          required
+        >
+          <option [ngValue]="0">Choose instructor</option>
+          <option
+            *ngFor="let inst of instructors"
+            [ngValue]="inst.id"
+          >
+            {{ inst.fullName }}
+          </option>
+        </select>
+      </div>
+
+      <div class="col-md-4 mb-3">
+        <label class="form-label">Price</label>
+        <input
+          placeholder="Price"
+          type="number"
+          class="form-control"
+          [(ngModel)]="formModel.price"
+          name="price"
+        >
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Description</label>
+      <textarea
+        placeholder="Description"
+        class="form-control"
+        rows="2"
+        [(ngModel)]="formModel.crs_Description"
+        name="crs_Description"
+      ></textarea>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label class="form-label">Upload image</label>
+        <input
+          type="file"
+          class="form-control"
+          (change)="onFileSelected($event)"
+        >
+      </div>
+
+      <div class="col-md-6 mb-3">
+        <label class="form-label">Image URL</label>
+        <input
+          placeholder="Image Url"
+          type="text"
+          class="form-control"
+          [(ngModel)]="formModel.imageUrl"
+          name="imageUrl"
+        >
+      </div>
+    </div>
+
+    <button
+      type="submit"
+      class="btn btn-primary me-2"
+      [disabled]="isSubmitting"
+    >
+      Add Course
+    </button>
+
+    <button
+      type="button"
+      class="btn btn-secondary"
+      [routerLink]="['/Courses']"
+    >
+      Cancel
+    </button>
+  </form>
+</div>

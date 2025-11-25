@@ -1,26 +1,204 @@
-.page-title {
-  margin-bottom: 20px; 
-  font-size: 28px;
-  font-weight: 600; 
+ .featured-instructors .instructor-card {
+  background: var(--surface-color);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px color-mix(in srgb, var(--default-color), transparent 94%);
+  border: 1px solid color-mix(in srgb, var(--default-color), transparent 92%);
+  transition: all 0.3s ease;
+  height: 90%;
+  display: flex;
+  flex-direction: column;
+  margin-top: 50px;
+  margin-bottom: 10px;  
 }
 
-.grid { 
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 24px; 
+.featured-instructors .instructor-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 30px color-mix(in srgb, var(--default-color), transparent 88%);
 }
 
-.badge {
-  color: #157347;
-  background: #d1e7dd;
-  width: fit-content;
-  padding: 2px 6px;
-  border-radius: 4px;
-  font-size: 12px; 
+/* IMAGE */
+
+.featured-instructors .instructor-image {
+  position: relative;
+  height: 230px;
+  overflow: hidden;
 }
 
-.meta { 
+.featured-instructors .instructor-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.featured-instructors .instructor-card:hover .instructor-image img {
+  transform: scale(1.05);
+}
+
+/* OVERLAY (فوق الصورة بس، مش يغطي الزر) */
+
+.featured-instructors .instructor-image .overlay-content {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  right: 15px;
+  display: flex;
+  justify-content: space-between;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none; /* أهم حاجة: ما يمنعش الكليك */
+}
+
+.featured-instructors .instructor-card:hover .instructor-image .overlay-content {
+  opacity: 1;
+}
+
+/* RATING + STUDENTS */
+
+.featured-instructors .instructor-image .rating-stars {
+  background: var(--surface-color);
+  padding: 8px 12px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  box-shadow: 0 2px 10px color-mix(in srgb, var(--default-color), transparent 90%);
+}
+
+.featured-instructors .instructor-image .rating-stars span {
+  font-size: 12px;
+  font-weight: 600;
+  margin-left: 4px;
+  color: var(--heading-color);
+}
+
+.featured-instructors .instructor-image .course-count {
+  background: var(--accent-color);
+  color: var(--contrast-color);
+  padding: 8px 12px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* INFO */
+
+.featured-instructors .instructor-info {
+  padding: 18px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.featured-instructors .instructor-info h5 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--heading-color);
+}
+
+.featured-instructors .instructor-info .specialty {
+  color: var(--accent-color);
+  font-weight: 600;
   font-size: 13px;
-  color: #666; 
-  margin: 8px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* STATS */
+
+.featured-instructors .stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  padding: 12px;
+  background: color-mix(in srgb, var(--accent-color), transparent 95%);
+  border-radius: 12px;
+}
+
+.featured-instructors .stats-grid .stat {
+  text-align: center;
+}
+
+.featured-instructors .stats-grid .number {
+  display: block;
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--heading-color);
+  margin-bottom: 2px;
+}
+
+.featured-instructors .stats-grid .label {
+  font-size: 10px;
+  color: color-mix(in srgb, var(--default-color), transparent 50%);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+}
+
+/* ACTION BUTTONS */
+
+.featured-instructors .action-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 12px;
+  position: relative;
+  z-index: 5; /* فوق أي حاجة */
+}
+
+.featured-instructors .btn-view {
+  background: var(--accent-color);
+  color: var(--contrast-color);
+  padding: 8px 18px;
+  border-radius: 25px;
+  border: none;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 13px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.featured-instructors .btn-view:hover {
+  transform: translateY(-2px);
+}
+
+.featured-instructors .social-links {
+  display: flex;
+  gap: 6px;
+}
+
+.featured-instructors .social-links a {
+  width: 32px;
+  height: 32px;
+  border: 1px solid color-mix(in srgb, var(--default-color), transparent 85%);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: color-mix(in srgb, var(--default-color), transparent 40%);
+  transition: all 0.3s ease;
+}
+
+.featured-instructors .social-links a:hover {
+  background-color: var(--accent-color);
+  border-color: var(--accent-color);
+  color: var(--contrast-color);
+  transform: scale(1.1);
+}
+
+/* STARS */
+
+.rating-stars .star-icon {
+  color: #ddd;
+  font-size: 14px;
+  transition: 0.3s;
+}
+
+.rating-stars .bi-star-fill {
+  color: #ffc107 !important;
 }

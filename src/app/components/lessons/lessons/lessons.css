@@ -1,0 +1,28 @@
+.lesson-card {
+  background: #fff;
+  border-radius: 12px;
+  transition: 0.2s ease-in-out;
+}
+
+.lesson-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 18px rgba(0,0,0,0.1);
+}
+
+.lesson-image-wrapper {
+  background: #f8f9fa;
+}
+
+.lesson-thumb {
+  width: 100px;
+  height: auto;
+  filter: drop-shadow(0 0 4px rgba(0,0,0,0.15));
+}
+
+.lesson-content h5 {
+  font-size: 1.05rem;
+}
+
+.btn-outline-success {
+  font-size: 0.75rem;
+}
