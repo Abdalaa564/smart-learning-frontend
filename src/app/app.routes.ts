@@ -14,7 +14,7 @@ import { ErrorPage } from './components/error-page/error-page';
 
 export const routes: Routes = [
 
-    {path: '', redirectTo: 'instructors', pathMatch: 'full' },
+    {path: '', redirectTo: 'Home', pathMatch: 'full' },
     {path:"Home", component: Home, title: 'Home' },
     {path:"instructors", component: Instructors, title: 'Instructors' },
     {path: 'instructors/:id', component: InstructorProfile, title: 'Instructor Profile' },

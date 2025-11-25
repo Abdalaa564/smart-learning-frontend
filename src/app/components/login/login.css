@@ -1,53 +1,109 @@
 body {
   font-family: var(--default-font);
-  background-color: var(--light-background);
+  background: linear-gradient(135deg, #f0f4ff, var(--light-background));
 }
 
+/* Card */
 .login-card {
   width: 100%;
-  max-width: 400px;
-  border-radius: 15px;
-  border: none;
+  max-width: 420px;
+  border-radius: 20px;
   background-color: var(--surface-color);
-  transition: all 0.3s;
+  padding: 40px 35px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+  transition: 0.3s ease;
+  border: 1px solid rgba(0,0,0,0.05);
 }
 
 .login-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 45px rgba(0,0,0,0.18);
 }
 
+/* Logo */
 .logo-image {
-    width: 60px;
-    height: 50px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    /* color: white; */
-    font-weight: 700;
-    font-size: 20px;
-    /* box-shadow: 0 4px 10px color-mix(in srgb, var(--accent-color), transparent 70%); */
+  width: 75px;
+  height: 75px;
+  border-radius: 15px;
+  background: #eef2ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+  transition: 0.3s ease;
+}
 
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 10px;
-    }
-  }
+.logo-image:hover {
+  transform: scale(1.05);
+}
+
+.logo-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+/* Input fields */
+.form-control {
+  height: 48px;
+  border-radius: 10px;
+  border: 1px solid #d7d8df;
+  background: #fbfbff;
+  transition: 0.25s ease;
+}
+
+.form-control:focus {
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent-color), transparent 80%);
+  background: #fff;
+}
+
+/* Labels */
+label {
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+/* Login Button */
+button[type="submit"] {
+  width: 100%;
+  padding: 12px;
+  font-weight: 600;
+  
+  border-radius: 12px;
+  transition: 0.25s ease;
+   background: var(--accent-color);
+     color: white;
+
+}
+
+button[type="submit"]:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--accent-color), black 10%);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px color-mix(in srgb, var(--accent-color), transparent 70%);
+}
+
+button:disabled {
+  opacity: 0.7;
+}
 
 
-
-
-
+/* Link */
 .accent-link {
   color: var(--accent-color);
-  font-weight: 600;
-  transition: all 0.3s;
+  font-weight: 700;
 }
 
 .accent-link:hover {
-  color: color-mix(in srgb, var(--accent-color), black 10%);
+  color: color-mix(in srgb, var(--accent-color), black 12%);
   text-decoration: underline;
+}
+.is-invalid {
+  border-color: #dc3545 !important;
+}
+
+.invalid-feedback {
+  display: block;
+  font-size: 0.85rem;
 }
