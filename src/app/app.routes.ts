@@ -25,7 +25,10 @@ import { QuizListComponent } from './components/quiz-list-component/quiz-list-co
 import { Lessons } from './components/lessons/lessons/lessons';
 
 export const routes: Routes = [
-    {path: '', redirectTo: 'instructors', pathMatch: 'full' },
+
+
+    {path: '', redirectTo: 'Home', pathMatch: 'full' },
+
     {path:"Home", component: Home, title: 'Home' },
     {path:"instructors", component: InstructorsListComponent , title: 'Instructors' },
     { path: 'instructor/:id', component: InstructorProfile },

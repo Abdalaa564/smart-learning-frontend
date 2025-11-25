@@ -5,12 +5,15 @@ import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { Navbar } from './components/navbar/navbar';
 
-
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Footer, CommonModule, HttpClientModule, Navbar,RouterLink],
+
+  standalone: true,
+
+  imports: [RouterOutlet, RouterLink, Footer, CommonModule, HttpClientModule, Navbar],
+
   templateUrl: './app.html',
-  styleUrl: './app.css'
+  styleUrl: './app.css',
 })
 export class App {
   protected readonly title = signal('smart-learning-Ang');
