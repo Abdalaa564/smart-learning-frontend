@@ -1,43 +1,81 @@
-<div class="courses-grid" data-aos="fade-up" data-aos-delay="200">
+<div class="container py-4">
+
+  <!-- زرار الإضافة -->
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h3>Courses</h3>
+    <button
+      class="btn btn-success"
+      [routerLink]="['/courses/add']">
+      + Add New Course
+    </button>
+  </div>
+
+  <!-- ===== كروت الكورسات ===== -->
   <div class="row">
-    <div class="col-lg-6 col-md-6" *ngFor="let course of courses">
+
+    <div
+      class="col-xl-3 col-lg-3 col-md-4 col-sm-6 mb-4"
+      *ngFor="let course of courses"
+    >
       <div class="course-card">
+
         <div class="course-image">
-          <img [src]="course.image" alt="Course" class="img-fluid">
-          <div class="course-badge" *ngIf="course.badge" [ngClass]="course.badgeClass">{{ course.badge }}</div>
-          <div class="course-price" *ngIf="course.price">{{ course.price }}</div>
+          <img
+          alt=""
+            [src]="getCourseImage(course)"
+            [alt]="course.crs_Name"
+            class="img-fluid"
+          />
+          <div class="course-price">
+            {{ course.price }} EGP
+          </div>
         </div>
+
         <div class="course-content">
           <div class="course-meta">
-            <span class="category">{{ course.category }}</span>
-            <span class="level">{{ course.level }}</span>
+            <span class="category">PROGRAMMING</span>
+            <span class="level">ALL LEVELS</span>
           </div>
-          <h3>{{ course.title }}</h3>
-          <p>{{ course.description }}</p>
-          <div class="course-stats">
-            <div class="stat">
-              <i class="bi bi-clock"></i> <span>{{ course.hours }}</span>
-            </div>
-            <div class="stat">
-              <i class="bi bi-people"></i> <span>{{ course.students }}</span>
-            </div>
-            <div class="rating">
-              <i class="bi bi-star-fill"></i>
-              <i class="bi bi-star-fill"></i>
-              <i class="bi bi-star-fill"></i>
-              <i class="bi bi-star-fill"></i>
-              <i class="bi bi-star-half"></i>
-              <span>{{ course.rating }}</span>
-            </div>
-          </div>
+
+          <h3>{{ course.crs_Name }}</h3>
+          <p>{{ course.crs_Description }}</p>
+
           <div class="instructor-info">
-            <img [src]="course.instructorImg" alt="Instructor" class="instructor-avatar">
-            <span class="instructor-name">{{ course.instructorName }}</span>
+            <img
+              [src]="getInstructorImage(course)"
+              alt="Instructor"
+              class="instructor-avatar"
+            />
+            <span class="instructor-name">
+              {{ getInstructorName(course) }}
+            </span>
           </div>
-          <a href="enroll.html" class="btn-course">{{ course.btnText }}</a>
+
+          <div class="d-flex justify-content-between mt-2">
+            <!-- زرار التعديل يودّي على صفحة edit -->
+            <button
+              class="btn btn-sm btn-outline-primary"
+              [routerLink]="['/courses/edit', course.crs_Id]">
+              Edit
+            </button>
+
+            <button
+              class="btn btn-sm btn-outline-danger"
+              (click)="deleteCourse(course)">
+              Delete
+            </button>
+          </div>
+          <div class="mt-1 text-end">
+             <a
+          class="small text-decoration-underline"
+         [routerLink]="['/Courses', course.crs_Id, 'units']">
+         Manage Units
+         </a>
+           </div>
         </div>
+
       </div>
     </div>
+
   </div>
 </div>
-

@@ -1,45 +1,88 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Course } from '../../models/Course';
+import { environment } from '../../environment/environment';
+import { AddCourseRequest, CourseService, UpdateCourseRequest } from '../../Services/course.service';
+import { forkJoin } from 'rxjs/internal/observable/forkJoin';
+import { Instructor } from '../../models/iinstructor';
+import { InstructorService } from '../../Services/instructor-srevices';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-courses',
-  imports: [FormsModule,CommonModule],
+  imports: [FormsModule,CommonModule,RouterLink],
   templateUrl: './courses.html',
   styleUrl: './courses.css',
 })
-export class Courses {
-courses = [
-    {
-      image: 'assets/img/education/courses-3.webp',
-      badge: 'Best Seller',
-      price: '$89',
-      category: 'Programming',
-      level: 'Intermediate',
-      title: 'Advanced JavaScript Development',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit...',
-      hours: '15 hours',
-      students: '1,245 students',
-      rating: '4.8 (89 reviews)',
-      instructorImg: 'assets/img/person/person-m-3.webp',
-      instructorName: 'Dr. Marcus Thompson',
-      btnText: 'Enroll Now'
-    },
-    {
-      image: 'assets/img/education/courses-7.webp',
-      badge: 'Free',
-      badgeClass: 'badge-free',
-      category: 'Design',
-      level: 'Beginner',
-      title: 'UI/UX Design Fundamentals',
-      description: 'Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a...',
-      hours: '8 hours',
-      students: '2,891 students',
-      rating: '4.6 (156 reviews)',
-      instructorImg: 'assets/img/person/person-f-7.webp',
-      instructorName: 'Sarah Johnson',
-      btnText: 'Start Free Course'
-    },
-    
-  ];
+export class Courses implements OnInit {
+
+  courses: Course[] = [];
+  instructors: Instructor[] = [];
+  imageBase = environment.imageBase;
+
+  constructor(
+    private courseService: CourseService,
+    private instructorService: InstructorService
+  ) {}
+
+  ngOnInit(): void {
+    this.loadData();
+  }
+
+  loadData(): void {
+    this.courseService.getAllCourses().subscribe({
+      next: (courses) => {
+        this.courses = courses;
+
+        this.instructorService.getAll().subscribe({
+          next: (instructors) => this.instructors = instructors,
+          error: (err) => console.error(err)
+        });
+      },
+      error: (err) => console.error(err)
+    });
+  }
+
+  // ------------- صور -------------
+  getCourseImage(course: Course): string {
+    const url = course.imageUrl;
+
+    if (!url) {
+      return '/assets/img/education/course-1.jpg';
+    }
+
+    if (url.startsWith('http://') || url.startsWith('https://')) {
+      return url;
+    }
+
+    return this.imageBase + url;
+  }
+
+  getInstructorImage(course: Course): string {
+    const instructor = this.instructors.find(i => i.id === course.instructorId);
+
+    if (!instructor || !instructor.photoUrl) {
+      return '/assets/img/person/person-1.jpg';
+    }
+
+    return instructor.photoUrl;
+  }
+
+  getInstructorName(course: Course): string {
+    const instructor = this.instructors.find(i => i.id === course.instructorId);
+    return instructor?.fullName ?? course.instructorName ?? 'Unknown';
+  }
+
+ deleteCourse(course: Course): void {
+    if (!confirm(`Are you sure to delete "${course.crs_Name}" ?`)) return;
+
+    this.courseService.deleteCourse(course.crs_Id).subscribe({
+      next: (res) => {
+        console.log('Delete response:', res);
+        this.loadData(); // إعادة تحميل الليست بعد الحذف
+      },
+      error: (err) => console.error(err)
+    });
+  }
 }

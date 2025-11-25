@@ -1,35 +1,16 @@
-import { IReview } from "./ireview";
+export interface Instructor {
+  // بيرجع من السيرفر، مش بنبعتُه في الـ POST
+  id?: number;
 
-export interface Iinstructor {
-     id: string;
-  name: string;
-  title: string;            
-  avatarUrl: string;         
-  verified?: boolean;
-  credentials: string[];     
-  rating: number;           
-  reviewsCount: number;      
-  studentsTotal?: number;    
-  coursesActive?: number;     
-  completionRate?: number;    
-  yearsTeaching?: number;    
-  socials?: Partial<Record<'linkedin'|'twitter'|'youtube'|'github'|'dribbble'|'behance'|'instagram'|'facebook'|'website', string>>;
-  bio?: string[];
-  expertise?: string[];       
-  experience?: Array<{
-    year: number | string;
-    role: string;
-    institution: string;
-    description?: string;
-  }>;
-//   courses?: Course[];
-  reviews?:IReview[];
-  contact?: {
-    email?: string;
-    phone?: string;
-    address?: string;
-    officeHours?: string;
-  };
-  heroImageUrl?: string;   
+  // الحقول اللي انت بتبعتها في الـ POST طبقاً للـ Swagger
+  userId: string;
+  fullName: string;
+  jobTitle: string;
+  numberOfStudents: number;
+  rating: number;
+  phoneNumber: string;
+  youtubeChannelUrl: string;
+  email?: string;
+  photoUrl?: string;
+  certificateUrl?: string
 }
-

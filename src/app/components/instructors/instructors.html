@@ -1,23 +1,82 @@
-<h1 class="page-title">Instructors</h1>
+<div class="featured-instructors">
 
-<div class="grid">
-  @for (ins of instructors; track ins.id) {
-    <app-card
-      [img]="ins.avatarUrl"
-      [title]="ins.name"
-      [subtitle]="ins.title"
-      [clickable]="true">
+  <div class="row">
+    <div class="col-xl-3 col-lg-4 col-md-6" *ngFor="let ins of instructors">
 
-      @if (ins.verified) {
-        <p class="badge">✔ Verified</p>
-      }
+      <div class="instructor-card">
 
-      <p class="meta">
-        ⭐ {{ ins.rating }} ({{ ins.reviewsCount | number }}) • {{ ins.studentsTotal | number }} students
-      </p>
+        <!-- Instructor Image -->
+        <div class="instructor-image">
+          <img
+            [src]="ins.photoUrl || 'assets/images/default-instructor.jpg'"
+            alt="Instructor">
 
-      <button [routerLink]="['/instructors', ins.id]" >view profile</button>
+          <!-- Hover Content -->
+          <div class="overlay-content">
 
-    </app-card>
-  }
+            <!-- Rating stars -->
+            <div class="rating-stars">
+              <ng-container *ngFor="let star of getStarsArray(ins.rating); let i = index">
+                <i class="bi"
+                   [ngClass]="{
+                     'bi-star-fill': star <= ins.rating,
+                     'bi-star': star > ins.rating
+                   }"
+                   class="star-icon"></i>
+              </ng-container>
+
+              <span>{{ ins.rating }}</span>
+            </div>
+
+            <!-- Students -->
+            <div class="course-count">
+              <i class="bi bi-people-fill"></i>
+              <span>{{ ins.numberOfStudents }} Students</span>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Instructor Info -->
+        <div class="instructor-info">
+
+          <h5>{{ ins.fullName }}</h5>
+          <p class="specialty">{{ ins.jobTitle }}</p>
+
+          <div class="stats-grid">
+            <div class="stat">
+              <span class="number">{{ ins.rating }}</span>
+              <span class="label">Rating</span>
+            </div>
+
+            <div class="stat">
+              <span class="number">{{ ins.numberOfStudents }}</span>
+              <span class="label">Students</span>
+            </div>
+          </div>
+
+          <div class="action-buttons">
+            <!-- زرار View Profile يروح لصفحة البروفايل -->
+            <button class="btn-view" type="button" (click)="goToProfile(ins.id)">
+              View Profile
+            </button>
+
+            <!-- لينك يوتيوب شغال -->
+            <div class="social-links">
+              <a
+                *ngIf="ins.youtubeChannelUrl"
+                [href]="ins.youtubeChannelUrl"
+                target="_blank"
+                rel="noopener noreferrer">
+                <i class="bi bi-youtube"></i>
+              </a>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
 </div>

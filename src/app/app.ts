@@ -5,9 +5,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { Navbar } from './components/navbar/navbar';
 
+
 @Component({
   selector: 'app-root',
-  imports: [ RouterOutlet,RouterLink, Footer, CommonModule, HttpClientModule,Navbar],
+  imports: [RouterOutlet, Footer, CommonModule, HttpClientModule, Navbar,RouterLink],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
