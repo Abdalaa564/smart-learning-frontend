@@ -15,9 +15,12 @@
   <h1 class="title">Setup</h1>
 
   <!-- Video Preview -->
-  <div id="video-preview">
+  <div id="video-preview" #preview class="video-preview">
     <!-- هنا هتحط Stream Video JS SDK VideoPreview -->
   </div>
+
+  <label for="userName">Enter your name:</label>
+  <input id="userName" type="text" [(ngModel)]="userName" placeholder="Your name" />
 
   <div class="controls">
     <label class="mic-cam-toggle">

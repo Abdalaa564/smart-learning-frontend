@@ -1,16 +1,25 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { Alert } from "../alert/alert";
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-
+import { ActivatedRoute } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { StreamClient } from '../../../../Services/meeting/stream-client';
 @Component({
   selector: 'app-meeting-setup',
-  imports: [Alert, CommonModule],
+  imports: [Alert, CommonModule, FormsModule],
   templateUrl: './meeting-setup.html',
   styleUrl: './meeting-setup.css',
 })
-export class MeetingSetup implements OnInit {
+export class MeetingSetup implements OnInit, OnDestroy {
   @Output() isSetupComplete = new EventEmitter<boolean>();
+  @ViewChild('preview') previewRef!: ElementRef<HTMLDivElement>;
+
+  meetingId?: string;
+  userName: string = '';
+  micOff = false;
+  camOff = false;
+  localStream?: MediaStream;
 
   isMicCamToggled = false;
 
@@ -23,9 +32,29 @@ export class MeetingSetup implements OnInit {
   callTimeNotArrived = false;
   callHasEnded = false;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private route: ActivatedRoute, private StreamClient: StreamClient) {}
   
-  ngOnInit(): void {
+  async ngOnInit() {
+    this.meetingId = this.route.snapshot.paramMap.get('id')!;
+    console.log('Meeting ID:', this.meetingId);
+
+    const userId = 'user-' + Date.now();
+    this.userName = this.userName || userId;
+
+    await this.StreamClient.initFromServer(
+      'jycwbvhufdkx',
+      userId,
+      this.meetingId!
+    );
+
+    this.StreamClient.call('default', this.meetingId!);
+
+    try {
+      const r = await this.StreamClient.attachPreview(this.previewRef.nativeElement);
+      this.localStream = r.stream;
+    } catch (err) {
+      console.error(err);
+    }
     // مثال: افترضنا اننا عندنا Call Object
     // this.call = streamClient.getCall(...);
     // this.callStartsAt = new Date(this.call.startsAt);
@@ -33,25 +62,69 @@ export class MeetingSetup implements OnInit {
     this.updateCallStatus();
   }
 
-
-  toggleMicCam() {
-    this.isMicCamToggled = !this.isMicCamToggled;
-
-    if (this.isMicCamToggled) {
-      this.call?.camera?.disable();
-      this.call?.microphone?.disable();
-    } else {
-      this.call?.camera?.enable();
-      this.call?.microphone?.enable();
-    }
+  ngOnDestroy() {
+    // stop local preview tracks
+    this.localStream?.getTracks().forEach(t => t.stop());
   }
 
-  joinMeeting() {
+
+  async toggleMicCam() {
+    if (!this.localStream) return;
+    this.micOff = !this.micOff;
+    this.localStream.getAudioTracks().forEach(t => {
+      if (this.micOff) {
+      t.stop();
+      } else {
+        t.enabled = true;
+      }
+    });
+
+    this.camOff = !this.camOff;
+    this.localStream.getVideoTracks().forEach(t => {
+      if (this.camOff) {
+      t.stop();
+      } else {
+        t.enabled = true;
+      }
+    });
+
+    if (!this.camOff) {
+      const r = await this.StreamClient.attachPreview(this.previewRef.nativeElement);
+      this.localStream = r.stream;
+    }
+
+    // this.isMicCamToggled = !this.isMicCamToggled;
+
+    // if (this.isMicCamToggled) {
+    //   this.call?.camera?.disable();
+    //   this.call?.microphone?.disable();
+    // } else {
+    //   this.call?.camera?.enable();
+    //   this.call?.microphone?.enable();
+    // }
+  }
+
+  async joinMeeting() {
+    if (!this.userName) {
+      alert('Please enter your name before joining the meeting');
+      return;
+    }
     alert('Joining Meeting...');
-    this.router.navigate(['/meeting']);
+    // this.router.navigate(['/meeting']);
+
+    await this.StreamClient.join('default', this.meetingId!, !this.micOff, !this.camOff);
+
+    this.router.navigate(['/meeting'], { 
+      queryParams: { 
+        id: this.meetingId, 
+        name: this.userName,
+        micOff: this.micOff,
+        camOff: this.camOff
+      } 
+    });
 
     // this.call?.join();
-    this.isSetupComplete.emit(true);
+    // this.isSetupComplete.emit(true);
   }
 
   updateCallStatus() {

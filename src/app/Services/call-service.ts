@@ -16,8 +16,10 @@ export interface CallDetail {
 export class CallService {
   constructor(private http: HttpClient) {}
 
-  getToken(userId: string): Observable<{ token: string }> {
-    return this.http.get<{ token: string }>(`/api/call/token?userId=${userId}`);
+  getToken(userId: string, callId: string): Observable<{ token: string }> {
+    return this.http.get<{ token: string }>(
+      `/api/call/token?userId=${userId}&callId=${callId}`
+    );
   }
 
   getEndedCalls(): Observable<CallDetail[]> {
@@ -42,7 +44,8 @@ export class CallService {
 
 
   createMeeting(startsAt: string, description: string): Observable<any> {
-    const token = localStorage.getItem('token'); // أو أي مكان بتحفظ فيه التوكن بعد login
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6ImUzM2NlNDJhLTA2YzgtNDVlZi04OGQ2LTY5OGJjNmFjNGM4NyIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJhYmRhbGFha0BnbWFpbC5jb20iLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJhYmRhbGFha0BnbWFpbC5jb20iLCJTdHVkZW50SWQiOiJlMzNjZTQyYS0wNmM4LTQ1ZWYtODhkNi02OThiYzZhYzRjODciLCJleHAiOjE3NjQwMzY4NTQsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NTE2My8iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjQyMDAvIn0.kdE7qtocmY_cmcHlCWiV2r9tMKLqk9mZnNdc_cG6JyI';
+    // const token = localStorage.getItem('token');
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json'
