@@ -96,22 +96,33 @@ export class StreamClient {
   }
 
   // preview: attach a video preview into an element
-  async attachPreview(element: HTMLElement) {
-    if (!this.currentCall) throw new Error('Call not created for preview');
+  // async attachPreview(element: HTMLElement) {
+  //   if (!this.currentCall) throw new Error('Call not created for preview');
 
-    try {
-      // Enable camera for preview (temporary stream)
-      await this.currentCall.camera.enable();
+  //   try {
+  //     // Enable camera for preview (temporary stream)
+  //     await this.currentCall.camera.enable();
 
-      element.innerHTML = '';
+  //     element.innerHTML = '';
 
-      // Stream SDK built-in preview
-      const preview = await this.currentCall.camera.createPreview(element);
+  //     // Stream SDK built-in preview
+  //     const preview = await this.currentCall.camera.createPreview(element);
 
-      return { stream: preview.stream, videoEl: preview.element };
-    } catch (err) {
-      console.error('Preview failed', err);
-      throw err;
-    }
+  //     return { stream: preview.stream, videoEl: preview.element };
+  //   } catch (err) {
+  //     console.error('Preview failed', err);
+  //     throw err;
+  //   }
+  // }
+  async attachPreview(videoEl: HTMLVideoElement) {
+    const stream = await navigator.mediaDevices.getUserMedia({
+      video: true,
+      audio: true,
+    });
+
+    videoEl.srcObject = stream;
+    videoEl.play();
+
+    return { stream };
   }
 }

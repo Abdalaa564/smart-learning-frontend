@@ -47,3 +47,9 @@
   object-fit: cover;
   border-radius: 12px;
 }
+
+.label-userName {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #000;
+}
