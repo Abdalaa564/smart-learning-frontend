@@ -1,6 +1,18 @@
 <!-- src/app/components/take-quiz/take-quiz.component.html -->
 
 <div class="container mt-4" *ngIf="!loading && quiz">
+
+  <!-- Overlay عند انتهاء الوقت أو أثناء الإرسال -->
+  <div *ngIf="isTimeUp || submitting" class="time-up-overlay">
+    <div class="text-center">
+      <h3 *ngIf="isTimeUp">Time is up! Submitting your answers...</h3>
+      <h3 *ngIf="submitting && !isTimeUp">Submitting your answers...</h3>
+      <div class="spinner-border text-light mt-3" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+  </div>
+
   <!-- Quiz Header -->
   <div class="card mb-4 shadow-sm">
     <div class="card-body">
@@ -10,7 +22,10 @@
           <p class="text-muted mb-0">Total Marks: {{ quiz.totalMarks }}</p>
         </div>
         <div class="col-md-6 text-md-end">
-          <div class="timer" [class.timer-warning]="timeRemaining < 300">
+          <div 
+            class="timer" 
+            [class.timer-warning]="timeRemaining < 300 && timeRemaining > 0"
+            [class.text-danger]="timeRemaining === 0 || isTimeUp">
             <i class="bi bi-clock"></i>
             <span class="fs-4 fw-bold ms-2">{{ formattedTime }}</span>
           </div>
@@ -49,13 +64,16 @@
           *ngFor="let choice of currentQuestion.choices" 
           class="choice-item mb-3"
           [class.selected]="isAnswerSelected(choice.choiceId)"
+          [class.disabled]="isTimeUp || submitting"
+          [style.pointer-events]="(isTimeUp || submitting) ? 'none' : 'auto'"
           (click)="selectAnswer(choice.choiceId)">
           <div class="form-check">
             <input 
               class="form-check-input" 
               type="radio" 
               [checked]="isAnswerSelected(choice.choiceId)"
-              [id]="'choice-' + choice.choiceId">
+              [id]="'choice-' + choice.choiceId"
+              [disabled]="isTimeUp || submitting">
             <label class="form-check-label w-100" [for]="'choice-' + choice.choiceId">
               {{ choice.choiceText }}
             </label>
@@ -70,22 +88,23 @@
         <button 
           class="btn btn-outline-secondary"
           (click)="previousQuestion()"
-          [disabled]="currentQuestionIndex === 0">
+          [disabled]="currentQuestionIndex === 0 || isTimeUp || submitting">
           <i class="bi bi-arrow-left"></i> Previous
         </button>
 
         <button 
           *ngIf="currentQuestionIndex < quiz.questions.length - 1"
           class="btn btn-primary"
-          (click)="nextQuestion()">
+          (click)="nextQuestion()"
+          [disabled]="isTimeUp || submitting">
           Next <i class="bi bi-arrow-right"></i>
         </button>
 
         <button 
           *ngIf="currentQuestionIndex === quiz.questions.length - 1"
-          class="btn btn-success"
+          class="btn btn.success"
           (click)="submitQuiz()"
-          [disabled]="submitting">
+          [disabled]="submitting || isTimeUp">
           <i class="bi bi-check-circle"></i> Submit Quiz
         </button>
       </div>
@@ -103,7 +122,8 @@
           [class.btn-success]="isQuestionAnswered(i)"
           [class.btn-outline-secondary]="!isQuestionAnswered(i)"
           [class.btn-primary]="i === currentQuestionIndex"
-          (click)="goToQuestion(i)">
+          (click)="goToQuestion(i)"
+          [disabled]="isTimeUp || submitting">
           {{ i + 1 }}
         </button>
       </div>
