@@ -12,13 +12,14 @@ import { CommonModule } from '@angular/common';
   styleUrl: './take-quiz-component.css',
 })
 export class TakeQuizComponent implements OnInit, OnDestroy {
- quiz: StartQuizDto | null = null;
+  quiz: StartQuizDto | null = null;
   currentQuestionIndex: number = 0;
   selectedAnswers: Map<number, number> = new Map();
   timeRemaining: number = 0;
   timerSubscription?: Subscription;
   loading: boolean = false;
   submitting: boolean = false;
+  isTimeUp: boolean = false; // 👈 فلاغ انتهاء الوقت
 
   constructor(
     private quizService: QuizService,
@@ -39,7 +40,7 @@ export class TakeQuizComponent implements OnInit, OnDestroy {
 
   loadQuiz(quizId: number): void {
     this.loading = true;
-    
+
     this.quizService.startQuiz(quizId).subscribe({
       next: (data) => {
         this.quiz = data;
@@ -59,9 +60,11 @@ export class TakeQuizComponent implements OnInit, OnDestroy {
   startTimer(): void {
     this.timerSubscription = interval(1000).subscribe(() => {
       this.timeRemaining--;
-      
-      if (this.timeRemaining <= 0) {
-        this.submitQuiz();
+
+      if (this.timeRemaining <= 0 && !this.isTimeUp) {
+        this.isTimeUp = true;
+        this.timeRemaining = 0;
+        this.submitQuiz(true); // 👈 autoSubmit = true (من غير confirm)
       }
     });
   }
@@ -82,6 +85,8 @@ export class TakeQuizComponent implements OnInit, OnDestroy {
   }
 
   selectAnswer(choiceId: number): void {
+    if (this.isTimeUp || this.submitting) return; // 👈 ممنوع بعد انتهاء الوقت أو أثناء الإرسال
+
     if (this.currentQuestion) {
       this.selectedAnswers.set(this.currentQuestion.question_Id, choiceId);
     }
@@ -93,18 +98,24 @@ export class TakeQuizComponent implements OnInit, OnDestroy {
   }
 
   nextQuestion(): void {
+    if (this.isTimeUp) return; // 👈 ممنوع التنقل بعد انتهاء الوقت
+
     if (this.quiz && this.currentQuestionIndex < this.quiz.questions.length - 1) {
       this.currentQuestionIndex++;
     }
   }
 
   previousQuestion(): void {
+    if (this.isTimeUp) return;
+
     if (this.currentQuestionIndex > 0) {
       this.currentQuestionIndex--;
     }
   }
 
   goToQuestion(index: number): void {
+    if (this.isTimeUp) return;
+
     this.currentQuestionIndex = index;
   }
 
@@ -113,18 +124,37 @@ export class TakeQuizComponent implements OnInit, OnDestroy {
     return question ? this.selectedAnswers.has(question.question_Id) : false;
   }
 
-  submitQuiz(): void {
-    if (this.timerSubscription) {
-      this.timerSubscription.unsubscribe();
-    }
+  // autoSubmit = true لما الوقت يخلص – false لما الطالب يضغط زرار بنفسه
+  submitQuiz(autoSubmit: boolean = false): void {
+    if (this.submitting) return; // لو أصلاً بيبعت، ما تبعتش تاني
 
-    if (!confirm('Are you sure you want to submit the quiz?')) {
-      return;
+    if (!autoSubmit) {
+      if (this.timerSubscription) {
+        this.timerSubscription.unsubscribe();
+      }
+
+      if (!confirm('Are you sure you want to submit the quiz?')) {
+        // لو رجع cancel نرجع نشغّل التايمر لو فيه وقت
+        if (this.timeRemaining > 0 && !this.isTimeUp) {
+          this.startTimer();
+        }
+        return;
+      }
+    } else {
+      // لو أوتو من التايمر – وقف التايمر
+      if (this.timerSubscription) {
+        this.timerSubscription.unsubscribe();
+      }
     }
 
     this.submitting = true;
 
-    // Submit all answers
+    if (!this.quiz) {
+      this.submitting = false;
+      return;
+    }
+
+    // جهّز كل الإجابات
     const answers: SubmitAnswerDto[] = [];
     this.selectedAnswers.forEach((choiceId, questionId) => {
       answers.push({
@@ -133,6 +163,12 @@ export class TakeQuizComponent implements OnInit, OnDestroy {
         choice_Id: choiceId
       });
     });
+
+    // لو مفيش ولا إجابة، برضه نروح للنتيجة (هتكون صفر)
+    if (answers.length === 0) {
+      this.router.navigate(['/quiz/result', this.quiz.quiz_Id]);
+      return;
+    }
 
     // Submit answers one by one
     let submittedCount = 0;
