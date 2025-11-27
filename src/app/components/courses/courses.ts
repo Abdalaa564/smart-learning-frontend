@@ -74,15 +74,5 @@ export class Courses implements OnInit {
     return instructor?.fullName ?? course.instructorName ?? 'Unknown';
   }
 
- deleteCourse(course: Course): void {
-    if (!confirm(`Are you sure to delete "${course.crs_Name}" ?`)) return;
-
-    this.courseService.deleteCourse(course.crs_Id).subscribe({
-      next: (res) => {
-        console.log('Delete response:', res);
-        this.loadData(); // إعادة تحميل الليست بعد الحذف
-      },
-      error: (err) => console.error(err)
-    });
-  }
+ 
 }

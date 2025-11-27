@@ -15,15 +15,17 @@ import { Course } from '../../models/Course';
 })
 export class EditCourse implements OnInit {
 
-    courseId!: number;
+  courseId!: number;
+  selectedImageFile: File | null = null;
+
   instructors: Instructor[] = [];
 
   formModel = {
     crs_Name: '',
-    crs_Description: '',
-    price: 0,
-    instructorId: 0,
-    imageUrl: ''
+  crs_Description: '',
+  price: 0,
+  instructorId: 0,
+  imageUrl: ''
   };
 
   isSubmitting = false;
@@ -80,11 +82,14 @@ export class EditCourse implements OnInit {
       return;
     }
 
-    const dto: UpdateCourseRequest = {
-      crs_Name: this.formModel.crs_Name,
-      crs_Description: this.formModel.crs_Description,
-      price: this.formModel.price
-    };
+   const dto: UpdateCourseRequest = {
+  crs_Name: this.formModel.crs_Name,
+  crs_Description: this.formModel.crs_Description,
+  price: this.formModel.price,
+  instructorId: this.formModel.instructorId,
+  imageUrl: this.formModel.imageUrl || null,
+  imageFile: this.selectedImageFile 
+};
 
     console.log('Submitting update dto = ', dto);
 
@@ -99,5 +104,14 @@ export class EditCourse implements OnInit {
         this.isSubmitting = false;
       }
     });
+    
   }
+  onFileSelected(event: Event): void {
+  const input = event.target as HTMLInputElement;
+  if (input.files && input.files.length > 0) {
+    this.selectedImageFile = input.files[0];
+    console.log("Selected file:", this.selectedImageFile);
+  }
+}
+
 }

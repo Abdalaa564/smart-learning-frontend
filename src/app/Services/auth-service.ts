@@ -94,5 +94,19 @@ removeUser() {
     const user = localStorage.getItem(this.userKey);
     return user ? JSON.parse(user) : null;
   }
+  // 👇👇 إضافة جديدة
+  get currentUser(): Studentprofile | null {
+    return this.currentUserSubject.value;
+  }
+
+  // 👇👇 Getter للـ userId (عدّل اسم الخاصية حسب Studentprofile)
+  get currentUserId(): string | null {
+    // لو Studentprofile فيه id:
+  return this.currentUserSubject.value?.userId ?? null;
+    // لو فيه studentId أو userId غيّر للسطر اللي يناسبك:
+    // return this.currentUserSubject.value?.studentId ?? null;
+    // return this.currentUserSubject.value?.userId ?? null;
+  }
+
 
 }
