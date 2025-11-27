@@ -1,6 +1,6 @@
 <div class="container bootstrap snippets bootdey">
     <div class="row">
-		<div class="col-md-4 bg-white mt-5 mb-5">
+		<div class="col-md-3 bg-white mt-5 mb-5">
             <div class=" row border-bottom padding-sm" style="height: 40px;">
             	Chats
             </div>
@@ -29,7 +29,7 @@
         
         <!--=========================================================-->
         <!-- selected chat -->
-    	<div class="col-md-8 bg-white mt-5 mb-5">
+    	<div class="col-md-9 bg-white mt-5 mb-5">
             <div class="chat-message">
                 <ul class="chat">
 					<li *ngFor="let msg of selectedSession?.messages" [ngClass]="{'left clearfix': msg.sender==='bot','right clearfix': msg.sender==='user'}">
@@ -46,25 +46,28 @@
 					</li>
 				</ul>
             </div>
-            <div class="chat-box bg-white">
+            <div class="chat-input-container">
 
-				<div class="input-group mb-2">
-					<input type="file" accept="application/pdf"
-						class="form-control"
-						(change)="onPdfSelected($event)">
-				</div>
+				<!-- Upload PDF Button -->
+				<label class="upload-btn">
+					<input type="file" accept="application/pdf" (change)="onPdfSelected($event)">
+					📎
+				</label>
 
-            	<div class="input-group">
-            		<input class="form-control border no-shadow no-rounded" placeholder="Type your message here"
+				<!-- Message Input -->
+				<input 
+					type="text" 
+					class="chat-input"
+					placeholder="Type your message here..."
 					[(ngModel)]="messageText">
-            		<span class="input-group-btn">
-            			<button class="btn btn-success no-rounded" type="button"
-						(click)="sendMessage()">
-							Send
-						</button>
-            		</span>
-            	</div><!-- /input-group -->	
-            </div>            
+
+				<!-- Send Button -->
+				<button class="send-btn" (click)="sendMessage()">
+					➤
+				</button>
+
+			</div>
+					
 		</div>        
-	</div>
+	</div><!-- /input-group Send-->	
 </div>
