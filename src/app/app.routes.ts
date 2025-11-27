@@ -1,6 +1,5 @@
 import { MeetingSetup } from './components/meeting/shared/meeting-setup/meeting-setup';
 import { Layout } from './components/meeting/Home/layout/layout';
-
 import { UserProfile } from './components/user-profile/user-profile';
 import { ChatRome } from './components/chat-rome/chat-rome';
 import { Routes } from '@angular/router';
@@ -24,32 +23,31 @@ import { TakeQuizComponent } from './components/take-quiz-component/take-quiz-co
 import { QuizResultComponent } from './components/quiz-result-component/quiz-result-component';
 import { QuizListComponent } from './components/quiz-list-component/quiz-list-component';
 import { Lessons } from './components/lessons/lessons/lessons';
+import { AddInstructorComponent } from './components/InstructorCrud/add-instructor/add-instructor';
+import { EditInstructorComponent } from './components/InstructorCrud/edit-instructor/edit-instructor';
+import { ConfirmDeleteInstructorComponent } from './components/InstructorCrud/delete-instructor/delete-instructor';
+import { DeleteCourse } from './components/delete-course/delete-course';
 
 export const routes: Routes = [
 
-    {path: '', redirectTo: 'instructors', pathMatch: 'full' },
+
+    {path: '', redirectTo: 'Home', pathMatch: 'full' },
+
     {path:"Home", component: Home, title: 'Home' },
-
-
-    {path:"instructors", component: InstructorsListComponent , title: 'Instructors' },
-     { path: 'instructor/:id', component: InstructorProfile },
-
+    {path:"instructors", component: InstructorsListComponent  },
+    { path: 'instructor/:id', component: InstructorProfile },
+    { path: 'instructors/add', component: AddInstructorComponent },
+  { path: 'instructors/edit/:id', component: EditInstructorComponent },
+  { path: 'instructors/:id/confirm-delete', component: ConfirmDeleteInstructorComponent },
     {path: "Courses", component: Courses },
-
-    
     { path: 'Courses/:id/units', component: Units },
-     { path: 'Courses/:id/units/add', component: AddUnit },
-      { path: 'Courses/:id/units/edit/:unitId', component: UpdateUnit },
-
-
-
-       { path: 'Courses/:courseId/units/:unitId/lessons', component: Lessons },
-        { path: 'Courses/:courseId/units/:unitId/lessons/add', component: AddLesson },
-
-
-
-     { path: 'courses/add', component: AddCourse },
-  { path: 'courses/edit/:id', component: EditCourse },
+    { path: 'Courses/:id/units/add', component: AddUnit },
+    { path: 'Courses/:id/units/edit/:unitId', component: UpdateUnit },
+    { path: 'Courses/:courseId/units/:unitId/lessons', component: Lessons },
+    { path: 'Courses/:courseId/units/:unitId/lessons/add', component: AddLesson },
+    { path: 'courses/add', component: AddCourse },
+    { path: 'courses/edit/:id', component: EditCourse },
+     { path: 'Courses/delete/:id', component: DeleteCourse },
     {path:'exam', component: Exam, title: 'Exam' },
     {path:'meeting', component: Meeting, title: 'Meeting' },
     {path:'meeting-setup/:id', component: MeetingSetup, title: 'MeetingSetup' },
@@ -65,5 +63,4 @@ export const routes: Routes = [
     {path: 'login', component: Login, title: 'Login'},
     {path: 'register', component: Register, title: 'Register'},
     {path: '**', component:ErrorPage, title: 'Not Found'}
-    
 ];
