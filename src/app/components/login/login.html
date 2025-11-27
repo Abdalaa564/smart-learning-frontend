@@ -1,56 +1,48 @@
-<body class="bg-light d-flex align-items-center justify-content-center vh-100">
+<div class="bg-light d-flex align-items-center justify-content-center vh-100">
   <div class="card shadow-lg p-5 login-card">
     <div class="text-center mb-4">
-       <div class= "logo-image mx-auto mb-3 logo-circle">
-          <img src="assets\img\logo-removebg-preview.png" alt="Logo">
+      <div class="logo-image mx-auto mb-3 logo-circle">
+        <img src="assets/img/logo-removebg-preview.png" alt="Logo" />
       </div>
       <h3 class="fw-bold">Welcome Back!</h3>
       <p class="text-muted">Login to access your courses</p>
     </div>
 
-    <form #loginForm="ngForm" (ngSubmit)="onSubmit()">
-      <!-- Email -->
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
       <div class="mb-3">
-        <label for="email" class="form-label">Email address</label>
+        <label>Email</label>
         <input
-          [(ngModel)]="loginData.email"
           type="email"
-          name="email"
-          id="email"
           class="form-control"
-          placeholder="Enter email"
-          pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
-          #email="ngModel"
-          required
+          formControlName="email"
+          [class.is-invalid]="submitted && f['email'].invalid"
         />
-        <div *ngIf="email.invalid && email.touched" class="text-danger mt-1">
-          <small *ngIf="email.errors?.['required']">Email is required.</small>
-          <small *ngIf="email.errors?.['email']">Enter a valid email.</small>
+
+        <div class="invalid-feedback" *ngIf="submitted && f['email'].errors">
+          <span *ngIf="f['email'].errors['required']">Email is required</span>
+          <span *ngIf="f['email'].errors['email']">Please enter a valid email</span>
         </div>
       </div>
 
-      <!-- Password -->
       <div class="mb-3">
-        <label for="password" class="form-label">Password</label>
+        <label>Password</label>
         <input
-          [(ngModel)]="loginData.password"
           type="password"
-          id="password"
-          name="password"
           class="form-control"
-          placeholder="Enter password"
-          minlength="6"
-          #password="ngModel"
-          required
+          formControlName="password"
+          [class.is-invalid]="submitted && f['password'].invalid"
         />
-        <div *ngIf="password.invalid && password.touched" class="text-danger mt-1">
-          <small *ngIf="password.errors?.['required']">Password is required.</small>
-          <small *ngIf="password.errors?.['minlength']">Password must be at least 6 characters.</small>
+
+        <div class="invalid-feedback" *ngIf="submitted && f['password'].errors">
+          <span *ngIf="f['password'].errors['required']">Password is required</span>
+          <span *ngIf="f['password'].errors['minlength']">Minimum 6 characters required</span>
         </div>
       </div>
 
-      <!-- Submit -->
-      <button type="submit" class=" btn-accent w-100" [disabled]="loginForm.invalid">Login</button>
+      <button type="submit" class="btn  w-100" [disabled]="loading">
+        <span *ngIf="loading" class="spinner-border spinner-border-sm me-2"></span>
+        Login
+      </button>
     </form>
 
     <p class="text-center mt-4 mb-0 text-muted">
@@ -58,4 +50,4 @@
       <a routerLink="/register" class="text-decoration-none accent-link">Sign up</a>
     </p>
   </div>
-</body>
+</div>

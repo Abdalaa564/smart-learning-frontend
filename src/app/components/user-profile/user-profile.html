@@ -1,180 +1,104 @@
-<div class="container">
-    <div class="main-body">
-    
-          <!-- Breadcrumb -->
-          <nav aria-label="breadcrumb" class="main-breadcrumb">
-            <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-              <li class="breadcrumb-item"><a href="javascript:void(0)">User</a></li>
-              <li class="breadcrumb-item active" aria-current="page">User Profile</li>
-            </ol>
-          </nav>
-          <!-- /Breadcrumb -->
-    
-          <div class="row gutters-sm">
-            <div class="col-md-4 mb-3">
-              <div class="card">
-                <div class="card-body">
-                  <div class="d-flex flex-column align-items-center text-center">
-                    <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="150">
-                    <div class="mt-3">
-                      <h4>John Doe</h4>
-                      <p class="text-secondary mb-1">Full Stack Developer</p>
-                      <p class="text-muted font-size-sm">Bay Area, San Francisco, CA</p>
-                      <!-- <button class="btn custom-btn-primary me-4">Follow</button> -->
-                      <button class="btn custom-btn-outline">Message</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="card mt-3">
-                <ul class="list-group list-group-flush">
-                  <!-- <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                  </li>
-                  <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                  </li>
-                  <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                  </li>
-                  <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                  </li>
-                  <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                  </li> -->
-                </ul>
-              </div>
-            </div>
-            <div class="col-md-8">
-              <div class="card mb-3">
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <h6 class="mb-0">Full Name</h6>
-                    </div>
-                    <div class="col-sm-9 text-secondary">
-                      Kenneth Valdez
-                    </div>
-                  </div>
-                  <hr>
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <h6 class="mb-0">Email</h6>
-                    </div>
-                    <div class="col-sm-9 text-secondary">
-                      fip@jukmuh.al
-                    </div>
-                  </div>
-                  <hr>
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <h6 class="mb-0">Phone</h6>
-                    </div>
-                    <div class="col-sm-9 text-secondary">
-                      01283456789
-                    </div>
-                  </div>
-                  <hr>
-                  <!-- <div class="row">
-                    <div class="col-sm-3">
-                      <h6 class="mb-0">Mobile</h6>
-                    </div>
-                    <div class="col-sm-9 text-secondary">
-                      0123456789
-                    </div>
-                  </div>
-                  <hr> -->
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <h6 class="mb-0">Address</h6>
-                    </div>
-                    <div class="col-sm-9 text-secondary">
-                      Bay Area, San Francisco, CA
-                    </div>
-                  </div>
-                  <hr>
-                  <div class="row">
-                    <div class="col-sm-12">
-                        <a class="btn custom-btn-primary" id="editBtn">Edit</a>
-
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="row gutters-sm">
-                <div class="col-sm-6 mb-3">
-                  <div class="card h-100">
-                    <div class="card-body">
-                      <h6 class="d-flex align-items-center mb-3"><i class="material-icons text-info mr-2">assignment </i>Units</h6>
-                      <small>Course name</small>
-                      <div class="progress mb-3" style="height: 5px">
-                        <div class="progress-bar bg-primary" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-                      </div>
-                      
-                    </div>
-                  </div>
-                </div>
-                <div class="col-sm-6 mb-3">
-                  <div class="card h-100">
-                    <div class="card-body">
-                      <h6 class="d-flex align-items-center mb-3"><i class="material-icons text-info mr-2">assignment </i>lessons</h6>
-                      <small>Web Design</small>
-                      <div class="progress mb-3" style="height: 5px">
-                        <div class="progress-bar bg-primary" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-                      </div>
-                      
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-
-
-            </div>
-          </div>
-
-        </div>
+<div class="profile-container" *ngIf="profile">
+  
+  <!-- LEFT PROFILE CARD -->
+  <div class="profile-sidebar glass-card">
+    <div class="avatar-container">
+      <img class="avatar-img" 
+           src="https://bootdey.com/img/Content/avatar/avatar7.png">
     </div>
 
+    <h2 class="profile-name">
+      {{ profile?.firstName }} {{ profile?.lastName }}
+    </h2>
+    <p class="profile-role">Student</p>
+    <p class="profile-location">
+      <i class="bi bi-geo-alt-fill"></i>
+      {{ profile?.city }}, {{ profile?.address }}
+    </p>
 
-
-
-    
-<!-- Modal -->
-<div class="modal-overlay" id="editModal">
-  <div class="modal-content">
-    <button class="close-btn" id="closeModal">×</button>
-    <h3 class="text-center mb-3">Edit Profile</h3>
-
-    <div class="mb-3">
-      <label class="form-label">Full Name</label>
-      <input type="text" class="form-control" value="Kenneth Valdez">
-    </div>
-
-    <div class="mb-3">
-      <label class="form-label">Email</label>
-      <input type="email" class="form-control" value="fip@jukmuh.al">
-    </div>
-
-    <div class="mb-3">
-      <label class="form-label">Phone</label>
-      <input type="text" class="form-control" value="(239) 816-9029">
-    </div>
-
-    <div class="mb-3">
-      <label class="form-label">Address</label>
-      <input type="text" class="form-control" value="Bay Area, San Francisco, CA">
-    </div>
-
-    <div class="text-end mt-3">
-      <button class="btn custom-btn-primary  me-4" id="cancelBtn">Cancel</button>
-      <button class="btn custom-btn-primary">Save Changes</button>
-    </div>
+    <button class="btn-edit" (click)="toggleEdit()">
+      <i class="bi bi-pencil-square"></i> Edit Profile
+    </button>
   </div>
+
+
+
+  <!-- RIGHT INFO CARD -->
+  <div class="profile-main glass-card">
+
+    <h3 class="section-title">Profile Information</h3>
+
+    <div class="info-row">
+      <span class="info-label"><i class="bi bi-person"></i> Full Name</span>
+      <span class="info-value">{{ profile?.firstName }} {{ profile?.lastName }}</span>
+    </div>
+
+    <div class="info-row">
+      <span class="info-label"><i class="bi bi-cake"></i> Date of Birth</span>
+      <span class="info-value">{{ profile?.dateOfBirth | date:'mediumDate' }}</span>
+    </div>
+
+    <div class="info-row">
+      <span class="info-label"><i class="bi bi-phone"></i> Phone Number</span>
+      <span class="info-value">{{ profile?.phoneNumber }}</span>
+    </div>
+
+    <div class="info-row">
+      <span class="info-label"><i class="bi bi-house"></i> Address</span>
+      <span class="info-value">{{ profile?.address }}, {{ profile?.city }}</span>
+    </div>
+
+  </div>
+
+
 </div>
 
 
+<!-- ========= MODAL (EDIT FORM) ============= -->
+<div class="modal-overlay" [ngClass]="{'show-modal': editing}">
+  <div class="modal-content">
 
+    <button class="close-btn" (click)="onCancel()">×</button>
+    
+    <h3 class="modal-title">Edit Profile</h3>
 
+    <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
 
+      <div class="input-group">
+        <label>First Name</label>
+        <input formControlName="firstName">
+      </div>
 
+      <div class="input-group">
+        <label>Last Name</label>
+        <input formControlName="lastName">
+      </div>
 
+      <div class="input-group">
+        <label>Phone Number</label>
+        <input formControlName="phoneNumber">
+      </div>
 
+      <div class="input-group">
+        <label>Date of Birth</label>
+        <input type="date" formControlName="dateOfBirth">
+      </div>
+
+      <div class="input-group">
+        <label>Address</label>
+        <input formControlName="address">
+      </div>
+
+      <div class="input-group">
+        <label>City</label>
+        <input formControlName="city">
+      </div>
+
+      <div class="modal-actions">
+        <button type="button" class="btn-cancel" (click)="onCancel()">Cancel</button>
+        <button type="submit" class="btn-save" [disabled]="profileForm.invalid">Save</button>
+      </div>
+
+    </form>
+  </div>
+</div>

@@ -1,33 +1,77 @@
 <header class="modern-header">
   <div class="header-container">
-
-    <!-- Logo -->
     <a routerLink="/" class="logo">
       <div class="logo-image logo-circle">
-        <img src="assets/img/logo-removebg-preview.png" alt="Logo">
+        <img src="assets/img/logo-removebg-preview.png" alt="Logo" />
       </div>
       <span class="logo-text">Elearning</span>
     </a>
 
-    <!-- Navigation -->
     <nav class="nav-menu">
       <ul>
-        <li><a routerLink="/Home" routerLinkActive="active">Home</a></li>
-        <!-- <li><a href="about.html">About</a></li> -->
-        <li><a routerLink="/Courses">Courses</a></li>
-        <li><a routerLink="/instructors">Instructors</a></li>
-        <!-- <li><a routerLink="/exam" routerLinkActive="active">Exam</a></li> -->
-        <li><a routerLink="/Layout">Meeting</a></li>
-        <li><a routerLink="/chatRome">ChatRome</a></li>
 
+        <li>
+          <a
+            routerLink="/Home"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            Home
+          </a>
+        </li>
+
+      
+        <!-- <li><a href="about.html">About</a></li> -->
+       
+       
+        <!-- <li><a routerLink="/exam" routerLinkActive="active">Exam</a></li> -->
+        <li><a routerLink="/Layout"  routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }">Meeting</a></li>
+       
+
+
+        <li>
+          <a
+            routerLink="/Courses"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            Courses
+          </a>
+        </li>
+
+        <li>
+          <a
+            routerLink="/instructors"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            Instructors
+          </a>
+        </li>
+
+        <li>
+          <a
+            routerLink="/chatRome"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            ChatRome
+          </a>
+        </li>
+          <li>
+          <a
+            routerLink="/lesson/1/create-quiz"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            Quiz
+          </a>
+        </li>
       </ul>
     </nav>
 
-    <!-- Buttons -->
     <div class="header-actions">
-      <a routerLink="/register" class="btn-signup">Sign up</a>
-      <a routerLink="/login" class="btn-login">Login</a>
-
       <button class="theme-toggle">
         <i class="bi bi-sun-fill"></i>
       </button>
@@ -36,28 +80,29 @@
         <i class="bi bi-globe"></i>
       </button>
 
-      
-      <!-- Profile Icon -->
-      <div class="profile-dropdown-container">
-        <button class="profile-btn">
+      <ng-container *ngIf="!(currentUser$ | async)">
+        <a routerLink="/register" class="btn-signup">Sign up</a>
+        <a routerLink="/login" class="btn-login">Login</a>
+      </ng-container>
+
+      <div class="profile-dropdown-container" *ngIf="currentUser$ | async as user">
+        <button class="profile-btn" (click)="toggleDropdown()">
           <i class="bi bi-person-circle"></i>
         </button>
-        <div class="profile-dropdown">
+
+        <div class="profile-dropdown" [class.show]="isDropdownOpen">
           <div class="profile-info">
-            <img src="https://randomuser.me/api/portraits/lego/6.jpg" alt="User">
+            <img src="https://randomuser.me/api/portraits/lego/6.jpg" alt="User" />
             <div>
-              <h4>John Doe</h4>
+              <h4>{{ user.firstName }} {{ user.lastName }}</h4>
               <p>Student</p>
-              <a routerLink="/userProfile">View Profile</a>
+              <a routerLink="/userProfile" (click)="isDropdownOpen = false">View Profile</a>
             </div>
           </div>
-          <hr>
-          <a routerLink="/login">Logout</a>
+          <hr />
+          <button class="btn logout" (click)="logout()">Logout</button>
         </div>
       </div>
-
-
     </div>
-
   </div>
 </header>

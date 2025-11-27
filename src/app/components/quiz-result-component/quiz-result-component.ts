@@ -61,12 +61,8 @@ result: QuizResultDto | null = null;
   }
 
   goBack(): void {
-    this.router.navigate(['/quizzes']);
+    this.router.navigate(['/lesson/1/quizzes']);
   }
 
-  retakeQuiz(): void {
-    if (this.result) {
-      this.router.navigate(['/quiz/take', this.result.quiz_Id]);
-    }
-  }
+  
 }

@@ -33,6 +33,9 @@ export const routes: Routes = [
 
     {path: '', redirectTo: 'Home', pathMatch: 'full' },
 
+
+    {path: '', redirectTo: 'Home', pathMatch: 'full' },
+
     {path:"Home", component: Home, title: 'Home' },
     {path:"instructors", component: InstructorsListComponent  },
     { path: 'instructor/:id', component: InstructorProfile },

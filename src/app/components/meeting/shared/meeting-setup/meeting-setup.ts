@@ -13,7 +13,7 @@ import { StreamClient } from '../../../../Services/meeting/stream-client';
 })
 export class MeetingSetup implements OnInit, OnDestroy {
   @Output() isSetupComplete = new EventEmitter<boolean>();
-  @ViewChild('preview') previewRef!: ElementRef<HTMLDivElement>;
+  @ViewChild('preview') previewRef!: ElementRef<HTMLVideoElement>;
 
   meetingId?: string;
   userName: string = '';
@@ -49,6 +49,8 @@ export class MeetingSetup implements OnInit, OnDestroy {
 
     this.StreamClient.call('default', this.meetingId!);
 
+    await this.StreamClient.getCurrentCall().getOrCreate();
+
     try {
       const r = await this.StreamClient.attachPreview(this.previewRef.nativeElement);
       this.localStream = r.stream;
@@ -72,20 +74,12 @@ export class MeetingSetup implements OnInit, OnDestroy {
     if (!this.localStream) return;
     this.micOff = !this.micOff;
     this.localStream.getAudioTracks().forEach(t => {
-      if (this.micOff) {
-      t.stop();
-      } else {
-        t.enabled = true;
-      }
+      t.enabled = !this.micOff;
     });
 
     this.camOff = !this.camOff;
     this.localStream.getVideoTracks().forEach(t => {
-      if (this.camOff) {
-      t.stop();
-      } else {
-        t.enabled = true;
-      }
+      t.enabled = !this.camOff;
     });
 
     if (!this.camOff) {
