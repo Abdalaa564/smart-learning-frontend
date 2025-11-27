@@ -1,30 +1,43 @@
 <div class="featured-instructors">
 
-  <div class="row">
-    <div class="col-xl-3 col-lg-4 col-md-6" *ngFor="let ins of instructors">
+  <!-- هيدر الليست + زرار إضافة -->
+  <div class="list-header">
+    <h2>Instructors</h2>
+
+    <!-- تقدر تستخدم routerLink أو (click) -->
+    <!-- هنا خلتها button علشان تدي شكل أحسن -->
+    <button class="btn-add" type="button" (click)="goToAdd()">
+      <i class="bi bi-plus-lg"></i>
+      <span>Add Instructor</span>
+    </button>
+  </div>
+
+  <div *ngIf="loading" class="loading-text">
+    Loading instructors...
+  </div>
+
+  <div class="row" *ngIf="!loading">
+    <div class="col-xl-3 col-lg-4 col-md-6"
+         *ngFor="let ins of instructors">
 
       <div class="instructor-card">
 
-        <!-- Instructor Image -->
+        <!-- IMAGE -->
         <div class="instructor-image">
           <img
             [src]="ins.photoUrl || 'assets/images/default-instructor.jpg'"
             alt="Instructor">
 
-          <!-- Hover Content -->
           <div class="overlay-content">
-
-            <!-- Rating stars -->
+            <!-- Rating -->
             <div class="rating-stars">
-              <ng-container *ngFor="let star of getStarsArray(ins.rating); let i = index">
+              <ng-container *ngFor="let star of getStarsArray()">
                 <i class="bi"
                    [ngClass]="{
                      'bi-star-fill': star <= ins.rating,
                      'bi-star': star > ins.rating
-                   }"
-                   class="star-icon"></i>
+                   }"></i>
               </ng-container>
-
               <span>{{ ins.rating }}</span>
             </div>
 
@@ -33,13 +46,11 @@
               <i class="bi bi-people-fill"></i>
               <span>{{ ins.numberOfStudents }} Students</span>
             </div>
-
           </div>
         </div>
 
-        <!-- Instructor Info -->
+        <!-- INFO -->
         <div class="instructor-info">
-
           <h5>{{ ins.fullName }}</h5>
           <p class="specialty">{{ ins.jobTitle }}</p>
 
@@ -55,22 +66,36 @@
             </div>
           </div>
 
-          <div class="action-buttons">
-            <!-- زرار View Profile يروح لصفحة البروفايل -->
+          <div class="action-row">
+
+            <!-- View Profile -->
             <button class="btn-view" type="button" (click)="goToProfile(ins.id)">
               View Profile
             </button>
 
-            <!-- لينك يوتيوب شغال -->
-            <div class="social-links">
-              <a
-                *ngIf="ins.youtubeChannelUrl"
-                [href]="ins.youtubeChannelUrl"
-                target="_blank"
-                rel="noopener noreferrer">
+            <div class="icon-actions">
+              <!-- Edit Icon -->
+              <button class="icon-btn" type="button" (click)="goToEdit(ins.id)" title="Edit">
+                <i class="bi bi-pencil-square"></i>
+              </button>
+
+              <!-- Delete Icon -->
+              <button class="icon-btn danger" type="button"
+                      (click)="goToDeleteConfirm(ins.id)" title="Delete">
+                <i class="bi bi-trash"></i>
+              </button>
+
+              <!-- Youtube Icon -->
+              <a class="icon-btn ghost"
+                 *ngIf="ins.youtubeChannelUrl"
+                 [href]="ins.youtubeChannelUrl"
+                 target="_blank"
+                 rel="noopener noreferrer"
+                 title="Youtube">
                 <i class="bi bi-youtube"></i>
               </a>
             </div>
+
           </div>
 
         </div>

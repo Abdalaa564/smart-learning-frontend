@@ -17,6 +17,9 @@ export interface UpdateCourseRequest {
   crs_Name: string;
   crs_Description?: string;
   price: number;
+  instructorId: number;
+  imageUrl?: string | null;
+   imageFile?: File | null;
 }
 
 @Injectable({
@@ -63,13 +66,23 @@ export class CourseService {
 
   // PUT: /api/Course/{id}  (application/json)
   // body: { crs_Name, crs_Description, price }
-  updateCourse(id: number, dto: UpdateCourseRequest): Observable<string> {
-    console.log('Updating course with id = ', id, 'dto = ', dto);
+ updateCourse(id: number, dto: UpdateCourseRequest): Observable<string> {
+  const formData = new FormData();
 
-    return this.http.put<string>(`${this.baseUrl}/${id}`, dto, {
-      responseType: 'text' as 'json'
-    });
+  formData.append('Crs_Name', dto.crs_Name);
+  formData.append('Crs_Description', dto.crs_Description || '');
+  formData.append('Price', dto.price.toString());
+  formData.append('InstructorId', dto.instructorId.toString());
+  formData.append('ImageUrl', dto.imageUrl || '');
+
+  if (dto.imageFile) {
+    formData.append('ImageFile', dto.imageFile);
   }
+
+  return this.http.put<string>(`${this.baseUrl}/${id}`, formData, {
+    responseType: 'text' as 'json'
+  });
+}
 
   // DELETE: /api/Course/{id}
   deleteCourse(id: number): Observable<string> {
