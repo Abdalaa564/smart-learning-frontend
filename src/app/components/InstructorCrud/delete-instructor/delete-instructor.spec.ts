@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DeleteInstructor } from './delete-instructor';
+import { ConfirmDeleteInstructorComponent } from './delete-instructor';
 
 describe('DeleteInstructor', () => {
-  let component: DeleteInstructor;
-  let fixture: ComponentFixture<DeleteInstructor>;
+  let component: ConfirmDeleteInstructorComponent;
+  let fixture: ComponentFixture<ConfirmDeleteInstructorComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DeleteInstructor]
+      imports: [ConfirmDeleteInstructorComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(DeleteInstructor);
+    fixture = TestBed.createComponent(ConfirmDeleteInstructorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

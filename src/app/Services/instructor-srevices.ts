@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 
 import { Instructor } from '../models/iinstructor';
 import { environment } from '../environment/environment';
+import { CreateInstructorRequest } from '../models/CreateInstructorRequest ';
 
 @Injectable({
   providedIn: 'root'
@@ -26,10 +27,9 @@ export class InstructorService {
   }
 
   // POST: /api/Instructor
-  create(instructor: Partial<Instructor>): Observable<Instructor> {
-    return this.http.post<Instructor>(this.baseUrl, instructor);
-  }
-
+ create(payload: CreateInstructorRequest): Observable<Instructor> {
+  return this.http.post<Instructor>(this.baseUrl, payload);
+}
   // PUT: /api/Instructor/{id}
   update(id: number, instructor: Partial<Instructor>): Observable<any> {
   return this.http.put(`${this.baseUrl}/${id}`, instructor, {
@@ -39,7 +39,10 @@ export class InstructorService {
 
 
   // DELETE: /api/Instructor/{id}
-  delete(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.baseUrl}/${id}`);
-  }
+ delete(id: number): Observable<any> {
+  return this.http.delete(`${this.baseUrl}/${id}`, {
+    responseType: 'text' as 'json'
+  });
+}
+
 }

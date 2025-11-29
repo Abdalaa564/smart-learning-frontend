@@ -2,6 +2,11 @@
   <h2>Add Instructor</h2>
 
   <form (ngSubmit)="submit()">
+       <label>Email</label>
+    <input type="email" [(ngModel)]="model.email" name="email" required placeholder="Email" />
+
+    <label>Password</label>
+    <input type="password" [(ngModel)]="model.password" name="password" required placeholder="Password" />
 
     <label>Full Name</label>
     <input type="text" [(ngModel)]="model.fullName" name="fullName" required placeholder="fullName" />
