@@ -13,34 +13,13 @@ import { InstructorService } from '../../Services/instructor-srevices';
 })
 export class InstructorProfile implements OnInit {
 
-  instructor?: Instructor;
-
-  // التاب الحالي
+   instructor?: Instructor;
   activeTab: 'about' | 'certifications' | 'courses' = 'about';
 
-  // كورسات مؤقتة
   courses = [
-    {
-      title: 'Full-Stack Web Development',
-      level: 'Advanced',
-      students: 320,
-      rating: 4.8,
-      duration: '24h content'
-    },
-    {
-      title: 'Angular & ASP.NET Core API',
-      level: 'Intermediate',
-      students: 210,
-      rating: 4.6,
-      duration: '18h content'
-    },
-    {
-      title: 'Intro to Programming',
-      level: 'Beginner',
-      students: 500,
-      rating: 4.4,
-      duration: '12h content'
-    }
+    { title: 'Full-Stack Web Development', level: 'Advanced',     students: 320, rating: 4.8, duration: '24h content' },
+    { title: 'Angular & ASP.NET Core API',  level: 'Intermediate', students: 210, rating: 4.6, duration: '18h content' },
+    { title: 'Intro to Programming',        level: 'Beginner',     students: 500, rating: 4.4, duration: '12h content' }
   ];
 
   constructor(
@@ -49,13 +28,22 @@ export class InstructorProfile implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
-    if (!id) return;
+    const idParam = this.route.snapshot.paramMap.get('id');
 
-    this.instructorService.getById(id).subscribe({
-      next: res => this.instructor = res,
-      error: err => console.error(err)
-    });
+    if (idParam) {
+      // حالة: /instructor/5  (public profile)
+      const id = Number(idParam);
+      this.instructorService.getById(id).subscribe({
+        next: res => this.instructor = res,
+        error: err => console.error('Error loading instructor by id:', err)
+      });
+    } else {
+      // حالة: /instructor/profile  (current logged-in instructor)
+      this.instructorService.getMyProfile().subscribe({
+        next: res => this.instructor = res,
+        error: err => console.error('Error loading my instructor profile:', err)
+      });
+    }
   }
 
   setTab(tab: 'about' | 'certifications' | 'courses') {
@@ -68,16 +56,13 @@ export class InstructorProfile implements OnInit {
 
   getCertificateImage(url: string | undefined): string {
     if (!url) return '';
-
-    // دعم لينك Google Drive
     if (url.includes('drive.google.com')) {
       const id = url.match(/\/d\/(.*?)\//)?.[1];
       if (id) {
         return `https://drive.google.com/uc?export=view&id=${id}`;
       }
     }
-
-    // لو لينك مباشر لصورة
     return url;
   }
 }
+

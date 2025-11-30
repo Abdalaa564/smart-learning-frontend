@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Unit } from '../../../models/Unit ';
 import { UnitService } from '../../../Services/unit.service';
+import { CourseService } from '../../../Services/course.service';
 
 @Component({
   selector: 'app-units',
@@ -13,19 +14,29 @@ import { UnitService } from '../../../Services/unit.service';
 export class Units implements OnInit {
 
   courseId!: number;
+ courseName: string = '';
+
   units: Unit[] = [];
   isLoading = false;
 
   constructor(
     private route: ActivatedRoute,
-    private unitService: UnitService
+    private unitService: UnitService,
+      private courseService: CourseService
   ) {}
 
   ngOnInit(): void {
     // من الروت: Courses/:id/units
     this.courseId = Number(this.route.snapshot.paramMap.get('id'));
-    this.loadUnits();
-  }
+    this.courseService.getCourseById(this.courseId).subscribe({
+    next: (course) => {
+      this.courseName = course.crs_Name;
+    }
+  });
+
+  this.loadUnits();
+}
+  
 
   loadUnits(): void {
     this.isLoading = true;

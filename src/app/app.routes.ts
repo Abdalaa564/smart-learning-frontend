@@ -38,6 +38,7 @@ export const routes: Routes = [
 
     {path:"Home", component: Home, title: 'Home' },
     {path:"instructors", component: InstructorsListComponent  },
+     { path: 'instructor/profile', component: InstructorProfile },
     { path: 'instructor/:id', component: InstructorProfile },
     { path: 'instructors/add', component: AddInstructorComponent },
   { path: 'instructors/edit/:id', component: EditInstructorComponent },
