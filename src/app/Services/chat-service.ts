@@ -18,17 +18,6 @@ export class ChatService {
 
   constructor(private http: HttpClient) {}
 
-  // askChatGPT(prompt: string) {
-  //   return this.http.post(
-  //   this.apiUrl,
-  //   `"${prompt}"`,
-  //   { 
-  //     responseType: 'text',
-  //     headers: { 'Content-Type': 'application/json' }
-  //   }
-  //   ).toPromise();
-  // }
-
   askChatGPT(messages: ChatGPTMessage[]) {
     const body: ChatRequest = { messages };
     return this.http.post(this.apiUrl, body, { responseType: 'text' }).toPromise();
