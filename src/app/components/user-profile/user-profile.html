@@ -3,17 +3,17 @@
   <!-- LEFT PROFILE CARD -->
   <div class="profile-sidebar glass-card">
     <div class="avatar-container">
-      <img class="avatar-img" 
+      <img alt="" class="avatar-img" 
            src="https://bootdey.com/img/Content/avatar/avatar7.png">
     </div>
 
     <h2 class="profile-name">
-      {{ profile?.firstName }} {{ profile?.lastName }}
+      {{ profile.firstName }} {{ profile.lastName }}
     </h2>
     <p class="profile-role">Student</p>
     <p class="profile-location">
       <i class="bi bi-geo-alt-fill"></i>
-      {{ profile?.city }}, {{ profile?.address }}
+      {{ profile.city }}, {{ profile.address }}
     </p>
 
     <button class="btn-edit" (click)="toggleEdit()">
@@ -30,22 +30,22 @@
 
     <div class="info-row">
       <span class="info-label"><i class="bi bi-person"></i> Full Name</span>
-      <span class="info-value">{{ profile?.firstName }} {{ profile?.lastName }}</span>
+      <span class="info-value">{{ profile.firstName }} {{ profile.lastName }}</span>
     </div>
 
     <div class="info-row">
       <span class="info-label"><i class="bi bi-cake"></i> Date of Birth</span>
-      <span class="info-value">{{ profile?.dateOfBirth | date:'mediumDate' }}</span>
+      <span class="info-value">{{ profile.dateOfBirth | date:'mediumDate' }}</span>
     </div>
 
     <div class="info-row">
       <span class="info-label"><i class="bi bi-phone"></i> Phone Number</span>
-      <span class="info-value">{{ profile?.phoneNumber }}</span>
+      <span class="info-value">{{ profile.phoneNumber }}</span>
     </div>
 
     <div class="info-row">
       <span class="info-label"><i class="bi bi-house"></i> Address</span>
-      <span class="info-value">{{ profile?.address }}, {{ profile?.city }}</span>
+      <span class="info-value">{{ profile.address }}, {{ profile.city }}</span>
     </div>
 
   </div>
@@ -66,32 +66,32 @@
 
       <div class="input-group">
         <label>First Name</label>
-        <input formControlName="firstName">
+        <input formControlName="firstName" placeholder="firstName">
       </div>
 
       <div class="input-group">
         <label>Last Name</label>
-        <input formControlName="lastName">
+        <input formControlName="lastName" placeholder="lastName">
       </div>
 
       <div class="input-group">
         <label>Phone Number</label>
-        <input formControlName="phoneNumber">
+        <input formControlName="phoneNumber" placeholder="phoneNumber">
       </div>
 
       <div class="input-group">
         <label>Date of Birth</label>
-        <input type="date" formControlName="dateOfBirth">
+        <input type="date" formControlName="dateOfBirth" placeholder="dateOfBirth">
       </div>
 
       <div class="input-group">
         <label>Address</label>
-        <input formControlName="address">
+        <input formControlName="address" placeholder="Address">
       </div>
 
       <div class="input-group">
         <label>City</label>
-        <input formControlName="city">
+        <input formControlName="city" placeholder="City">
       </div>
 
       <div class="modal-actions">

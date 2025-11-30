@@ -40,13 +40,22 @@ loginForm: FormGroup;
     }
 
     this.loading = true;
+    
     this.authService.login(this.loginForm.value).subscribe({
-      next: (response) => {
+      next: res => {
+        const role = this.authService.getRoleFromToken();  // 👈 برضو من authService
+
+        if (role === 'Instructor') {
+          this.router.navigate(['/instructor/profile']);
+        } else {
+          this.router.navigate(['/userProfile']);
+        }
+
         this.loading = false;
-        this.router.navigate(['/userProfile']);
       },
-      error: (error) => {
-        this.error = error.error?.message || 'Login failed';
+      error: err => {
+        console.error(err);
+        this.error = err.error?.message || 'Login failed';
         this.loading = false;
       }
     });

@@ -28,7 +28,7 @@ export class AuthService {
     return this.http.post<Authresponse>(`${this.apiUrl}/Account/register`,data)
     .pipe(tap
       (response=>{
-        if(response.success && response.token){
+        if(response.success && response.token&& response.data){
            this.saveToken(response.token.accessToken);
             this.saveUser(response.data);
             this.currentUserSubject.next(response.data);
@@ -46,8 +46,12 @@ export class AuthService {
         tap(response => {
           if (response.success && response.token) {
             this.saveToken(response.token.accessToken);
-            this.saveUser(response.data);
-            this.currentUserSubject.next(response.data);
+             const role = this.getRoleFromToken();
+             // 2) هات الـ role من التوكن
+           if (role === 'Student' && response.data) {
+          this.saveUser(response.data);
+          this.currentUserSubject.next(response.data);
+        }
             this.isAuthenticatedSubject.next(true);
           }
         })
@@ -77,6 +81,24 @@ removeUser() {
   getToken(): string | null {
     return localStorage.getItem(this.tokenKey);
   }
+    getRoleFromToken(): string | null {
+    const token = this.getToken();
+    if (!token) return null;
+
+    try {
+      const payload = token.split('.')[1];
+      const decodedJson = atob(payload);
+      const decoded = JSON.parse(decodedJson);
+
+      // الكليم بتاع الـ role في .NET غالبًا بالشكل ده:
+      const roleClaim = "http://schemas.microsoft.com/ws/2008/06/identity/claims/role";
+      return decoded[roleClaim] || null;
+    } catch (e) {
+      console.error('Failed to decode token', e);
+      return null;
+    }
+  }
+
 
   hasToken(): boolean {
     return !!this.getToken();

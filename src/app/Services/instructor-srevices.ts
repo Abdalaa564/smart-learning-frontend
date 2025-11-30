@@ -44,5 +44,8 @@ export class InstructorService {
     responseType: 'text' as 'json'
   });
 }
+getMyProfile(): Observable<Instructor> {
+    return this.http.get<Instructor>(`${environment.apiBase}/Account/instructor-profile`);
+  }
 
 }
