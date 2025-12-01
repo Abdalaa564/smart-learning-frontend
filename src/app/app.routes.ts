@@ -27,6 +27,9 @@ import { DeleteCourse } from './components/delete-course/delete-course';
 import { AdminPanelComponent } from './components/admin/admin';
 import { JitsiComponent } from './components/jitsi/jitsi.component';
 import { MeetingSetupComponent } from './components/meeting-setup/meeting-setup.component';
+import { LessonDetails } from './components/lessons/lesson-details/lesson-details';
+import { EditLesson } from './components/lessons/updatelesson/updatelesson';
+import { DeleteLesson } from './components/lessons/delete-lesson/delete-lesson';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'Home', pathMatch: 'full' },
@@ -43,8 +46,11 @@ export const routes: Routes = [
     { path: 'Courses/:id/units', component: Units },
     { path: 'Courses/:id/units/add', component: AddUnit },
     { path: 'Courses/:id/units/edit/:unitId', component: UpdateUnit },
-    { path: 'Courses/:courseId/units/:unitId/lessons', component: Lessons },
-    { path: 'Courses/:courseId/units/:unitId/lessons/add', component: AddLesson },
+   { path: 'Courses/:courseId/units/:unitId/lessons', component: Lessons },
+  { path: 'Courses/:courseId/units/:unitId/lessons/add', component: AddLesson },
+  { path: 'Courses/:courseId/units/:unitId/lessons/:lessonId', component: LessonDetails },
+  { path: 'Courses/:courseId/units/:unitId/lessons/:lessonId/edit', component: EditLesson },
+  { path: 'Courses/:courseId/units/:unitId/lessons/:lessonId/delete', component: DeleteLesson },
     { path: 'courses/add', component: AddCourse },
     { path: 'courses/edit/:id', component: EditCourse },
     { path: 'Courses/delete/:id', component: DeleteCourse },

@@ -81,19 +81,90 @@
             <strong>Unit:</strong> {{ unit?.unit_Name }}
           </p>
 
-          <div class="d-flex justify-content-end">
-            <a
-              *ngIf="getPdfDownloadUrl(lesson) as pdfUrl"
-              [href]="pdfUrl"
-              target="_blank"
-              class="btn btn-outline-success btn-sm px-3">
-              ⬇ Download PDF
-            </a>
+          <!-- Section: Download + CRUD Icons -->
+          <div class="d-flex justify-content-between align-items-center">
 
-            <span *ngIf="!getPdfDownloadUrl(lesson)" class="text-muted small">
-              No PDF attached
-            </span>
+            <!-- Download PDF if available -->
+            <div>
+              <a
+                *ngIf="getPdfDownloadUrl(lesson) as pdfUrl"
+                [href]="pdfUrl"
+                target="_blank"
+                class="btn btn-outline-success btn-sm px-3 me-2"
+                title="Download PDF">
+                ⬇ PDF
+              </a>
+
+              <span *ngIf="!getPdfDownloadUrl(lesson)" class="text-muted small">
+                No PDF available
+              </span>
+            </div>
+
+            <!-- CRUD Icons -->
+            <div class="d-flex gap-2">
+
+              <!-- View Details -->
+              <a
+                class="btn btn-sm btn-outline-secondary"
+                [routerLink]="[
+                  '/Courses',
+                  courseId,
+                  'units',
+                  unitId,
+                  'lessons',
+                  lesson.lesson_Id
+                ]"
+                title="View details">
+                <i class="bi bi-eye"></i>
+              </a>
+
+              <!-- Edit -->
+              <a
+                class="btn btn-sm btn-outline-primary"
+                [routerLink]="[
+                  '/Courses',
+                  courseId,
+                  'units',
+                  unitId,
+                  'lessons',
+                  lesson.lesson_Id,
+                  'edit'
+                ]"
+                title="Edit lesson">
+                <i class="bi bi-pencil"></i>
+              </a>
+
+              <!-- Create Quiz -->
+              <a
+                class="btn btn-sm btn-outline-warning"
+                [routerLink]="[
+                  '/lesson',
+                  lesson.lesson_Id,
+                  'create-quiz'
+                ]"
+                title="Create quiz for this lesson">
+                <i class="bi bi-question-circle"></i>
+              </a>
+
+              <!-- Delete -->
+              <a
+                class="btn btn-sm btn-outline-danger"
+                [routerLink]="[
+                  '/Courses',
+                  courseId,
+                  'units',
+                  unitId,
+                  'lessons',
+                  lesson.lesson_Id,
+                  'delete'
+                ]"
+                title="Delete lesson">
+                <i class="bi bi-trash"></i>
+              </a>
+            </div>
+
           </div>
+          <!-- End of section -->
 
         </div>
 

@@ -1,11 +1,13 @@
+// lessons.ts
 import { Component, OnInit } from '@angular/core';
-import { Unit } from '../../../models/Unit ';
-import { Lesson } from '../../../models/LessonResource ';
+
 import { environment } from '../../../environment/environment';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { LessonService } from '../../../Services/lesson.service';
 import { UnitService } from '../../../Services/unit.service';
 import { CommonModule } from '@angular/common';
+import { Unit } from '../../../models/Unit ';
+import { Lesson } from '../../../models/LessonResource ';
 
 @Component({
   selector: 'app-lessons',
@@ -27,6 +29,7 @@ export class Lessons implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private lessonService: LessonService,
     private unitService: UnitService
   ) {}
@@ -41,12 +44,8 @@ export class Lessons implements OnInit {
 
   loadUnit(): void {
     this.unitService.getUnit(this.unitId).subscribe({
-      next: (u) => {
-        this.unit = u;
-      },
-      error: (err) => {
-        console.error('Error loading unit:', err);
-      }
+      next: (u) => this.unit = u,
+      error: (err) => console.error('Error loading unit:', err)
     });
   }
 
@@ -81,5 +80,23 @@ export class Lessons implements OnInit {
   getPdfDownloadUrl(lesson: Lesson): string | null {
     const pdf = this.getPdfResource(lesson);
     return pdf ? pdf.resource_Url : null;
+  }
+
+  // ✅ حذف الدرس
+  onDeleteLesson(lesson: Lesson) {
+    if (!confirm(`هل أنت متأكد من حذف الدرس "${lesson.lesson_Name}" ؟`)) {
+      return;
+    }
+
+    this.lessonService.deleteLesson(lesson.lesson_Id).subscribe({
+      next: () => {
+        // شيله من الليست من غير ما تعيد تحميل API لو حابب
+        this.lessons = this.lessons.filter(l => l.lesson_Id !== lesson.lesson_Id);
+      },
+      error: (err) => {
+        console.error('Error deleting lesson:', err);
+        alert('حدث خطأ أثناء حذف الدرس');
+      }
+    });
   }
 }
