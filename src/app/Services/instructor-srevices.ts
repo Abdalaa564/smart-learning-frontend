@@ -47,5 +47,9 @@ export class InstructorService {
 getMyProfile(): Observable<Instructor> {
     return this.http.get<Instructor>(`${environment.apiBase}/Account/instructor-profile`);
   }
+  getCount(): Observable<{ totalInstructors: number }> {
+  return this.http.get<{ totalInstructors: number }>(`${this.baseUrl}/count`);
+}
+
 
 }
