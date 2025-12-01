@@ -1,1 +1,60 @@
-<p>updatelesson works!</p>
+<!-- edit-lesson.html -->
+<div class="container py-4">
+
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h3 class="mb-0">Edit Lesson</h3>
+
+    <a
+      class="btn btn-secondary btn-sm"
+      (click)="cancel()">
+      ← Back
+    </a>
+  </div>
+
+  <div *ngIf="isLoading" class="alert alert-info">
+    Loading...
+  </div>
+
+  <div *ngIf="!isLoading">
+
+    <div *ngIf="errorMessage" class="alert alert-danger">
+      {{ errorMessage }}
+    </div>
+
+    <form (ngSubmit)="onSubmit()" novalidate>
+
+      <div class="mb-3">
+        <label class="form-label">Lesson Name</label>
+        <input placeholder="Lesson Name"
+          type="text"
+          class="form-control"
+          [(ngModel)]="lessonName"
+          name="lessonName"
+          required
+        />
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Lesson Description</label>
+        <textarea placeholder="lesson Descripetion"
+          class="form-control"
+          rows="3"
+          [(ngModel)]="lessonDescription"
+          name="lessonDescription">
+        </textarea>
+      </div>
+
+      <div class="d-flex justify-content-end gap-2">
+        <button type="button" class="btn btn-outline-secondary" (click)="cancel()">
+          Cancel
+        </button>
+        <button type="submit" class="btn btn-primary" [disabled]="isSubmitting">
+          {{ isSubmitting ? 'Saving...' : 'Save Changes' }}
+        </button>
+      </div>
+
+    </form>
+
+  </div>
+
+</div>

@@ -1,29 +1,27 @@
+// delete-lesson.ts
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { Lesson } from '../../../models/LessonResource ';
-import { LessonService } from '../../../Services/lesson.service';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { LessonService } from '../../../Services/lesson.service';
+import { Lesson } from '../../../models/LessonResource ';
 
 @Component({
-  selector: 'app-updatelesson',
-  imports: [CommonModule,FormsModule,RouterLink],
-  templateUrl: './updatelesson.html',
-  styleUrl: './updatelesson.css',
+  selector: 'app-delete-lesson',
+  standalone: true,
+  imports: [CommonModule, RouterLink],
+  templateUrl: './delete-lesson.html',
+  styleUrl: './delete-lesson.css',
 })
-export class EditLesson implements OnInit {
+export class DeleteLesson implements OnInit {
 
   courseId!: number;
   unitId!: number;
   lessonId!: number;
 
-  lessonName = '';
-  lessonDescription = '';
-
+  lesson?: Lesson;
   isLoading = false;
-  isSubmitting = false;
+  isDeleting = false;
   errorMessage = '';
-  successMessage = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -43,9 +41,8 @@ export class EditLesson implements OnInit {
     this.isLoading = true;
     this.lessonService.getLessonById(this.lessonId).subscribe({
       next: (lesson: Lesson) => {
-        // ✅ رجعنا البيانات القديمة وملينا الفورم
-        this.lessonName = lesson.lesson_Name;
-        this.lessonDescription = lesson.lessonDescription ?? '';
+        // ✅ بنعرض البيانات قبل الحذف
+        this.lesson = lesson;
         this.isLoading = false;
       },
       error: (err) => {
@@ -56,27 +53,15 @@ export class EditLesson implements OnInit {
     });
   }
 
-  onSubmit() {
-    this.errorMessage = '';
-    this.successMessage = '';
+  confirmDelete() {
+    if (!this.lesson) { return; }
 
-    if (!this.lessonName.trim()) {
-      this.errorMessage = 'Lesson name is required.';
-      return;
-    }
-
-    this.isSubmitting = true;
-
-    const body = {
-      lesson_Name: this.lessonName,
-      lessonDescription: this.lessonDescription
-    };
-
-    this.lessonService.updateLesson(this.lessonId, body).subscribe({
+    this.isDeleting = true;
+    this.lessonService.deleteLesson(this.lessonId).subscribe({
       next: () => {
-        this.isSubmitting = false;
-        // تقدر تعرض رسالة أو ترجع لصفحة التفاصيل
-         this.router.navigate([
+        this.isDeleting = false;
+        // بعد الحذف نرجع لليستة الدروس
+        this.router.navigate([
           '/Courses',
           this.courseId,
           'units',
@@ -86,8 +71,8 @@ export class EditLesson implements OnInit {
       },
       error: (err) => {
         console.error(err);
-        this.isSubmitting = false;
-        this.errorMessage = 'Error while updating lesson.';
+        this.isDeleting = false;
+        this.errorMessage = 'حدث خطأ أثناء حذف الدرس.';
       }
     });
   }
@@ -98,8 +83,7 @@ export class EditLesson implements OnInit {
       this.courseId,
       'units',
       this.unitId,
-      'lessons',
-      this.lessonId
+      'lessons'
     ]);
   }
 }

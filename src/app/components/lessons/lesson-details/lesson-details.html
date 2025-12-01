@@ -1,0 +1,73 @@
+<!-- lesson-details.html -->
+<div class="container py-4">
+
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h3 class="mb-0">Lesson Details</h3>
+
+    <div class="d-flex gap-2">
+      <a
+        class="btn btn-secondary btn-sm"
+        (click)="goBack()">
+        ← Back to Lessons
+      </a>
+
+      <a
+        class="btn btn-primary btn-sm"
+        [routerLink]="[
+          '/Courses',
+          courseId,
+          'units',
+          unitId,
+          'lessons',
+          lessonId,
+          'edit'
+        ]">
+        Edit
+      </a>
+
+      <a
+        class="btn btn-danger btn-sm"
+        [routerLink]="[
+          '/Courses',
+          courseId,
+          'units',
+          unitId,
+          'lessons',
+          lessonId,
+          'delete'
+        ]">
+        Delete
+      </a>
+    </div>
+  </div>
+
+  <div *ngIf="isLoading" class="alert alert-info">Loading...</div>
+  <div *ngIf="!isLoading && errorMessage" class="alert alert-danger">
+    {{ errorMessage }}
+  </div>
+
+  <div *ngIf="!isLoading && lesson">
+
+    <h4>{{ lesson.lesson_Name }}</h4>
+    <p class="text-muted">{{ lesson.lessonDescription }}</p>
+
+    <h5>Resources</h5>
+    <ul *ngIf="lesson.resources && lesson.resources.length > 0">
+      <li *ngFor="let r of lesson.resources">
+        <strong>{{ r.resource_Name }}</strong>
+        <span class="text-muted"> ({{ r.resource_Type }})</span>
+        <div>
+          <a *ngIf="r.resource_Url" [href]="r.resource_Url" target="_blank">
+            Open
+          </a>
+        </div>
+      </li>
+    </ul>
+
+    <p *ngIf="!lesson.resources || lesson.resources.length === 0" class="text-muted">
+      No resources for this lesson.
+    </p>
+
+  </div>
+
+</div>

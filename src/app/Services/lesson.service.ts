@@ -1,3 +1,4 @@
+// lesson.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -14,17 +15,25 @@ export class LessonService {
 
   constructor(private http: HttpClient) {}
 
-  // GET /api/Lesson/unit/{unitId}
   getLessonsByUnit(unitId: number): Observable<Lesson[]> {
-    // عدّل مسار الـ API هنا لو عندك Route مختلف
     return this.http.get<Lesson[]>(`${this.baseUrl}/unit/${unitId}`);
   }
 
-  // لو حبيت تستخدمه لاحقاً
   getLessonById(id: number): Observable<Lesson> {
     return this.http.get<Lesson>(`${this.baseUrl}/${id}`);
   }
-   createLesson(formData: FormData) {
+
+  createLesson(formData: FormData) {
     return this.http.post<any>(`${this.baseUrl}/create`, formData);
+  }
+
+  // ✅ UPDATE
+  updateLesson(id: number, body: { lesson_Name: string; lessonDescription: string }) {
+    return this.http.put(`${this.baseUrl}/${id}`, body);
+  }
+
+  // ✅ DELETE
+  deleteLesson(id: number) {
+    return this.http.delete(`${this.baseUrl}/${id}`);
   }
 }

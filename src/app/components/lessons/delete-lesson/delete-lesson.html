@@ -1,0 +1,48 @@
+<!-- delete-lesson.html -->
+<div class="container py-4">
+
+  <h3 class="mb-3 text-danger">Confirm Delete</h3>
+
+  <div *ngIf="isLoading" class="alert alert-info">
+    Loading...
+  </div>
+
+  <div *ngIf="!isLoading && errorMessage" class="alert alert-danger">
+    {{ errorMessage }}
+  </div>
+
+  <div *ngIf="!isLoading && lesson">
+
+    <p>Are You Sure Delete This Lesson!!.</p>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h5 class="card-title">{{ lesson.lesson_Name }}</h5>
+        <p class="card-text text-muted">{{ lesson.lessonDescription }}</p>
+
+        <p class="mb-0">
+          <strong>Lesson Id:</strong> {{ lesson.lesson_Id }}
+        </p>
+        <p class="mb-0">
+          <strong>Unit Id:</strong> {{ lesson.unit_Id }}
+        </p>
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-end gap-2">
+      <button
+        class="btn btn-outline-secondary"
+        (click)="cancel()"
+        [disabled]="isDeleting">
+        Cancel
+      </button>
+      <button
+        class="btn btn-danger"
+        (click)="confirmDelete()"
+        [disabled]="isDeleting">
+        {{ isDeleting ? 'Deleting...' : 'Yes, delete' }}
+      </button>
+    </div>
+  </div>
+
+</div>
