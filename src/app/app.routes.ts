@@ -4,7 +4,7 @@ import { UserProfile } from './components/user-profile/user-profile';
 import { ChatRome } from './components/chat-rome/chat-rome';
 import { Routes } from '@angular/router';
 import { Home } from './components/home/home';
-import { InstructorsListComponent  } from './components/instructors/instructors';
+import { InstructorsListComponent } from './components/instructors/instructors';
 import { InstructorProfile } from './components/instructor-profile/instructor-profile';
 import { Courses } from './components/courses/courses';
 import { Login } from './components/login/login';
@@ -23,36 +23,48 @@ import { TakeQuizComponent } from './components/take-quiz-component/take-quiz-co
 import { QuizResultComponent } from './components/quiz-result-component/quiz-result-component';
 import { QuizListComponent } from './components/quiz-list-component/quiz-list-component';
 import { Lessons } from './components/lessons/lessons/lessons';
+import { AddInstructorComponent } from './components/InstructorCrud/add-instructor/add-instructor';
+import { EditInstructorComponent } from './components/InstructorCrud/edit-instructor/edit-instructor';
+import { ConfirmDeleteInstructorComponent } from './components/InstructorCrud/delete-instructor/delete-instructor';
+import { DeleteCourse } from './components/delete-course/delete-course';
+import { enrollmentGuard } from './guard/enrollment-guard';
+import { MyCourses } from './components/user-profile/my-courses/my-courses';
 
 export const routes: Routes = [
+  { path: '', redirectTo: 'Home', pathMatch: 'full' },
 
+  { path: '', redirectTo: 'Home', pathMatch: 'full' },
 
-    {path: '', redirectTo: 'Home', pathMatch: 'full' },
+  { path: 'Home', component: Home, title: 'Home' },
+  { path: 'instructors', component: InstructorsListComponent },
+  { path: 'instructor/:id', component: InstructorProfile },
+  { path: 'instructors/add', component: AddInstructorComponent },
+  { path: 'instructors/edit/:id', component: EditInstructorComponent },
+  { path: 'instructors/:id/confirm-delete', component: ConfirmDeleteInstructorComponent },
+  { path: 'Courses', component: Courses },
+  { path: 'Courses/:id/units', component: Units, canActivate: [enrollmentGuard] },
+  { path: 'Courses/:id/units/add', component: AddUnit },
+  { path: 'Courses/:id/units/edit/:unitId', component: UpdateUnit },
+  { path: 'Courses/:courseId/units/:unitId/lessons', component: Lessons },
+  { path: 'Courses/:courseId/units/:unitId/lessons/add', component: AddLesson },
+  { path: 'courses/add', component: AddCourse },
+  { path: 'courses/edit/:id', component: EditCourse },
+  { path: 'Courses/delete/:id', component: DeleteCourse },
+  { path: 'exam', component: Exam, title: 'Exam' },
+  { path: 'meeting', component: Meeting, title: 'Meeting' },
+  { path: 'meeting-setup/:id', component: MeetingSetup, title: 'MeetingSetup' },
+  // {path:'meeting-setup', component: MeetingSetup, title: 'MeetingSetup' },
+  { path: 'Layout', component: Layout, title: 'Layout' },
+  { path: 'chatRome', component: ChatRome, title: 'ChatRome' },
+  { path: 'lesson/:lessonId/quizzes', component: QuizListComponent, title: 'Quiz Result' },
+  { path: 'quiz/take/:quizId', component: TakeQuizComponent, title: 'Take Quiz' },
+  { path: 'quiz/result/:quizId', component: QuizResultComponent, title: 'Quiz Result' },
+  { path: 'lesson/:lessonId/create-quiz', component: CreateQuizComponent, title: 'CreateQuiz' },
+  { path: 'userProfile', component: UserProfile, title: 'UserProfile' },
+  { path: 'lessons', component: Lessons, title: 'Lessons' },
+  { path: 'login', component: Login, title: 'Login' },
+  { path: 'register', component: Register, title: 'Register' },
+  { path: 'student/:id/courses', component: MyCourses },
 
-    {path:"Home", component: Home, title: 'Home' },
-    {path:"instructors", component: InstructorsListComponent , title: 'Instructors' },
-    { path: 'instructor/:id', component: InstructorProfile },
-    {path: "Courses", component: Courses },
-    { path: 'Courses/:id/units', component: Units },
-    { path: 'Courses/:id/units/add', component: AddUnit },
-    { path: 'Courses/:id/units/edit/:unitId', component: UpdateUnit },
-    { path: 'Courses/:courseId/units/:unitId/lessons', component: Lessons },
-    { path: 'Courses/:courseId/units/:unitId/lessons/add', component: AddLesson },
-    { path: 'courses/add', component: AddCourse },
-    { path: 'courses/edit/:id', component: EditCourse },
-    {path:'exam', component: Exam, title: 'Exam' },
-    {path:'meeting', component: Meeting, title: 'Meeting' },
-    {path:'meeting-setup/:id', component: MeetingSetup, title: 'MeetingSetup' },
-    // {path:'meeting-setup', component: MeetingSetup, title: 'MeetingSetup' },
-    {path:'Layout', component: Layout, title: 'Layout' },
-    {path:'chatRome', component: ChatRome, title: 'ChatRome' },
-    {path:'lesson/:lessonId/quizzes', component: QuizListComponent, title: 'Quiz Result' },
-    {path:'quiz/take/:quizId', component: TakeQuizComponent, title: 'Take Quiz' },
-    {path:'quiz/result/:quizId', component: QuizResultComponent, title: 'Quiz Result' },
-    {path:'lesson/:lessonId/create-quiz', component: CreateQuizComponent, title: 'CreateQuiz' },
-    {path:'userProfile', component: UserProfile, title: 'UserProfile' },
-    {path:'lessons', component: Lessons, title: 'Lessons' },
-    {path: 'login', component: Login, title: 'Login'},
-    {path: 'register', component: Register, title: 'Register'},
-    {path: '**', component:ErrorPage, title: 'Not Found'}
+  { path: '**', component: ErrorPage, title: 'Not Found' },
 ];
