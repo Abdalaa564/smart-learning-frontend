@@ -1,0 +1,26 @@
+
+
+export class User {
+  room: String = 'principalRoom'; // set your room name
+  name: String = ''; // set your room name
+
+  constructor() {
+    this.room = 'principalRoom';
+  }
+
+  getRoom() {
+    return this.room;
+  }
+
+  setRoom(roomName: String) {
+    this.room = roomName;
+  }
+
+  getName() {
+    return this.name;
+  }
+
+  setName(name: String) {
+    this.name = name;
+  }
+}
