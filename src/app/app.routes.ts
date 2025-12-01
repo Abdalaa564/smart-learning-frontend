@@ -27,6 +27,7 @@ import { AddInstructorComponent } from './components/InstructorCrud/add-instruct
 import { EditInstructorComponent } from './components/InstructorCrud/edit-instructor/edit-instructor';
 import { ConfirmDeleteInstructorComponent } from './components/InstructorCrud/delete-instructor/delete-instructor';
 import { DeleteCourse } from './components/delete-course/delete-course';
+import { AdminPanelComponent } from './components/admin/admin';
 
 export const routes: Routes = [
 
@@ -35,6 +36,7 @@ export const routes: Routes = [
 
 
     {path: '', redirectTo: 'Home', pathMatch: 'full' },
+    { path: 'admin', component: AdminPanelComponent, title: 'Admin Panel' },
 
     {path:"Home", component: Home, title: 'Home' },
     {path:"instructors", component: InstructorsListComponent  },

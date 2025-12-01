@@ -90,4 +90,8 @@ export class CourseService {
       responseType: 'text' as 'json'
     });
   }
+  getCount(): Observable<{ totalCourses: number }> {
+  return this.http.get<{ totalCourses: number }>(`${this.baseUrl}/count`);
+}
+
 }
