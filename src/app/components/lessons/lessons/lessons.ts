@@ -8,6 +8,8 @@ import { UnitService } from '../../../Services/unit.service';
 import { CommonModule } from '@angular/common';
 import { Unit } from '../../../models/Unit ';
 import { Lesson } from '../../../models/LessonResource ';
+import { EnrollmentService } from '../../../Services/enrollment-service';
+import { AuthService } from '../../../Services/auth-service';
 
 @Component({
   selector: 'app-lessons',
@@ -24,19 +26,28 @@ export class Lessons implements OnInit {
   lessons: Lesson[] = [];
   isLoading = false;
   errorMessage = '';
-
+  isEnrolled = false;
+  freeLessonsLimit = 3;   
+  freeUnitId = 1; 
   env = environment;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private lessonService: LessonService,
-    private unitService: UnitService
+    private unitService: UnitService,
+    private enrollmentService: EnrollmentService,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
     this.courseId = Number(this.route.snapshot.paramMap.get('courseId'));
     this.unitId = Number(this.route.snapshot.paramMap.get('unitId'));
+    const studentId = this.authService.UserId;
+    if (studentId) {
+      this.enrollmentService.isStudentEnrolled(studentId, this.courseId)
+        .subscribe(res => this.isEnrolled = res);
+    }
 
     this.loadUnit();
     this.loadLessons();
@@ -64,7 +75,16 @@ export class Lessons implements OnInit {
       }
     });
   }
+ canAccessLesson(index: number): boolean {
+    // If enrolled, grant full access
+    if (this.isEnrolled) return true;
 
+    // Only first unit's first 3 lessons are free
+    if (this.unitId === this.freeUnitId && index < this.freeLessonsLimit) {
+      return true;
+    }
+    return false;
+  }
   getPdfResource(lesson: Lesson) {
     return lesson.resources?.find(r => r.resource_Type === 'pdf');
   }

@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../Services/auth-service';
+import { ageRangeValidator } from '../../validators/date-range.validator';
 
 @Component({
   selector: 'app-register',
@@ -26,8 +27,8 @@ registerForm: FormGroup;
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      phoneNumber: ['', Validators.required],
-      dateOfBirth: ['', Validators.required],
+      phoneNumber: ['', [Validators.required, Validators.pattern(/^01[0-2,5]{1}[0-9]{8}$/)]],
+      dateOfBirth: ['',[ageRangeValidator(20, 80)]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', Validators.required],
       address: ['', Validators.required],

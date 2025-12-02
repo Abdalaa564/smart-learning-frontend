@@ -182,3 +182,20 @@
   opacity: 0.5;
   cursor: not-allowed;
 }
+.btn-courses {
+  margin-top: 10px;
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  background: var(--accent-color);
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn-courses:hover {
+  background: var(--accent-color);
+  transform: translateY(-2px);
+}
