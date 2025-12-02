@@ -14,10 +14,10 @@ export class AuthService {
   private tokenKey = 'access_token';
   private userKey = 'current_user';
 
-  private currentUserSubject = new BehaviorSubject<Studentprofile | null>(this.getUserFromStorage());
+  public currentUserSubject = new BehaviorSubject<Studentprofile | null>(this.getUserFromStorage());
   public currentUser$ = this.currentUserSubject.asObservable();
 
-  private isAuthenticatedSubject = new BehaviorSubject<boolean>(this.hasToken());
+  public isAuthenticatedSubject = new BehaviorSubject<boolean>(this.hasToken());
   public isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
 
   constructor(private http: HttpClient) {}
