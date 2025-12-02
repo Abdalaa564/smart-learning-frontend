@@ -35,18 +35,23 @@ export class AuthService {
     );
   }
 
-  login(data: Login): Observable<Authresponse> {
+ login(data:Login): Observable<Authresponse> {
     return this.http.post<Authresponse>(`${this.apiUrl}/Account/login`, data).pipe(
-      tap(response => {
-        if (response.success && response.token&& response.data) {
-          this.saveToken(response.token.accessToken);
+        tap(response => {
+          if (response.success && response.token) {
+            this.saveToken(response.token.accessToken);
+             const role = this.getRoleFromToken();
+             // 2) هات الـ role من التوكن
+           if (role === 'Student' && response.data) {
           this.saveUser(response.data);
           this.currentUserSubject.next(response.data);
-          this.isAuthenticatedSubject.next(true);
         }
-      })
-    );
+            this.isAuthenticatedSubject.next(true);
+          }
+        })
+      );
   }
+
 
   logout(): Observable<any> {
     return this.http.post(`${this.apiUrl}/Account/logout`, {}).pipe(
@@ -70,7 +75,23 @@ export class AuthService {
   getToken(): string | null {
     return localStorage.getItem(this.tokenKey);
   }
+ getRoleFromToken(): string | null {
+    const token = this.getToken();
+    if (!token) return null;
 
+    try {
+      const payload = token.split('.')[1];
+      const decodedJson = atob(payload);
+      const decoded = JSON.parse(decodedJson);
+
+      // الكليم بتاع الـ role في .NET غالبًا بالشكل ده:
+      const roleClaim = "http://schemas.microsoft.com/ws/2008/06/identity/claims/role";
+      return decoded[roleClaim] || null;
+    } catch (e) {
+      console.error('Failed to decode token', e);
+      return null;
+    }
+  }
   hasToken(): boolean {
     return !!this.getToken();
   }
@@ -99,7 +120,15 @@ export class AuthService {
   }
 
   // لو جوا Studentprofile فيه userId (string)
+  // get currentIdentityUserId(): string | null {
+  //   return this.currentUserSubject.value?.userId ?? null;
+  // }
+  // 👇👇 Getter للـ userId (عدّل اسم الخاصية حسب Studentprofile)
   get currentIdentityUserId(): string | null {
-    return this.currentUserSubject.value?.userId ?? null;
+    // لو Studentprofile فيه id:
+  return this.currentUserSubject.value?.userId ?? null;
+    // لو فيه studentId أو userId غيّر للسطر اللي يناسبك:
+    // return this.currentUserSubject.value?.studentId ?? null;
+    // return this.currentUserSubject.value?.userId ?? null;
   }
 }

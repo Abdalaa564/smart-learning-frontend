@@ -1,18 +1,11 @@
 import { Component } from '@angular/core';
 import { InstructorService } from '../../../Services/instructor-srevices';
 import { Router } from '@angular/router';
-<<<<<<< HEAD
 import { Instructor } from '../../../models/iinstructor';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../../Services/auth-service';
 import { CreateInstructorRequest } from '../../../models/CreateInstructorRequest ';
-=======
-import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
-
-import { CreateInstructorRequest } from '../../../models/CreateInstructorRequest ';
->>>>>>> master
 
 @Component({
   selector: 'app-add-instructor',
