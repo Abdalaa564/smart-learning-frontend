@@ -67,12 +67,12 @@ export const routes: Routes = [
   { path: 'Courses/delete/:id', component: DeleteCourse },
 
   // Units
-  { path: 'Courses/:id/units', component: Units, canActivate: [enrollmentGuard] },
+  { path: 'Courses/:id/units', component: Units},
   { path: 'Courses/:id/units/add', component: AddUnit },
   { path: 'Courses/:id/units/edit/:unitId', component: UpdateUnit },
 
   // Lessons
-  { path: 'Courses/:courseId/units/:unitId/lessons', component: Lessons },
+  { path: 'Courses/:courseId/units/:unitId/lessons', component: Lessons  },
   { path: 'Courses/:courseId/units/:unitId/lessons/add', component: AddLesson },
   { path: 'Courses/:courseId/units/:unitId/lessons/:lessonId', component: LessonDetails },
   { path: 'Courses/:courseId/units/:unitId/lessons/:lessonId/edit', component: EditLesson },

@@ -23,7 +23,7 @@ export class MyCourses implements OnInit {
   ) {}
 
   ngOnInit(): void {
-  this.studentId = this.authService.currentUserId!;
+  this.studentId = this.authService.UserId!;
 
   if (!this.studentId) {
     alert("Please login first.");

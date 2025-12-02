@@ -114,7 +114,7 @@ export class Courses implements OnInit {
 
   // ----------- ENROLLMENT ----------
   loadEnrolledCourses(): void {
-    const studentId = this.authService.currentUserId;
+    const studentId = this.authService.UserId;
     if (studentId) {
       this.enrollmentService.getStudentCourses(studentId).subscribe({
         next: (courses) => {
@@ -131,33 +131,24 @@ export class Courses implements OnInit {
     return this.enrolledCourses.has(id);
   }
 
-  goToUnits(course: Course): void {
-    const studentId = this.authService.currentUserId;
+ goToUnits(course: Course): void {
+  const studentId = this.authService.currentUserId;
 
-    if (!studentId) {
-      alert('⚠️ Please login to access course content.');
-      this.router.navigate(['/login']);
-      return;
-    }
-
-    if (course.crs_Id == null) {
-      console.error('Attempted to navigate to units for a course with missing crs_Id:', course);
-      alert('❌ Cannot access units: Course ID is missing.');
-      return;
-    }
-
-    if (!this.isEnrolledInCourse(course.crs_Id)) {
-      const confirmEnroll = confirm(
-        `You must enroll in "${course.crs_Name}" to access its units.\n\nWould you like to enroll now?`
-      );
-      if (confirmEnroll) {
-        this.enroll(course);
-      }
-      return;
-    }
-
-    this.router.navigate(['/Courses', course.crs_Id, 'units']);
+  if (!studentId) {
+    alert('⚠️ Please login to access course content.');
+    this.router.navigate(['/login']);
+    return;
   }
+
+  if (course.crs_Id == null) {
+    alert('❌ Cannot access units: Course ID is missing.');
+    return;
+  }
+
+ 
+  this.router.navigate(['/Courses', course.crs_Id, 'units']);
+}
+
 
   enroll(course: Course): void {
     const studentId = this.authService.currentUserId;
@@ -175,7 +166,7 @@ export class Courses implements OnInit {
   confirmEnrollment(): void {
     if (!this.selectedCourse) return;
 
-    const studentId = this.authService.currentUserId;
+    const studentId = this.authService.UserId;
     if (!studentId) {
       alert('⚠️ You must be logged in to enroll.');
       this.closeEnrollModal();

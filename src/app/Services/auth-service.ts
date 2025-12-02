@@ -52,7 +52,6 @@ export class AuthService {
       );
   }
 
-
   logout(): Observable<any> {
     return this.http.post(`${this.apiUrl}/Account/logout`, {}).pipe(
       tap(() => {
@@ -75,7 +74,7 @@ export class AuthService {
   getToken(): string | null {
     return localStorage.getItem(this.tokenKey);
   }
- getRoleFromToken(): string | null {
+  getRoleFromToken(): string | null {
     const token = this.getToken();
     if (!token) return null;
 
@@ -115,7 +114,7 @@ export class AuthService {
   }
 
   // لو Studentprofile فيه خاصية اسمها id
-  get currentUserId(): number | null {
+  get UserId(): number | null {
     return this.currentUserSubject.value?.id ?? null;
   }
 
@@ -124,7 +123,7 @@ export class AuthService {
   //   return this.currentUserSubject.value?.userId ?? null;
   // }
   // 👇👇 Getter للـ userId (عدّل اسم الخاصية حسب Studentprofile)
-  get currentIdentityUserId(): string | null {
+  get currentUserId(): string | null {
     // لو Studentprofile فيه id:
   return this.currentUserSubject.value?.userId ?? null;
     // لو فيه studentId أو userId غيّر للسطر اللي يناسبك:
