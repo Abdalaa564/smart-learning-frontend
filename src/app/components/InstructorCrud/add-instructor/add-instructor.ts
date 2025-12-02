@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { InstructorService } from '../../../Services/instructor-srevices';
 import { Router } from '@angular/router';
+import { Instructor } from '../../../models/iinstructor';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-
+import { AuthService } from '../../../Services/auth-service';
 import { CreateInstructorRequest } from '../../../models/CreateInstructorRequest ';
 
 @Component({
@@ -14,12 +15,14 @@ import { CreateInstructorRequest } from '../../../models/CreateInstructorRequest
   styleUrl: './add-instructor.css',
 })
 export class AddInstructorComponent {
+
   model: CreateInstructorRequest = {
     email: '',
     password: '',
     fullName: '',
     jobTitle: '',
     rating: 1,
+
     phoneNumber: '',
     youtubeChannelUrl: '',
     photoUrl: '',
@@ -28,6 +31,7 @@ export class AddInstructorComponent {
 
   constructor(
     private service: InstructorService,
+    private auth: AuthService,
     private router: Router
   ) {}
 

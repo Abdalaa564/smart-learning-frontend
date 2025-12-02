@@ -42,17 +42,26 @@ export class Navbar  {
 logout() {
   this.authService.logout().subscribe({
     next: () => {
+     
+      this.authService.currentUserSubject.next(null);
+      this.authService.isAuthenticatedSubject.next(false);
+
       this.isDropdownOpen = false;
       this.router.navigate(['/login']);
     },
     error: (err) => {
       console.error("Logout failed", err);
-      // Fallback: clear data anyway
+
+      // fallback
+      this.authService.currentUserSubject.next(null);
+      this.authService.isAuthenticatedSubject.next(false);
       this.authService.removeToken();
       this.authService.removeUser();
+
       this.router.navigate(['/login']);
     }
   });
 }
+
 
 }

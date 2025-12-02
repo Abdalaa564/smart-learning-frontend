@@ -14,15 +14,13 @@
     </div>
 
     <div class="d-flex gap-2">
-      <a
-        class="btn btn-success btn-sm px-3"
-        [routerLink]="['/Courses', courseId, 'units', unitId, 'lessons', 'add']">
+      <a class="btn btn-success btn-sm px-3"
+         [routerLink]="['/Courses', courseId, 'units', unitId, 'lessons', 'add']">
         + Add Lesson
       </a>
 
-      <a
-        class="btn btn-secondary btn-sm px-3"
-        [routerLink]="['/Courses', courseId, 'units']">
+      <a class="btn btn-secondary btn-sm px-3"
+         [routerLink]="['/Courses', courseId, 'units']">
         ← Back to Units
       </a>
     </div>
@@ -48,17 +46,15 @@
   <div *ngIf="!isLoading && !errorMessage && lessons.length > 0" class="row g-4">
 
     <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12"
-         *ngFor="let lesson of lessons">
+         *ngFor="let lesson of lessons; let i = index">
 
       <div class="lesson-card shadow-sm rounded-3 overflow-hidden">
 
         <!-- Image -->
         <div class="lesson-image-wrapper text-center bg-light p-3">
-          <img
-            class="lesson-thumb"
-            [src]="getPdfThumbnail(lesson)"
-            alt="Lesson PDF thumbnail"
-          />
+          <img class="lesson-thumb"
+               [src]="getPdfThumbnail(lesson)"
+               alt="Lesson PDF thumbnail" />
         </div>
 
         <!-- Content -->
@@ -69,44 +65,68 @@
             <span class="text-muted small">#{{ lesson.lesson_Id }}</span>
           </div>
 
-          <h5 class="fw-semibold mb-2">
-            {{ lesson.lesson_Name }}
-          </h5>
+          <h5 class="fw-semibold mb-2">{{ lesson.lesson_Name }}</h5>
 
-          <p class="text-muted small mb-3">
-            {{ lesson.lessonDescription }}
-          </p>
+          <p class="text-muted small mb-3">{{ lesson.lessonDescription }}</p>
 
           <p class="text-secondary mb-3 small">
             <strong>Unit:</strong> {{ unit?.unit_Name }}
           </p>
 
-          <!-- Section: Download + CRUD Icons -->
-          <div class="d-flex justify-content-between align-items-center">
+          <!-- ⭐ FREE / LOCKED Section ⭐ -->
+          <div *ngIf="canAccessLesson(i); else lockedLesson">
 
-            <!-- Download PDF if available -->
-            <div>
-              <a
-                *ngIf="getPdfDownloadUrl(lesson) as pdfUrl"
-                [href]="pdfUrl"
-                target="_blank"
-                class="btn btn-outline-success btn-sm px-3 me-2"
-                title="Download PDF">
-                ⬇ PDF
-              </a>
+            <!-- Open lesson -->
+            <a [routerLink]="[
+                '/Courses',
+                courseId,
+                'units',
+                unitId,
+                'lessons',
+                lesson.lesson_Id
+              ]"
+              class="btn btn-primary w-100 mb-2">
+              📘 Open Lesson
+            </a>
 
-              <span *ngIf="!getPdfDownloadUrl(lesson)" class="text-muted small">
-                No PDF available
-              </span>
+            <!-- Download PDF -->
+            <a *ngIf="getPdfDownloadUrl(lesson) as pdfUrl"
+               [href]="pdfUrl"
+               target="_blank"
+               class="btn btn-outline-success w-100 mb-3">
+              ⬇ Download PDF
+            </a>
+
+            <span *ngIf="!getPdfDownloadUrl(lesson)" class="text-muted small">
+              No PDF available
+            </span>
+
+          </div>
+
+          <!-- 🔒 Locked Lessons -->
+          <ng-template #lockedLesson>
+            <div class="locked-lesson bg-light rounded p-3 text-center mb-2">
+              <div class="fw-bold text-danger mb-1">🔒 Locked</div>
+              <small class="text-muted">
+                Enroll to access this lesson
+              </small>
             </div>
 
-            <!-- CRUD Icons -->
+            <button
+              class="btn btn-success w-100 mb-3"
+              [routerLink]="['/Courses']">
+              🔓 Enroll Now
+            </button>
+          </ng-template>
+
+          <!-- CRUD Actions (Admin only) -->
+          <div class="d-flex justify-content-between align-items-center mt-3">
+
             <div class="d-flex gap-2">
 
               <!-- View Details -->
-              <a
-                class="btn btn-sm btn-outline-secondary"
-                [routerLink]="[
+              <a class="btn btn-sm btn-outline-secondary"
+                 [routerLink]="[
                   '/Courses',
                   courseId,
                   'units',
@@ -119,9 +139,8 @@
               </a>
 
               <!-- Edit -->
-              <a
-                class="btn btn-sm btn-outline-primary"
-                [routerLink]="[
+              <a class="btn btn-sm btn-outline-primary"
+                 [routerLink]="[
                   '/Courses',
                   courseId,
                   'units',
@@ -135,36 +154,22 @@
               </a>
 
               <!-- Create Quiz -->
-              <a
-                class="btn btn-sm btn-outline-warning"
-                [routerLink]="[
-                  '/lesson',
-                  lesson.lesson_Id,
-                  'create-quiz'
-                ]"
-                title="Create quiz for this lesson">
+              <a class="btn btn-sm btn-outline-warning"
+                 [routerLink]="['/lesson', lesson.lesson_Id, 'create-quiz']"
+                 title="Create quiz for this lesson">
                 <i class="bi bi-question-circle"></i>
               </a>
 
               <!-- Delete -->
-              <a
+              <button
                 class="btn btn-sm btn-outline-danger"
-                [routerLink]="[
-                  '/Courses',
-                  courseId,
-                  'units',
-                  unitId,
-                  'lessons',
-                  lesson.lesson_Id,
-                  'delete'
-                ]"
+                (click)="onDeleteLesson(lesson)"
                 title="Delete lesson">
                 <i class="bi bi-trash"></i>
-              </a>
-            </div>
+              </button>
 
+            </div>
           </div>
-          <!-- End of section -->
 
         </div>
 

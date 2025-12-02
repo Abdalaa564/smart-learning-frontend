@@ -1,0 +1,34 @@
+<div class="container py-4">
+
+  <h2 class="mb-4">📚 My Enrolled Courses</h2>
+
+  <div *ngIf="enrolledCourses.length === 0" class="alert alert-info">
+    You have not enrolled in any courses yet.
+  </div>
+
+  <div class="row">
+    <div *ngFor="let course of enrolledCourses" class="col-md-4 mb-4">
+      <div class="card shadow-sm h-100">
+
+        <img [src]="getCourseImage(course)" class="course-img"
+
+             class="card-img-top"
+             alt="{{ course.crs_Name }}">
+
+        <div class="card-body">
+          <h5 class="card-title">{{ course.crs_Name }}</h5>
+          <p class="card-text text-muted">{{ course.crs_Description }}</p>
+
+          <p class="fw-bold">Price: {{ course.price }} EGP</p>
+
+          <button class="btn-units" (click)="goToUnits(course)">
+            View Units
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+

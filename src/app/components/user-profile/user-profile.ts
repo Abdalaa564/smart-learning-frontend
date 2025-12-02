@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Studentprofile } from '../../models/studentprofile';
 import { StudentprofileService } from '../../Services/studentprofile-service';
 import { CommonModule, DatePipe } from '@angular/common';
+import { AuthService } from '../../Services/auth-service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-profile',
@@ -24,7 +26,9 @@ export class UserProfile implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private student: StudentprofileService
+    private student: StudentprofileService,
+    private authService: AuthService,
+    private router: Router
   ) {
     this.profileForm = this.formBuilder.group({
       firstName: ['', Validators.required],
@@ -113,6 +117,13 @@ onSubmit() {
   get f() {
     return this.profileForm.controls;
   }
+
+  goToMyCourses() {
+  const studentId = this.authService.currentUserId;
+  this.router.navigate(['/student', studentId, 'courses']);
+
+}
+
   // ngAfterViewInit() {
   //   const editBtn = document.getElementById('editBtn');
   //   const modal = document.getElementById('editModal');

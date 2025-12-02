@@ -2,78 +2,194 @@
   <div class="card shadow-lg p-5 register-card my-4">
     <!-- Logo & Title -->
     <div class="text-center mb-4">
-      <div class= "logo-image mx-auto mb-3 logo-circle">
-          <img src="assets\img\logo-removebg-preview.png" alt="Logo">
+      <div class="logo-image mx-auto mb-3 logo-circle">
+        <img src="assets/img/logo-removebg-preview.png" alt="Logo" />
       </div>
       <h3 class="fw-bold">Create Your Account</h3>
       <p class="text-muted">Join our community and start learning today</p>
     </div>
 
     <!-- Registration Form -->
-<form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="row g-3">
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="row g-3">
+      <!-- FIRST NAME -->
+      <div class="mb-3 col-md-6">
+        <label>First Name</label>
+        <input
+          type="text"
+          class="form-control"
+          formControlName="firstName"
+          [class.is-invalid]="
+            (f['firstName'].touched || f['firstName'].dirty || submitted) && f['firstName'].invalid
+          "
+        />
 
-  <div class="mb-3 col-md-6">
-    <label>First Name</label>
-    <input type="text" class="form-control" formControlName="firstName" placeholder="First Name">
-    <small *ngIf="submitted && f['firstName'].errors" class="text-danger">Required</small>
-  </div>
+        <small
+          class="text-danger"
+          *ngIf="(f['firstName'].touched || submitted) && f['firstName'].errors"
+        >
+          First name is required
+        </small>
+      </div>
 
-  <div class="mb-3 col-md-6">
-    <label>Last Name</label>
-    <input type="text" class="form-control" formControlName="lastName" placeholder="Last Name">
-  </div>
+      <!-- LAST NAME -->
+      <div class="mb-3 col-md-6">
+        <label>Last Name</label>
+        <input
+          type="text"
+          class="form-control"
+          formControlName="lastName"
+          [class.is-invalid]="
+            (f['lastName'].touched || f['lastName'].dirty || submitted) && f['lastName'].invalid
+          "
+        />
+      </div>
 
-  <div class="mb-3 col-md-6">
-    <label>Email</label>
-    <input type="email" class="form-control" formControlName="email" placeholder="Email">
-    <small *ngIf="submitted && f['email'].errors" class="text-danger">Valid email required</small>
-  </div>
+      <!-- EMAIL -->
+      <div class="mb-3 col-md-6">
+        <label>Email</label>
+        <input
+          type="email"
+          class="form-control"
+          formControlName="email"
+          [class.is-invalid]="
+            (f['email'].touched || f['email'].dirty || submitted) && f['email'].invalid
+          "
+        />
 
-  <div class="mb-3 col-md-6">
-    <label>Phone</label>
-    <input type="tel" class="form-control" formControlName="phoneNumber" placeholder="phoneNumber">
-  </div>
+        <small class="text-danger" *ngIf="(f['email'].touched || submitted) && f['email'].errors">
+          Valid email required
+        </small>
+      </div>
 
-  <div class="mb-3 col-md-6">
-    <label>Date of Birth</label>
-    <input type="date" class="form-control" formControlName="dateOfBirth" placeholder="dateOfBirth">
-  </div>
+      <!-- PHONE -->
+      <div class="mb-3 col-md-6">
+        <label>Phone Number</label>
+        <input
+          type="tel"
+          class="form-control"
+          formControlName="phoneNumber"
+          [class.is-invalid]="
+            (f['phoneNumber'].touched || f['phoneNumber'].dirty || submitted) &&
+            f['phoneNumber'].invalid
+          "
+        />
 
-  <div class="mb-3 col-md-6">
-    <label>Address</label>
-    <input type="text" class="form-control" formControlName="address" placeholder="Address">
-  </div>
+        <small
+          class="text-danger"
+          *ngIf="(f['phoneNumber'].touched || submitted) && f['phoneNumber'].errors?.['required']"
+        >
+          Phone number is required
+        </small>
 
-  <div class="mb-3 col-md-6">
-    <label>City</label>
-    <input type="text" class="form-control" formControlName="city" placeholder="text">
-  </div>
+        <small
+          class="text-danger"
+          *ngIf="(f['phoneNumber'].touched || submitted) && f['phoneNumber'].errors?.['pattern']"
+        >
+          Enter a valid Egyptian phone number (e.g., 010xxxxxxxx)
+        </small>
+      </div>
 
-  <div class="mb-3 col-md-6">
-    <label>Password</label>
-    <input type="password" class="form-control" formControlName="password" placeholder="Password">
-    <small *ngIf="submitted && f['password'].errors" class="text-danger">Min 6 characters</small>
-  </div>
+      <!-- DATE OF BIRTH -->
+      <div class="mb-3 col-md-6">
+        <label>Date of Birth</label>
+        <input
+          type="date"
+          class="form-control"
+          formControlName="dateOfBirth"
+          [class.is-invalid]="
+            (f['dateOfBirth'].touched || f['dateOfBirth'].dirty || submitted) &&
+            f['dateOfBirth'].invalid
+          "
+        />
 
-  <div class="mb-3 col-md-6">
-    <label>Confirm Password</label>
-    <input type="password" class="form-control" formControlName="confirmPassword" placeholder="confirmPassword">
-    <small *ngIf="submitted && registerForm.errors?.['passwordMismatch']" class="text-danger">
-      Passwords don't match
-    </small>
-  </div>
+        <small
+          class="text-danger"
+          *ngIf="
+                 (f['dateOfBirth'].touched || submitted) 
+                 && f['dateOfBirth'].errors?.['ageOutOfRange']
+               "
+        >
+          Age must be between 20 and 80 years old
+        </small>
+      </div>
 
-  <div class="col-12">
-    <button type="submit" class="btn btn-primary w-100" [disabled]="loading">
-      <span *ngIf="loading" class="spinner-border spinner-border-sm me-2"></span>
-      Register
-    </button>
-  </div>
+      <!-- ADDRESS -->
+      <div class="mb-3 col-md-6">
+        <label>Address</label>
+        <input
+          type="text"
+          class="form-control"
+          formControlName="address"
+          [class.is-invalid]="
+            (f['address'].touched || f['address'].dirty || submitted) && f['address'].invalid
+          "
+        />
+      </div>
 
-</form>
+      <!-- CITY -->
+      <div class="mb-3 col-md-6">
+        <label>City</label>
+        <input
+          type="text"
+          class="form-control"
+          formControlName="city"
+          [class.is-invalid]="
+            (f['city'].touched || f['city'].dirty || submitted) && f['city'].invalid
+          "
+        />
+      </div>
 
+      <!-- PASSWORD -->
+      <div class="mb-3 col-md-6">
+        <label>Password</label>
+        <input
+          type="password"
+          class="form-control"
+          formControlName="password"
+          [class.is-invalid]="
+            (f['password'].touched || f['password'].dirty || submitted) && f['password'].invalid
+          "
+        />
 
-    <!-- Login link -->
+        <small
+          class="text-danger"
+          *ngIf="(f['password'].touched || submitted) && f['password'].errors"
+        >
+          Minimum 6 characters required
+        </small>
+      </div>
+
+      <!-- CONFIRM PASSWORD -->
+      <div class="mb-3 col-md-6">
+        <label>Confirm Password</label>
+        <input
+          type="password"
+          class="form-control"
+          formControlName="confirmPassword"
+          [class.is-invalid]="
+                 (f['confirmPassword'].touched || f['confirmPassword'].dirty || submitted)
+                 && (f['confirmPassword'].errors || registerForm.errors?.['passwordMismatch'])
+               "
+        />
+
+        <small
+          class="text-danger"
+          *ngIf="registerForm.errors?.['passwordMismatch'] && (f['confirmPassword'].touched || submitted)"
+        >
+          Passwords do not match
+        </small>
+      </div>
+
+      <!-- SUBMIT BUTTON -->
+      <div class="col-12">
+        <button type="submit" class="btn btn-primary w-100" [disabled]="loading">
+          <span *ngIf="loading" class="spinner-border spinner-border-sm me-2"></span>
+          Register
+        </button>
+      </div>
+    </form>
+
+    <!-- LOGIN LINK -->
     <p class="text-center mt-4 mb-0 text-muted">
       Already have an account?
       <a routerLink="/login" class="text-decoration-none accent-link">Login</a>
