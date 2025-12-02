@@ -1,0 +1,94 @@
+/* --- Main Container --- */
+.container {
+  max-width: 650px;
+  margin: auto;
+  padding-top: 35px;
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+/* --- Header Bar --- */
+h3 {
+  font-weight: 700;
+}
+
+.btn-sm {
+  padding: 5px 12px !important;
+  font-size: 14px;
+  border-radius: 6px !important;
+}
+
+/* Back Button */
+.btn-secondary {
+  background-color: #6c757d;
+}
+
+.btn-secondary:hover {
+  background-color: #5a6268;
+}
+
+/* --- Alerts --- */
+.alert {
+  border-radius: 7px;
+  text-align: center;
+  font-size: 15px;
+}
+
+/* --- Form Styling --- */
+form {
+  background: #ffffff;
+  padding: 20px 18px;
+  border-radius: 10px;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+  border: 1px solid #f0f0f0;
+}
+
+/* Labels */
+.form-label {
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+/* Inputs & Textareas */
+.form-control {
+  border-radius: 8px;
+  border: 1px solid #ced4da;
+  font-size: 14px;
+  padding: 8px 10px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-control:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 0 0.15rem rgba(0,123,255,0.25);
+}
+
+/* Textarea */
+textarea.form-control {
+  resize: vertical;
+}
+
+/* --- Buttons --- */
+button {
+  padding: 8px 22px !important;
+  font-size: 15px;
+  border-radius: 6px;
+}
+
+.btn-outline-secondary:hover {
+  background-color: #e9ecef;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+.btn-primary:hover {
+  background-color: #0069d9;
+}
+
+/* --- Fade animation --- */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}

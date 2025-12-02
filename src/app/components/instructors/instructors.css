@@ -1,204 +1,258 @@
- .featured-instructors .instructor-card {
-  background: var(--surface-color);
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 4px 20px color-mix(in srgb, var(--default-color), transparent 94%);
-  border: 1px solid color-mix(in srgb, var(--default-color), transparent 92%);
-  transition: all 0.3s ease;
-  height: 90%;
+/* ===== Header & Add Button ===== */
+
+.list-header {
   display: flex;
-  flex-direction: column;
-  margin-top: 50px;
-  margin-bottom: 10px;  
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  margin-top: 10px;
 }
 
-.featured-instructors .instructor-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 30px color-mix(in srgb, var(--default-color), transparent 88%);
+.list-header h2 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.btn-add {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: none;
+  background: var(--accent-color);
+  color: var(--contrast-color);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+}
+
+.btn-add i {
+  font-size: 16px;
+}
+
+.btn-add:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  filter: brightness(1.02);
+}
+
+/* ===== Card (ممكن يكون عندك ده أصلا) ===== */
+
+.featured-instructors {
+  margin-top: 10px;
+}
+
+.instructor-card {
+  background: var(--surface-color, #fff);
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid #eee;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  height: 95%;
+  display: flex;
+  flex-direction: column;
+  margin: 16px 0;
+}
+
+.instructor-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
 }
 
 /* IMAGE */
 
-.featured-instructors .instructor-image {
+.instructor-image {
   position: relative;
-  height: 230px;
+  height: 220px;
   overflow: hidden;
 }
 
-.featured-instructors .instructor-image img {
+.instructor-image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   transition: transform 0.3s ease;
 }
 
-.featured-instructors .instructor-card:hover .instructor-image img {
+.instructor-card:hover .instructor-image img {
   transform: scale(1.05);
 }
 
-/* OVERLAY (فوق الصورة بس، مش يغطي الزر) */
+/* Overlay */
 
-.featured-instructors .instructor-image .overlay-content {
+.overlay-content {
   position: absolute;
-  top: 15px;
-  left: 15px;
-  right: 15px;
+  top: 12px;
+  left: 12px;
+  right: 12px;
   display: flex;
   justify-content: space-between;
   opacity: 0;
-  transition: opacity 0.3s ease;
-  pointer-events: none; /* أهم حاجة: ما يمنعش الكليك */
+  transition: opacity 0.25s ease;
+  pointer-events: none;
 }
 
-.featured-instructors .instructor-card:hover .instructor-image .overlay-content {
+.instructor-card:hover .overlay-content {
   opacity: 1;
 }
 
-/* RATING + STUDENTS */
+.rating-stars {
+  background: #fff;
+  padding: 6px 10px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  font-size: 12px;
+}
 
-.featured-instructors .instructor-image .rating-stars {
-  background: var(--surface-color);
-  padding: 8px 12px;
-  border-radius: 20px;
+.rating-stars i {
+  font-size: 14px;
+  color: #ddd;
+}
+
+.rating-stars .bi-star-fill {
+  color: #ffc107;
+}
+
+.rating-stars span {
+  margin-left: 4px;
+  font-weight: 600;
+}
+
+.course-count {
+  background: var(--accent-color);
+  color: var(--contrast-color);
+  padding: 6px 12px;
+  border-radius: 999px;
   display: flex;
   align-items: center;
   gap: 4px;
-  box-shadow: 0 2px 10px color-mix(in srgb, var(--default-color), transparent 90%);
-}
-
-.featured-instructors .instructor-image .rating-stars span {
   font-size: 12px;
-  font-weight: 600;
-  margin-left: 4px;
-  color: var(--heading-color);
-}
-
-.featured-instructors .instructor-image .course-count {
-  background: var(--accent-color);
-  color: var(--contrast-color);
-  padding: 8px 12px;
-  border-radius: 20px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
 }
 
 /* INFO */
 
-.featured-instructors .instructor-info {
-  padding: 18px;
-  flex-grow: 1;
+.instructor-info {
+  padding: 16px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 8px;
+  flex: 1;
 }
 
-.featured-instructors .instructor-info h5 {
+.instructor-info h5 {
   margin: 0;
   font-size: 18px;
   font-weight: 700;
-  color: var(--heading-color);
 }
 
-.featured-instructors .instructor-info .specialty {
-  color: var(--accent-color);
-  font-weight: 600;
+.specialty {
+  margin: 0;
   font-size: 13px;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: .5px;
+  color: var(--accent-color);
+  font-weight: 600;
 }
 
 /* STATS */
 
-.featured-instructors .stats-grid {
+.stats-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  padding: 12px;
-  background: color-mix(in srgb, var(--accent-color), transparent 95%);
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  padding: 10px;
   border-radius: 12px;
+  background: #fafafa;
 }
 
-.featured-instructors .stats-grid .stat {
+.stat {
   text-align: center;
 }
 
-.featured-instructors .stats-grid .number {
-  display: block;
-  font-size: 16px;
-  font-weight: 800;
-  color: var(--heading-color);
-  margin-bottom: 2px;
+.stat .number {
+  font-weight: 700;
+  font-size: 14px;
 }
 
-.featured-instructors .stats-grid .label {
+.stat .label {
   font-size: 10px;
-  color: color-mix(in srgb, var(--default-color), transparent 50%);
   text-transform: uppercase;
-  letter-spacing: 0.5px;
-  font-weight: 600;
+  opacity: .6;
 }
 
-/* ACTION BUTTONS */
+/* ACTIONS */
 
-.featured-instructors .action-buttons {
+.action-row {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
   margin-top: 12px;
-  position: relative;
-  z-index: 5; /* فوق أي حاجة */
+  gap: 10px;
 }
 
-.featured-instructors .btn-view {
+.btn-view {
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: none;
   background: var(--accent-color);
   color: var(--contrast-color);
-  padding: 8px 18px;
-  border-radius: 25px;
-  border: none;
-  text-decoration: none;
+  font-size: 12px;
   font-weight: 600;
-  font-size: 13px;
-  transition: all 0.3s ease;
   cursor: pointer;
 }
 
-.featured-instructors .btn-view:hover {
-  transform: translateY(-2px);
-}
-
-.featured-instructors .social-links {
+.icon-actions {
   display: flex;
+  align-items: center;
   gap: 6px;
 }
 
-.featured-instructors .social-links a {
+/* Icon buttons (Edit/Delete/Youtube) */
+
+.icon-btn {
   width: 32px;
   height: 32px;
-  border: 1px solid color-mix(in srgb, var(--default-color), transparent 85%);
-  border-radius: 8px;
-  display: flex;
+  border-radius: 50%;
+  border: none;
+  background: #f3f3f3;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: color-mix(in srgb, var(--default-color), transparent 40%);
-  transition: all 0.3s ease;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease, color 0.15s ease;
+  color: #444;
 }
 
-.featured-instructors .social-links a:hover {
-  background-color: var(--accent-color);
-  border-color: var(--accent-color);
-  color: var(--contrast-color);
-  transform: scale(1.1);
+.icon-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
 }
 
-/* STARS */
+/* Delete */
+.icon-btn.danger {
+  background: #fdecec;
+  color: #e63946;
+}
 
-.rating-stars .star-icon {
-  color: #ddd;
+/* Youtube as link */
+.icon-btn.ghost {
+  background: #fff;
+  border: 1px solid #ddd;
+  color: #e52d27;
+}
+
+/* LOADING */
+
+.loading-text {
+  text-align: center;
+  margin: 40px 0;
   font-size: 14px;
-  transition: 0.3s;
-}
-
-.rating-stars .bi-star-fill {
-  color: #ffc107 !important;
+  opacity: 0.7;
 }

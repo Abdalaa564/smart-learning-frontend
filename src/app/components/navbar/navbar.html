@@ -25,7 +25,7 @@
        
        
         <!-- <li><a routerLink="/exam" routerLinkActive="active">Exam</a></li> -->
-        <li><a routerLink="/Layout"  routerLinkActive="active"
+        <li><a routerLink="/meeting-setup"  routerLinkActive="active"
             [routerLinkActiveOptions]="{ exact: true }">Meeting</a></li>
        
 
@@ -49,6 +49,15 @@
             Instructors
           </a>
         </li>
+        <li>
+  <a
+    routerLink="/admin"
+    routerLinkActive="active"
+    [routerLinkActiveOptions]="{ exact: true }"
+  >
+    Admin Panel
+  </a>
+</li>
 
         <li>
           <a
@@ -57,6 +66,15 @@
             [routerLinkActiveOptions]="{ exact: true }"
           >
             ChatRome
+          </a>
+        </li>
+          <li>
+          <a
+            routerLink="/lesson/1/create-quiz"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            Quiz
           </a>
         </li>
       </ul>

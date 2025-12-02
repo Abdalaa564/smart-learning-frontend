@@ -15,9 +15,10 @@
         >
       </div>
 
-      <!-- <div class="col-md-4 mb-3">
-        <label class="form-label">Instructor *</label>
+      <div class="col-md-4 mb-3">
+        <label class="form-label" for="instructorId">Instructor *</label>
         <select
+        id="instructorId"
           class="form-select"
           [(ngModel)]="formModel.instructorId"
           name="instructorId"
@@ -31,7 +32,7 @@
             {{ inst.fullName }}
           </option>
         </select>
-      </div> -->
+      </div>
 
       <div class="col-md-4 mb-3">
         <label class="form-label">Price</label>
@@ -55,6 +56,15 @@
         name="crs_Description"
       ></textarea>
     </div>
+    <div class="mb-3">
+  <label class="form-label">Upload New Image</label>
+  <input  placeholder="UploadImage"
+    type="file" 
+    class="form-control"
+    (change)="onFileSelected($event)"
+  >
+</div>
+
 
     <button
       type="submit"

@@ -1,0 +1,34 @@
+<div class="form-container">
+  <h2>Add Instructor</h2>
+
+  <form (ngSubmit)="submit()">
+       <label>Email</label>
+    <input type="email" [(ngModel)]="model.email" name="email" required placeholder="Email" />
+
+    <label>Password</label>
+    <input type="password" [(ngModel)]="model.password" name="password" required placeholder="Password" />
+
+    <label>Full Name</label>
+    <input type="text" [(ngModel)]="model.fullName" name="fullName" required placeholder="fullName" />
+
+    <label>Job Title</label>
+    <input type="text" [(ngModel)]="model.jobTitle" name="jobTitle" required placeholder="jobTitle" />
+
+    <label>Rating</label>
+    <input type="number" [(ngModel)]="model.rating" name="rating" min="1" max="5" placeholder="Rating" />
+
+    <label>Phone Number</label>
+    <input type="text" [(ngModel)]="model.phoneNumber" name="phoneNumber" required  placeholder="PhoneNumber"/>
+
+    <label>Youtube Channel</label>
+    <input type="text" [(ngModel)]="model.youtubeChannelUrl" name="youtubeChannelUrl" placeholder="youtubeChannelUrl"/>
+
+    <label>Photo URL</label>
+    <input type="text" [(ngModel)]="model.photoUrl" name="photoUrl" placeholder="imagesUrl"/>
+
+    <label>Certificate URL</label>
+    <input type="text" [(ngModel)]="model.certificateUrl" name="certificateUrl" placeholder="certificateUrl"/>
+
+    <button type="submit" class="btn-save">Save</button>
+  </form>
+</div>

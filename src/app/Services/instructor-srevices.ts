@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 
 import { Instructor } from '../models/iinstructor';
 import { environment } from '../environment/environment';
+import { CreateInstructorRequest } from '../models/CreateInstructorRequest ';
 
 @Injectable({
   providedIn: 'root'
@@ -26,18 +27,29 @@ export class InstructorService {
   }
 
   // POST: /api/Instructor
-  // هنا خلتها Partial عشان لو بعت object من غير id / email ما يزعقش TypeScript
-  create(instructor: Partial<Instructor>): Observable<Instructor> {
-    return this.http.post<Instructor>(this.baseUrl, instructor);
-  }
-
+ create(payload: CreateInstructorRequest): Observable<Instructor> {
+  return this.http.post<Instructor>(this.baseUrl, payload);
+}
   // PUT: /api/Instructor/{id}
-  update(id: number, instructor: Partial<Instructor>): Observable<void> {
-    return this.http.put<void>(`${this.baseUrl}/${id}`, instructor);
-  }
+  update(id: number, instructor: Partial<Instructor>): Observable<any> {
+  return this.http.put(`${this.baseUrl}/${id}`, instructor, {
+    responseType: 'text' as 'json'
+  });
+}
+
 
   // DELETE: /api/Instructor/{id}
-  delete(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.baseUrl}/${id}`);
+ delete(id: number): Observable<any> {
+  return this.http.delete(`${this.baseUrl}/${id}`, {
+    responseType: 'text' as 'json'
+  });
+}
+getMyProfile(): Observable<Instructor> {
+    return this.http.get<Instructor>(`${environment.apiBase}/Account/instructor-profile`);
   }
+  getCount(): Observable<{ totalInstructors: number }> {
+  return this.http.get<{ totalInstructors: number }>(`${this.baseUrl}/count`);
+}
+
+
 }

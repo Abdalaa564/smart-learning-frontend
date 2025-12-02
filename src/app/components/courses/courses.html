@@ -7,7 +7,7 @@
       [routerLink]="['/courses/add']">
       + Add New Course
     </button>
-  </div>
+  </div>  
 
   <!-- Course Cards -->
   <div class="row">
@@ -33,6 +33,17 @@
               {{ getInstructorName(course) }}
             </span>
           </div>
+                
+                <div class="d-flex justify-content-between align-items-center mt-2">
+                    <div class="d-flex align-items-center gap-2">
+    <!-- Edit icon -->
+              <button
+                class="btn btn-link p-0"
+                 [routerLink]="['/courses/edit', course.crs_Id]"
+               title="Edit course"
+                             >
+        <i class="fa fa-edit"></i>
+               </button>
 
 
           <div class="d-flex justify-content-between align-items-center mt-2">

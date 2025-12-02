@@ -10,69 +10,62 @@ import { Login } from '../models/login';
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:5163/api'; 
+  private apiUrl = 'http://localhost:5163/api';
   private tokenKey = 'access_token';
   private userKey = 'current_user';
-
 
   private currentUserSubject = new BehaviorSubject<Studentprofile | null>(this.getUserFromStorage());
   public currentUser$ = this.currentUserSubject.asObservable();
 
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(this.hasToken());
   public isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
-  
-  constructor(private http: HttpClient) { }
 
+  constructor(private http: HttpClient) {}
 
-  register(data:Register):Observable<Authresponse>{
-    return this.http.post<Authresponse>(`${this.apiUrl}/Account/register`,data)
-    .pipe(tap
-      (response=>{
-        if(response.success && response.token){
-           this.saveToken(response.token.accessToken);
-            this.saveUser(response.data);
-            this.currentUserSubject.next(response.data);
-            this.isAuthenticatedSubject.next(true);
-
+  register(data: Register): Observable<Authresponse> {
+    return this.http.post<Authresponse>(`${this.apiUrl}/Account/register`, data).pipe(
+      tap(response => {
+        if (response.success && response.token && response.data) {
+          this.saveToken(response.token.accessToken);
+          this.saveUser(response.data);
+          this.currentUserSubject.next(response.data);
+          this.isAuthenticatedSubject.next(true);
         }
-
       })
     );
-
   }
-  
-  login(data:Login): Observable<Authresponse> {
+
+  login(data: Login): Observable<Authresponse> {
     return this.http.post<Authresponse>(`${this.apiUrl}/Account/login`, data).pipe(
-        tap(response => {
-          if (response.success && response.token) {
-            this.saveToken(response.token.accessToken);
-            this.saveUser(response.data);
-            this.currentUserSubject.next(response.data);
-            this.isAuthenticatedSubject.next(true);
-          }
-        })
-      );
+      tap(response => {
+        if (response.success && response.token&& response.data) {
+          this.saveToken(response.token.accessToken);
+          this.saveUser(response.data);
+          this.currentUserSubject.next(response.data);
+          this.isAuthenticatedSubject.next(true);
+        }
+      })
+    );
   }
 
-logout(): Observable<any> {
-  return this.http.post(`${this.apiUrl}/Account/logout`, {}).pipe(
-    tap(() => {
-      this.removeToken();
-      this.removeUser();
-      this.isAuthenticatedSubject.next(false);
-      this.currentUserSubject.next(null);
-    })
-  );
-}
+  logout(): Observable<any> {
+    return this.http.post(`${this.apiUrl}/Account/logout`, {}).pipe(
+      tap(() => {
+        this.removeToken();
+        this.removeUser();
+        this.isAuthenticatedSubject.next(false);
+        this.currentUserSubject.next(null);
+      })
+    );
+  }
 
-removeToken() {
-  localStorage.removeItem(this.tokenKey);
-}
+  removeToken() {
+    localStorage.removeItem(this.tokenKey);
+  }
 
-removeUser() {
-  localStorage.removeItem(this.userKey);
-}
-
+  removeUser() {
+    localStorage.removeItem(this.userKey);
+  }
 
   getToken(): string | null {
     return localStorage.getItem(this.tokenKey);
@@ -95,24 +88,18 @@ removeUser() {
     return user ? JSON.parse(user) : null;
   }
 
-  // 👇👇 إضافة جديدة
+  // --- Added from Stashed changes ---
   get currentUser(): Studentprofile | null {
     return this.currentUserSubject.value;
   }
 
-  // 👇👇 Getter للـ userId (عدّل اسم الخاصية حسب Studentprofile)
+  // لو Studentprofile فيه خاصية اسمها id
   get currentUserId(): number | null {
-    // لو Studentprofile فيه id:
-  return this.currentUserSubject.value?.id ?? null;
-    // لو فيه studentId أو userId غيّر للسطر اللي يناسبك:
-    // return this.currentUserSubject.value?.studentId ?? null;
-    // return this.currentUserSubject.value?.userId ?? null;
+    return this.currentUserSubject.value?.id ?? null;
   }
+
+  // لو جوا Studentprofile فيه userId (string)
   get currentIdentityUserId(): string | null {
-  return this.currentUserSubject.value?.userId ?? null;
-}
-
-
-
-
+    return this.currentUserSubject.value?.userId ?? null;
+  }
 }

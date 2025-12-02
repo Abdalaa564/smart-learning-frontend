@@ -30,7 +30,9 @@ margin-left: -40px;
  .friend-list li a {
   position: relative;
   display: block;
-  padding: 10px;
+  padding: 5px;
+  border-radius: 10px;
+  margin: 10px 5px;
   transition: all .2s ease;
   -webkit-transition: all .2s ease;
   -moz-transition: all .2s ease;
@@ -99,6 +101,10 @@ img {
 
 .chat-body {
   padding-bottom: 20px;
+}
+
+.chat-body p {
+  white-space: pre-wrap;
 }
 
 .chat li.left .chat-body {
@@ -193,4 +199,62 @@ img {
 a:hover, a:active, a:focus {
   text-decoration: none;
   outline: 0;
+}
+
+
+.chat-input-container {
+    display: flex;
+    align-items: center;
+    background: #ffffff;
+    padding: 6px;
+    border-radius: 40px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    gap: 10px;
+    width: 100%;
+    margin-top: 1.5rem;
+}
+
+/* PDF Upload Button */
+.upload-btn {
+    font-size: 22px;
+    cursor: pointer;
+    padding: 8px;
+    color: #555;
+    transition: 0.3s;
+}
+
+.upload-btn:hover {
+    color: #2b7cff;
+}
+
+.upload-btn input {
+    display: none;
+}
+
+/* Input Text */
+.chat-input {
+    flex: 1;
+    height: 40px;
+    border: none;
+    outline: none;
+    font-size: 15px;
+    padding: 0 10px;
+    background: transparent;
+}
+
+/* Send Button */
+.send-btn {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: none;
+    background: #0d5c3f;
+    color: #fff;
+    font-size: 20px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.send-btn:hover {
+    background: #03311c;
 }

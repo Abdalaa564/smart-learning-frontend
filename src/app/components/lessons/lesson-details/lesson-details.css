@@ -1,0 +1,105 @@
+/* --- Main Container --- */
+.container {
+  max-width: 750px;
+  margin: auto;
+  padding-top: 35px;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+/* --- Header Bar --- */
+h3 {
+  font-weight: 700;
+}
+
+.btn-sm {
+  padding: 5px 12px !important;
+  font-size: 14px;
+  border-radius: 6px !important;
+}
+
+/* Back Button */
+.btn-secondary {
+  background-color: #6c757d;
+}
+
+.btn-secondary:hover {
+  background-color: #5a6268;
+}
+
+/* Edit Button */
+.btn-primary {
+  background-color: #007bff;
+}
+
+.btn-primary:hover {
+  background-color: #0069d9;
+}
+
+/* Delete Button */
+.btn-danger {
+  background-color: #dc3545;
+}
+
+.btn-danger:hover {
+  background-color: #b71c1c;
+}
+
+/* --- Loading & Error Alerts --- */
+.alert {
+  border-radius: 7px;
+  text-align: center;
+  font-size: 15px;
+}
+
+/* --- Lesson Content --- */
+h4 {
+  font-weight: 700;
+  margin-top: 15px;
+}
+
+.text-muted {
+  font-size: 15px;
+}
+
+/* --- Resources --- */
+h5 {
+  margin-top: 25px;
+  font-weight: 600;
+  color: #333;
+}
+
+ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+ul li {
+  background: #fafafa;
+  padding: 12px 15px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  border-left: 4px solid #007bff;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.06);
+  transition: transform 0.2s ease;
+}
+
+ul li:hover {
+  transform: translateX(5px);
+  box-shadow: 0 3px 12px rgba(0,0,0,0.12);
+}
+
+ul li a {
+  font-size: 14px;
+  color: #007bff;
+  text-decoration: none;
+}
+
+ul li a:hover {
+  text-decoration: underline;
+}
+
+/* --- Fade animation --- */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}

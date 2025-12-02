@@ -1,0 +1,33 @@
+<div class="form-container" *ngIf="!loading">
+  <h2>Edit Instructor</h2>
+
+  <form (ngSubmit)="save()">
+
+    <label>Full Name</label>
+    <input type="text" [(ngModel)]="model.fullName" name="fullName" required placeholder="FullName" />
+
+    <label>Job Title</label>
+    <input type="text" [(ngModel)]="model.jobTitle" name="jobTitle" required  placeholder="jobTitle"/>
+
+    <label>Rating</label>
+    <input type="number" [(ngModel)]="model.rating" name="rating" min="1" max="5" placeholder="Rating"/>
+
+    <label>Phone Number</label>
+    <input type="text" [(ngModel)]="model.phoneNumber" name="phoneNumber" required placeholder="PhoneNumber"/>
+
+    <label>Youtube Channel</label>
+    <input type="text" [(ngModel)]="model.youtubeChannelUrl" name="youtubeChannelUrl" placeholder="youtubeChannelUrl"/>
+
+    <label>Photo URL</label>
+    <input type="text" [(ngModel)]="model.photoUrl" name="photoUrl" placeholder="photoUrl"/>
+
+    <label>Certificate URL</label>
+    <input type="text" [(ngModel)]="model.certificateUrl" name="certificateUrl" placeholder="Certificate"/>
+
+    <button type="submit" class="btn-save">Save Changes</button>
+  </form>
+</div>
+
+<div *ngIf="loading" class="loading-text">
+  Loading instructor...
+</div>

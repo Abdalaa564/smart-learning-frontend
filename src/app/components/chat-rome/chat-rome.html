@@ -1,34 +1,38 @@
 <div class="container bootstrap snippets bootdey">
     <div class="row">
-		<div class="col-md-4 bg-white mt-5 mb-5">
+		<div class="col-md-3 bg-white mt-5 mb-5">
             <div class=" row border-bottom padding-sm" style="height: 40px;">
-            	Member
+            	Chats
             </div>
             
             <!-- =============================================================== -->
             <!-- member list -->
             <ul class="friend-list">
-                <li class="active bounceInDown">
+                <li *ngFor="let session of sessions" (click)="selectSession(session)" class="active bounceInDown">
                 	<a href="#" class="clearfix">
                 		<img src="https://bootdey.com/img/Content/user_1.jpg" alt="" class="img-circle">
                 		<div class="friend-name">	
-                			<strong>John Doe</strong>
+                			<strong>{{session.name}}</strong>
                 		</div>
-                		<div class="last-message text-muted">Hello, Are you there?</div>
+						<div class="last-message text-muted">
+							{{session.messages.length > 0 ? session.messages[session.messages.length-1].text : 'No messages'}}
+						</div>
+                		<!-- <div class="last-message text-muted">Hello, Are you there?</div>
                 		<small class="time text-muted">Just now</small>
-                		<small class="chat-alert label label-danger">1</small>
+                		<small class="chat-alert label label-danger">1</small> -->
                 	</a>
                 </li>
                           
             </ul>
+			<button class="btn btn-primary mt-2" (click)="createNewSession('New Chat')">New Chat</button>
 		</div>
         
         <!--=========================================================-->
         <!-- selected chat -->
-    	<div class="col-md-8 bg-white mt-5 mb-5">
+    	<div class="col-md-9 bg-white mt-5 mb-5">
             <div class="chat-message">
                 <ul class="chat">
-					<li *ngFor="let msg of messages" [ngClass]="{'left clearfix': msg.sender==='bot','right clearfix': msg.sender==='user'}">
+					<li *ngFor="let msg of selectedSession?.messages" [ngClass]="{'left clearfix': msg.sender==='bot','right clearfix': msg.sender==='user'}">
 						<span class="chat-img" [ngClass]="{'pull-left': msg.sender==='bot', 'pull-right': msg.sender==='user'}">
 						<img src="https://bootdey.com/img/Content/user_1.jpg" *ngIf="msg.sender==='user'">
 						<img src="https://bootdey.com/img/Content/user_3.jpg" *ngIf="msg.sender==='bot'">
@@ -42,17 +46,28 @@
 					</li>
 				</ul>
             </div>
-            <div class="chat-box bg-white">
-            	<div class="input-group">
-            		<input class="form-control border no-shadow no-rounded" placeholder="Type your message here"
+            <div class="chat-input-container">
+
+				<!-- Upload PDF Button -->
+				<label class="upload-btn">
+					<input type="file" accept="application/pdf" (change)="onPdfSelected($event)">
+					📎
+				</label>
+
+				<!-- Message Input -->
+				<input 
+					type="text" 
+					class="chat-input"
+					placeholder="Type your message here..."
 					[(ngModel)]="messageText">
-            		<span class="input-group-btn">
-            			<button class="btn btn-success no-rounded" type="button"
-						(click)="sendMessage()"
-						>Send</button>
-            		</span>
-            	</div><!-- /input-group -->	
-            </div>            
+
+				<!-- Send Button -->
+				<button class="send-btn" (click)="sendMessage()">
+					➤
+				</button>
+
+			</div>
+					
 		</div>        
-	</div>
+	</div><!-- /input-group Send-->	
 </div>
