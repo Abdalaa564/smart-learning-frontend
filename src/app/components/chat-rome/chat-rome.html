@@ -6,8 +6,13 @@
             </div>
             
             <!-- =============================================================== -->
+			 <!-- Skeleton Loading for Sessions -->
+			<app-skeleton-list *ngIf="isLoadingSessions" [items]="5" [showAvatar]="true" [lines]="2" avatarSize="40px"
+				animation="wave">
+			</app-skeleton-list>
+
             <!-- member list -->
-            <ul class="friend-list">
+            <ul class="friend-list" *ngIf="!isLoadingSessions">
                 <li *ngFor="let session of sessions" (click)="selectSession(session)" class="active bounceInDown">
                 	<a href="#" class="clearfix">
                 		<img src="https://bootdey.com/img/Content/user_1.jpg" alt="" class="img-circle">
@@ -56,11 +61,9 @@
 
 				<!-- Message Input -->
 				<input 
-					type="text" 
-					class="chat-input"
-					placeholder="Type your message here..."
+					type="text" class="chat-input" placeholder="Type your message here..."
 					[(ngModel)]="messageText">
-
+					
 				<!-- Send Button -->
 				<button class="send-btn" (click)="sendMessage()">
 					➤

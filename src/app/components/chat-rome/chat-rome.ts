@@ -4,6 +4,7 @@ import { ChatGPTMessage, ChatService } from '../../Services/chat-service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
+import { SkeletonListComponent } from '../../shared/Skeleton/skeleton-list/skeleton-list';
 
 interface ChatMessage {
   text: string;
@@ -20,7 +21,7 @@ interface ChatSession {
 @Component({
   selector: 'app-chat-rome',
   standalone: true,
-  imports: [RouterLink, CommonModule, FormsModule, HttpClientModule],
+  imports: [RouterLink, CommonModule, FormsModule, HttpClientModule, SkeletonListComponent],
   templateUrl: './chat-rome.html',
   styleUrls: ['./chat-rome.css'],
 })
@@ -28,7 +29,8 @@ export class ChatRome {
   messageText: string = '';
   messages: ChatMessage[] = [];
   sessions: ChatSession[] = [];
-
+  isLoadingSessions = false; // For future API integration
+  
   selectedSession: ChatSession | null = null;
   nextSessionId = 1;
 

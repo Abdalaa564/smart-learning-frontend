@@ -3,10 +3,11 @@ import { QuizDetailsDto } from '../../models/exam-question';
 import { ActivatedRoute, Router } from '@angular/router';
 import { QuizService } from '../../Services/quiz-service';
 import { CommonModule } from '@angular/common';
+import { SkeletonCardComponent } from '../../shared/Skeleton/skeleton-card/skeleton-card';
 
 @Component({
   selector: 'app-quiz-list-component',
-  imports: [CommonModule],
+  imports: [CommonModule, SkeletonCardComponent],
   templateUrl: './quiz-list-component.html',
   styleUrl: './quiz-list-component.css',
 })

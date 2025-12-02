@@ -3,10 +3,11 @@
     <div class="col-12">
       <h2 class="mb-4">Available Quizzes</h2>
 
-      <!-- Loading Spinner -->
-      <div *ngIf="loading" class="text-center">
-        <div class="spinner-border text-primary" role="status">
-          <span class="visually-hidden">Loading...</span>
+      <!-- Skeleton Loading State -->
+      <div *ngIf="loading" class="row">
+        <div *ngFor="let i of [1,2,3,4,5,6]" class="col-md-6 col-lg-4 mb-4">
+          <app-skeleton-card [showImage]="false" [lines]="4" [showActions]="true" animation="wave">
+          </app-skeleton-card>
         </div>
       </div>
 
