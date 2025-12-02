@@ -1,0 +1,38 @@
+.skeleton-card {
+    background: var(--surface-color, #ffffff);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1rem;
+}
+
+.skeleton-card-image {
+    width: 100%;
+}
+
+.skeleton-card-content {
+    padding: 1.5rem;
+}
+
+.skeleton-card-description {
+    margin-top: 1rem;
+}
+
+.skeleton-card-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-color, #e0e0e0);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .skeleton-card-content {
+        padding: 1rem;
+    }
+
+    .skeleton-card-actions {
+        flex-direction: column;
+    }
+}

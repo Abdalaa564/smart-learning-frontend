@@ -15,10 +15,11 @@ import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../Services/auth-service';
 import { EnrollmentService } from '../../Services/enrollment-service';
 import { EnrollmentRequest } from '../../models/EnrollmentRequest';
+import { SkeletonCardComponent } from '../../shared/Skeleton/skeleton-card/skeleton-card';
 
 @Component({
   selector: 'app-courses',
-  imports: [FormsModule, CommonModule, RouterLink],
+  imports: [FormsModule, CommonModule, RouterLink, SkeletonCardComponent],
   templateUrl: './courses.html',
   styleUrl: './courses.css',
 })
@@ -44,6 +45,8 @@ export class Courses implements OnInit {
   showResultModal: boolean = false;
   transactionId: string = '';
 
+  isLoading = true;
+
   constructor(
     private courseService: CourseService,
     private instructorService: InstructorService,
@@ -58,6 +61,8 @@ export class Courses implements OnInit {
   }
 
   loadData(): void {
+    this.isLoading = true;
+
     forkJoin({
       courses: this.courseService.getAllCourses(),
       instructors: this.instructorService.getAll(),
@@ -65,8 +70,12 @@ export class Courses implements OnInit {
       next: (data) => {
         this.courses = data.courses;
         this.instructors = data.instructors;
+        this.isLoading = false;
       },
-      error: (err) => console.error('Error loading data:', err),
+      error: (err) => {
+        console.error('Error loading data:', err);
+        this.isLoading = false;
+      },
     });
   }
 

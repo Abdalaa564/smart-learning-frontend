@@ -1,0 +1,15 @@
+<div class="skeleton-wrapper" [ngClass]="customClass">
+  <!-- Multiple lines for text type -->
+  <div 
+    *ngFor="let line of linesArray; let i = index; let last = last"
+    class="skeleton"
+    [ngClass]="{
+      'skeleton-pulse': animation === 'pulse',
+      'skeleton-wave': animation === 'wave',
+      'skeleton-last-line': last && lines > 1
+    }"
+    [ngStyle]="getSkeletonStyles()"
+    [style.margin-bottom]="!last && lines > 1 ? '0.5rem' : '0'"
+    [style.width]="last && lines > 1 ? '70%' : width">
+  </div>
+</div>

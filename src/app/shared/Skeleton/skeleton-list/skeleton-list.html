@@ -1,0 +1,16 @@
+<div class="skeleton-list">
+    <div *ngFor="let item of itemsArray; let i = index" class="skeleton-list-item">
+
+        <!-- Avatar/Icon -->
+        <div *ngIf="showAvatar" class="skeleton-list-avatar">
+            <app-skeleton type="circle" [width]="avatarSize" [height]="avatarSize" [animation]="animation">
+            </app-skeleton>
+        </div>
+
+        <!-- Content -->
+        <div class="skeleton-list-content">
+            <app-skeleton type="text" [lines]="lines" [animation]="animation">
+            </app-skeleton>
+        </div>
+    </div>
+</div>

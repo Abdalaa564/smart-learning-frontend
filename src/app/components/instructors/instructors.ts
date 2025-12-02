@@ -4,11 +4,12 @@ import { CommonModule } from '@angular/common';
 import { Instructor } from '../../models/iinstructor';
 import { InstructorService } from '../../Services/instructor-srevices';
 import { Router, RouterLink } from '@angular/router';
+import { SkeletonCardComponent } from '../../shared/Skeleton/skeleton-card/skeleton-card';
 
 @Component({
   selector: 'app-instructors-list',
   standalone: true,
-  imports: [CommonModule,RouterLink],
+  imports: [CommonModule,RouterLink, SkeletonCardComponent],
   templateUrl: './instructors.html',
   styleUrls: ['./instructors.css']
 })

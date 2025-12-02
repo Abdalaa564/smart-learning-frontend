@@ -12,8 +12,11 @@
     </button>
   </div>
 
-  <div *ngIf="loading" class="loading-text">
-    Loading instructors...
+  <div class="row" *ngIf="loading">
+    <div class="col-xl-3 col-lg-4 col-md-6" *ngFor="let i of [1,2,3,4,5,6,7,8]">
+      <app-skeleton-card [showImage]="true" [lines]="3" [showActions]="true" imageHeight="250px" animation="wave">
+      </app-skeleton-card>
+    </div>
   </div>
 
   <div class="row" *ngIf="!loading">
