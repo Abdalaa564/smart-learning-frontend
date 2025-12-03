@@ -15,7 +15,8 @@ export class StudentService {
   getCount(): Observable<{ totalStudents: number }> {
     return this.http.get<{ totalStudents: number }>(`${this.baseUrl}/count`);
   }
-    getAll(): Observable<Studentprofile[]> {
-    return this.http.get<Studentprofile[]>(this.baseUrl);
-  }
+  getAll(): Observable<{ totalStudents: number, data: Studentprofile[] }> {
+  return this.http.get<{ totalStudents: number, data: Studentprofile[] }>(`${this.baseUrl}/all`);
+}
+
 }

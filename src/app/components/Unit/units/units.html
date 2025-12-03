@@ -1,11 +1,9 @@
-<div class="container py-4">
+ <div class="container py-4">
 
   <!-- Header -->
   <div class="d-flex justify-content-between align-items-center mb-3">
     
     <h3>Units for Course {{ courseName }}, (#{{courseId}}) </h3>
-
-
 
     <div>
       <a class="btn btn-success btn-sm me-2"
@@ -66,20 +64,21 @@
 
           <div class="d-flex justify-content-between mt-2">
             <button
-              class="btn btn-sm btn-outline-primary"
+              class="btn btn-sm btn-outline-primary d-flex align-items-center gap-1"
               [routerLink]="['/Courses', courseId, 'units', 'edit', u.unit_Id]">
-              Edit
+              <i class="bi bi-pencil-square"></i>
             </button>
-            <button
-               class="btn btn-sm btn-outline-info"
-                [routerLink]="['/Courses', courseId, 'units', u.unit_Id, 'lessons']">
-                👀 View Lessons
-           </button>
 
             <button
-              class="btn btn-sm btn-outline-danger"
+              class="btn btn-sm btn-outline-info d-flex align-items-center gap-1"
+              [routerLink]="['/Courses', courseId, 'units', u.unit_Id, 'lessons']">
+              <i class="bi bi-eye"></i>
+            </button>
+
+            <button
+              class="btn btn-sm btn-outline-danger d-flex align-items-center gap-1"
               (click)="deleteUnit(u)">
-              Delete
+              <i class="bi bi-trash"></i>
             </button>
           </div>
 
