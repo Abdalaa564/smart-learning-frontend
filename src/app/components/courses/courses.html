@@ -1,34 +1,25 @@
 <div class="container py-4">
-
-  <!-- زرار الإضافة -->
+  <!-- Add Course Button -->
   <div class="d-flex justify-content-between align-items-center mb-3">
     <h3>Courses</h3>
-    <button
-      class="btn btn-success"
-      [routerLink]="['/courses/add']">
-      + Add New Course
-    </button>
-  </div>  
+    <button class="btn btn-success" [routerLink]="['/courses/add']">+ Add New Course</button>
+  </div>
 
-  <!-- ===== كروت الكورسات ===== -->
-  <div class="row">
+  <!-- ===== Skeleton Loading State ===== -->
+  <div class="row" *ngIf="isLoading">
+    <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 mb-4" *ngFor="let i of [1,2,3,4,5,6,7,8]">
+      <app-skeleton-card [showImage]="true" [lines]="3" [showActions]="true" imageHeight="200px" animation="wave">
+      </app-skeleton-card>
+    </div>
+  </div>
 
-    <div
-      class="col-xl-3 col-lg-3 col-md-4 col-sm-6 mb-4"
-      *ngFor="let course of courses"
-    >
+  <!-- Course Cards -->
+  <div class="row" *ngIf="!isLoading">
+    <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 mb-4" *ngFor="let course of paginatedCourses">
       <div class="course-card">
-
         <div class="course-image">
-          <img
-          alt=""
-            [src]="getCourseImage(course)"
-            [alt]="course.crs_Name"
-            class="img-fluid"
-          />
-          <div class="course-price">
-            {{ course.price }} EGP
-          </div>
+          <img alt="" [src]="getCourseImage(course)" [alt]="course.crs_Name" class="img-fluid" />
+          <div class="course-price">{{ course.price }} EGP</div>
         </div>
 
         <div class="course-content">
@@ -41,48 +32,263 @@
           <p>{{ course.crs_Description }}</p>
 
           <div class="instructor-info">
-            <img
-              [src]="getInstructorImage(course)"
-              alt="Instructor"
-              class="instructor-avatar"
-            />
+            <img [src]="getInstructorImage(course)" alt="Instructor" class="instructor-avatar" />
             <span class="instructor-name">
               {{ getInstructorName(course) }}
             </span>
           </div>
-                
-                <div class="d-flex justify-content-between align-items-center mt-2">
-                    <div class="d-flex align-items-center gap-2">
-    <!-- Edit icon -->
+
+          <div class="d-flex justify-content-between align-items-center mt-2">
+            <div class="d-flex align-items-center gap-2">
+              <!-- Edit icon -->
               <button
                 class="btn btn-link p-0"
-                 [routerLink]="['/courses/edit', course.crs_Id]"
-               title="Edit course"
-                             >
-        <i class="fa fa-edit"></i>
-               </button>
+                [routerLink]="['/courses/edit', course.crs_Id]"
+                title="Edit course"
+              >
+                <i class="fa fa-edit"></i>
+              </button>
 
-    <button
-      class="btn btn-link text-danger p-0"
-      [routerLink]="['/Courses/delete', course.crs_Id]"
-      title="Delete course"
-    >
-      <i class="fa fa-trash"></i>
-    </button>
-  </div>
+              <!-- Delete icon -->
+              <button
+                class="btn btn-link text-danger p-0"
+                [routerLink]="['/Courses/delete', course.crs_Id]"
+                title="Delete course"
+              >
+                <i class="fa fa-trash"></i>
+              </button>
+            </div>
 
-  <a
-    class="small text-decoration-underline ms-auto"
-    [routerLink]="['/Courses', course.crs_Id, 'units']">
-    Manage Units
-  </a>
-</div>
+            <!-- Manage Units -->
+            <button
+              class="btn btn-link small text-decoration-underline ms-auto p-0"
+              (click)="goToUnits(course)"
+              [class.text-success]="isEnrolledInCourse(course.crs_Id)"
+              [class.text-primary]="!isEnrolledInCourse(course.crs_Id)"
+            >
+              <i
+                class="fa"
+                [class.fa-book-open]="isEnrolledInCourse(course.crs_Id)"
+                [class.fa-eye]="!isEnrolledInCourse(course.crs_Id)"
+              ></i>
 
-       
+              {{ isEnrolledInCourse(course.crs_Id) ? 'View Units' : 'Preview Units' }}
+            </button>
+          </div>
+
+          <div class="enroll-section mt-3">
+            <button
+              *ngIf="!isEnrolledInCourse(course.crs_Id)"
+              class="btn btn-primary w-100"
+              (click)="enroll(course)"
+              [disabled]="isEnrolling(course.crs_Id)"
+            >
+              <span *ngIf="!isEnrolling(course.crs_Id)">
+                <i class="fa fa-graduation-cap me-2"></i> Enroll Now
+              </span>
+              <span *ngIf="isEnrolling(course.crs_Id)">
+                <span class="spinner-border spinner-border-sm me-2"></span>
+                Enrolling...
+              </span>
+            </button>
+
+            <!-- Already Enrolled Badge -->
+            <div
+              *ngIf="isEnrolledInCourse(course.crs_Id)"
+              class="alert alert-success mb-0 text-center"
+            >
+              <i class="fa fa-check-circle me-2"></i>
+              <strong>Enrolled</strong>
+            </div>
+          </div>
         </div>
-
       </div>
     </div>
-
   </div>
 </div>
+
+<!-- Enrollment Confirmation Modal -->
+<div
+  class="modal fade"
+  [class.show]="showEnrollModal"
+  [style.display]="showEnrollModal ? 'block' : 'none'"
+  tabindex="-1"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content" *ngIf="selectedCourse">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title">
+          <i class="fa fa-graduation-cap me-2"></i>
+          Confirm Enrollment
+        </h5>
+        <button
+          type="button"
+          class="btn-close btn-close-white"
+          (click)="closeEnrollModal()"
+          [disabled]="enrollingCourseId !== null"
+        ></button>
+      </div>
+
+      <div class="modal-body">
+        <!-- Course Image -->
+        <div class="text-center mb-3">
+          <img
+            [src]="getCourseImage(selectedCourse)"
+            [alt]="selectedCourse.crs_Name"
+            class="img-fluid rounded shadow-sm"
+            style="max-height: 200px; object-fit: cover; width: 100%"
+          />
+        </div>
+
+        <!-- Course Title -->
+        <h4 class="text-center mb-3">{{ selectedCourse.crs_Name }}</h4>
+
+        <!-- Enrollment Details -->
+        <div class="enrollment-details bg-light rounded p-3 mb-3">
+          <div class="detail-row d-flex justify-content-between py-2 border-bottom">
+            <span class="text-muted">
+              <i class="fa fa-chalkboard-teacher me-2"></i>Instructor:
+            </span>
+            <span class="fw-semibold">{{ getInstructorName(selectedCourse) }}</span>
+          </div>
+          <div class="detail-row d-flex justify-content-between py-2 border-bottom">
+            <span class="text-muted"> <i class="fa fa-money-bill-wave me-2"></i>Price: </span>
+            <span class="fw-bold text-success">{{ selectedCourse.price }} EGP</span>
+          </div>
+          <div class="detail-row d-flex justify-content-between py-2">
+            <span class="text-muted"> <i class="fa fa-credit-card me-2"></i>Payment Method: </span>
+            <select
+              class="form-select form-select-sm w-auto"
+              [(ngModel)]="selectedPaymentMethod"
+              [disabled]="enrollingCourseId !== null"
+            >
+              <option *ngFor="let method of paymentMethods" [value]="method.value">
+                {{ method.icon }} {{ method.label }}
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Info Alert -->
+        <div class="alert alert-info mb-0">
+          <i class="fa fa-info-circle me-2"></i>
+          <small
+            >You will be charged <strong>{{ selectedCourse.price }} EGP</strong> for this
+            course.</small
+          >
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          (click)="closeEnrollModal()"
+          [disabled]="enrollingCourseId !== null"
+        >
+          Cancel
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="confirmEnrollment()"
+          [disabled]="enrollingCourseId !== null"
+        >
+          <span *ngIf="enrollingCourseId === null">
+            <i class="fa fa-check me-2"></i> Confirm & Pay
+          </span>
+          <span *ngIf="enrollingCourseId !== null">
+            <span class="spinner-border spinner-border-sm me-2"></span>
+            Processing...
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Result Modal (Success/Error) -->
+<div
+  class="modal fade"
+  [class.show]="showResultModal"
+  [style.display]="showResultModal ? 'block' : 'none'"
+  tabindex="-1"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div
+        class="modal-header"
+        [class.bg-success]="enrollmentSuccess"
+        [class.bg-danger]="!enrollmentSuccess"
+        [class.text-white]="true"
+      >
+        <h5 class="modal-title">
+          <i
+            class="fa"
+            [class.fa-check-circle]="enrollmentSuccess"
+            [class.fa-times-circle]="!enrollmentSuccess"
+            class="me-2"
+          ></i>
+          {{ enrollmentSuccess ? 'Enrollment Successful!' : 'Enrollment Failed' }}
+        </h5>
+        <button
+          type="button"
+          class="btn-close btn-close-white"
+          (click)="closeResultModal()"
+        ></button>
+      </div>
+
+      <div class="modal-body text-center py-4">
+        <div class="result-icon mb-3">
+          <i
+            class="fa fa-5x"
+            [class.fa-check-circle]="enrollmentSuccess"
+            [class.fa-times-circle]="!enrollmentSuccess"
+            [class.text-success]="enrollmentSuccess"
+            [class.text-danger]="!enrollmentSuccess"
+          ></i>
+        </div>
+
+        <p class="lead mb-3">{{ enrollmentMessage }}</p>
+
+        <div *ngIf="enrollmentSuccess && transactionId" class="alert alert-success">
+          <small>
+            <i class="fa fa-receipt me-2"></i>
+            <strong>Transaction ID:</strong> {{ transactionId }}
+          </small>
+        </div>
+
+        <div *ngIf="enrollmentSuccess" class="mt-3">
+          <p class="text-muted">
+            <i class="fa fa-envelope me-2"></i>
+            A confirmation email has been sent to your registered email address.
+          </p>
+        </div>
+      </div>
+
+      <div class="modal-footer justify-content-center">
+        <button type="button" class="btn btn-secondary" (click)="closeResultModal()">Close</button>
+        <button
+          *ngIf="enrollmentSuccess"
+          type="button"
+          class="btn btn-primary"
+          (click)="goToMyCourses()"
+        >
+          <i class="fa fa-graduation-cap me-2"></i>
+          View My Courses
+        </button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Pagination -->
+  <div class="mt-4" *ngIf="!isLoading">
+    <app-pagination [currentPage]="currentPage" [totalItems]="courses.length" [itemsPerPage]="itemsPerPage"
+      (pageChange)="onPageChange($event)">
+    </app-pagination>
+  </div>
+</div>
+
+<!-- Modal Backdrops -->
+<div class="modal-backdrop fade" [class.show]="showEnrollModal" *ngIf="showEnrollModal"></div>
+<div class="modal-backdrop fade" [class.show]="showResultModal" *ngIf="showResultModal"></div>

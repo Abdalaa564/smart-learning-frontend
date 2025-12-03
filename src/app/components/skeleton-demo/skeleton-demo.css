@@ -1,0 +1,193 @@
+.skeleton-demo-container {
+    min-height: 100vh;
+    background-color: var(--background-color);
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--accent-color);
+}
+
+.section-header h2 {
+    margin: 0;
+    color: var(--heading-color);
+}
+
+/* Cards Section */
+.card {
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1.5rem;
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+.card-img-top {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.card-body {
+    padding: 1.5rem;
+}
+
+.card-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--heading-color);
+}
+
+.card-text {
+    color: var(--default-color);
+    margin-bottom: 1rem;
+}
+
+.card-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-color);
+}
+
+/* List Section */
+.list-container {
+    background: var(--surface-color);
+    border-radius: 12px;
+    padding: 1rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.instructors-list {
+    width: 100%;
+}
+
+.instructor-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    border-bottom: 1px solid var(--border-color);
+    transition: background-color 0.3s ease;
+}
+
+.instructor-item:hover {
+    background-color: var(--background-color);
+}
+
+.instructor-item:last-child {
+    border-bottom: none;
+}
+
+.instructor-avatar {
+    color: var(--accent-color);
+    flex-shrink: 0;
+}
+
+.instructor-info h4 {
+    margin: 0;
+    font-size: 1.1rem;
+    color: var(--heading-color);
+}
+
+.instructor-info p {
+    margin: 0.25rem 0 0 0;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+/* Table Section */
+.table-container {
+    background: var(--surface-color);
+    border-radius: 12px;
+    padding: 1rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    overflow-x: auto;
+}
+
+.table {
+    margin-bottom: 0;
+}
+
+.table thead th {
+    background-color: var(--accent-color);
+    color: var(--contrast-color);
+    font-weight: 600;
+    border: none;
+    padding: 1rem;
+}
+
+.table tbody tr {
+    transition: background-color 0.3s ease;
+}
+
+.table tbody tr:hover {
+    background-color: color-mix(in srgb, var(--accent-color), transparent 95%);
+}
+
+.table tbody td {
+    padding: 1rem;
+    vertical-align: middle;
+}
+
+/* Custom Skeleton Demo */
+.custom-skeleton-demo {
+    background: var(--surface-color);
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.custom-skeleton-demo h5 {
+    color: var(--heading-color);
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .card-actions {
+        flex-direction: column;
+    }
+
+    .custom-skeleton-demo {
+        padding: 1rem;
+    }
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.card,
+.instructor-item,
+.table tbody tr {
+    animation: fadeIn 0.5s ease-out;
+}

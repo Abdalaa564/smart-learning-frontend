@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
 import { ChatGPTMessage, ChatService } from '../../Services/chat-service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
+import { SkeletonListComponent } from '../../shared/Skeleton/skeleton-list/skeleton-list';
 
 interface ChatMessage {
   text: string;
@@ -20,7 +20,7 @@ interface ChatSession {
 @Component({
   selector: 'app-chat-rome',
   standalone: true,
-  imports: [RouterLink, CommonModule, FormsModule, HttpClientModule],
+  imports: [CommonModule, FormsModule, HttpClientModule, SkeletonListComponent],
   templateUrl: './chat-rome.html',
   styleUrls: ['./chat-rome.css'],
 })
@@ -28,6 +28,10 @@ export class ChatRome {
   messageText: string = '';
   messages: ChatMessage[] = [];
   sessions: ChatSession[] = [];
+  isLoadingSessions = false; // For future API integration
+  
+  isSearchOpen = false;
+  searchText = '';
 
   selectedSession: ChatSession | null = null;
   nextSessionId = 1;
@@ -83,4 +87,17 @@ export class ChatRome {
   }
 
 
+  toggleSearch() {
+    this.isSearchOpen = !this.isSearchOpen;
+    if (!this.isSearchOpen) {
+      this.searchText = '';
+    }
+  }
+
+  highlightText(text: string): string {
+    if (!this.searchText.trim()) return text;
+
+    const regex = new RegExp(`(${this.searchText})`, 'gi');
+    return text.replace(regex, '<mark class="highlight">$1</mark>');
+  }
 }

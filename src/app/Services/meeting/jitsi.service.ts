@@ -31,6 +31,8 @@ export class JitsiService {
 
     console.log('nameRoom' + nameRoom);
     console.log('prejoinPageEnabled:' + (this.user.name != '' ? true : false));
+    console.log('isAdmin:' + isAdmin);
+    console.log('password provided:' + (password ? 'yes' : 'no'));
 
     this.options = {
       roomName: nameRoom,
@@ -39,10 +41,23 @@ export class JitsiService {
         prejoinPageEnabled: this.user.name != '' ? false : true,
         startWithAudioMuted: !isAdmin,
         startWithVideoMuted: !isAdmin,
+        // Connection stability settings
+        enableNoAudioDetection: false,
+        enableNoisyMicDetection: false,
+        p2p: {
+          enabled: true,
+          stunServers: [
+            { urls: 'stun:stun.l.google.com:19302' },
+            { urls: 'stun:stun1.l.google.com:19302' }
+          ]
+        },
+        // Disable features that might cause issues
+        disableDeepLinking: true,
       },
       interfaceConfigOverwrite: {
         startAudioMuted: !isAdmin,
         startVideoMuted: !isAdmin,
+        DISABLE_VIDEO_BACKGROUND: true,
       },
       parentNode: document.querySelector('#jitsi-iframe'),
       userInfo: {
@@ -53,9 +68,11 @@ export class JitsiService {
 
     this.api = new JitsiMeetExternalAPI(this.domain, this.options);
 
-    // Set password if provided
-    if (password && isAdmin) {
+    // Set password ONLY if provided and user is admin/moderator
+    if (password && password.trim() !== '' && isAdmin) {
+      console.log('Setting password for room as moderator');
       this.api.addEventListener('videoConferenceJoined', () => {
+        console.log('Room joined, setting password now');
         this.api.executeCommand('password', password);
       });
     }
@@ -68,9 +85,13 @@ export class JitsiService {
       videoConferenceLeft: this.handleVideoConferenceLeft,
       audioMuteStatusChanged: this.handleMuteStatus,
       videoMuteStatusChanged: this.handleVideoStatus,
-      participantRoleChanged: this.participantRoleChanged,
-      passwordRequired: this.passwordRequired,
       endpointTextMessageReceived: this.endpointTextMessageReceived,
+      // Error and connection monitoring
+      connectionFailed: this.handleConnectionFailed,
+      connectionInterrupted: this.handleConnectionInterrupted,
+      connectionRestored: this.handleConnectionRestored,
+      errorOccurred: this.handleError,
+      p2pStatusChanged: this.handleP2PStatusChanged,
     });
   }
 
@@ -114,23 +135,9 @@ export class JitsiService {
     }
   };
 
-  passwordRequired = async () => {
-    console.log('passwordRequired'); // { id: "2baa184e" }
-    this.api.executeCommand('password', 'The Password');
-  };
-
   handleParticipantLeft = async (participant: any) => {
     console.log('handleParticipantLeft', participant); // { id: "2baa184e" }
     const data = await this.getParticipants();
-  };
-
-  participantRoleChanged = async (participant: any) => {
-    console.log('participantRoleChanged', participant);
-    //if (participant.role === "moderator")
-    {
-      console.log('participantRoleChanged:', participant.role);
-      this.api.executeCommand('password', 'The Password');
-    }
   };
 
   handleParticipantJoined = async (participant: any) => {
@@ -156,7 +163,37 @@ roomName: "PrincipalRoom"
 
   handleVideoConferenceLeft = () => {
     console.log('handleVideoConferenceLeft');
-    this.route.navigate(['/thank-you']);
+    this.route.navigate(['/Home']);
+  };
+
+  // Connection error handlers
+  handleConnectionFailed = (error: any) => {
+    console.error('❌ CONNECTION FAILED:', error);
+    console.error('Connection failed details:', JSON.stringify(error, null, 2));
+    alert('فشل الاتصال بالخادم. يرجى التحقق من اتصال الإنترنت أو إعدادات الخادم.');
+  };
+
+  handleConnectionInterrupted = () => {
+    console.warn('⚠️ CONNECTION INTERRUPTED - Attempting to reconnect...');
+  };
+
+  handleConnectionRestored = () => {
+    console.log('✅ CONNECTION RESTORED');
+  };
+
+  handleError = (error: any) => {
+    console.error('❌ JITSI ERROR OCCURRED:', error);
+    console.error('Error details:', JSON.stringify(error, null, 2));
+
+    // Log specific error types
+    if (error.error) {
+      console.error('Error type:', error.error.name);
+      console.error('Error message:', error.error.message);
+    }
+  };
+
+  handleP2PStatusChanged = (status: any) => {
+    console.log('P2P Status Changed:', status);
   };
 
   handleMuteStatus = (audio: any) => {

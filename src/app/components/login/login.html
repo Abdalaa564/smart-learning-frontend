@@ -9,39 +9,44 @@
     </div>
 
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      
+      <!-- EMAIL -->
       <div class="mb-3">
         <label>Email</label>
         <input
-        placeholder="Email"
+          placeholder="Email"
           type="email"
           class="form-control"
           formControlName="email"
-          [class.is-invalid]="submitted && f['email'].invalid"
+          [class.is-invalid]="(f['email'].touched || f['email'].dirty || submitted) && f['email'].invalid"
         />
 
-        <div class="invalid-feedback" *ngIf="submitted && f['email'].errors">
+        <div class="invalid-feedback"
+          *ngIf="(f['email'].touched || f['email'].dirty || submitted) && f['email'].errors">
           <span *ngIf="f['email'].errors['required']">Email is required</span>
           <span *ngIf="f['email'].errors['email']">Please enter a valid email</span>
         </div>
       </div>
 
+      <!-- PASSWORD -->
       <div class="mb-3">
         <label>Password</label>
         <input
-        placeholder="enter Password"
+          placeholder="enter Password"
           type="password"
           class="form-control"
           formControlName="password"
-          [class.is-invalid]="submitted && f['password'].invalid"
+          [class.is-invalid]="(f['password'].touched || f['password'].dirty || submitted) && f['password'].invalid"
         />
 
-        <div class="invalid-feedback" *ngIf="submitted && f['password'].errors">
+        <div class="invalid-feedback"
+          *ngIf="(f['password'].touched || f['password'].dirty || submitted) && f['password'].errors">
           <span *ngIf="f['password'].errors['required']">Password is required</span>
           <span *ngIf="f['password'].errors['minlength']">Minimum 6 characters required</span>
         </div>
       </div>
 
-      <button type="submit" class="btn  w-100" [disabled]="loading">
+      <button type="submit" class="btn w-100" [disabled]="loading">
         <span *ngIf="loading" class="spinner-border spinner-border-sm me-2"></span>
         Login
       </button>
