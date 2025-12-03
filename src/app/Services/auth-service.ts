@@ -5,6 +5,7 @@ import { Studentprofile } from '../models/studentprofile';
 import { Register } from '../components/register/register';
 import { Authresponse } from '../models/authresponse';
 import { Login } from '../models/login';
+import { RegisterInstructorRequest } from '../models/iinstructor';
 
 @Injectable({
   providedIn: 'root',
@@ -33,6 +34,9 @@ export class AuthService {
         }
       })
     );
+  }
+   registerInstructor(data: RegisterInstructorRequest): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/Account/register-instructor`, data);
   }
 
  login(data:Login): Observable<Authresponse> {

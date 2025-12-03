@@ -1,0 +1,75 @@
+.step-card {
+  background: var(--surface-color, #ffffff);
+  border-radius: 16px;
+  padding: 24px 24px 20px;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+  border: 1px solid rgba(148, 163, 184, 0.25);
+}
+
+.step-header {
+  margin-bottom: 18px;
+}
+
+.step-header h5 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--heading-color, #0f172a);
+}
+
+.step-header p {
+  margin: 4px 0 0;
+  font-size: 0.9rem;
+  color: var(--muted-color, #6b7280);
+}
+
+/* Input styling */
+.form-label {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--label-color, #111827);
+  margin-bottom: 4px;
+}
+
+.form-control {
+  border-radius: 10px;
+  border: 1px solid rgba(148, 163, 184, 0.7);
+  padding: 8px 12px;
+  font-size: 0.9rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s;
+}
+
+.form-control:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.15);
+  background-color: #f9fafb;
+}
+
+.form-control.is-invalid {
+  border-color: #dc2626;
+  box-shadow: 0 0 0 1px rgba(220, 38, 38, 0.1);
+}
+
+.text-danger {
+  font-size: 0.78rem;
+}
+
+/* Button */
+.btn-primary {
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.25);
+}
+.form-image {
+  width: 120px;        /* حجم صغير مناسب */
+  height: 120px;
+  border-radius: 12px;
+  object-fit: cover;
+  margin: 0 auto 20px; /* توسيطها وتحتها مسافة */
+  display: block;
+}

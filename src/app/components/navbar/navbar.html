@@ -9,7 +9,6 @@
 
     <nav class="nav-menu">
       <ul>
-
         <li>
           <a
             routerLink="/Home"
@@ -20,15 +19,15 @@
           </a>
         </li>
 
-      
-        <!-- <li><a href="about.html">About</a></li> -->
-       
-       
-        <!-- <li><a routerLink="/exam" routerLinkActive="active">Exam</a></li> -->
-        <li><a routerLink="/meeting-setup"  routerLinkActive="active"
-            [routerLinkActiveOptions]="{ exact: true }">Meeting</a></li>
-       
-
+        <li>
+          <a
+            routerLink="/meeting-setup"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            Meeting
+          </a>
+        </li>
 
         <li>
           <a
@@ -49,15 +48,16 @@
             Instructors
           </a>
         </li>
+
         <li>
-  <a
-    routerLink="/admin"
-    routerLinkActive="active"
-    [routerLinkActiveOptions]="{ exact: true }"
-  >
-    Admin Panel
-  </a>
-</li>
+          <a
+            routerLink="/admin"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            Admin Panel
+          </a>
+        </li>
 
         <li>
           <a
@@ -68,7 +68,8 @@
             ChatRome
           </a>
         </li>
-          <li>
+
+        <li>
           <a
             routerLink="/lesson/1/create-quiz"
             routerLinkActive="active"
@@ -89,23 +90,74 @@
         <i class="bi bi-globe"></i>
       </button>
 
+      <!-- ========== لو مفيش يوزر (مش لوجين) ========== -->
       <ng-container *ngIf="!(currentUser$ | async)">
-        <a routerLink="/register" class="btn-signup">Sign up</a>
+        <!-- Register as dropdown -->
+        <div class="dropdown me-2" [class.show]="isRegisterDropdownOpen">
+          <button
+            class="btn-signup dropdown-toggle"
+            type="button"
+            id="registerDropdown"
+            (click)="toggleRegisterDropdown()"
+            [attr.aria-expanded]="isRegisterDropdownOpen"
+          >
+            Register as
+          </button>
+
+          <ul
+            class="dropdown-menu"
+            aria-labelledby="registerDropdown"
+            [class.show]="isRegisterDropdownOpen"
+          >
+            <li>
+              <a
+                class="dropdown-item"
+                routerLink="/register"
+                (click)="isRegisterDropdownOpen = false"
+              >
+                Student
+              </a>
+            </li>
+
+            <li>
+              <a
+                class="dropdown-item"
+                routerLink="/register-instructor"
+                (click)="isRegisterDropdownOpen = false"
+              >
+                Instructor
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Login button -->
         <a routerLink="/login" class="btn-login">Login</a>
       </ng-container>
 
-      <div class="profile-dropdown-container" *ngIf="currentUser$ | async as user">
-        <button class="profile-btn" (click)="toggleDropdown()">
+      <!-- ========== لو في يوزر (لوجين) ========== -->
+      <div
+        class="profile-dropdown-container"
+        *ngIf="currentUser$ | async as user"
+      >
+        <button class="profile-btn" (click)="toggleProfileDropdown()">
           <i class="bi bi-person-circle"></i>
         </button>
 
-        <div class="profile-dropdown" [class.show]="isDropdownOpen">
+        <div class="profile-dropdown" [class.show]="isProfileDropdownOpen">
           <div class="profile-info">
-            <img src="https://randomuser.me/api/portraits/lego/6.jpg" alt="User" />
+            <img
+              src="https://randomuser.me/api/portraits/lego/6.jpg"
+              alt="User"
+            />
             <div>
               <h4>{{ user.firstName }} {{ user.lastName }}</h4>
               <p>Student</p>
-              <a routerLink="/userProfile" (click)="isDropdownOpen = false">View Profile</a>
+              <a
+                routerLink="/userProfile"
+                (click)="isProfileDropdownOpen = false"
+                >View Profile</a
+              >
             </div>
           </div>
           <hr />
