@@ -20,8 +20,7 @@
   </div>
 
   <div class="row" *ngIf="!loading">
-    <div class="col-xl-3 col-lg-4 col-md-6"
-         *ngFor="let ins of instructors">
+    <div class="col-xl-3 col-lg-4 col-md-6" *ngFor="let ins of paginatedInstructors">
 
       <div class="instructor-card">
 
@@ -105,6 +104,13 @@
 
       </div>
     </div>
+  </div>
+
+  <!-- Pagination -->
+  <div class="mt-4" *ngIf="!loading">
+    <app-pagination [currentPage]="currentPage" [totalItems]="instructors.length" [itemsPerPage]="itemsPerPage"
+      (pageChange)="onPageChange($event)">
+    </app-pagination>
   </div>
 
 </div>

@@ -16,10 +16,11 @@ import { AuthService } from '../../Services/auth-service';
 import { EnrollmentService } from '../../Services/enrollment-service';
 import { EnrollmentRequest } from '../../models/EnrollmentRequest';
 import { SkeletonCardComponent } from '../../shared/Skeleton/skeleton-card/skeleton-card';
+import { PaginationComponent } from '../../shared/pagination/pagination';
 
 @Component({
   selector: 'app-courses',
-  imports: [FormsModule, CommonModule, RouterLink, SkeletonCardComponent],
+  imports: [FormsModule, CommonModule, RouterLink, SkeletonCardComponent, PaginationComponent],
   templateUrl: './courses.html',
   styleUrl: './courses.css',
 })
@@ -46,6 +47,21 @@ export class Courses implements OnInit {
   transactionId: string = '';
 
   isLoading = true;
+
+  // ----Pagination----
+  currentPage: number = 1;
+  itemsPerPage: number = 8;
+
+  get paginatedCourses(): Course[] {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    return this.courses.slice(startIndex, startIndex + this.itemsPerPage);
+  }
+  // ---- end Pagination----
+
+  onPageChange(page: number): void {
+    this.currentPage = page;
+    window.scrollTo(0, 0);
+  }
 
   constructor(
     private courseService: CourseService,
