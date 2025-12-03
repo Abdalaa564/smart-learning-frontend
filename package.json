@@ -31,6 +31,8 @@
     "@fortawesome/fontawesome-free": "^7.1.0",
     "@stream-io/video-client": "^1.37.3",
     "bootstrap": "^5.3.8",
+    "chart.js": "^4.5.1",
+    "ng2-charts": "^7.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"
