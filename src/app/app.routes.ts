@@ -42,6 +42,7 @@ import { Exam } from './components/exam/exam';
 import { ErrorPage } from './components/error-page/error-page';
 
 import { enrollmentGuard } from './guard/enrollment-guard';
+import { RegisterInstructorComponent } from './components/Register-as-instructor/register-instructor/register-instructor';
 
 export const routes: Routes = [
 
@@ -101,6 +102,9 @@ export const routes: Routes = [
   // Auth
   { path: 'login', component: Login, title: 'Login' },
   { path: 'register', component: Register, title: 'Register' },
+
+   // Register Instructor
+   { path: 'register-instructor', component: RegisterInstructorComponent, title: 'Register Instructor' },
 
   // Exam
   { path: 'exam', component: Exam, title: 'Exam' },
