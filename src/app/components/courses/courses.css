@@ -248,7 +248,9 @@
 
 /* ==== Instructor Info ==== */
 .instructor-avatar {
-  border: 2px solid var(--accent-color);
+  border: 1px solid var(--accent-color) !important;
+  height: 35px;
+  border-radius: 50%;
 }
 
 .instructor-name {

@@ -41,48 +41,29 @@
           <div class="d-flex justify-content-between align-items-center mt-2">
             <div class="d-flex align-items-center gap-2">
               <!-- Edit icon -->
-              <button
-                class="btn btn-link p-0"
-                [routerLink]="['/courses/edit', course.crs_Id]"
-                title="Edit course"
-              >
+              <button class="btn btn-link p-0" [routerLink]="['/courses/edit', course.crs_Id]" title="Edit course">
                 <i class="fa fa-edit"></i>
               </button>
 
               <!-- Delete icon -->
-              <button
-                class="btn btn-link text-danger p-0"
-                [routerLink]="['/Courses/delete', course.crs_Id]"
-                title="Delete course"
-              >
+              <button class="btn btn-link text-danger p-0" [routerLink]="['/Courses/delete', course.crs_Id]" title="Delete course">
                 <i class="fa fa-trash"></i>
               </button>
             </div>
 
             <!-- Manage Units -->
             <button
-              class="btn btn-link small text-decoration-underline ms-auto p-0"
-              (click)="goToUnits(course)"
-              [class.text-success]="isEnrolledInCourse(course.crs_Id)"
-              [class.text-primary]="!isEnrolledInCourse(course.crs_Id)"
-            >
-              <i
-                class="fa"
-                [class.fa-book-open]="isEnrolledInCourse(course.crs_Id)"
-                [class.fa-eye]="!isEnrolledInCourse(course.crs_Id)"
+              class="btn btn-link small text-decoration-underline ms-auto p-0" (click)="goToUnits(course)"
+              [class.text-success]="isEnrolledInCourse(course.crs_Id)" [class.text-primary]="!isEnrolledInCourse(course.crs_Id)">
+              <i class="fa" [class.fa-book-open]="isEnrolledInCourse(course.crs_Id)" [class.fa-eye]="!isEnrolledInCourse(course.crs_Id)"
               ></i>
-
               {{ isEnrolledInCourse(course.crs_Id) ? 'View Units' : 'Preview Units' }}
             </button>
           </div>
 
           <div class="enroll-section mt-3">
-            <button
-              *ngIf="!isEnrolledInCourse(course.crs_Id)"
-              class="btn btn-primary w-100"
-              (click)="enroll(course)"
-              [disabled]="isEnrolling(course.crs_Id)"
-            >
+            <button *ngIf="!isEnrolledInCourse(course.crs_Id)" class="btn btn-primary w-100"
+              (click)="enroll(course)" [disabled]="isEnrolling(course.crs_Id)" >
               <span *ngIf="!isEnrolling(course.crs_Id)">
                 <i class="fa fa-graduation-cap me-2"></i> Enroll Now
               </span>
@@ -93,10 +74,7 @@
             </button>
 
             <!-- Already Enrolled Badge -->
-            <div
-              *ngIf="isEnrolledInCourse(course.crs_Id)"
-              class="alert alert-success mb-0 text-center"
-            >
+            <div *ngIf="isEnrolledInCourse(course.crs_Id)" class="alert alert-success mb-0 text-center" >
               <i class="fa fa-check-circle me-2"></i>
               <strong>Enrolled</strong>
             </div>
@@ -109,11 +87,8 @@
 
 <!-- Enrollment Confirmation Modal -->
 <div
-  class="modal fade"
-  [class.show]="showEnrollModal"
-  [style.display]="showEnrollModal ? 'block' : 'none'"
-  tabindex="-1"
->
+  class="modal fade" [class.show]="showEnrollModal"
+  [style.display]="showEnrollModal ? 'block' : 'none'" tabindex="-1">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content" *ngIf="selectedCourse">
       <div class="modal-header bg-primary text-white">
@@ -121,23 +96,16 @@
           <i class="fa fa-graduation-cap me-2"></i>
           Confirm Enrollment
         </h5>
-        <button
-          type="button"
-          class="btn-close btn-close-white"
-          (click)="closeEnrollModal()"
-          [disabled]="enrollingCourseId !== null"
+        <button type="button" class="btn-close btn-close-white"
+          (click)="closeEnrollModal()" [disabled]="enrollingCourseId !== null"
         ></button>
       </div>
 
       <div class="modal-body">
         <!-- Course Image -->
         <div class="text-center mb-3">
-          <img
-            [src]="getCourseImage(selectedCourse)"
-            [alt]="selectedCourse.crs_Name"
-            class="img-fluid rounded shadow-sm"
-            style="max-height: 200px; object-fit: cover; width: 100%"
-          />
+          <img [src]="getCourseImage(selectedCourse)" [alt]="selectedCourse.crs_Name"
+            class="img-fluid rounded shadow-sm" style="max-height: 200px; object-fit: cover; width: 100%" />
         </div>
 
         <!-- Course Title -->
@@ -157,11 +125,8 @@
           </div>
           <div class="detail-row d-flex justify-content-between py-2">
             <span class="text-muted"> <i class="fa fa-credit-card me-2"></i>Payment Method: </span>
-            <select
-              class="form-select form-select-sm w-auto"
-              [(ngModel)]="selectedPaymentMethod"
-              [disabled]="enrollingCourseId !== null"
-            >
+            <select class="form-select form-select-sm w-auto" [(ngModel)]="selectedPaymentMethod"
+              [disabled]="enrollingCourseId !== null">
               <option *ngFor="let method of paymentMethods" [value]="method.value">
                 {{ method.icon }} {{ method.label }}
               </option>
@@ -173,27 +138,17 @@
         <div class="alert alert-info mb-0">
           <i class="fa fa-info-circle me-2"></i>
           <small
-            >You will be charged <strong>{{ selectedCourse.price }} EGP</strong> for this
-            course.</small
-          >
+            >You will be charged <strong>{{ selectedCourse.price }} EGP</strong> for this course.</small>
         </div>
       </div>
 
       <div class="modal-footer">
-        <button
-          type="button"
-          class="btn btn-secondary"
-          (click)="closeEnrollModal()"
-          [disabled]="enrollingCourseId !== null"
-        >
+        <button type="button" class="btn btn-secondary" 
+        (click)="closeEnrollModal()" [disabled]="enrollingCourseId !== null">
           Cancel
         </button>
-        <button
-          type="button"
-          class="btn btn-primary"
-          (click)="confirmEnrollment()"
-          [disabled]="enrollingCourseId !== null"
-        >
+        <button type="button" class="btn btn-primary"
+          (click)="confirmEnrollment()" [disabled]="enrollingCourseId !== null">
           <span *ngIf="enrollingCourseId === null">
             <i class="fa fa-check me-2"></i> Confirm & Pay
           </span>
@@ -208,45 +163,26 @@
 </div>
 
 <!-- Result Modal (Success/Error) -->
-<div
-  class="modal fade"
-  [class.show]="showResultModal"
-  [style.display]="showResultModal ? 'block' : 'none'"
-  tabindex="-1"
->
+<div class="modal fade" [class.show]="showResultModal"
+  [style.display]="showResultModal ? 'block' : 'none'" tabindex="-1">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
-      <div
-        class="modal-header"
-        [class.bg-success]="enrollmentSuccess"
-        [class.bg-danger]="!enrollmentSuccess"
-        [class.text-white]="true"
-      >
+      <div class="modal-header" [class.bg-success]="enrollmentSuccess" 
+        [class.bg-danger]="!enrollmentSuccess" [class.text-white]="true">
         <h5 class="modal-title">
-          <i
-            class="fa"
-            [class.fa-check-circle]="enrollmentSuccess"
-            [class.fa-times-circle]="!enrollmentSuccess"
-            class="me-2"
-          ></i>
+          <i class="fa" [class.fa-check-circle]="enrollmentSuccess"
+            [class.fa-times-circle]="!enrollmentSuccess" class="me-2"></i>
           {{ enrollmentSuccess ? 'Enrollment Successful!' : 'Enrollment Failed' }}
         </h5>
-        <button
-          type="button"
-          class="btn-close btn-close-white"
-          (click)="closeResultModal()"
-        ></button>
+        <button type="button" class="btn-close btn-close-white"
+          (click)="closeResultModal()" ></button>
       </div>
 
       <div class="modal-body text-center py-4">
         <div class="result-icon mb-3">
-          <i
-            class="fa fa-5x"
-            [class.fa-check-circle]="enrollmentSuccess"
-            [class.fa-times-circle]="!enrollmentSuccess"
-            [class.text-success]="enrollmentSuccess"
-            [class.text-danger]="!enrollmentSuccess"
-          ></i>
+          <i class="fa fa-5x" [class.fa-check-circle]="enrollmentSuccess"
+            [class.fa-times-circle]="!enrollmentSuccess" [class.text-success]="enrollmentSuccess"
+            [class.text-danger]="!enrollmentSuccess"></i>
         </div>
 
         <p class="lead mb-3">{{ enrollmentMessage }}</p>
@@ -268,25 +204,21 @@
 
       <div class="modal-footer justify-content-center">
         <button type="button" class="btn btn-secondary" (click)="closeResultModal()">Close</button>
-        <button
-          *ngIf="enrollmentSuccess"
-          type="button"
-          class="btn btn-primary"
-          (click)="goToMyCourses()"
-        >
+        <button *ngIf="enrollmentSuccess"
+          type="button" class="btn btn-primary" (click)="goToMyCourses()" >
           <i class="fa fa-graduation-cap me-2"></i>
           View My Courses
         </button>
       </div>
     </div>
   </div>
-  
-  <!-- Pagination -->
-  <div class="mt-4" *ngIf="!isLoading">
-    <app-pagination [currentPage]="currentPage" [totalItems]="courses.length" [itemsPerPage]="itemsPerPage"
-      (pageChange)="onPageChange($event)">
-    </app-pagination>
-  </div>
+</div>
+
+<!-- Pagination -->
+<div class="mt-4 mb-3" *ngIf="!isLoading">
+  <app-pagination [currentPage]="currentPage" [totalItems]="courses.length" [itemsPerPage]="itemsPerPage"
+    (pageChange)="onPageChange($event)">
+  </app-pagination>
 </div>
 
 <!-- Modal Backdrops -->

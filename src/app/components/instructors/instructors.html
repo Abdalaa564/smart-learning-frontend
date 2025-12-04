@@ -107,7 +107,7 @@
   </div>
 
   <!-- Pagination -->
-  <div class="mt-4" *ngIf="!loading">
+  <div class="mt-4 mb-3" *ngIf="!loading">
     <app-pagination [currentPage]="currentPage" [totalItems]="instructors.length" [itemsPerPage]="itemsPerPage"
       (pageChange)="onPageChange($event)">
     </app-pagination>
