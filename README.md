@@ -1,59 +1,560 @@
-# SmartLearningAng
+# Smart Learning - Frontend Application
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.3.
+## 📋 Project Overview
 
-## Development server
+Smart Learning Frontend is an interactive web application built using **Angular 20**, providing a modern and user-friendly interface for an e-learning management system. The application supports course management, lessons, quizzes, virtual meetings, and live chat.
 
-To start a local development server, run:
+## 🏗️ Project Structure
 
-```bash
-ng serve
+```
+Front/
+│
+├── src/
+│   ├── app/
+│   │   ├── components/           # 31 main components
+│   │   │   ├── home/            # Home page
+│   │   │   ├── login/           # Login
+│   │   │   ├── register/        # Registration
+│   │   │   ├── courses/         # Course display
+│   │   │   ├── lessons/         # Lesson management
+│   │   │   ├── chat-rome/       # Chat system
+│   │   │   ├── jitsi/           # Virtual meetings
+│   │   │   ├── quiz-*/          # Quiz system
+│   │   │   ├── user-profile/    # User profile
+│   │   │   ├── instructor-*/    # Instructor management
+│   │   │   ├── admin/           # Admin panel
+│   │   │   └── ...              # Other components
+│   │   │
+│   │   ├── Services/            # Services
+│   │   ├── models/              # Data models
+│   │   ├── guard/               # Route Guards
+│   │   ├── interceptor/         # HTTP Interceptors
+│   │   ├── pipes/               # Custom Pipes
+│   │   ├── validators/          # Custom Validators
+│   │   ├── shared/              # Shared components
+│   │   ├── environment/         # Environment settings
+│   │   ├── app.routes.ts        # Route definitions
+│   │   └── app.ts               # Main component
+│   │
+│   ├── styles.css               # Global styles
+│   ├── index.html               # Main page
+│   └── main.ts                  # Entry point
+│
+├── public/                      # Static files
+├── angular.json                 # Angular configuration
+├── package.json                 # Dependencies
+├── tsconfig.json                # TypeScript configuration
+└── README.md                    # This file
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## 🚀 Technologies Used
 
-## Code scaffolding
+### Core Framework
+- **Angular 20.3.0** - Core framework
+- **TypeScript 5.9.2** - Programming language
+- **RxJS 7.8.0** - Reactive programming
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+### UI & Styling
+- **Bootstrap 5.3.8** - Design framework
+- **Font Awesome 7.1.0** - Icons
+- **Custom CSS** - Custom designs
 
-```bash
-ng generate component component-name
+### Charts & Visualization
+- **Chart.js 4.5.1** - For creating charts
+- **ng2-charts 8.0.0** - Chart.js integration with Angular
+- **ngx-chartjs 0.0.1** - Additional charting library
+
+### Video & Communication
+- **@stream-io/video-client 1.37.3** - For live streaming and video
+- **Jitsi Meet Integration** - For virtual meetings
+
+### Development Tools
+- **Angular CLI 20.3.3** - Development tools
+- **Jasmine & Karma** - For testing
+- **Prettier** - Code formatting
+
+## 📱 Main Components (31 Components)
+
+### 🏠 Core Pages
+
+#### 1. **Home Component**
+- Application home page
+- Featured courses display
+- General statistics
+- Quick links
+
+#### 2. **Login Component**
+- User login
+- JWT authentication
+- Remember me
+- Forgot password
+
+#### 3. **Register Component**
+- New user registration
+- Data validation
+- Account type selection (student/instructor)
+
+#### 4. **Register Instructor Component**
+- Special instructor registration
+- Upload qualifications
+- Approval request
+
+### 📚 Course Management
+
+#### 5. **Courses Component**
+- Display all courses
+- Search and filter
+- Category sorting
+- Pagination
+
+#### 6. **Add Course Component**
+- Add new course
+- Upload course image
+- Set price and description
+
+#### 7. **Edit Course Component**
+- Edit course data
+- Update content
+
+#### 8. **Delete Course Component**
+- Delete course
+- Confirm deletion
+
+### 📖 Unit and Lesson Management
+
+#### 9. **Units Component**
+- Display course units
+- Order units
+- Add/edit/delete
+
+#### 10. **Add Unit Component**
+- Add new unit to course
+
+#### 11. **Update Unit Component**
+- Edit unit data
+
+#### 12. **Lessons Component**
+- Display unit lessons
+- Track progress
+- Order lessons
+
+#### 13. **Add Lesson Component**
+- Add new lesson
+- Upload lesson content (video/PDF/text)
+- Set lesson duration
+
+#### 14. **Lesson Details Component**
+- Display lesson details
+- View content
+- Comments and discussions
+- Download resources
+
+#### 15. **Edit Lesson Component**
+- Edit lesson content
+- Update resources
+
+#### 16. **Delete Lesson Component**
+- Delete lesson
+- Confirm deletion
+
+### 📝 Quiz System
+
+#### 17. **Create Quiz Component**
+- Create new quiz
+- Add multiple choice questions
+- Set grades and time
+
+#### 18. **Quiz List Component**
+- Display quiz list
+- Quiz status (completed/incomplete)
+- Grades
+
+#### 19. **Take Quiz Component**
+- Take quiz
+- Timer
+- Auto-save answers
+- Navigate between questions
+
+#### 20. **Quiz Result Component**
+- Display quiz result
+- Correct and incorrect answers
+- Final grade
+- Review
+
+### 👥 User Management
+
+#### 21. **User Profile Component**
+- Personal user profile
+- Edit data
+- Change profile picture
+- Student statistics
+
+#### 22. **My Courses Component**
+- Student enrolled courses
+- Progress in each course
+- Certificates
+
+#### 23. **Instructors List Component**
+- Display instructor list
+- Search for instructor
+- Ratings
+
+#### 24. **Instructor Profile Component**
+- Instructor profile
+- Courses taught
+- Reviews and ratings
+- Statistics
+
+#### 25-27. **Instructor CRUD Components**
+- **Add Instructor**: Add new instructor
+- **Edit Instructor**: Edit instructor data
+- **Delete Instructor**: Delete instructor
+
+### 💬 Communication and Meetings
+
+#### 28. **Chat Room Component**
+- Live chat system
+- Group and individual conversations
+- File sharing
+- Search in conversations
+- Highlight important messages
+
+#### 29. **Jitsi Component**
+- Live video meetings
+- Screen sharing
+- Chat during meeting
+- Record meetings
+
+#### 30. **Meeting Setup Component**
+- Meeting setup
+- Test camera and microphone
+- Audio and video settings
+- Join meeting
+
+### 🎛️ Administration
+
+#### 31. **Admin Panel Component**
+- Admin dashboard
+- User management
+- System statistics
+- Approvals and requests
+- Role management
+
+### 🔧 Additional Components
+
+- **Enrollment Component**: Course enrollment management
+- **Rating Component**: Course and instructor ratings
+- **Department Component**: Department management
+- **Student Component**: Student management
+- **Exam Component**: Exam system
+- **Navbar Component**: Navigation bar
+- **Footer Component**: Page footer
+- **Error Page Component**: Error page (404)
+- **Skeleton Demo Component**: Loading Skeletons
+
+## 🛣️ Routes (Routing)
+
+The application contains a comprehensive routing system:
+
+```typescript
+// Home
+/Home
+
+// Authentication
+/login
+/register
+/register-instructor
+
+// Courses
+/Courses
+/courses/add
+/courses/edit/:id
+/Courses/delete/:id
+
+// Units
+/Courses/:id/units
+/Courses/:id/units/add
+/Courses/:id/units/edit/:unitId
+
+// Lessons
+/Courses/:courseId/units/:unitId/lessons
+/Courses/:courseId/units/:unitId/lessons/add
+/Courses/:courseId/units/:unitId/lessons/:lessonId
+/Courses/:courseId/units/:unitId/lessons/:lessonId/edit
+/Courses/:courseId/units/:unitId/lessons/:lessonId/delete
+
+// Quizzes
+/lesson/:lessonId/quizzes
+/lesson/:lessonId/create-quiz
+/quiz/take/:quizId
+/quiz/result/:quizId
+
+// Users
+/userProfile
+/student/:id/courses
+
+// Instructors
+/instructors
+/instructor/:id
+/instructors/add
+/instructors/edit/:id
+/instructors/:id/confirm-delete
+
+// Meetings
+/meeting
+/meeting-setup
+
+// Chat
+/chatRome
+
+// Administration
+/admin
+
+// Exams
+/exam
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## 🔐 Security and Protection
 
+### Route Guards
+- **Enrollment Guard**: Verify student enrollment in course
+- **Auth Guard**: Verify login
+- **Role Guard**: Verify permissions
+
+### HTTP Interceptors
+- **JWT Interceptor**: Add token to requests
+- **Error Interceptor**: Error handling
+- **Loading Interceptor**: Display loading indicator
+
+## 🎨 Services
+
+The application contains multiple services for backend communication:
+
+- **AuthService**: Authentication and authorization
+- **CourseService**: Course management
+- **LessonService**: Lesson management
+- **QuizService**: Quiz management
+- **UserService**: User management
+- **InstructorService**: Instructor management
+- **EnrollmentService**: Enrollment management
+- **ChatService**: Chat service
+- **MeetingService**: Meeting management
+- **ResourceService**: Resource management
+- **AttendanceService**: Attendance management
+- **RatingService**: Rating management
+- **StreamService**: Live streaming service
+
+
+## 🎯 Main Features
+
+### ✨ For Students
+- ✅ Browse available courses
+- ✅ Enroll in courses
+- ✅ Watch lessons and content
+- ✅ Take quizzes
+- ✅ Track progress
+- ✅ Get certificates
+- ✅ Chat with instructors and students
+- ✅ Attend virtual meetings
+- ✅ Rate courses
+
+### 👨‍🏫 For Instructors
+- ✅ Create and manage courses
+- ✅ Add units and lessons
+- ✅ Upload content (video, PDF, files)
+- ✅ Create quizzes
+- ✅ Track student progress
+- ✅ Hold virtual meetings
+- ✅ Communicate with students
+- ✅ View statistics
+
+### 🎛️ For Administrators
+- ✅ Manage users (students and instructors)
+- ✅ Approve instructor requests
+- ✅ Manage courses and content
+- ✅ View system statistics
+- ✅ Manage roles and permissions
+- ✅ Monitor activity
+
+## 🎨 Design and UI/UX
+
+### Main Colors
+- **Primary**: Teal/Turquoise (#20c997)
+- **Secondary**: Dark Gray (#343a40)
+- **Success**: Green (#28a745)
+- **Danger**: Red (#dc3545)
+- **Warning**: Yellow (#ffc107)
+
+### Design Features
+- ✨ Responsive design
+- ✨ Dark Mode Support
+- ✨ Smooth Animations
+- ✨ Loading Skeletons
+- ✨ Toast Notifications
+- ✨ Modal Dialogs
+- ✨ Pagination
+- ✨ Search & Filter
+
+## 📊 Charts and Statistics
+
+The application uses **Chart.js** to display:
+- 📈 Student progress
+- 📊 Course statistics
+- 📉 Completion rates
+- 🎯 Quiz results
+- 👥 Enrolled student count
+
+## 🔌 Backend Integration
+
+The application communicates with Backend API via:
+- **HTTP Requests** (GET, POST, PUT, DELETE)
+- **JWT Authentication**
+- **File Upload/Download**
+- **Real-time Updates** (WebSockets for chat)
+
+## 🧪 Testing
+
+### Unit Tests
 ```bash
-ng generate --help
+npm test
 ```
 
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
+### E2E Tests
 ```bash
 ng e2e
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+## 🚀 Deployment
 
-## Additional Resources
+### Build for Production
+```bash
+ng build --configuration production
+```
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Files will be in the `dist/` folder
+
+### Deploy to Firebase
+```bash
+npm install -g firebase-tools
+firebase login
+firebase init
+firebase deploy
+```
+
+### Deploy to Netlify
+```bash
+npm install -g netlify-cli
+netlify deploy --prod
+```
+
+### Deploy to Vercel
+```bash
+npm install -g vercel
+vercel --prod
+```
+
+## 📱 Browser Compatibility
+
+The application is compatible with:
+- ✅ Chrome (last 2 versions)
+- ✅ Firefox (last 2 versions)
+- ✅ Safari (last 2 versions)
+- ✅ Edge (last 2 versions)
+
+## 🔧 Customization
+
+### Change Colors
+Edit `src/styles.css`:
+```css
+:root {
+  --primary-color: #20c997;
+  --secondary-color: #343a40;
+  /* ... */
+}
+```
+
+### Change Logo
+Replace files in `public/`:
+- `logo.png`
+- `favicon.ico`
+
+## 📚 Additional Resources
+
+- [Angular Documentation](https://angular.io/docs)
+- [Bootstrap Documentation](https://getbootstrap.com/docs)
+- [Chart.js Documentation](https://www.chartjs.org/docs)
+- [RxJS Documentation](https://rxjs.dev/)
+
+## 🐛 Common Issues and Solutions
+
+### Issue: Port 4200 in use
+```bash
+ng serve --port 4300
+```
+
+### Issue: CORS Error
+Check CORS settings in Backend
+
+### Issue: Module not found
+```bash
+npm install
+```
+
+## 🤝 Contributing
+
+To contribute to the project:
+1. Fork the project
+2. Create a new branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 📝 Code Style
+
+The project uses **Prettier** for formatting:
+```bash
+npm run format
+```
+
+Settings in `package.json`:
+```json
+{
+  "prettier": {
+    "printWidth": 100,
+    "singleQuote": true
+  }
+}
+```
+
+## 📄 License
+
+This project is licensed under the [MIT License](LICENSE).
+
+## 📞 Contact
+
+For questions and inquiries:
+- Email: abdalaakhaleel564@gmail.com
+- GitHub Issues: [Project Issues](https://github.com/your-repo/issues)
+
+## � Team Members
+
+This project was developed by:
+- **Abdalla Khalil**
+- **Mennatullah Atef**
+- **Hisham Radi**
+- **Ramiz Magdy**
+
+## �🙏 Acknowledgments
+
+- Angular Team
+- Bootstrap Team
+- Chart.js Team
+- Stream.io Team
+- Jitsi Team
+- Font Awesome Team
+
+---
+
+**Note**: This project is under active development. Some features may be in progress.
+
+**Tip**: For the best experience, use Chrome or Firefox with the latest version.
