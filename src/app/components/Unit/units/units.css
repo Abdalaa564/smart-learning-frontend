@@ -1,138 +1,87 @@
-/* ===== Units Grid (نفس استايل الكورسات) ===== */
-.courses-grid {
-  margin-top: 30px;
-}
-
-.course-card {
-  background-color: #fff;
-  border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-  margin-bottom: 30px;
+/* Card Styling */
+.unit-card {
+  border-radius: 16px;
   overflow: hidden;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.course-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+.unit-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
 }
 
-/* ===== Course Image ===== */
-.course-image {
+/* Image Section */
+.unit-image-wrapper {
   position: relative;
   overflow: hidden;
+  border-radius: 16px 16px 0 0;
 }
 
-.course-image img {
+.unit-image {
   width: 100%;
-  display: block;
+  height: 180px;
+  object-fit: cover;
   transition: transform 0.3s ease;
 }
 
-.course-card:hover .course-image img {
+.unit-card:hover .unit-image {
   transform: scale(1.05);
 }
 
-/* ===== Unit Badge (بدل السعر) ===== */
-.course-price {
+/* Unit Badge */
+.unit-badge {
   position: absolute;
-  bottom: 15px;
-  right: 15px;
-  background-color: #1abc9c;
+  top: 12px;
+  left: 12px;
+  background: #074226;
   color: #fff;
+  font-size: 0.8rem;
   font-weight: 600;
-  padding: 5px 10px;
-  border-radius: 6px;
-  font-size: 13px;
+  padding: 4px 10px;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
 }
 
-/* لو عايز لون مختلف لليونتس بس */
-/*
-.unit-card .course-price {
-  background-color: #3498db;
-}
-*/
-
-/* ===== Course Content ===== */
-.course-content {
-  padding: 20px;
-}
-
-.course-meta {
-  display: flex;
-  gap: 15px;
-  margin-bottom: 10px;
-  font-size: 13px;
-  color: #777;
-}
-
-.course-meta span {
-  text-transform: uppercase;
-}
-
-.course-content h3 {
-  font-size: 18px;
-  margin-bottom: 10px;
-  color: #333;
-}
-
-.course-content p {
-  font-size: 14px;
-  color: #555;
-  margin-bottom: 15px;
-}
-
-/* ===== Instructor Info ===== */
-.instructor-info {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 15px;
-}
-
-.instructor-avatar {
-  width: 35px;
-  height: 35px;
-  border-radius: 50%;
-  object-fit: cover;
-}
-
-.instructor-name {
-  font-size: 14px;
-  font-weight: 500;
-  color: #333;
-}
-
-/* ===== Button (لو استخدمتها) ===== */
-.btn-course {
-  display: inline-block;
-  text-decoration: none;
-  background-color: #1abc9c;
-  color: #fff;
+/* Card Title */
+.card-title {
+  font-size: 1.1rem;
   font-weight: 600;
-  padding: 8px 18px;
+  color: #074226;
+}
+
+/* Texts */
+.card-text {
+  font-size: 0.9rem;
+}
+
+/* Buttons */
+.btn-sm {
   border-radius: 8px;
-  transition: background-color 0.3s ease;
-  cursor: pointer;
+  font-size: 0.8rem;
+  transition: all 0.2s ease;
 }
 
-.btn-course:hover {
-  background-color: #16a085;
+.btn-outline-primary:hover {
+  background-color: #074226;
+  color: #fff;
+  border-color: #074226;
 }
 
-/* ===== Responsive ===== */
-@media (max-width: 767px) {
-  .course-card {
-    margin-bottom: 20px;
-  }
+.btn-outline-info:hover {
+  background-color: #0dcaf0;
+  color: #fff;
+  border-color: #0dcaf0;
 }
 
-@media (max-width: 479px) {
-  .course-content h3 {
-    font-size: 16px;
-  }
+.btn-outline-danger:hover {
+  background-color: #dc3545;
+  color: #fff;
+  border-color: #dc3545;
+}
 
-  .course-content p {
-    font-size: 13px;
-  }
+/* Responsive adjustments */
+@media(max-width:768px){
+  .unit-image { height: 150px; }
+  .card-title { font-size: 1rem; }
+  .btn-sm { font-size: 0.75rem; }
 }

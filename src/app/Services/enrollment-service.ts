@@ -31,6 +31,7 @@ export class EnrollmentService {
       this.cachedCourses = courses; 
     })
   );
+
 }
 
   isStudentEnrolled(studentId: number, courseId: number) {
@@ -41,5 +42,8 @@ export class EnrollmentService {
         return enrollments.some((e) => Number(e.crs_Id) === Number(courseId));
       })
     );
+  }
+   getEnrollmentStatus(transactionId: string): Observable<any> {
+    return this.http.get(`${this.baseUrl}/paymob-status/${transactionId}`);
   }
 }

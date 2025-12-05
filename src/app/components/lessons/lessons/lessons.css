@@ -1,28 +1,156 @@
+/* ==========================
+   Lesson Card Base
+========================== */
 .lesson-card {
-  background: #fff;
-  border-radius: 12px;
-  transition: 0.2s ease-in-out;
+  background: #ffffff;
+  border-radius: 16px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
 }
 
 .lesson-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 4px 18px rgba(0,0,0,0.1);
+  transform: translateY(-6px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
 }
 
+/* ==========================
+   Lesson Image
+========================== */
 .lesson-image-wrapper {
-  background: #f8f9fa;
+  background: linear-gradient(135deg, #f3f9f8, #e0f2f1);
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .lesson-thumb {
-  width: 100px;
-  height: auto;
-  filter: drop-shadow(0 0 4px rgba(0,0,0,0.15));
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  border-radius: 8px;
+  transition: transform 0.3s ease;
+}
+
+.lesson-card:hover .lesson-thumb {
+  transform: scale(1.1);
+  filter: drop-shadow(0 4px 10px rgba(0,0,0,0.15));
+}
+
+/* ==========================
+   Content Section
+========================== */
+.lesson-content {
+  padding: 20px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .lesson-content h5 {
-  font-size: 1.05rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #074226;
+  margin-bottom: 0.5rem;
+}
+
+.lesson-content p {
+  font-size: 0.875rem;
+  color: #555;
+  margin-bottom: 0.75rem;
+}
+
+.badge {
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.3em 0.6em;
+  border-radius: 12px;
+  text-transform: uppercase;
+}
+
+.badge.bg-primary {
+  background-color: #074226;
+  color: #fff;
+}
+
+/* ==========================
+   Buttons
+========================== */
+.btn-primary {
+  background: #074226;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  margin:  8px 0 8px;
+}
+
+.btn-primary:hover {
+  background: #0a7a40;
+  transform: translateY(-2px);
 }
 
 .btn-outline-success {
-  font-size: 0.75rem;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  transition: all 0.3s ease;
+}
+
+.btn-outline-success:hover {
+  background-color: #4ade80;
+  color: #074226;
+  border-color: #4ade80;
+}
+
+/* ==========================
+   Locked Lessons
+========================== */
+.locked-lesson {
+  border: 1px dashed #ccc;
+  padding: 15px;
+  border-radius: 12px;
+  background-color: #fafafa;
+  transition: 0.3s;
+}
+
+.locked-lesson:hover {
+  background-color: #f0f8f6;
+}
+
+/* ==========================
+   Admin Actions
+========================== */
+.lesson-content .d-flex.gap-2 a,
+.lesson-content .d-flex.gap-2 button {
+  font-size: 0.8rem;
+  padding: 5px 8px;
+  border-radius: 8px;
+  transition: all 0.2s;
+}
+
+.lesson-content .d-flex.gap-2 a:hover,
+.lesson-content .d-flex.gap-2 button:hover {
+  transform: translateY(-2px);
+}
+
+/* ==========================
+   Responsive
+========================== */
+@media (max-width: 768px) {
+  .lesson-thumb {
+    width: 60px;
+    height: 60px;
+  }
+
+  .lesson-content h5 {
+    font-size: 1rem;
+  }
+
+  .btn-primary, .btn-outline-success {
+    font-size: 0.75rem;
+    padding: 6px 12px;
+  }
 }

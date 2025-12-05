@@ -1,26 +1,24 @@
+// courses.component.ts
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Course } from '../../models/Course';
 import { environment } from '../../environment/environment';
-import {
-  AddCourseRequest,
-  CourseService,
-  UpdateCourseRequest,
-} from '../../Services/course.service';
+import { CourseService } from '../../Services/course.service';
 import { forkJoin } from 'rxjs/internal/observable/forkJoin';
 import { Instructor } from '../../models/iinstructor';
 import { InstructorService } from '../../Services/instructor-srevices';
-import { Router, RouterLink } from '@angular/router';
+import { Router, RouterLink, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../Services/auth-service';
 import { EnrollmentService } from '../../Services/enrollment-service';
 import { EnrollmentRequest } from '../../models/EnrollmentRequest';
 import { SkeletonCardComponent } from '../../shared/Skeleton/skeleton-card/skeleton-card';
 import { PaginationComponent } from '../../shared/pagination/pagination';
+import { SafePipe } from '../../pipes/safe-pipe';
 
 @Component({
   selector: 'app-courses',
-  imports: [FormsModule, CommonModule, RouterLink, SkeletonCardComponent, PaginationComponent],
+  imports: [FormsModule, CommonModule, RouterLink, SkeletonCardComponent, PaginationComponent, SafePipe],
   templateUrl: './courses.html',
   styleUrl: './courses.css',
 })
@@ -33,18 +31,17 @@ export class Courses implements OnInit {
   showEnrollModal: boolean = false;
   selectedCourse: Course | null = null;
   enrollingCourseId: number | null = null;
-  selectedPaymentMethod: string = 'CreditCard';
+  selectedPaymentMethod = 'Paymob';
 
-  paymentMethods = [
-    { value: 'CreditCard', label: 'Credit Card', icon: '💳' },
-    { value: 'DebitCard', label: 'Debit Card', icon: '💳' },
-    { value: 'PayPal', label: 'PayPal', icon: '🅿️' },
-    { value: 'BankTransfer', label: 'Bank Transfer', icon: '🏦' },
-  ];
+  showPaymentIframe = false;
+  paymentUrl = '';
+  transactionId = '';
   enrollmentMessage: string = '';
   enrollmentSuccess: boolean = false;
   showResultModal: boolean = false;
-  transactionId: string = '';
+
+  // For checking payment status
+  checkingPaymentStatus = false;
 
   isLoading = true;
 
@@ -68,12 +65,57 @@ export class Courses implements OnInit {
     private instructorService: InstructorService,
     private authService: AuthService,
     private enrollmentService: EnrollmentService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
     this.loadData();
     this.loadEnrolledCourses();
+    
+    // Check if returning from payment
+    this.checkPaymentCallback();
+  }
+
+  /**
+   * Check if user is returning from Paymob payment
+   */
+  checkPaymentCallback(): void {
+    this.route.queryParams.subscribe(params => {
+      const success = params['success'];
+      const transactionId = params['transactionId'];
+      
+      if (success === 'true' && transactionId) {
+        this.verifyPaymentStatus(transactionId);
+      } else if (success === 'false') {
+        this.showPaymentResult(false, 'Payment was cancelled or failed.');
+      }
+    });
+  }
+
+  /**
+   * Verify payment status with backend
+   */
+  verifyPaymentStatus(transactionId: string): void {
+    this.checkingPaymentStatus = true;
+    
+    this.enrollmentService.getEnrollmentStatus(transactionId).subscribe({
+      next: (status) => {
+        this.checkingPaymentStatus = false;
+        
+        if (status.paymentStatus === 'Completed') {
+          this.enrolledCourses.add(status.enrollmentId);
+          this.showPaymentResult(true, 'Enrollment successful! Welcome to your course.');
+        } else {
+          this.showPaymentResult(false, `Payment status: ${status.paymentStatus}`);
+        }
+      },
+      error: (err) => {
+        this.checkingPaymentStatus = false;
+        this.showPaymentResult(false, 'Error verifying payment status.');
+        console.error(err);
+      }
+    });
   }
 
   loadData(): void {
@@ -97,25 +139,16 @@ export class Courses implements OnInit {
 
   getCourseImage(course: Course): string {
     const url = course.imageUrl;
-
-    if (!url) {
-      return '/assets/img/education/course-1.jpg';
-    }
-
-    if (url.startsWith('http://') || url.startsWith('https://')) {
-      return url;
-    }
-
+    if (!url) return '/assets/img/education/course-1.jpg';
+    if (url.startsWith('http://') || url.startsWith('https://')) return url;
     return this.imageBase + url;
   }
 
   getInstructorImage(course: Course): string {
     const instructor = this.instructors.find((i) => i.id === course.instructorId);
-
     if (!instructor || !instructor.photoUrl) {
       return '/assets/img/person/person-1.jpg';
     }
-
     return instructor.photoUrl;
   }
 
@@ -124,10 +157,8 @@ export class Courses implements OnInit {
     return instructor?.fullName ?? course.instructorName ?? 'Unknown';
   }
 
-  // ---------- DELETE COURSE ----------
   deleteCourse(course: Course): void {
     if (!confirm(`Are you sure to delete "${course.crs_Name}" ?`)) return;
-
     this.courseService.deleteCourse(course.crs_Id).subscribe({
       next: (res) => {
         console.log('Delete response:', res);
@@ -137,7 +168,6 @@ export class Courses implements OnInit {
     });
   }
 
-  // ----------- ENROLLMENT ----------
   loadEnrolledCourses(): void {
     const studentId = this.authService.UserId;
     if (studentId) {
@@ -156,52 +186,40 @@ export class Courses implements OnInit {
     return this.enrolledCourses.has(id);
   }
 
- goToUnits(course: Course): void {
-  const studentId = this.authService.currentUserId;
-
-  if (!studentId) {
-    alert('⚠️ Please login to access course content.');
-    this.router.navigate(['/login']);
-    return;
+  goToUnits(course: Course): void {
+    const studentId = this.authService.currentUserId;
+    if (!studentId) {
+      alert('⚠️ Please login to access course content.');
+      this.router.navigate(['/login']);
+      return;
+    }
+    if (course.crs_Id == null) {
+      alert('❌ Cannot access units: Course ID is missing.');
+      return;
+    }
+    this.router.navigate(['/Courses', course.crs_Id, 'units']);
   }
-
-  if (course.crs_Id == null) {
-    alert('❌ Cannot access units: Course ID is missing.');
-    return;
-  }
-
- 
-  this.router.navigate(['/Courses', course.crs_Id, 'units']);
-}
-
 
   enroll(course: Course): void {
     const studentId = this.authService.currentUserId;
-
     if (!studentId) {
       alert('⚠️ You must be logged in to enroll in a course.');
       return;
     }
-
     this.selectedCourse = course;
-    this.selectedPaymentMethod = 'CreditCard';
+    this.selectedPaymentMethod = 'Paymob';
     this.showEnrollModal = true;
   }
 
+  /**
+   * Confirm enrollment and get payment URL
+   */
   confirmEnrollment(): void {
     if (!this.selectedCourse) return;
 
-    const studentId = this.authService.UserId;
-    if (!studentId) {
-      alert('⚠️ You must be logged in to enroll.');
-      this.closeEnrollModal();
-      return;
-    }
-
-    this.enrollingCourseId = this.selectedCourse.crs_Id;
-
+    const studentId = this.authService.UserId!;
     const req: EnrollmentRequest = {
-      studentId: studentId,
+      studentId,
       courseId: this.selectedCourse.crs_Id,
       payment: {
         amount: this.selectedCourse.price,
@@ -211,28 +229,37 @@ export class Courses implements OnInit {
 
     this.enrollmentService.enrollStudent(req).subscribe({
       next: (res) => {
-        this.enrollingCourseId = null;
         this.showEnrollModal = false;
-
-        if (this.selectedCourse) {
-          this.enrolledCourses.add(this.selectedCourse.crs_Id);
+        
+        if (res.success && res.paymentUrl) {
+          this.transactionId = res.transactionId;
+          this.paymentUrl = res.paymentUrl;
+          
+          // Option 1: Show in iframe (current approach)
+          this.showPaymentIframe = true;
+          
+          // Option 2: Redirect directly to Paymob (alternative)
+          // window.location.href = res.paymentUrl;
+        } else {
+          alert(res.message || 'Failed to initiate enrollment.');
         }
-
-        this.enrollmentSuccess = true;
-        this.enrollmentMessage = res.message || 'Enrollment completed successfully!';
-        this.transactionId = res.transactionId || '';
-        this.showResultModal = true;
       },
       error: (err) => {
-        this.enrollingCourseId = null;
         this.showEnrollModal = false;
-        this.enrollmentSuccess = false;
-        this.enrollmentMessage =
-          err.error?.message || 'Failed to enroll. Please try again.';
-        this.showResultModal = true;
-        console.error('Enrollment error:', err);
+        alert(err.error?.message || 'Failed to enroll.');
+        console.error(err);
       },
     });
+  }
+
+  /**
+   * Show payment result modal
+   */
+  showPaymentResult(success: boolean, message: string): void {
+    this.enrollmentSuccess = success;
+    this.enrollmentMessage = message;
+    this.showResultModal = true;
+    this.closePaymentIframe();
   }
 
   closeEnrollModal(): void {
@@ -241,10 +268,18 @@ export class Courses implements OnInit {
     this.enrollingCourseId = null;
   }
 
+  closePaymentIframe(): void {
+    this.showPaymentIframe = false;
+    this.paymentUrl = '';
+  }
+
   closeResultModal(): void {
     this.showResultModal = false;
     this.enrollmentMessage = '';
     this.transactionId = '';
+    
+    // Reload enrolled courses
+    this.loadEnrolledCourses();
   }
 
   isEnrolling(crs_Id: number): boolean {
