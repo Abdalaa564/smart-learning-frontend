@@ -4,7 +4,9 @@ export interface EnrollmentResponse{
   message: string;
   enrollmentId?: number;
   enrollmentDate?: string;
-  transactionId?: string;
+  transactionId: string;
   paidAmount?: number;
+  paymentUrl: string;
+
 
 }

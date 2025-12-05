@@ -1,4 +1,3 @@
-// lessons.ts
 import { Component, OnInit } from '@angular/core';
 
 import { environment } from '../../../environment/environment';
@@ -30,7 +29,7 @@ export class Lessons implements OnInit {
   freeLessonsLimit = 3;   
   freeUnitId = 1; 
   env = environment;
-
+  units: Unit[] = [];
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -49,8 +48,11 @@ export class Lessons implements OnInit {
         .subscribe(res => this.isEnrolled = res);
     }
 
+    this.unitService.getByCourse(this.courseId).subscribe(units => {
+    this.units = units.sort((a, b) => a.orderIndex - b.orderIndex); // تأكد إن الوحدات مرتبة حسب الـ order
     this.loadUnit();
     this.loadLessons();
+  });
   }
 
   loadUnit(): void {
@@ -75,16 +77,19 @@ export class Lessons implements OnInit {
       }
     });
   }
- canAccessLesson(index: number): boolean {
-    // If enrolled, grant full access
-    if (this.isEnrolled) return true;
+canAccessLesson(index: number): boolean {
+  // If enrolled, grant full access
+  if (this.isEnrolled) return true;
 
-    // Only first unit's first 3 lessons are free
-    if (this.unitId === this.freeUnitId && index < this.freeLessonsLimit) {
-      return true;
-    }
-    return false;
+  // Only first unit's first 3 lessons are free
+  const firstUnit = this.units[0];
+  if (this.unit && this.unit.unit_Id === firstUnit.unit_Id && index < this.freeLessonsLimit) {
+    return true;
   }
+
+  return false;
+}
+
   getPdfResource(lesson: Lesson) {
     return lesson.resources?.find(r => r.resource_Type === 'pdf');
   }

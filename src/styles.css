@@ -145,6 +145,12 @@ h6 {
     cursor: not-allowed;
   }
 }
+.badge {
+  padding: 0.5em 0.8em;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
 
 /*--------------------------------------------------------------
 # Global Section Titles
