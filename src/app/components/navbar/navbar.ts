@@ -1,67 +1,77 @@
 // navbar.component.ts
 
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router, RouterLink, RouterModule } from '@angular/router';
 import { Observable } from 'rxjs';
-import { CommonModule } from '@angular/common'; // Needed for *ngIf and async pipe
 
 // Assuming you have these models/services. Adjust paths as necessary.
 import { AuthService } from '../../Services/auth-service';
-import { Studentprofile } from '../../models/studentprofile'; 
+import { Studentprofile } from '../../models/studentprofile';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-navbar',
- 
-  imports: [RouterLink, CommonModule,RouterModule], 
+  standalone: true,
+  imports: [RouterLink, RouterModule, CommonModule],
   templateUrl: './navbar.html',
   styleUrl: './navbar.css',
 })
-export class Navbar  {
+export class Navbar {
 
- 
-  currentUser$: Observable<Studentprofile | null>; 
-  
-  
-  isDropdownOpen: boolean = false; 
+  // observable of current user
+  currentUser$: Observable<Studentprofile | null>;
+
+  // dropdown state
+  isProfileDropdownOpen: boolean = false;    // للبروفايل
+  isRegisterDropdownOpen: boolean = false;   // لـ "Register as"
 
   constructor(
-    private authService: AuthService, 
-    private router: Router 
+    private authService: AuthService,
+    private router: Router
   ) {
     this.currentUser$ = this.authService.currentUser$;
-
-     
-
   }
 
-  toggleDropdown() {
-    this.isDropdownOpen = !this.isDropdownOpen;
+  // toggle profile dropdown
+  toggleProfileDropdown() {
+    this.isProfileDropdownOpen = !this.isProfileDropdownOpen;
   }
-  
+
+  // toggle register dropdown
+  toggleRegisterDropdown() {
+    this.isRegisterDropdownOpen = !this.isRegisterDropdownOpen;
+  }
+
+  // close all dropdowns (لو حبيت تستخدمها بعدين)
+  closeAllDropdowns() {
+    this.isProfileDropdownOpen = false;
+    this.isRegisterDropdownOpen = false;
+  }
+
   // Method to handle logout
-logout() {
-  this.authService.logout().subscribe({
-    next: () => {
-     
-      this.authService.currentUserSubject.next(null);
-      this.authService.isAuthenticatedSubject.next(false);
+  logout() {
+    this.authService.logout().subscribe({
+      next: () => {
+        this.authService.currentUserSubject.next(null);
+        this.authService.isAuthenticatedSubject.next(false);
 
-      this.isDropdownOpen = false;
-      this.router.navigate(['/login']);
-    },
-    error: (err) => {
-      console.error("Logout failed", err);
+        // اقفل القايم
+        this.isProfileDropdownOpen = false;
+        this.isRegisterDropdownOpen = false;
 
-      // fallback
-      this.authService.currentUserSubject.next(null);
-      this.authService.isAuthenticatedSubject.next(false);
-      this.authService.removeToken();
-      this.authService.removeUser();
+        this.router.navigate(['/login']);
+      },
+      error: (err) => {
+        console.error("Logout failed", err);
 
-      this.router.navigate(['/login']);
-    }
-  });
-}
+        // fallback
+        this.authService.currentUserSubject.next(null);
+        this.authService.isAuthenticatedSubject.next(false);
+        this.authService.removeToken();
+        this.authService.removeUser();
 
-
+        this.router.navigate(['/login']);
+      }
+    });
+  }
 }

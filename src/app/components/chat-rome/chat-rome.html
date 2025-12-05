@@ -1,73 +1,119 @@
-<div class="container bootstrap snippets bootdey">
-    <div class="row">
-		<div class="col-md-3 bg-white mt-5 mb-5">
-            <div class=" row border-bottom padding-sm" style="height: 40px;">
-            	Chats
-            </div>
-            
-            <!-- =============================================================== -->
-            <!-- member list -->
-            <ul class="friend-list">
-                <li *ngFor="let session of sessions" (click)="selectSession(session)" class="active bounceInDown">
-                	<a href="#" class="clearfix">
-                		<img src="https://bootdey.com/img/Content/user_1.jpg" alt="" class="img-circle">
-                		<div class="friend-name">	
-                			<strong>{{session.name}}</strong>
-                		</div>
-						<div class="last-message text-muted">
-							{{session.messages.length > 0 ? session.messages[session.messages.length-1].text : 'No messages'}}
+<div class="chat-container">
+	<div class="chat-wrapper">
+		<!-- Sidebar - Sessions List -->
+		<div class="chat-sidebar">
+			<div class="sidebar-header">
+				<h3><i class="fas fa-comments"></i> Chats</h3>
+				<button class="btn-new-chat" (click)="createNewSession('New Chat')">
+					<i class="fas fa-plus"></i>
+				</button>
+			</div>
+
+			<!-- Skeleton Loading for Sessions -->
+			<app-skeleton-list *ngIf="isLoadingSessions" [items]="5" [showAvatar]="true" [lines]="2" avatarSize="40px"
+				animation="wave">
+			</app-skeleton-list>
+
+			<!-- Sessions List -->
+			<ul class="sessions-list" *ngIf="!isLoadingSessions">
+				<li *ngFor="let session of sessions" (click)="selectSession(session)" class="session-item"
+					[class.active]="selectedSession?.id === session.id">
+					<div class="session-avatar">
+						<i class="fas fa-user-circle"></i>
+					</div>
+					<div class="session-info">
+						<div class="session-name">{{session.name}}</div>
+						<div class="session-preview">
+							{{session.messages.length > 0 ? session.messages[session.messages.length-1].text : 'Nomessages'}}
 						</div>
-                		<!-- <div class="last-message text-muted">Hello, Are you there?</div>
-                		<small class="time text-muted">Just now</small>
-                		<small class="chat-alert label label-danger">1</small> -->
-                	</a>
-                </li>
-                          
-            </ul>
-			<button class="btn btn-primary mt-2" (click)="createNewSession('New Chat')">New Chat</button>
-		</div>
-        
-        <!--=========================================================-->
-        <!-- selected chat -->
-    	<div class="col-md-9 bg-white mt-5 mb-5">
-            <div class="chat-message">
-                <ul class="chat">
-					<li *ngFor="let msg of selectedSession?.messages" [ngClass]="{'left clearfix': msg.sender==='bot','right clearfix': msg.sender==='user'}">
-						<span class="chat-img" [ngClass]="{'pull-left': msg.sender==='bot', 'pull-right': msg.sender==='user'}">
-						<img src="https://bootdey.com/img/Content/user_1.jpg" *ngIf="msg.sender==='user'">
-						<img src="https://bootdey.com/img/Content/user_3.jpg" *ngIf="msg.sender==='bot'">
+					</div>
+					<div class="session-meta">
+						<span class="message-count" *ngIf="session.messages.length > 0">
+							{{session.messages.length}}
 						</span>
-						<div class="chat-body clearfix">
-						<div class="header">
-							<strong class="primary-font">{{msg.sender === 'user' ? 'You' : 'AI'}}</strong>
+					</div>
+				</li>
+			</ul>
+
+			<!-- Empty State -->
+			<div class="empty-state" *ngIf="!isLoadingSessions && sessions.length === 0">
+				<i class="fas fa-comments"></i>
+				<p>No chats yet</p>
+				<small>Click the + button to start a new chat</small>
+			</div>
+		</div>
+
+		<!-- Main Chat Area -->
+		<div class="chat-main">
+			<!-- Chat Header -->
+			<div class="chat-header" *ngIf="selectedSession">
+				<div class="chat-header-info">
+					<i class="fas fa-robot"></i>
+					<div>
+						<h4>{{selectedSession.name}}</h4>
+						<span class="status-online"><i class="fas fa-circle"></i> Online</span>
+					</div>
+				</div>
+				<div class="chat-header-actions">
+					<div class="search-container" [class.active]="isSearchOpen">
+						<input type="text" class="search-input" placeholder="Search messages..."
+							[(ngModel)]="searchText">
+						<button class="btn-icon" title="Search" (click)="toggleSearch()">
+							<i class="fas" [ngClass]="isSearchOpen ? 'fa-times' : 'fa-search'"></i>
+						</button>
+					</div>
+					<button class="btn-icon" title="More options">
+						<i class="fas fa-ellipsis-v"></i>
+					</button>
+				</div>
+			</div>
+
+			<!-- Messages Area -->
+			<div class="messages-container">
+				<!-- Welcome Message -->
+				<div class="welcome-message" *ngIf="!selectedSession">
+					<i class="fas fa-comments"></i>
+					<h3>Welcome to AI Chat</h3>
+					<p>Select a chat from the sidebar or create a new one to get started</p>
+				</div>
+
+				<!-- Messages -->
+				<ul class="messages-list" *ngIf="selectedSession">
+					<li *ngFor="let msg of selectedSession.messages" class="message-item"
+						[class.message-user]="msg.sender === 'user'" [class.message-bot]="msg.sender === 'bot'">
+						<div class="message-avatar">
+							<i class="fas" [ngClass]="msg.sender === 'user' ? 'fa-user' : 'fa-robot'"></i>
 						</div>
-						<p>{{ msg.text }}</p>
+						<div class="message-content">
+							<div class="message-header">
+								<strong>{{msg.sender === 'user' ? 'You' : 'AI Assistant'}}</strong>
+								<span class="message-time">Just now</span>
+							</div>
+							<div class="message-text" [innerHTML]="highlightText(msg.text)"></div>
 						</div>
 					</li>
 				</ul>
-            </div>
-            <div class="chat-input-container">
-
-				<!-- Upload PDF Button -->
-				<label class="upload-btn">
-					<input type="file" accept="application/pdf" (change)="onPdfSelected($event)">
-					📎
-				</label>
-
-				<!-- Message Input -->
-				<input 
-					type="text" 
-					class="chat-input"
-					placeholder="Type your message here..."
-					[(ngModel)]="messageText">
-
-				<!-- Send Button -->
-				<button class="send-btn" (click)="sendMessage()">
-					➤
-				</button>
-
 			</div>
-					
-		</div>        
-	</div><!-- /input-group Send-->	
+
+			<!-- Input Area -->
+			<div class="chat-input-wrapper" *ngIf="selectedSession">
+				<div class="chat-input-container">
+					<!-- Upload PDF Button -->
+					<label class="btn-attachment" title="Attach PDF">
+						<input type="file" accept="application/pdf" (change)="onPdfSelected($event)">
+						<i class="fas fa-paperclip"></i>
+					</label>
+
+					<!-- Message Input -->
+					<input type="text" class="message-input" placeholder="Type your message..."
+						[(ngModel)]="messageText" (keyup.enter)="sendMessage()">
+
+					<!-- Send Button -->
+					<button class="btn-send" (click)="sendMessage()" [disabled]="!messageText.trim()">
+						<i class="fas fa-paper-plane"></i>
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>

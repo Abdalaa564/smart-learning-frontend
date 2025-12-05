@@ -10,4 +10,19 @@ export interface Instructor {
   email?: string;
   photoUrl?: string;
   certificateUrl?: string;
+} 
+export interface RegisterInstructorRequest {
+  email: string;
+  password: string;
+  confirmPassword: string;
+  fullName: string;
+  jobTitle: string;
+  phoneNumber: string;
+  youtubeChannelUrl: string;
+  photoUrl: string;
+  certificateUrl: string;
+  cvUrl: string;
+  specialization: string;
+  universityName: string;
+  about: string;
 }

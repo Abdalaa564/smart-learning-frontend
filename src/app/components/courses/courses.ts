@@ -12,11 +12,13 @@ import { Router, RouterLink, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../Services/auth-service';
 import { EnrollmentService } from '../../Services/enrollment-service';
 import { EnrollmentRequest } from '../../models/EnrollmentRequest';
+import { SkeletonCardComponent } from '../../shared/Skeleton/skeleton-card/skeleton-card';
+import { PaginationComponent } from '../../shared/pagination/pagination';
 import { SafePipe } from '../../pipes/safe-pipe';
 
 @Component({
   selector: 'app-courses',
-  imports: [FormsModule, CommonModule, RouterLink, SafePipe],
+  imports: [FormsModule, CommonModule, RouterLink, SkeletonCardComponent, PaginationComponent, SafePipe],
   templateUrl: './courses.html',
   styleUrl: './courses.css',
 })
@@ -40,6 +42,23 @@ export class Courses implements OnInit {
 
   // For checking payment status
   checkingPaymentStatus = false;
+
+  isLoading = true;
+
+  // ----Pagination----
+  currentPage: number = 1;
+  itemsPerPage: number = 8;
+
+  get paginatedCourses(): Course[] {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    return this.courses.slice(startIndex, startIndex + this.itemsPerPage);
+  }
+  // ---- end Pagination----
+
+  onPageChange(page: number): void {
+    this.currentPage = page;
+    window.scrollTo(0, 0);
+  }
 
   constructor(
     private courseService: CourseService,
@@ -100,6 +119,8 @@ export class Courses implements OnInit {
   }
 
   loadData(): void {
+    this.isLoading = true;
+
     forkJoin({
       courses: this.courseService.getAllCourses(),
       instructors: this.instructorService.getAll(),
@@ -107,8 +128,12 @@ export class Courses implements OnInit {
       next: (data) => {
         this.courses = data.courses;
         this.instructors = data.instructors;
+        this.isLoading = false;
       },
-      error: (err) => console.error('Error loading data:', err),
+      error: (err) => {
+        console.error('Error loading data:', err);
+        this.isLoading = false;
+      },
     });
   }
 

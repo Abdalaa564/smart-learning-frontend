@@ -1,0 +1,153 @@
+<div class="skeleton-demo-container">
+    <div class="container py-5">
+        <h1 class="text-center mb-5">Skeleton Loading Demo</h1>
+
+        <!-- Section 1: Skeleton Cards -->
+        <section class="mb-5">
+            <div class="section-header">
+                <h2>1. Skeleton Cards</h2>
+                <button class="btn btn-accent" (click)="reloadCards()">
+                    <i class="fas fa-sync-alt"></i> إعادة التحميل
+                </button>
+            </div>
+
+            <div *ngIf="isLoadingCards" class="row">
+                <div class="col-md-4" *ngFor="let i of [1,2,3]">
+                    <app-skeleton-card [showImage]="true" [lines]="3" [showActions]="true" imageHeight="200px"
+                        animation="wave">
+                    </app-skeleton-card>
+                </div>
+            </div>
+
+            <div *ngIf="!isLoadingCards" class="row">
+                <div class="col-md-4" *ngFor="let course of courses">
+                    <div class="card">
+                        <img [src]="course.image" class="card-img-top" [alt]="course.title">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ course.title }}</h5>
+                            <p class="card-text">{{ course.description }}</p>
+                            <p class="text-muted">المدرس: {{ course.instructor }}</p>
+                            <div class="card-actions">
+                                <button class="btn btn-accent">عرض التفاصيل</button>
+                                <button class="btn btn-secondary">تسجيل</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Skeleton List -->
+        <section class="mb-5">
+            <div class="section-header">
+                <h2>2. Skeleton List</h2>
+                <button class="btn btn-accent" (click)="reloadList()">
+                    <i class="fas fa-sync-alt"></i> إعادة التحميل
+                </button>
+            </div>
+
+            <div class="list-container">
+                <app-skeleton-list *ngIf="isLoadingList" [items]="5" [showAvatar]="true" [lines]="2" avatarSize="56px"
+                    animation="wave">
+                </app-skeleton-list>
+
+                <div *ngIf="!isLoadingList" class="instructors-list">
+                    <div class="instructor-item" *ngFor="let instructor of instructors">
+                        <div class="instructor-avatar">
+                            <i class="fas fa-user-circle fa-3x"></i>
+                        </div>
+                        <div class="instructor-info">
+                            <h4>{{ instructor.name }}</h4>
+                            <p>{{ instructor.specialization }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Skeleton Table -->
+        <section class="mb-5">
+            <div class="section-header">
+                <h2>3. Skeleton Table</h2>
+                <button class="btn btn-accent" (click)="reloadTable()">
+                    <i class="fas fa-sync-alt"></i> إعادة التحميل
+                </button>
+            </div>
+
+            <div class="table-container">
+                <app-skeleton-table *ngIf="isLoadingTable" [rows]="10" [columns]="6" [showHeader]="true"
+                    animation="wave">
+                </app-skeleton-table>
+
+                <table *ngIf="!isLoadingTable" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>الرقم</th>
+                            <th>الاسم</th>
+                            <th>البريد الإلكتروني</th>
+                            <th>القسم</th>
+                            <th>المستوى</th>
+                            <th>التقدير</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let student of students">
+                            <td>{{ student.id }}</td>
+                            <td>{{ student.name }}</td>
+                            <td>{{ student.email }}</td>
+                            <td>{{ student.department }}</td>
+                            <td>{{ student.level }}</td>
+                            <td>{{ student.grade }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Section 4: Custom Skeleton Usage -->
+        <section class="mb-5">
+            <div class="section-header">
+                <h2>4. Custom Skeleton Elements</h2>
+            </div>
+
+            <div *ngIf="isLoadingCustom" class="custom-skeleton-demo">
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <h5>Text Skeleton (Single Line)</h5>
+                        <app-skeleton type="text" width="80%" height="1rem"></app-skeleton>
+                    </div>
+                    <div class="col-md-6">
+                        <h5>Text Skeleton (Multiple Lines)</h5>
+                        <app-skeleton type="text" [lines]="3"></app-skeleton>
+                    </div>
+                </div>
+
+                <div class="row mb-4">
+                    <div class="col-md-4">
+                        <h5>Circle/Avatar</h5>
+                        <app-skeleton type="circle" width="80px" height="80px"></app-skeleton>
+                    </div>
+                    <div class="col-md-4">
+                        <h5>Button</h5>
+                        <app-skeleton type="button" width="150px" height="40px"></app-skeleton>
+                    </div>
+                    <div class="col-md-4">
+                        <h5>Rectangle</h5>
+                        <app-skeleton type="rectangle" width="100%" height="100px" borderRadius="8px"></app-skeleton>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <h5>Pulse Animation</h5>
+                        <app-skeleton type="text" [lines]="2" animation="pulse"></app-skeleton>
+                    </div>
+                </div>
+            </div>
+
+            <div *ngIf="!isLoadingCustom" class="alert alert-success">
+                <i class="fas fa-check-circle"></i> تم تحميل المحتوى بنجاح!
+            </div>
+        </section>
+    </div>
+</div>
