@@ -31,7 +31,7 @@ import { QuizListComponent } from './components/quiz-list-component/quiz-list-co
 import { TakeQuizComponent } from './components/take-quiz-component/take-quiz-component';
 import { QuizResultComponent } from './components/quiz-result-component/quiz-result-component';
 
-import { AdminPanelComponent } from './components/admin/admin';
+
 import { JitsiComponent } from './components/jitsi/jitsi.component';
 import { MeetingSetupComponent } from './components/meeting-setup/meeting-setup.component';
 
@@ -48,8 +48,13 @@ export const routes: Routes = [
 
   { path: '', redirectTo: 'Home', pathMatch: 'full' },
 
-  // Admin
-  { path: 'admin', component: AdminPanelComponent, title: 'Admin Panel' },
+ {
+  path: 'admin',
+  loadComponent: () =>
+    import('./components/ADMIN-Panel/admin-panel/admin-panel')
+      .then((m) => m.AdminPanelComponent),
+},
+
 
   // Main
   { path: 'Home', component: Home, title: 'Home' },

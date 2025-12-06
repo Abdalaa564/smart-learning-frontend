@@ -1,0 +1,80 @@
+ <div class="d-flex vh-100 bg-light">
+  <!-- Sidebar -->
+  <app-admin-sidebar
+    [sidebarOpen]="sidebarOpen"
+    [menuItems]="menuItems"
+    [activePage]="activePage"
+    (pageChange)="setActivePage($event)"
+  ></app-admin-sidebar>
+
+  <!-- Main area -->
+  <div class="grow d-flex flex-column overflow-hidden">
+    <!-- Header -->
+    <app-admin-header
+      [adminName]="adminName"
+      (toggleSidebar)="toggleSidebar()"
+    ></app-admin-header>
+
+    <!-- Content -->
+    <main class="grow overflow-auto p-3">
+      <ng-container [ngSwitch]="activePage">
+        <!-- Dashboard -->
+        <app-admin-dashboard
+          *ngSwitchCase="'dashboard'"
+          [stats]="stats"
+          [activityData]="activityData"
+          [progressData]="progressData"
+          [recentActivities]="recentActivities"
+          [barChartOptions]="barChartOptions"
+          [barChartData]="barChartData"
+        >
+        </app-admin-dashboard>
+
+        <!-- Students -->
+        <app-admin-students
+          *ngSwitchCase="'students'"
+          [students]="students"
+          [studentEnrollCounts]="studentEnrollCounts"
+          (add)="onAddStudent()"
+          (view)="onViewStudent($event)"
+          (edit)="onEditStudent($event)"
+          (delete)="onDeleteStudent($event)"
+        ></app-admin-students>
+
+        <!-- Instructors -->
+        <app-admin-instructors
+          *ngSwitchCase="'instructors'"
+          [instructors]="instructors"
+          (add)="onAddInstructor()"
+          (view)="onViewInstructor($event)"
+          (edit)="onEditInstructor($event)"
+          (delete)="onDeleteInstructor($event)"
+        ></app-admin-instructors>
+
+        <!-- Courses -->
+        <app-admin-courses
+          *ngSwitchCase="'courses'"
+          [courses]="courses"
+          [courseEnrollCounts]="courseEnrollCounts"
+          (add)="onAddCourse()"
+          (view)="onViewCourse($event)"
+          (edit)="onEditCourse($event)"
+          (delete)="onDeleteCourse($event)"
+        ></app-admin-courses>
+
+        <!-- Instructor Requests -->
+        <app-admin-instructor-requests
+          *ngSwitchCase="'instructorRequests'"
+          [pendingInstructors]="pendingInstructors"
+          [isLoading]="isLoadingPending"
+          (approve)="onApproveInstructor($event)"
+          (reject)="onRejectInstructor($event)"
+        >
+        </app-admin-instructor-requests>
+
+        <!-- Profile -->
+        <app-admin-profile *ngSwitchCase="'profile'"></app-admin-profile>
+      </ng-container>
+    </main>
+  </div>
+</div>

@@ -1,0 +1,67 @@
+<div class="card">
+  <div class="card-header d-flex justify-content-between">
+    <h5 class="mb-0">Instructors Management</h5>
+    <button
+      class="btn btn-primary btn-sm"
+      (click)="add.emit()"
+    >
+      <i class="bi bi-plus-lg me-1"></i> Add New
+    </button>
+  </div>
+  <div class="card-body">
+    <div class="mb-3 position-relative">
+      <i
+        class="bi bi-search position-absolute top-50 start-0 translate-middle-y ms-2 text-muted"
+      ></i>
+      <input
+        type="text"
+        class="form-control ps-5"
+        placeholder="Search..."
+      />
+    </div>
+
+    <div class="table-responsive">
+      <table class="table align-middle">
+        <thead class="table-light">
+          <tr>
+            <th>ID</th>
+            <th>Full Name</th>
+            <th>Job Title</th>
+            <th>Students</th>
+            <th>Rating</th>
+            <th class="text-end">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let row of instructors">
+            <td>{{ row.id }}</td>
+            <td>{{ row.fullName }}</td>
+            <td>{{ row.jobTitle }}</td>
+            <td>{{ row.numberOfStudents }}</td>
+            <td>{{ row.rating }}</td>
+            <td class="text-end">
+              <button
+                class="btn btn-sm btn-outline-primary me-1"
+                (click)="view.emit(row)"
+              >
+                <i class="bi bi-eye"></i>
+              </button>
+              <button
+                class="btn btn-sm btn-outline-success me-1"
+                (click)="edit.emit(row)"
+              >
+                <i class="bi bi-pencil"></i>
+              </button>
+              <button
+                class="btn btn-sm btn-outline-danger"
+                (click)="delete.emit(row)"
+              >
+                <i class="bi bi-trash"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
