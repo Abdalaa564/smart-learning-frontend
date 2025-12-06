@@ -49,12 +49,16 @@ export class TakeQuizComponent implements OnInit, OnDestroy {
         this.loading = false;
       },
       error: (error) => {
-        console.error('Error loading quiz:', error);
-        alert('Failed to load quiz');
-        this.loading = false;
-        this.router.navigate(['/quizzes']);
-      }
-    });
+      console.error('Error loading quiz:', error);
+
+      if (error.status === 400 && error.error?.message?.includes("already taken")) {
+  alert('You have already taken this quiz. Redirecting to results.');
+  this.router.navigate(['/quiz/result', quizId]);
+} 
+
+      this.loading = false;
+    }
+  });
   }
 
   startTimer(): void {
