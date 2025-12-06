@@ -1,0 +1,37 @@
+<aside
+  class="bg-white border-end d-flex flex-column transition-all vh-100"
+  [ngClass]="sidebarOpen ? 'sidebar-open' : 'sidebar-collapsed'"
+>
+  <div class="p-3 border-bottom">
+    <div class="d-flex align-items-center">
+      <div
+        class="d-flex align-items-center justify-content-center bg-primary text-white fw-bold rounded me-2"
+        style="width: 40px; height: 40px"
+      >
+        L
+      </div>
+      <span *ngIf="sidebarOpen" class="fs-5 fw-bold text-dark">
+        Learnzie
+      </span>
+    </div>
+  </div>
+
+  <nav class="grow p-2">
+    <button
+      *ngFor="let item of menuItems"
+      class="btn w-100 text-start d-flex align-items-center mb-2"
+      [ngClass]="
+        activePage === item.id
+          ? 'btn-primary'
+          : 'btn-outline-light text-secondary'
+      "
+      (click)="onSelect(item.id)"
+    >
+      <i class="me-2" [ngClass]="item.iconClass"></i>
+      <span *ngIf="sidebarOpen">{{ item.label }}</span>
+    </button>
+    
+     <div class="mt-auto"></div>
+  </nav>
+</aside>
+

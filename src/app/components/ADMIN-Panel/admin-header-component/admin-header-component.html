@@ -1,0 +1,29 @@
+<header class="bg-white border-bottom px-3 py-2">
+  <div class="d-flex justify-content-between align-items-center">
+    <button class="btn btn-light" (click)="toggleSidebar.emit()">
+      <i class="bi bi-list"></i>
+    </button>
+
+    <div class="d-flex align-items-center gap-3">
+      <button class="btn btn-light position-relative">
+        <i class="bi bi-bell"></i>
+        <span
+          class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger p-1"
+        ></span>
+      </button>
+
+      <div class="d-flex align-items-center">
+        <div
+          class="rounded-circle bg-primary text-white fw-bold d-flex align-items-center justify-content-center me-2"
+          style="width: 40px; height: 40px"
+        >
+          {{ getInitials(adminName) }}
+        </div>
+        <div class="d-none d-md-block">
+          <div class="fw-semibold">{{ adminName || 'Admin' }}</div>
+          <div class="text-muted small">@admin</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>

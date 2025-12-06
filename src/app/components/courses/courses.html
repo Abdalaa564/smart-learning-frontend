@@ -28,7 +28,7 @@
 
         <!-- Image -->
         <div class="course-image-wrapper">
-          <img [src]="getCourseImage(course)" [alt]="course.crs_Name" class="course-image" />
+          <img [src]="getCourseImage(course)" [alt]="course.crs_Name" class="course-image"  alt=""/>
           <div class="course-price">{{ course.price }} EGP</div>
         </div>
 
@@ -118,7 +118,7 @@
 
       <div class="modal-body">
         <div class="text-center mb-3">
-          <img
+          <img alt=""
             [src]="getCourseImage(selectedCourse)"
             [alt]="selectedCourse.crs_Name"
             class="img-fluid rounded shadow-sm"
