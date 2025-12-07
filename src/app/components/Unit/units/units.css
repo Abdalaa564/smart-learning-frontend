@@ -3,6 +3,9 @@
   border-radius: 16px;
   overflow: hidden;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background-color: var(--surface-color); 
+  
+  border: 1px solid var(--border-color);
 }
 
 .unit-card:hover {
@@ -46,12 +49,13 @@
 .card-title {
   font-size: 1.1rem;
   font-weight: 600;
-  color: #074226;
+ color: var(--heading-color);
 }
 
 /* Texts */
 .card-text {
   font-size: 0.9rem;
+  color: var(--text-muted);
 }
 
 /* Buttons */

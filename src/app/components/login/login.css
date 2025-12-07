@@ -1,6 +1,7 @@
 body {
   font-family: var(--default-font);
-  background: linear-gradient(135deg, #f0f4ff, var(--light-background));
+  background: linear-gradient(135deg, var(--surface-color), var(--background-color));
+  color: var(--default-color);
 }
 
 /* Card */
@@ -25,7 +26,7 @@ body {
   width: 75px;
   height: 75px;
   border-radius: 15px;
-  background: #eef2ff;
+  background:color-mix(in srgb, var(--surface-color), var(--accent-color) 5%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -48,21 +49,23 @@ body {
 .form-control {
   height: 48px;
   border-radius: 10px;
-  border: 1px solid #d7d8df;
-  background: #fbfbff;
+ border: 1px solid var(--border-color);
+  background: var(--surface-color);
   transition: 0.25s ease;
+  color: var(--heading-color);
 }
 
 .form-control:focus {
   border-color: var(--accent-color);
-  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent-color), transparent 80%);
-  background: #fff;
+ box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent-color), transparent 80%);
+  background: var(--surface-color);
 }
 
 /* Labels */
 label {
   font-weight: 600;
   margin-bottom: 6px;
+  color:var(--heading-color);
 }
 
 /* Login Button */
@@ -74,8 +77,7 @@ button[type="submit"] {
   border-radius: 12px;
   transition: 0.25s ease;
    background: var(--accent-color);
-     color: white;
-
+    color: var(--background-color);
 }
 
 button[type="submit"]:hover:not(:disabled) {

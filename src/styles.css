@@ -1,80 +1,85 @@
-/* You can add global styles to this file, and also import other style files */
+/*--------------------------------------------------------------
+# Import Libraries
+--------------------------------------------------------------*/
 @import url(../node_modules/bootstrap/dist/css/bootstrap.min.css);
 @import "@fortawesome/fontawesome-free/css/all.min.css";
-
-
-
-
-
 
 /*--------------------------------------------------------------
 # Font & Color Variables
 --------------------------------------------------------------*/
-/* Fonts */
 :root {
-  --default-font: "Roboto",  system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  --heading-font: "Raleway",  sans-serif;
-  --nav-font: "Ubuntu",  sans-serif;
-}
+  /* Fonts */
+  --default-font: "Roboto", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --heading-font: "Raleway", sans-serif;
+  --nav-font: "Ubuntu", sans-serif;
 
-/* Global Colors*/
-:root { 
- --background-color: #ffffff;
-  --default-color: #394450;
-  --heading-color: #223a58;
-  --accent-color: #074226;
-  --secondary-accent: #4ade80;
-  --surface-color: #ffffff;
-  --contrast-color: #ffffff;
+  /* Global Colors */
+--background-color: #ffffff; 
+--default-color:  #074226; 
+--heading-color: #000000;
+--accent-color: #074226; 
+--secondary-accent: #4ade80;
+ --surface-color: #ffffff; 
+ --contrast-color: #ffffff;
   --border-color: #e0e0e0;
-  --text-muted: #666666;
-}
+   --text-muted: #666666;
 
-/* Nav Menu Colors*/
-:root {
+  /* Nav Colors */
   --nav-color: #4a4a4a;
   --nav-hover-color: #0d5c3f;
   --nav-mobile-background-color: #ffffff;
   --nav-dropdown-background-color: #ffffff;
   --nav-dropdown-color: #4a4a4a;
   --nav-dropdown-hover-color: #0d5c3f;
-}
 
-/* Color Presets*/
-.light-background {
-  --background-color: #f5faff;
-  --surface-color: #ffffff;
-}
-
-.dark-background {
-  --background-color: #060606;
-  --default-color: #ffffff;
-  --heading-color: #ffffff;
-  --surface-color: #252525;
-  --contrast-color: #ffffff;
-}
-
-.accent-background {
-  --background-color: #074226;
-  --default-color: #ffffff;
-  --heading-color: #ffffff;
-  --accent-color: #074226;
-  --surface-color:  #4ade80;
-  --contrast-color: #ffffff;
-}
-
-/* Smooth scroll */
-:root {
+  /* Smooth scroll */
   scroll-behavior: smooth;
 }
 
+/* Dark Mode */
+.dark-mode {
+  --background-color: #121212;
+  --default-color: #e0e0e0;
+  --heading-color: #f0f0f0;
+  --accent-color: #4ade80;
+  --secondary-accent: #074226;
+  --surface-color: #1e1e1e;
+  --contrast-color: #121212;
+  --border-color: #333333;
+  --text-muted: #aaaaaa;
+
+  /* Cards & UI */
+  --card-background: #252525f4;
+  --card-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  --stat-bg: #2c2c2c;
+
+  /* Buttons */
+  --btn-light-bg: #2c2c2c;
+  --btn-light-color: #e0e0e0;
+
+  /* Nav */
+  --nav-color: #e0e0e0;
+  --nav-hover-color: #4ade80;
+  --nav-mobile-background-color: #1e1e1e;
+  --nav-dropdown-background-color: #252525;
+  --nav-dropdown-color: #e0e0e0;
+  --nav-dropdown-hover-color: #4ade80;
+
+
+}
+.dark-mode footer {
+  background-color: var(--secondary-accent) !important;
+  color: unset !important;
+}
+
 /*--------------------------------------------------------------
-# General Styling & Shared Classes
+# Body & Global Styles
 --------------------------------------------------------------*/
 body {
+  font-family: var(--default-font);
   color: var(--default-color);
   background-color: var(--background-color);
-  font-family: var(--default-font);
+  transition: background-color 0.3s, color 0.3s;
 }
 
 a {
@@ -84,21 +89,17 @@ a {
 }
 
 a:hover {
-  color: color-mix(in srgb, var(--accent-color), transparent 25%);
-  text-decoration: none;
+  color: color-mix(in srgb, var(--accent-color), black 15%);
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  color: var(--heading-color);
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
   font-family: var(--heading-font);
+  color: var(--heading-color);
 }
+
 /*--------------------------------------------------------------
-# Shared Buttons
+# Buttons
 --------------------------------------------------------------*/
 .btn-accent {
   background-color: var(--accent-color);
@@ -108,19 +109,13 @@ h6 {
   padding: 10px 20px;
   font-weight: 600;
   cursor: pointer;
-  transition: 0.3s;
+  transition: all 0.3s;
+}
 
-  &:hover {
-   background-color: color-mix(in srgb, var(--accent-color), black 15%);
-  border-color: color-mix(in srgb, var(--accent-color), black 15%);
+.btn-accent:hover {
+  background-color: color-mix(in srgb, var(--accent-color), black 15%);
   transform: translateY(-2px);
   box-shadow: 0 4px 15px color-mix(in srgb, var(--accent-color), transparent 70%);
-  }
-
-  &:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-  }
 }
 
 .btn-secondary {
@@ -131,31 +126,24 @@ h6 {
   padding: 10px 20px;
   font-weight: 600;
   cursor: pointer;
-  transition: 0.3s;
-
-  &:hover {
-    background-color: color-mix(in srgb, var(--accent-color), black 15%);
-  border-color: color-mix(in srgb, var(--accent-color), black 15%);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 15px color-mix(in srgb, var(--accent-color), transparent 70%);
-  }
-
-  &:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-  }
+  transition: all 0.3s;
 }
-.badge {
-  padding: 0.5em 0.8em;
-  border-radius: 6px;
-  font-size: 0.75rem;
-  font-weight: 700;
+
+.btn-secondary:hover {
+  background-color: color-mix(in srgb, var(--secondary-accent), black 15%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px color-mix(in srgb, var(--secondary-accent), transparent 70%);
+}
+
+/* Disabled Buttons */
+.btn-accent:disabled, .btn-secondary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 /*--------------------------------------------------------------
-# Global Section Titles
+# Sections & Titles
 --------------------------------------------------------------*/
-
 .section-title {
   text-align: center;
   padding-bottom: 60px;
@@ -187,19 +175,68 @@ h6 {
 
 .section-title p {
   margin-bottom: 0;
+  color: var(--text-muted);
 }
 
-@media (max-width: 768px) {
-  .section-title h2 {
-    font-size: 20px;
-  }
+/*--------------------------------------------------------------
+# Badges
+--------------------------------------------------------------*/
+.badge {
+  padding: 0.5em 0.8em;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  background-color: var(--accent-color);
+  color: var(--contrast-color);
+}
 
-  .section-title h2:before,
-  .section-title h2:after {
-    content: "";
-    width: 20px;
-    height: 2px;
-    background: var(--accent-color);
-    display: inline-block;
-  }
+/*--------------------------------------------------------------
+# Light/Dark Adjustments for Bootstrap Components
+--------------------------------------------------------------*/
+.dark-mode .card {
+  background-color: var(--card-background);
+  color: var(--default-color);
+  border-color: var(--border-color);
+  box-shadow: var(--card-shadow);
+}
+
+.dark-mode .dropdown-menu {
+  background-color: var(--nav-dropdown-background-color);
+  color: var(--nav-dropdown-color);
+}
+
+.dark-mode .dropdown-item:hover {
+  background-color: var(--nav-dropdown-hover-color);
+  color: #fff;
+}
+
+.dark-mode .btn-light {
+  background-color: var(--btn-light-bg) !important;
+  color: var(--btn-light-color) !important;
+  border: 1px solid var(--border-color);
+}
+
+.dark-mode input, .dark-mode textarea, .dark-mode select {
+  background-color: var(--surface-color);
+  color: var(--default-color);
+  border-color: var(--border-color);
+}
+
+/*--------------------------------------------------------------
+# Tables
+--------------------------------------------------------------*/
+.dark-mode table {
+  color: var(--default-color);
+}
+
+.dark-mode table th,
+.dark-mode table td {
+  border-color: var(--border-color);
+}
+
+/*--------------------------------------------------------------
+# Smooth Scroll
+--------------------------------------------------------------*/
+:root {
+  scroll-behavior: smooth;
 }

@@ -2,7 +2,7 @@
    Lesson Card Base
 ========================== */
 .lesson-card {
-  background: #ffffff;
+  background:var(--background-color);
   border-radius: 16px;
   overflow: hidden;
   transition: all 0.3s ease;
