@@ -502,10 +502,16 @@
 .profile-dropdown .profile-info h4 {
   font-size: 15px;
   font-weight: 500;
-  color: #333;
+  color:var(--heading-color);
   margin: 0;
 }
+.logout{
+   color:var(--heading-color);
+}
+.dropdown-item{
+     color:var(--heading-color);
 
+}
 .profile-dropdown hr {
   margin: 10px 0;
   border: 0;
