@@ -4,6 +4,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Unit } from '../../../models/Unit ';
 import { UnitService } from '../../../Services/unit.service';
 import { CourseService } from '../../../Services/course.service';
+import { AuthService } from '../../../Services/auth-service';
 
 @Component({
   selector: 'app-units',
@@ -19,11 +20,17 @@ export class Units implements OnInit {
   units: Unit[] = [];
   isLoading = false;
 
+  // Role checking
+  get isInstructor(): boolean {
+    return this.authService.isInstructor();
+  }
+
   constructor(
     private route: ActivatedRoute,
     private unitService: UnitService,
-      private courseService: CourseService
-  ) {}
+    private courseService: CourseService,
+    private authService: AuthService
+  ) { }
 
   ngOnInit(): void {
     // من الروت: Courses/:id/units

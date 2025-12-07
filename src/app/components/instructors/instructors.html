@@ -6,7 +6,7 @@
 
     <!-- تقدر تستخدم routerLink أو (click) -->
     <!-- هنا خلتها button علشان تدي شكل أحسن -->
-    <button class="btn-add" type="button" (click)="goToAdd()">
+    <button class="btn-add" type="button" (click)="goToAdd()" *ngIf="isInstructor">
       <i class="bi bi-plus-lg"></i>
       <span>Add Instructor</span>
     </button>
@@ -26,16 +26,14 @@
 
         <!-- IMAGE -->
         <div class="instructor-image">
-          <img
-            [src]="ins.photoUrl || 'assets/images/default-instructor.jpg'"
+          <img [src]="ins.photoUrl || 'assets/images/default-instructor.jpg'"
             alt="Instructor">
 
           <div class="overlay-content">
             <!-- Rating -->
             <div class="rating-stars">
               <ng-container *ngFor="let star of getStarsArray()">
-                <i class="bi"
-                   [ngClass]="{
+                <i class="bi" [ngClass]="{
                      'bi-star-fill': star <= ins.rating,
                      'bi-star': star > ins.rating
                    }"></i>
@@ -77,23 +75,19 @@
 
             <div class="icon-actions">
               <!-- Edit Icon -->
-              <button class="icon-btn" type="button" (click)="goToEdit(ins.id)" title="Edit">
+              <button class="icon-btn" type="button" (click)="goToEdit(ins.id)" title="Edit" *ngIf="isInstructor">
                 <i class="bi bi-pencil-square"></i>
               </button>
 
               <!-- Delete Icon -->
               <button class="icon-btn danger" type="button"
-                      (click)="goToDeleteConfirm(ins.id)" title="Delete">
+                      (click)="goToDeleteConfirm(ins.id)" title="Delete" *ngIf="isInstructor">
                 <i class="bi bi-trash"></i>
               </button>
 
               <!-- Youtube Icon -->
-              <a class="icon-btn ghost"
-                 *ngIf="ins.youtubeChannelUrl"
-                 [href]="ins.youtubeChannelUrl"
-                 target="_blank"
-                 rel="noopener noreferrer"
-                 title="Youtube">
+              <a class="icon-btn ghost" *ngIf="ins.youtubeChannelUrl" [href]="ins.youtubeChannelUrl" 
+                target="_blank" rel="noopener noreferrer" title="Youtube">
                 <i class="bi bi-youtube"></i>
               </a>
             </div>

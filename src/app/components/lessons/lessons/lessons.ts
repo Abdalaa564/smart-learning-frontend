@@ -30,6 +30,12 @@ export class Lessons implements OnInit {
   freeUnitId = 1; 
   env = environment;
   units: Unit[] = [];
+
+    // Role checking
+  get isInstructor(): boolean {
+    return this.authService.isInstructor();
+  }
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -37,7 +43,7 @@ export class Lessons implements OnInit {
     private unitService: UnitService,
     private enrollmentService: EnrollmentService,
     private authService: AuthService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.courseId = Number(this.route.snapshot.paramMap.get('courseId'));

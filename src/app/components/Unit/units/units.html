@@ -4,7 +4,7 @@
   <div class="d-flex justify-content-between align-items-center mb-4">
     <h3 class="fw-bold mb-0">Units for Course {{ courseName }} (#{{courseId}})</h3>
     <div class="d-flex gap-2">
-      <a class="btn btn-success btn-sm" [routerLink]="['/Courses', courseId, 'units', 'add']">
+      <a class="btn btn-success btn-sm" [routerLink]="['/Courses', courseId, 'units', 'add']" *ngIf="isInstructor">
         + Add Unit
       </a>
       <a class="btn btn-outline-secondary btn-sm" [routerLink]="['/Courses']">
@@ -32,8 +32,7 @@
         <!-- Image -->
         <div class="unit-image-wrapper position-relative">
           <img [src]="u.imageUrl || '/assets/img/education/course-1.jpg'"
-               [alt]="u.unit_Name"
-               class="card-img-top unit-image">
+               [alt]="u.unit_Name" class="card-img-top unit-image">
           <span class="unit-badge">Unit #{{ u.orderIndex }}</span>
         </div>
 
@@ -53,7 +52,7 @@
 
           <div class="mt-auto d-flex flex-wrap gap-2">
             <button class="btn btn-outline-primary btn-sm flex-grow-1"
-                    [routerLink]="['/Courses', courseId, 'units', 'edit', u.unit_Id]">
+                    [routerLink]="['/Courses', courseId, 'units', 'edit', u.unit_Id]" *ngIf="isInstructor">
               Edit
             </button>
 
@@ -63,7 +62,7 @@
             </button>
 
             <button class="btn btn-outline-danger btn-sm flex-grow-1"
-                    (click)="deleteUnit(u)">
+                    (click)="deleteUnit(u)" *ngIf="isInstructor">
               Delete
             </button>
           </div>

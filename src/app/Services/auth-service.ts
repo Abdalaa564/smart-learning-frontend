@@ -39,7 +39,7 @@ export class AuthService {
     return this.http.post<any>(`${this.apiUrl}/Account/register-instructor`, data);
   }
 
- login(data:Login): Observable<Authresponse> {
+ login(data: Login): Observable<Authresponse> {
     return this.http.post<Authresponse>(`${this.apiUrl}/Account/login`, data).pipe(
         tap(response => {
           if (response.success && response.token) {
@@ -95,6 +95,26 @@ export class AuthService {
       return null;
     }
   }
+  
+  // Role checking methods
+  hasRole(role: string): boolean {
+    const userRole = this.getRoleFromToken();
+    return userRole === role;
+  }
+
+  isInstructor(): boolean {
+    return this.hasRole('Instructor');
+  }
+
+  isStudent(): boolean {
+    return this.hasRole('Student');
+  }
+
+  isAdmin(): boolean {
+    return this.hasRole('Admin');
+  }
+  // End Role checking methods
+
   hasToken(): boolean {
     return !!this.getToken();
   }

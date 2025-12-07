@@ -54,6 +54,11 @@ export class Courses implements OnInit {
     return this.courses.slice(startIndex, startIndex + this.itemsPerPage);
   }
   // ---- end Pagination----
+  
+  // Role checking
+  get isInstructor(): boolean {
+    return this.authService.isInstructor();
+  }
 
   onPageChange(page: number): void {
     this.currentPage = page;
