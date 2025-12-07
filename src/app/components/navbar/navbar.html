@@ -82,8 +82,10 @@
     </nav>
 
     <div class="header-actions">
-      <button class="theme-toggle">
-        <i class="bi bi-sun-fill"></i>
+      <button class="theme-toggle" (click)="toggleTheme()" title="Toggle Theme">
+        <i class="bi bi-sun-fill"
+        [ngClass]="(isDarkMode$ | async) ? 'bi-sun-fill text-warning' : 'bi-moon-fill text-dark'"
+        ></i>
       </button>
 
       <button class="language-selector">

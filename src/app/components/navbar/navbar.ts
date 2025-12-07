@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 import { AuthService } from '../../Services/auth-service';
 import { Studentprofile } from '../../models/studentprofile';
 import { CommonModule } from '@angular/common';
+import { Theme } from '../../Services/theme';
 
 @Component({
   selector: 'app-navbar',
@@ -24,12 +25,14 @@ export class Navbar {
   // dropdown state
   isProfileDropdownOpen: boolean = false;    // للبروفايل
   isRegisterDropdownOpen: boolean = false;   // لـ "Register as"
-
+  isDarkMode$: Observable<boolean>;
   constructor(
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private themeService: Theme
   ) {
     this.currentUser$ = this.authService.currentUser$;
+    this.isDarkMode$ = this.themeService.isdarkMode$; 
   }
 
   // toggle profile dropdown
@@ -41,7 +44,10 @@ export class Navbar {
   toggleRegisterDropdown() {
     this.isRegisterDropdownOpen = !this.isRegisterDropdownOpen;
   }
-
+  // toggle dark mode
+  toggleTheme(): void {
+    this.themeService.toggleDarkMode();
+  }
   // close all dropdowns (لو حبيت تستخدمها بعدين)
   closeAllDropdowns() {
     this.isProfileDropdownOpen = false;
@@ -74,4 +80,6 @@ export class Navbar {
       }
     });
   }
+
+
 }

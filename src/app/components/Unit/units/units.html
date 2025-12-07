@@ -1,8 +1,7 @@
- <div class="container py-4">
-
+<div class="container py-4">
   <!-- Header -->
   <div class="d-flex justify-content-between align-items-center mb-4">
-    <h3 class="fw-bold mb-0">Units for Course {{ courseName }} (#{{courseId}})</h3>
+    <h3 class="fw-bold mb-0">Units for Course {{ courseName }} (#{{ courseId }})</h3>
     <div class="d-flex gap-2">
       <a class="btn btn-success btn-sm" [routerLink]="['/Courses', courseId, 'units', 'add']">
         + Add Unit
@@ -14,9 +13,7 @@
   </div>
 
   <!-- Loading -->
-  <div *ngIf="isLoading" class="text-center py-4">
-    Loading units...
-  </div>
+  <div *ngIf="isLoading" class="text-center py-4">Loading units...</div>
 
   <!-- Empty -->
   <div *ngIf="!isLoading && units.length === 0" class="alert alert-info text-center py-4">
@@ -26,14 +23,14 @@
   <!-- Units Cards -->
   <div *ngIf="!isLoading && units.length > 0" class="row g-4">
     <div class="col-lg-4 col-md-6 col-sm-12" *ngFor="let u of units">
-
       <div class="card unit-card h-100 shadow-sm border-0">
-
         <!-- Image -->
         <div class="unit-image-wrapper position-relative">
-          <img [src]="u.imageUrl || '/assets/img/education/course-1.jpg'"
-               [alt]="u.unit_Name"
-               class="card-img-top unit-image">
+          <img
+            [src]="u.imageUrl || '/assets/img/education/course-1.jpg'"
+            [alt]="u.unit_Name"
+            class="card-img-top unit-image"
+          />
           <span class="unit-badge">Unit #{{ u.orderIndex }}</span>
         </div>
 
@@ -45,30 +42,35 @@
           </div>
 
           <h5 class="card-title mb-2">{{ u.unit_Name }}</h5>
-          <p class="card-text text-muted mb-3">{{ u.unit_Description }}</p>
+          <p class="card-text  mb-3">{{ u.unit_Description }}</p>
 
           <div *ngIf="u.instructorName" class="mb-3">
             <small class="text-secondary">Instructor: {{ u.instructorName }}</small>
           </div>
 
           <div class="mt-auto d-flex flex-wrap gap-2">
-            <button class="btn btn-outline-primary btn-sm flex-grow-1"
-                    [routerLink]="['/Courses', courseId, 'units', 'edit', u.unit_Id]">
+            <button
+              class="btn btn-outline-primary btn-sm flex-grow-1"
+              [routerLink]="['/Courses', courseId, 'units', 'edit', u.unit_Id]"
+            >
+              <i class="bi bi-pencil-square me-1"></i>
               Edit
             </button>
 
-            <button class="btn btn-outline-info btn-sm flex-grow-1"
-                    [routerLink]="['/Courses', courseId, 'units', u.unit_Id, 'lessons']">
+            <button
+              class="btn btn-outline-info btn-sm flex-grow-1"
+              [routerLink]="['/Courses', courseId, 'units', u.unit_Id, 'lessons']"
+            >
+              <i class="bi bi-eye me-1"></i>
               View Lessons
             </button>
 
-            <button class="btn btn-outline-danger btn-sm flex-grow-1"
-                    (click)="deleteUnit(u)">
+            <button class="btn btn-outline-danger btn-sm flex-grow-1" (click)="deleteUnit(u)">
+              <i class="bi bi-trash me-1"></i>
               Delete
             </button>
           </div>
         </div>
-
       </div>
     </div>
   </div>
