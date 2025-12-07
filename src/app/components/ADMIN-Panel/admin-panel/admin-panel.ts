@@ -3,12 +3,13 @@ import { Component, OnInit } from '@angular/core';
 
 import { AdminSidebarComponent } from '../admin-sidebar/admin-sidebar';
 import { AdminHeaderComponent } from '../admin-header-component/admin-header-component';
-import { AdminDashboardComponent, Stats,Activity,ProgressItem,RecentActivity,} from '../admin-dashboard/admin-dashboard';
+import { AdminDashboardComponent, Stats, Activity, ProgressItem,RecentActivity,} from '../admin-dashboard/admin-dashboard';
 import { AdminStudentsComponent } from '../admin-students/admin-students';
 import { AdminInstructorsComponent } from '../admin-instructors/admin-instructors';
 import { AdminCoursesComponent } from '../admin-courses/admin-courses';
 import { AdminProfileComponent } from '../admin-profile/admin-profile';
-import { AdminInstructorRequestsComponent } from '../admin-instructor-requests/admin-instructor-requests';
+import { AdminInstructorRequestsComponent,} from '../admin-instructor-requests/admin-instructor-requests';
+import {AdminEnrollmentsComponent, AdminEnrollmentRow,} from '../admin-enrollments/admin-enrollments';
 
 // models
 import { Studentprofile } from '../../../models/studentprofile';
@@ -27,6 +28,8 @@ import { ChartConfiguration, ChartOptions } from 'chart.js';
 import { forkJoin } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { MenuItem } from '../../../models/Admin';
+import { AdminPaymentRow, AdminPaymentsComponent } from '../admin-payments/admin-payments';
+import { EnrollmentPayment } from '../../../models/EnrollmentPayment';
 
 @Component({
   selector: 'app-admin-panel',
@@ -42,7 +45,9 @@ import { MenuItem } from '../../../models/Admin';
     AdminInstructorsComponent,
     AdminCoursesComponent,
     AdminInstructorRequestsComponent,
-    AdminProfileComponent
+    AdminProfileComponent,
+    AdminEnrollmentsComponent,
+    AdminPaymentsComponent
 ],
 })
 export class AdminPanelComponent implements OnInit {
@@ -56,7 +61,7 @@ export class AdminPanelComponent implements OnInit {
     instructors: 0,
     courses: 0,
     activeEnrollments: 0,
-    totalRevenue: 45780,
+    totalRevenue: 0,
     completedQuizzes: 2341,
     averageGrade: 85.4,
     pendingPayments: 12,
@@ -71,7 +76,15 @@ export class AdminPanelComponent implements OnInit {
   studentEnrollCounts: { [studentId: number]: number } = {};
 
   pendingInstructors: Instructor[] = [];
-  isLoadingPending = false;
+  isLoadingPending = false; 
+
+  // payment 
+  payments: AdminPaymentRow[] = [];
+  isLoadingPayments = false;
+
+  // 🆕 enrollments data for enrollments page
+  enrollments: AdminEnrollmentRow[] = [];
+  isLoadingEnrollments = false;
 
   activityData: Activity[] = [
     { day: 'Mon', students: 45, courses: 12 },
@@ -94,10 +107,13 @@ export class AdminPanelComponent implements OnInit {
     { id: 'students', label: 'Students', iconClass: 'bi-people' },
     { id: 'instructors', label: 'Instructors', iconClass: 'bi-mortarboard' },
     { id: 'courses', label: 'Courses', iconClass: 'bi-journal-bookmark' },
-     { id: 'enrollments',      label: 'Enrollments',       iconClass: 'bi-graph-up' },
-    { id: 'quizzes',          label: 'Quizzes',           iconClass: 'bi-file-earmark-text' },
-    { id: 'payments',         label: 'Payments',          iconClass: 'bi-cash-coin' },
-    { id: 'grades',           label: 'Grades & Results',  iconClass: 'bi-award' },
+
+    { id: 'enrollments', label: 'Enrollments', iconClass: 'bi-graph-up' },
+
+    { id: 'quizzes', label: 'Quizzes', iconClass: 'bi-file-earmark-text' },
+    { id: 'payments', label: 'Payments', iconClass: 'bi-cash-coin' },
+    { id: 'grades', label: 'Grades & Results', iconClass: 'bi-award' },
+
     {
       id: 'instructorRequests',
       label: 'Instructor Requests',
@@ -180,6 +196,12 @@ export class AdminPanelComponent implements OnInit {
       },
       error: (err) => console.error('Error getting courses count', err),
     });
+
+    // 🆕 load total revenue
+     this.enrollmentService.getTotalRevenue().subscribe({
+    next: (rev) => this.stats.totalRevenue = rev,
+    error: (err) => console.error('Error getting total revenue', err),
+  });
   }
 
   private updateBarChart(): void {
@@ -201,6 +223,8 @@ export class AdminPanelComponent implements OnInit {
         this.students = res.data;
         this.buildRecentActivities();
         this.loadStudentEnrollmentCounts();
+        this.loadAllEnrollments(); // 🆕 هنا بنادي عشان اجيب enrollments
+        this.loadPayments(); // load payments table
       },
       error: (err) => console.error('Error loading students', err),
     });
@@ -247,7 +271,7 @@ export class AdminPanelComponent implements OnInit {
     });
   }
 
-  private loadCourseEnrollmentCounts(): void {
+   private loadCourseEnrollmentCounts(): void {
     if (!this.courses || this.courses.length === 0) return;
 
     const requests = this.courses.map((course) =>
@@ -259,17 +283,63 @@ export class AdminPanelComponent implements OnInit {
     forkJoin(requests).subscribe({
       next: (results) => {
         this.courseEnrollCounts = {};
-        let total = 0;
+        let totalEnrollments = 0;
 
         results.forEach((r) => {
           this.courseEnrollCounts[r.courseId] = r.count;
-          total += r.count;
+          totalEnrollments += r.count;
         });
 
-        this.stats.activeEnrollments = total;
+        // 🔹 إجمالي الـ enrollments
+        this.stats.activeEnrollments = totalEnrollments;
+
+        // 🔹 حساب الـ Total Revenue من السعر × عدد الـ enrollments لكل كورس
+        let totalRevenue = 0;
+        this.courses.forEach((course) => {
+          const count = this.courseEnrollCounts[course.crs_Id] || 0;
+          totalRevenue += count * course.price;
+        });
+        this.stats.totalRevenue = totalRevenue;
       },
       error: (err) =>
         console.error('Error loading enrollments per course', err),
+    });
+  }
+
+
+  // 🆕 load all enrollments (student + course info)
+  private loadAllEnrollments(): void {
+    if (!this.students || this.students.length === 0) {
+      this.enrollments = [];
+      return;
+    }
+
+    this.isLoadingEnrollments = true;
+
+    const requests = this.students.map((stu) =>
+      this.enrollmentService.getStudentCourses(stu.id).pipe(
+        map((courses) => {
+          const studentName = `${stu.firstName} ${stu.lastName}`;
+          return courses.map<AdminEnrollmentRow>((course) => ({
+            studentName,
+            courseName: course.crs_Name,
+            coursePrice: course.price,
+            instructorName: course.instructorName,
+          }));
+        })
+      )
+    );
+
+    forkJoin(requests).subscribe({
+      next: (results) => {
+        // results: AdminEnrollmentRow[][] -> نفلّطها
+        this.enrollments = results.flat();
+        this.isLoadingEnrollments = false;
+      },
+      error: (err) => {
+        console.error('Error loading enrollments', err);
+        this.isLoadingEnrollments = false;
+      },
     });
   }
 
@@ -325,7 +395,44 @@ export class AdminPanelComponent implements OnInit {
     }
 
     this.recentActivities = activities;
+  } 
+
+  // to calculate total revenue table of Payments
+    private loadPayments(): void {
+    if (!this.courses || this.courses.length === 0) {
+      this.payments = [];
+      return;
+    }
+
+    this.isLoadingPayments = true;
+
+    const requests = this.courses.map((course) =>
+      this.enrollmentService.getCoursePayments(course.crs_Id).pipe(
+        map((enrollments: EnrollmentPayment[]) =>
+          enrollments.map<AdminPaymentRow>((e) => ({
+            studentName: e.studentName,
+            courseName: e.courseName,
+            paidAmount: e.paidAmount ?? e.coursePrice,
+            paymentDate: e.paymentDate ?? e.enrollDate,
+            paymentStatus: e.paymentStatus,
+          }))
+        )
+      )
+    );
+
+    forkJoin(requests).subscribe({
+      next: (results) => {
+        // flatten
+        this.payments = results.flat();
+        this.isLoadingPayments = false;
+      },
+      error: (err) => {
+        console.error('Error loading payments', err);
+        this.isLoadingPayments = false;
+      },
+    });
   }
+
 
   // ===== UI =====
 
@@ -337,74 +444,35 @@ export class AdminPanelComponent implements OnInit {
     this.sidebarOpen = !this.sidebarOpen;
   }
 
-  // ===== Handlers for children (ممكن بعدين تعمل فيها navigation/Dialogs) =====
+  // باقي الـ handlers زي ما عملنا قبل كده (اختياري تسيبهم console.log)
 
-  // Students
-  onAddStudent() {
-    console.log('Add student clicked');
-  }
+  onAddStudent() {}
+  onViewStudent(stu: Studentprofile) {}
+  onEditStudent(stu: Studentprofile) {}
+  onDeleteStudent(stu: Studentprofile) {}
 
-  onViewStudent(stu: Studentprofile) {
-    console.log('View student', stu);
-  }
+  onAddInstructor() {}
+  onViewInstructor(inst: Instructor) {}
+  onEditInstructor(inst: Instructor) {}
+  onDeleteInstructor(inst: Instructor) {}
 
-  onEditStudent(stu: Studentprofile) {
-    console.log('Edit student', stu);
-  }
+  onAddCourse() {}
+  onViewCourse(course: Course) {}
+  onEditCourse(course: Course) {}
+  onDeleteCourse(course: Course) {}
 
-  onDeleteStudent(stu: Studentprofile) {
-    console.log('Delete student', stu);
-  }
-
-  // Instructors
-  onAddInstructor() {
-    console.log('Add instructor clicked');
-  }
-
-  onViewInstructor(inst: Instructor) {
-    console.log('View instructor', inst);
-  }
-
-  onEditInstructor(inst: Instructor) {
-    console.log('Edit instructor', inst);
-  }
-
-  onDeleteInstructor(inst: Instructor) {
-    console.log('Delete instructor', inst);
-  }
-
-  // Courses
-  onAddCourse() {
-    console.log('Add course clicked');
-  }
-
-  onViewCourse(course: Course) {
-    console.log('View course', course);
-  }
-
-  onEditCourse(course: Course) {
-    console.log('Edit course', course);
-  }
-
-  onDeleteCourse(course: Course) {
-    console.log('Delete course', course);
-  }
-
-  // Instructor requests
   onApproveInstructor(inst: Instructor) {
-    this.adminService.approveInstructor(inst.id!).subscribe({
-      next: () => {
-        this.loadPendingInstructors();
-      },
+    if (!inst.id) return;
+    this.adminService.approveInstructor(inst.id).subscribe({
+      next: () => this.loadPendingInstructors(),
       error: (err) => console.error('Error approving instructor', err),
     });
   }
 
   onRejectInstructor(inst: Instructor) {
-    this.adminService.rejectInstructor(inst.id!).subscribe({
-      next: () => {
-        this.loadPendingInstructors();
-      },
+    if (!inst.id) return;
+    this.adminService.rejectInstructor(inst.id).subscribe({
+      next: () => this.loadPendingInstructors(),
       error: (err) => console.error('Error rejecting instructor', err),
     });
   }
