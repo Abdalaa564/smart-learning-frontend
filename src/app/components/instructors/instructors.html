@@ -6,7 +6,7 @@
       <i class="bi bi-person-badge-fill me-2 text-accent"></i> Our Expert Instructors
     </h2>
 
-    <button class="btn btn-accent btn-add" type="button" (click)="goToAdd()">
+    <button class="btn btn-accent btn-add" type="button" (click)="goToAdd()"  *ngIf="isInstructor">
       <i class="bi bi-plus-lg me-1"></i>
       <span>Add New Instructor</span>
     </button>
@@ -83,7 +83,7 @@
                 class="icon-btn-new btn btn-sm btn-light"
                 type="button"
                 (click)="goToEdit(ins.id)"
-                title="Edit"
+                title="Edit" *ngIf="isInstructor"
               >
                 <i class="bi bi-pencil-square text-primary"></i>
               </button>
@@ -91,7 +91,7 @@
                 class="icon-btn-new btn btn-sm btn-light"
                 type="button"
                 (click)="goToDeleteConfirm(ins.id)"
-                title="Delete"
+                title="Delete" *ngIf="isInstructor"
               >
                 <i class="bi bi-trash text-danger"></i>
               </button>

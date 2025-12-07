@@ -19,7 +19,7 @@
           </a>
         </li>
 
-        <li>
+        <li *ngIf="isAuthenticated$ | async">
           <a
             routerLink="/meeting-setup"
             routerLinkActive="active"
@@ -49,7 +49,7 @@
           </a>
         </li>
 
-        <li>
+        <li *ngIf="isInstructorOrAdmin">
           <a
             routerLink="/admin"
             routerLinkActive="active"
@@ -59,7 +59,7 @@
           </a>
         </li>
 
-        <li>
+        <li *ngIf="isAuthenticated$ | async">
           <a
             routerLink="/chatRome"
             routerLinkActive="active"
@@ -69,7 +69,7 @@
           </a>
         </li>
 
-        <li>
+        <li *ngIf="isInstructorOrAdmin">
           <a
             routerLink="/lesson/1/create-quiz"
             routerLinkActive="active"
@@ -96,37 +96,20 @@
       <ng-container *ngIf="!(currentUser$ | async)">
         <!-- Register as dropdown -->
         <div class="dropdown me-2" [class.show]="isRegisterDropdownOpen">
-          <button
-            class="btn-signup dropdown-toggle"
-            type="button"
-            id="registerDropdown"
-            (click)="toggleRegisterDropdown()"
-            [attr.aria-expanded]="isRegisterDropdownOpen"
-          >
+          <button class="btn-signup dropdown-toggle" type="button" id="registerDropdown"
+            (click)="toggleRegisterDropdown()" [attr.aria-expanded]="isRegisterDropdownOpen" >
             Register as
           </button>
 
-          <ul
-            class="dropdown-menu"
-            aria-labelledby="registerDropdown"
-            [class.show]="isRegisterDropdownOpen"
-          >
+          <ul class="dropdown-menu" aria-labelledby="registerDropdown" [class.show]="isRegisterDropdownOpen">
             <li>
-              <a
-                class="dropdown-item"
-                routerLink="/register"
-                (click)="isRegisterDropdownOpen = false"
-              >
+              <a class="dropdown-item" routerLink="/register" (click)="isRegisterDropdownOpen = false">
                 Student
               </a>
             </li>
 
             <li>
-              <a
-                class="dropdown-item"
-                routerLink="/register-instructor"
-                (click)="isRegisterDropdownOpen = false"
-              >
+              <a class="dropdown-item" routerLink="/register-instructor" (click)="isRegisterDropdownOpen = false">
                 Instructor
               </a>
             </li>
@@ -138,28 +121,18 @@
       </ng-container>
 
       <!-- ========== لو في يوزر (لوجين) ========== -->
-      <div
-        class="profile-dropdown-container"
-        *ngIf="currentUser$ | async as user"
-      >
+      <div class="profile-dropdown-container" *ngIf="currentUser$ | async as user">
         <button class="profile-btn" (click)="toggleProfileDropdown()">
           <i class="bi bi-person-circle"></i>
         </button>
 
         <div class="profile-dropdown" [class.show]="isProfileDropdownOpen">
           <div class="profile-info">
-            <img
-              src="https://randomuser.me/api/portraits/lego/6.jpg"
-              alt="User"
-            />
+            <img src="https://randomuser.me/api/portraits/lego/6.jpg" alt="User"/>
             <div>
               <h4>{{ user.firstName }} {{ user.lastName }}</h4>
               <p>Student</p>
-              <a
-                routerLink="/userProfile"
-                (click)="isProfileDropdownOpen = false"
-                >View Profile</a
-              >
+              <a routerLink="/userProfile" (click)="isProfileDropdownOpen = false">View Profile</a >
             </div>
           </div>
           <hr />

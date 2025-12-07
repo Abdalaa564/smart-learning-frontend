@@ -1,0 +1,13 @@
+.sidebar-open {
+  width: 16rem; /* ~256px */
+  transition: width 0.3s ease;
+}
+
+.sidebar-collapsed {
+  width: 4.5rem; /* icon-only */
+  transition: width 0.3s ease;
+}
+:host { display: block; height: 100vh; }
+.grow {
+    flex-grow: 1;
+}

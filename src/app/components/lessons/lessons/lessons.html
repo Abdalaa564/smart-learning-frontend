@@ -10,17 +10,12 @@
     </div>
 
     <div class="d-flex gap-2">
-      <a
-        class="btn btn-success btn-sm px-3"
-        [routerLink]="['/Courses', courseId, 'units', unitId, 'lessons', 'add']"
-      >
+      <a class="btn btn-success btn-sm px-3"
+         [routerLink]="['/Courses', courseId, 'units', unitId, 'lessons', 'add']" *ngIf="isInstructor">
         + Add Lesson
       </a>
 
-      <a
-        class="btn btn-outline-secondary btn-sm px-3"
-        [routerLink]="['/Courses', courseId, 'units']"
-      >
+      <a class="btn btn-outline-secondary btn-sm px-3" [routerLink]="['/Courses', courseId, 'units']">
         ← Back to Units
       </a>
     </div>
@@ -83,12 +78,10 @@
           </ng-template>
 
           <!-- Admin Actions -->
-          <div class="mt-auto d-flex justify-content-between gap-1 flex-wrap">
-            <a
-              class="btn btn-outline-secondary btn-sm flex-grow-1"
-              [routerLink]="['/Courses', courseId, 'units', unitId, 'lessons', lesson.lesson_Id]"
-            >
-              <i class="bi bi-eye"></i>
+          <div class="mt-auto d-flex justify-content-between gap-1 flex-wrap"  *ngIf="isInstructor">
+            <a class="btn btn-outline-secondary btn-sm flex-grow-1"
+               [routerLink]="['/Courses', courseId, 'units', unitId, 'lessons', lesson.lesson_Id]">
+               <i class="bi bi-eye"></i>
             </a>
             <a
               class="btn btn-outline-primary btn-sm flex-grow-1"

@@ -2,11 +2,13 @@
     <div class="setup-card">
         <h1>Join or Create a Meeting</h1>
 
-        <div class="meeting-type-toggle">
-            <button [class.active]="isCreatingMeeting" (click)="isCreatingMeeting = true">
+        <div class="meeting-type-toggle" role="group" aria-label="Meeting type selection">
+            <button type="button" [class.active]="isCreatingMeeting" (click)="isCreatingMeeting = true"
+                aria-pressed="{{isCreatingMeeting}}">
                 Create Meeting
             </button>
-            <button [class.active]="!isCreatingMeeting" (click)="isCreatingMeeting = false">
+            <button type="button" [class.active]="!isCreatingMeeting" (click)="isCreatingMeeting = false"
+                aria-pressed="{{!isCreatingMeeting}}">
                 Join Meeting
             </button>
         </div>
@@ -15,7 +17,7 @@
             <div class="form-group">
                 <label for="displayName">Your Name *</label>
                 <input type="text" id="displayName" [(ngModel)]="meetingConfig.displayName" name="displayName"
-                    placeholder="Enter your name" required>
+                    placeholder="Enter your name" required autocomplete="name">
             </div>
 
             <div class="form-group">
@@ -23,8 +25,9 @@
                 <div class="room-input-group">
                     <input type="text" id="roomName" [(ngModel)]="meetingConfig.roomName" name="roomName"
                         [placeholder]="isCreatingMeeting ? 'Enter room name or generate one' : 'Enter room name to join'"
-                        required>
-                    <button type="button" *ngIf="isCreatingMeeting" (click)="generateRoomName()" class="generate-btn">
+                        required autocomplete="off">
+                    <button type="button" *ngIf="isCreatingMeeting" (click)="generateRoomName()" class="generate-btn"
+                        aria-label="Generate random room name">
                         Generate
                     </button>
                 </div>
@@ -32,7 +35,7 @@
 
             <div class="form-group" *ngIf="isCreatingMeeting">
                 <label class="checkbox-label">
-                    <input type="checkbox" [(ngModel)]="meetingConfig.isModerator" name="isModerator">
+                    <input type="checkbox" [(ngModel)]="meetingConfig.isModerator" name="isModerator" id="isModerator">
                     <span>Join as Moderator (Host)</span>
                 </label>
                 <small class="help-text">As the meeting creator, you'll have moderator privileges</small>
@@ -41,7 +44,7 @@
             <div class="form-group" *ngIf="isCreatingMeeting && meetingConfig.isModerator">
                 <label for="password">Meeting Password (Optional)</label>
                 <input type="password" id="password" [(ngModel)]="meetingConfig.password" name="password"
-                    placeholder="Set a password for your meeting">
+                    placeholder="Set a password for your meeting" autocomplete="new-password">
                 <small class="help-text">Leave empty for no password protection</small>
             </div>
 

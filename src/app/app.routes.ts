@@ -31,7 +31,7 @@ import { QuizListComponent } from './components/quiz-list-component/quiz-list-co
 import { TakeQuizComponent } from './components/take-quiz-component/take-quiz-component';
 import { QuizResultComponent } from './components/quiz-result-component/quiz-result-component';
 
-import { AdminPanelComponent } from './components/admin/admin';
+
 import { JitsiComponent } from './components/jitsi/jitsi.component';
 import { MeetingSetupComponent } from './components/meeting-setup/meeting-setup.component';
 
@@ -43,13 +43,19 @@ import { ErrorPage } from './components/error-page/error-page';
 
 import { enrollmentGuard } from './guard/enrollment-guard';
 import { RegisterInstructorComponent } from './components/Register-as-instructor/register-instructor/register-instructor';
+import { StudentGradesComponent } from './components/student-grades-component/student-grades-component';
 
 export const routes: Routes = [
 
   { path: '', redirectTo: 'Home', pathMatch: 'full' },
 
-  // Admin
-  { path: 'admin', component: AdminPanelComponent, title: 'Admin Panel' },
+ {
+  path: 'admin',
+  loadComponent: () =>
+    import('./components/ADMIN-Panel/admin-panel/admin-panel')
+      .then((m) => m.AdminPanelComponent),
+},
+
 
   // Main
   { path: 'Home', component: Home, title: 'Home' },
@@ -108,6 +114,7 @@ export const routes: Routes = [
 
   // Exam
   { path: 'exam', component: Exam, title: 'Exam' },
+  { path: 'grades', component: StudentGradesComponent, title: 'My Grades' },
 
   // Not found
   { path: '**', component: ErrorPage, title: 'Not Found' },

@@ -1,0 +1,4 @@
+/* مثال بسيط لو حبيت تعدّل مثلاً على الزر */
+header .btn-light {
+  border-radius: 999px;
+}

@@ -55,13 +55,8 @@
 					</div>
 				</div>
 				<div class="chat-header-actions">
-					<div class="search-container" [class.active]="isSearchOpen">
-						<input type="text" class="search-input" placeholder="Search messages..."
-							[(ngModel)]="searchText">
-						<button class="btn-icon" title="Search" (click)="toggleSearch()">
-							<i class="fas" [ngClass]="isSearchOpen ? 'fa-times' : 'fa-search'"></i>
-						</button>
-					</div>
+					<app-search-bar placeholder="Search messages..." (searchTextChange)="onSearchTextChange($event)">
+					</app-search-bar>
 					<button class="btn-icon" title="More options">
 						<i class="fas fa-ellipsis-v"></i>
 					</button>

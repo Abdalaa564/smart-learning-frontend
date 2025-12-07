@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ChatGPTMessage, ChatService } from '../../Services/chat-service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { SkeletonListComponent } from '../../shared/Skeleton/skeleton-list/skeleton-list';
+import { SearchBarComponent } from '../../shared/search-bar/search-bar.component';
 
 interface ChatMessage {
   text: string;
@@ -20,7 +21,7 @@ interface ChatSession {
 @Component({
   selector: 'app-chat-rome',
   standalone: true,
-  imports: [CommonModule, FormsModule, HttpClientModule, SkeletonListComponent],
+  imports: [CommonModule, FormsModule, HttpClientModule, SkeletonListComponent, SearchBarComponent],
   templateUrl: './chat-rome.html',
   styleUrls: ['./chat-rome.css'],
 })
@@ -32,7 +33,7 @@ export class ChatRome implements OnInit {
   sessions: ChatSession[] = [];
   isLoadingSessions = false; // For future API integration
   
-  isSearchOpen = false;
+  @ViewChild(SearchBarComponent) searchBar!: SearchBarComponent;
   searchText = '';
 
   selectedSession: ChatSession | null = null;
@@ -141,17 +142,11 @@ export class ChatRome implements OnInit {
   }
 
 
-  toggleSearch() {
-    this.isSearchOpen = !this.isSearchOpen;
-    if (!this.isSearchOpen) {
-      this.searchText = '';
-    }
+  onSearchTextChange(searchText: string) {
+    this.searchText = searchText;
   }
 
   highlightText(text: string): string {
-    if (!this.searchText.trim()) return text;
-
-    const regex = new RegExp(`(${this.searchText})`, 'gi');
-    return text.replace(regex, '<mark class="highlight">$1</mark>');
+    return this.searchBar?.highlightText(text) || text;
   }
 }

@@ -1,0 +1,55 @@
+<div class="card">
+  <div class="card-header d-flex justify-content-between">
+    <h5 class="mb-0">Courses Management</h5>
+    <button
+      class="btn btn-primary btn-sm"
+      (click)="add.emit()"
+    >
+      <i class="bi bi-plus-lg me-1"></i> Add New
+    </button>
+  </div>
+  <div class="card-body">
+    <div class="mb-3">
+      <app-search-bar placeholder="Search courses..." [alignRight]="false"
+        (searchTextChange)="onSearchTextChange($event)">
+      </app-search-bar>
+    </div>
+
+    <div class="table-responsive">
+      <table class="table align-middle">
+        <thead class="table-light">
+          <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Instructor</th>
+            <th>Price</th>
+            <th>Description</th>
+            <th>Enrollments</th>
+            <th class="text-end">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let row of filteredCourses">
+            <td>{{ row.crs_Id }}</td>
+            <td>{{ row.crs_Name }}</td>
+            <td>{{ row.instructorName }}</td>
+            <td>{{ row.price | currency }}</td>
+            <td>{{ row.crs_Description }}</td>
+            <td>{{ getCourseEnrollCount(row.crs_Id) }}</td>
+            <td class="text-end">
+              <button class="btn btn-sm btn-outline-primary me-1" (click)="view.emit(row)" >
+                <i class="bi bi-eye"></i>
+              </button>
+              <button class="btn btn-sm btn-outline-success me-1" (click)="edit.emit(row)" >
+                <i class="bi bi-pencil"></i>
+              </button>
+              <button class="btn btn-sm btn-outline-danger" (click)="delete.emit(row)" >
+                <i class="bi bi-trash"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

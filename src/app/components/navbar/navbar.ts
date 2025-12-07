@@ -21,11 +21,26 @@ export class Navbar {
 
   // observable of current user
   currentUser$: Observable<Studentprofile | null>;
+  isAuthenticated$: Observable<boolean>;
 
   // dropdown state
   isProfileDropdownOpen: boolean = false;    // للبروفايل
   isRegisterDropdownOpen: boolean = false;   // لـ "Register as"
   isDarkMode$: Observable<boolean>;
+
+  // Role checking
+  get isInstructor(): boolean {
+    return this.authService.isInstructor();
+  }
+
+  get isAdmin(): boolean {
+    return this.authService.isAdmin();
+  }
+
+  get isInstructorOrAdmin(): boolean {
+    return this.isInstructor || this.isAdmin;
+  }
+
   constructor(
     private authService: AuthService,
     private router: Router,
@@ -33,6 +48,7 @@ export class Navbar {
   ) {
     this.currentUser$ = this.authService.currentUser$;
     this.isDarkMode$ = this.themeService.isdarkMode$; 
+    this.isAuthenticated$ = this.authService.isAuthenticated$;
   }
 
   // toggle profile dropdown
