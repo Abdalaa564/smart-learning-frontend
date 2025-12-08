@@ -11,7 +11,7 @@
 
     <div class="d-flex gap-2">
       <a class="btn btn-success btn-sm px-3"
-         [routerLink]="['/Courses', courseId, 'units', unitId, 'lessons', 'add']" *ngIf="isInstructor">
+         [routerLink]="['/Courses', courseId, 'units', unitId, 'lessons', 'add']" *ngIf="isAdmin">
         + Add Lesson
       </a>
 
@@ -27,8 +27,7 @@
       <div class="card lesson-card shadow-sm h-100">
         <!-- PDF / Image -->
         <div
-          class="card-img-top lesson-image-wrapper d-flex justify-content-center align-items-center p-4"
-        >
+          class="card-img-top lesson-image-wrapper d-flex justify-content-center align-items-center p-4">
           <img [src]="getPdfThumbnail(lesson)" class="lesson-thumb" alt="Lesson PDF thumbnail" />
         </div>
 
@@ -52,17 +51,11 @@
           <div *ngIf="canAccessLesson(i); else lockedLesson" class="mb-3">
             <a
               [routerLink]="['/Courses', courseId, 'units', unitId, 'lessons', lesson.lesson_Id]"
-              class="btn btn-success w-100 mb-2"
-            >
+              class="btn btn-success w-100 mb-2">
               <i class="bi bi-book me-1"></i> Open Lesson
             </a>
 
-            <a
-              *ngIf="getPdfDownloadUrl(lesson) as pdfUrl"
-              [href]="pdfUrl"
-              target="_blank"
-              class="btn btn-outline-primary w-100"
-            >
+            <a *ngIf="getPdfDownloadUrl(lesson) as pdfUrl" [href]="pdfUrl" target="_blank" class="btn btn-outline-primary w-100">
               <i class="bi bi-file-earmark-arrow-down me-1"></i> Download PDF
             </a>
           </div>
@@ -78,14 +71,13 @@
           </ng-template>
 
           <!-- Admin Actions -->
-          <div class="mt-auto d-flex justify-content-between gap-1 flex-wrap"  *ngIf="isInstructor">
+          <div class="mt-auto d-flex justify-content-between gap-1 flex-wrap"  *ngIf="isInstructor || isAdmin">
             <a class="btn btn-outline-secondary btn-sm flex-grow-1"
-               [routerLink]="['/Courses', courseId, 'units', unitId, 'lessons', lesson.lesson_Id]">
+               [routerLink]="['/Courses', courseId, 'units', unitId, 'lessons', lesson.lesson_Id]" *ngIf="isInstructor">
                <i class="bi bi-eye"></i>
             </a>
             <a
-              class="btn btn-outline-primary btn-sm flex-grow-1"
-              [routerLink]="[
+              class="btn btn-outline-primary btn-sm flex-grow-1" [routerLink]="[
                 '/Courses',
                 courseId,
                 'units',
@@ -93,20 +85,16 @@
                 'lessons',
                 lesson.lesson_Id,
                 'edit'
-              ]"
-            >
+              ]" *ngIf="isInstructor || isAdmin">
               <i class="bi bi-pencil"></i>
             </a>
             <a
               class="btn btn-outline-warning btn-sm flex-grow-1"
-              [routerLink]="['/lesson', lesson.lesson_Id, 'create-quiz']"
-            >
+              [routerLink]="['/lesson', lesson.lesson_Id, 'create-quiz']" *ngIf="isInstructor || isAdmin">
               <i class="bi bi-question-circle"></i>
             </a>
-            <button
-              class="btn btn-outline-danger btn-sm flex-grow-1"
-              (click)="onDeleteLesson(lesson)"
-            >
+            <button class="btn btn-outline-danger btn-sm flex-grow-1"
+              (click)="onDeleteLesson(lesson)" *ngIf="isAdmin">
               <i class="bi bi-trash"></i>
             </button>
           </div>

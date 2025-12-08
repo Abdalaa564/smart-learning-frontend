@@ -49,7 +49,7 @@
           </a>
         </li>
 
-        <li *ngIf="isInstructorOrAdmin">
+        <li *ngIf="isAdmin">
           <a
             routerLink="/admin"
             routerLinkActive="active"
@@ -84,8 +84,7 @@
     <div class="header-actions">
       <button class="theme-toggle" (click)="toggleTheme()" title="Toggle Theme">
         <i class="bi bi-sun-fill"
-        [ngClass]="(isDarkMode$ | async) ? 'bi-sun-fill text-warning' : 'bi-moon-fill text-dark'"
-        ></i>
+        [ngClass]="(isDarkMode$ | async) ? 'bi-sun-fill text-warning' : 'bi-moon-fill text-dark'"></i>
       </button>
 
       <button class="language-selector">
@@ -97,7 +96,7 @@
         <!-- Register as dropdown -->
         <div class="dropdown me-2" [class.show]="isRegisterDropdownOpen">
           <button class="btn-signup dropdown-toggle" type="button" id="registerDropdown"
-            (click)="toggleRegisterDropdown()" [attr.aria-expanded]="isRegisterDropdownOpen" >
+            (click)="toggleRegisterDropdown()" [attr.aria-expanded]="isRegisterDropdownOpen">
             Register as
           </button>
 
@@ -128,11 +127,11 @@
 
         <div class="profile-dropdown" [class.show]="isProfileDropdownOpen">
           <div class="profile-info">
-            <img src="https://randomuser.me/api/portraits/lego/6.jpg" alt="User"/>
+            <img src="https://randomuser.me/api/portraits/lego/6.jpg" alt="User" />
             <div>
               <h4>{{ user.firstName }} {{ user.lastName }}</h4>
               <p>Student</p>
-              <a routerLink="/userProfile" (click)="isProfileDropdownOpen = false">View Profile</a >
+              <a routerLink="/userProfile" (click)="isProfileDropdownOpen = false">View Profile</a>
             </div>
           </div>
           <hr />

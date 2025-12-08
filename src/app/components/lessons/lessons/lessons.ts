@@ -31,10 +31,16 @@ export class Lessons implements OnInit {
   env = environment;
   units: Unit[] = [];
 
-    // Role checking
+  // Role checking
   get isInstructor(): boolean {
     return this.authService.isInstructor();
   }
+
+  get isAdmin(): boolean {
+    return this.authService.isAdmin();
+  }
+
+  // End Role checking
 
   constructor(
     private route: ActivatedRoute,

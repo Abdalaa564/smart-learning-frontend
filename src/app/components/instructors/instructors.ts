@@ -40,11 +40,17 @@ export class InstructorsListComponent implements OnInit {
     return this.authService.isInstructor();
   }
   
+  get isAdmin(): boolean {
+    return this.authService.isAdmin();
+  }
+
+    // End Role checking
+
   constructor(
     private service: InstructorService,
     private router: Router,
     private authService: AuthService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.service.getAll().subscribe({

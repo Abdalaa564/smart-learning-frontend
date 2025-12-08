@@ -60,6 +60,12 @@ export class Courses implements OnInit {
     return this.authService.isInstructor();
   }
 
+  get isAdmin(): boolean {
+    return this.authService.isAdmin();
+  }
+
+  // End Role checking
+
   onPageChange(page: number): void {
     this.currentPage = page;
     window.scrollTo(0, 0);
@@ -72,7 +78,7 @@ export class Courses implements OnInit {
     private enrollmentService: EnrollmentService,
     private router: Router,
     private route: ActivatedRoute
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.loadData();

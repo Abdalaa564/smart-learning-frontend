@@ -2,29 +2,27 @@
   <!-- Add Course Button -->
   <div class="d-flex justify-content-between align-items-center mb-3">
     <h3 class="fw-bold">Courses</h3>
-    <button class="btn btn-success btn-sm" [routerLink]="['/courses/add']" *ngIf="isInstructor">
+    <button class="btn btn-success btn-sm" [routerLink]="['/courses/add']" *ngIf="isAdmin">
       + Add New Course</button>
   </div>
 
   <!-- ===== Skeleton Loading State ===== -->
   <div class="row" *ngIf="isLoading">
     <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 mb-4" *ngFor="let i of [1,2,3,4,5,6,7,8]">
-      <app-skeleton-card [showImage]="true" [lines]="3"
-        [showActions]="true" imageHeight="200px" animation="wave">
+      <app-skeleton-card [showImage]="true" [lines]="3" [showActions]="true" imageHeight="200px" animation="wave">
       </app-skeleton-card>
     </div>
   </div>
 
   <!-- ===== Course Cards ===== -->
   <div class="row g-4" *ngIf="!isLoading">
-    <div
-      class="col-xl-3 col-lg-4 col-md-6 col-sm-12" *ngFor="let course of paginatedCourses">
+    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12" *ngFor="let course of paginatedCourses">
 
       <div class="course-card h-100 shadow-sm" (click)="goToUnits(course)">
 
         <!-- Image -->
         <div class="course-image-wrapper">
-          <img [src]="getCourseImage(course)" [alt]="course.crs_Name" class="course-image"  alt="" />
+          <img [src]="getCourseImage(course)" [alt]="course.crs_Name" class="course-image" alt="" />
           <div class="course-price">{{ course.price }} EGP</div>
         </div>
 
@@ -44,27 +42,21 @@
           </div>
 
           <!-- Edit/Delete Buttons -->
-          <div class="d-flex gap-2 mt-auto" *ngIf="isInstructor">
-            <button
-              class="btn btn-outline-primary btn-sm flex-grow-1" [routerLink]="['/courses/edit', course.crs_Id]"
-              (click)="$event.stopPropagation()">
+          <div class="d-flex gap-2 mt-auto" *ngIf="isInstructor || isAdmin">
+            <button *ngIf="isInstructor || isAdmin" class="btn btn-outline-primary btn-sm flex-grow-1"
+              [routerLink]="['/courses/edit', course.crs_Id]" (click)="$event.stopPropagation()">
               <i class="fa fa-edit me-1"></i> Edit
             </button>
 
-            <button
-              class="btn btn-outline-danger btn-sm flex-grow-1"
-              [routerLink]="['/Courses/delete', course.crs_Id]"
-              (click)="$event.stopPropagation()">
+            <button *ngIf="isAdmin" class="btn btn-outline-danger btn-sm flex-grow-1"
+              [routerLink]="['/Courses/delete', course.crs_Id]" (click)="$event.stopPropagation()">
               <i class="fa fa-trash me-1"></i> Delete
             </button>
           </div>
 
           <!-- Enroll Button -->
           <div class="enroll-section mt-3" (click)="$event.stopPropagation()">
-            <button
-              *ngIf="!isEnrolledInCourse(course.crs_Id)"
-              class="btn btn-primary w-100"
-              (click)="enroll(course)"
+            <button *ngIf="!isEnrolledInCourse(course.crs_Id)" class="btn btn-primary w-100" (click)="enroll(course)"
               [disabled]="isEnrolling(course.crs_Id)">
 
               <span *ngIf="!isEnrolling(course.crs_Id)">
@@ -76,9 +68,7 @@
               </span>
             </button>
 
-            <div
-              *ngIf="isEnrolledInCourse(course.crs_Id)"
-              class="alert alert-success text-center mb-0 mt-2">
+            <div *ngIf="isEnrolledInCourse(course.crs_Id)" class="alert alert-success text-center mb-0 mt-2">
               <i class="fa fa-check-circle me-2"></i> Enrolled
             </div>
           </div>
@@ -89,10 +79,7 @@
 </div>
 
 <!-- Enrollment Confirmation Modal -->
-<div
-  class="modal fade"
-  [class.show]="showEnrollModal"
-  [style.display]="showEnrollModal ? 'block' : 'none'"
+<div class="modal fade" [class.show]="showEnrollModal" [style.display]="showEnrollModal ? 'block' : 'none'"
   tabindex="-1">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content" *ngIf="selectedCourse">
@@ -103,21 +90,15 @@
           Confirm Enrollment
         </h5>
 
-        <button
-          type="button"
-          class="btn-close btn-close-white"
-          (click)="closeEnrollModal()"
+        <button type="button" class="btn-close btn-close-white" (click)="closeEnrollModal()"
           [disabled]="enrollingCourseId !== null">
         </button>
       </div>
 
       <div class="modal-body">
         <div class="text-center mb-3">
-          <img alt=""
-            [src]="getCourseImage(selectedCourse)"
-            [alt]="selectedCourse.crs_Name"
-            class="img-fluid rounded shadow-sm"
-            style="max-height: 200px; object-fit: cover; width: 100%" />
+          <img alt="" [src]="getCourseImage(selectedCourse)" [alt]="selectedCourse.crs_Name"
+            class="img-fluid rounded shadow-sm" style="max-height: 200px; object-fit: cover; width: 100%" />
         </div>
 
         <h4 class="text-center mb-3">{{ selectedCourse.crs_Name }}</h4>
@@ -153,18 +134,12 @@
       </div>
 
       <div class="modal-footer">
-        <button
-          type="button"
-          class="btn btn-secondary"
-          (click)="closeEnrollModal()"
+        <button type="button" class="btn btn-secondary" (click)="closeEnrollModal()"
           [disabled]="enrollingCourseId !== null">
           Cancel
         </button>
 
-        <button
-          type="button"
-          class="btn btn-primary"
-          (click)="confirmEnrollment()"
+        <button type="button" class="btn btn-primary" (click)="confirmEnrollment()"
           [disabled]="enrollingCourseId !== null">
 
           <span *ngIf="enrollingCourseId === null">
@@ -182,10 +157,7 @@
 </div>
 
 <!-- Payment Iframe Modal -->
-<div
-  class="modal fade"
-  [class.show]="showPaymentIframe"
-  [style.display]="showPaymentIframe ? 'block' : 'none'"
+<div class="modal fade" [class.show]="showPaymentIframe" [style.display]="showPaymentIframe ? 'block' : 'none'"
   tabindex="-1">
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
@@ -199,11 +171,7 @@
       </div>
 
       <div class="modal-body p-0">
-        <iframe
-          *ngIf="showPaymentIframe"
-          [src]="paymentUrl | safe : 'resourceUrl'"
-          width="100%"
-          height="600"
+        <iframe *ngIf="showPaymentIframe" [src]="paymentUrl | safe : 'resourceUrl'" width="100%" height="600"
           frameborder="0"></iframe>
       </div>
 
@@ -212,25 +180,16 @@
 </div>
 
 <!-- Result Modal -->
-<div
-  class="modal fade"
-  [class.show]="showResultModal"
-  [style.display]="showResultModal ? 'block' : 'none'"
+<div class="modal fade" [class.show]="showResultModal" [style.display]="showResultModal ? 'block' : 'none'"
   tabindex="-1">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
 
-      <div
-        class="modal-header"
-        [class.bg-success]="enrollmentSuccess"
-        [class.bg-danger]="!enrollmentSuccess"
+      <div class="modal-header" [class.bg-success]="enrollmentSuccess" [class.bg-danger]="!enrollmentSuccess"
         [class.text-white]="true">
 
         <h5 class="modal-title">
-          <i
-            class="fa"
-            [class.fa-check-circle]="enrollmentSuccess"
-            [class.fa-times-circle]="!enrollmentSuccess"
+          <i class="fa" [class.fa-check-circle]="enrollmentSuccess" [class.fa-times-circle]="!enrollmentSuccess"
             class="me-2"></i>
           {{ enrollmentSuccess ? 'Enrollment Successful!' : 'Enrollment Failed' }}
         </h5>
@@ -240,12 +199,8 @@
 
       <div class="modal-body text-center py-4">
         <div class="result-icon mb-3">
-          <i
-            class="fa fa-5x"
-            [class.fa-check-circle]="enrollmentSuccess"
-            [class.fa-times-circle]="!enrollmentSuccess"
-            [class.text-success]="enrollmentSuccess"
-            [class.text-danger]="!enrollmentSuccess">
+          <i class="fa fa-5x" [class.fa-check-circle]="enrollmentSuccess" [class.fa-times-circle]="!enrollmentSuccess"
+            [class.text-success]="enrollmentSuccess" [class.text-danger]="!enrollmentSuccess">
           </i>
         </div>
 
@@ -271,11 +226,7 @@
           Close
         </button>
 
-        <button
-          *ngIf="enrollmentSuccess"
-          type="button"
-          class="btn btn-primary"
-          (click)="goToMyCourses()">
+        <button *ngIf="enrollmentSuccess" type="button" class="btn btn-primary" (click)="goToMyCourses()">
           <i class="fa fa-graduation-cap me-2"></i> View My Courses
         </button>
       </div>
@@ -286,23 +237,15 @@
 
 <!-- Pagination -->
 <div class="mt-4 mb-3" *ngIf="!isLoading">
-  <app-pagination
-    [currentPage]="currentPage"
-    [totalItems]="courses.length"
-    [itemsPerPage]="itemsPerPage"
+  <app-pagination [currentPage]="currentPage" [totalItems]="courses.length" [itemsPerPage]="itemsPerPage"
     (pageChange)="onPageChange($event)">
   </app-pagination>
 </div>
 
 <!-- Modal Backdrops -->
-<div
-  class="modal-backdrop fade"
-  [class.show]="showEnrollModal || showPaymentIframe"
+<div class="modal-backdrop fade" [class.show]="showEnrollModal || showPaymentIframe"
   *ngIf="showEnrollModal || showPaymentIframe">
 </div>
 
-<div
-  class="modal-backdrop fade"
-  [class.show]="showResultModal"
-  *ngIf="showResultModal">
+<div class="modal-backdrop fade" [class.show]="showResultModal" *ngIf="showResultModal">
 </div>
