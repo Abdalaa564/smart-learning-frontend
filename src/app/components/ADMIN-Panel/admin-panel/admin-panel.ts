@@ -30,6 +30,7 @@ import { map } from 'rxjs/operators';
 import { MenuItem } from '../../../models/Admin';
 import { AdminPaymentRow, AdminPaymentsComponent } from '../admin-payments/admin-payments';
 import { EnrollmentPayment } from '../../../models/EnrollmentPayment';
+import { AdminAdmins } from '../admin-admins/admin-admins';
 
 @Component({
   selector: 'app-admin-panel',
@@ -47,7 +48,8 @@ import { EnrollmentPayment } from '../../../models/EnrollmentPayment';
     AdminInstructorRequestsComponent,
     AdminProfileComponent,
     AdminEnrollmentsComponent,
-    AdminPaymentsComponent
+    AdminPaymentsComponent,
+    AdminAdmins
 ],
 })
 export class AdminPanelComponent implements OnInit {
@@ -104,6 +106,7 @@ export class AdminPanelComponent implements OnInit {
 
   menuItems: MenuItem[] = [
     { id: 'dashboard', label: 'Dashboard', iconClass: 'bi-speedometer2' },
+    { id: 'admins', label: 'Admins', iconClass: 'bi-shield-lock' },
     { id: 'students', label: 'Students', iconClass: 'bi-people' },
     { id: 'instructors', label: 'Instructors', iconClass: 'bi-mortarboard' },
     { id: 'courses', label: 'Courses', iconClass: 'bi-journal-bookmark' },

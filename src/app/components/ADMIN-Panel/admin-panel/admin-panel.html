@@ -17,6 +17,9 @@
                     [barChartOptions]="barChartOptions" [barChartData]="barChartData">
                 </app-admin-dashboard>
 
+                <!-- Admins -->
+                <app-admin-admins *ngSwitchCase="'admins'"></app-admin-admins>
+
                 <!-- Students -->
                 <app-admin-students *ngSwitchCase="'students'" [students]="students"
                     [studentEnrollCounts]="studentEnrollCounts" (add)="onAddStudent()" (view)="onViewStudent($event)"
