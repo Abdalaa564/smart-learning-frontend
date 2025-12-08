@@ -21,7 +21,7 @@ export class AuthService {
   public isAuthenticatedSubject = new BehaviorSubject<boolean>(this.hasToken());
   public isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   register(data: Register): Observable<Authresponse> {
     return this.http.post<Authresponse>(`${this.apiUrl}/Account/register`, data).pipe(
@@ -35,25 +35,78 @@ export class AuthService {
       })
     );
   }
-   registerInstructor(data: RegisterInstructorRequest): Observable<any> {
+  registerInstructor(data: RegisterInstructorRequest): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/Account/register-instructor`, data);
   }
 
- login(data: Login): Observable<Authresponse> {
+  login(data: Login): Observable<Authresponse> {
     return this.http.post<Authresponse>(`${this.apiUrl}/Account/login`, data).pipe(
-        tap(response => {
-          if (response.success && response.token) {
-            this.saveToken(response.token.accessToken);
-             const role = this.getRoleFromToken();
-             // 2) هات الـ role من التوكن
-           if (role === 'Student' && response.data) {
-          this.saveUser(response.data);
-          this.currentUserSubject.next(response.data);
-        }
-            this.isAuthenticatedSubject.next(true);
+      tap((response) => {
+        if (response.success && response.token) {
+          this.saveToken(response.token.accessToken);
+          const role = this.getRoleFromToken();
+
+          let userToSave: any = null;
+
+          if (role === 'Student' && response.data) {
+            userToSave = response.data;
+          } else if (role === 'Instructor' && response.data) {
+            // Map Instructor data to fit Studentprofile structure for Navbar using simple casting
+            const ins = response.data as any;
+            userToSave = {
+              ...ins,
+              id: ins.id || ins.Id, // Explicitly map ID to handle potential casing issues
+              firstName: ins.fullName ? ins.fullName.split(' ')[0] : 'Instructor',
+              lastName: ins.fullName
+                ? ins.fullName.split(' ').slice(1).join(' ')
+                : '',
+            };
+          } else if (role === 'Admin') {
+            // Admin has no profile data, so we decode token
+            const payload = this.decodePayload(response.token.accessToken);
+            userToSave = {
+              id: 0, // Dummy ID
+              userId:
+                payload[
+                'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'
+                ] ||
+                payload['nameid'] ||
+                payload['sub'],
+              firstName:
+                payload[
+                'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'
+                ] ||
+                payload['unique_name'] ||
+                'Admin',
+              lastName: '',
+              email:
+                payload[
+                'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress'
+                ] ||
+                payload['email'] ||
+                '',
+            } as Studentprofile;
           }
-        })
-      );
+
+          if (userToSave) {
+            this.saveUser(userToSave);
+            this.currentUserSubject.next(userToSave);
+          }
+
+          this.isAuthenticatedSubject.next(true);
+        }
+      })
+    );
+  }
+
+  private decodePayload(token: string): any {
+    try {
+      const payload = token.split('.')[1];
+      const decodedJson = atob(payload);
+      return JSON.parse(decodedJson);
+    } catch (e) {
+      return {};
+    }
   }
 
   logout(): Observable<any> {
@@ -95,7 +148,7 @@ export class AuthService {
       return null;
     }
   }
-  
+
   // Role checking methods
   hasRole(role: string): boolean {
     const userRole = this.getRoleFromToken();
@@ -149,7 +202,7 @@ export class AuthService {
   // 👇👇 Getter للـ userId (عدّل اسم الخاصية حسب Studentprofile)
   get currentUserId(): string | null {
     // لو Studentprofile فيه id:
-  return this.currentUserSubject.value?.userId ?? null;
+    return this.currentUserSubject.value?.userId ?? null;
     // لو فيه studentId أو userId غيّر للسطر اللي يناسبك:
     // return this.currentUserSubject.value?.studentId ?? null;
     // return this.currentUserSubject.value?.userId ?? null;

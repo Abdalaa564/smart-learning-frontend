@@ -130,8 +130,8 @@
             <img src="https://randomuser.me/api/portraits/lego/6.jpg" alt="User" />
             <div>
               <h4>{{ user.firstName }} {{ user.lastName }}</h4>
-              <p>Student</p>
-              <a routerLink="/userProfile" (click)="isProfileDropdownOpen = false">View Profile</a>
+              <p>{{ userRole }}</p>
+              <a [routerLink]="profileLink" (click)="isProfileDropdownOpen = false">View Profile</a>
             </div>
           </div>
           <hr />
