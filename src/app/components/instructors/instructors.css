@@ -153,3 +153,11 @@
   transform: translateY(-1px);
   border-color: var(--accent-color);
 }
+.stars span {
+  font-size: 24px;
+  cursor: pointer;
+  color: #ccc;
+}
+.stars span.filled {
+  color: gold;
+}

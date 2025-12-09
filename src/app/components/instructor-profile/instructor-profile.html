@@ -96,6 +96,44 @@
             </button>
           </div>
 
+  <!-- Stars -->
+
+
+
+  
+</div><div class="add-rating mt-4" *ngIf="instructor">
+  <h5>Rate {{ instructor.fullName }}</h5>
+
+  <!-- النجوم -->
+<div class="stars mb-2">
+  <span *ngFor="let star of [1,2,3,4,5]; let i = index"
+        (click)="setRating(i+1)"
+        (mouseenter)="hoverRating(i+1)"
+        (mouseleave)="hoverRating(0)"
+        [class.filled]="i < (hoveredRating > 0 ? hoveredRating : ratingValue)"
+        [class.disabled]="hasRated">
+    ★
+  </span>
+</div>
+
+  <!-- feedback -->
+  <textarea [(ngModel)]="feedback"
+            class="form-control mb-2"
+            rows="3"
+            placeholder="Write your feedback"
+            [disabled]="hasRated"></textarea>
+
+  <!-- زرار submit -->
+  <button class="btn btn-accent" (click)="submitRating()"
+          [disabled]="hasRated || ratingValue === 0">
+    Submit Rating
+  </button>
+
+  <!-- رسالة لو المستخدم قيم قبل كده -->
+  <p *ngIf="hasRated" class="text-success mt-2">
+    You already rated this instructor. ✅
+  </p>
+</div>
           <!-- Tab panels -->
           <!-- About -->
           <div class="tab-panel" *ngIf="activeTab === 'about'">
@@ -194,6 +232,6 @@
 
     </div>
 
-  </div>
+
 
 </section>

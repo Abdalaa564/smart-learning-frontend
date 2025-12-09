@@ -45,6 +45,7 @@ import { enrollmentGuard } from './guard/enrollment-guard';
 import { RegisterInstructorComponent } from './components/Register-as-instructor/register-instructor/register-instructor';
 import { StudentGradesComponent } from './components/student-grades-component/student-grades-component';
 
+
 export const routes: Routes = [
 
   { path: '', redirectTo: 'Home', pathMatch: 'full' },

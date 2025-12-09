@@ -1,35 +1,59 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { RatingDto, LessonAverageRating, CreateOrUpdateRatingDto } from '../models/rating';
+
+export interface CourseRatingDto {
+  courseId: number;
+  userId?: string;
+  ratingValue: number;
+  feedback: string;
+}
+
+export interface InstructorRatingDto {
+  instructorId?: number;
+  userId?: string;
+  ratingValue: number;
+  feedback: string;
+}
+interface HasRatedResponse {
+  hasRated: boolean;
+  ratingValue?: number;
+  feedback?: string;
+}
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class RatingService {
-   private baseUrl = 'http://localhost:5163/api/ratings'; // عدّلها حسب الـ API عندك
 
-  constructor(private http: HttpClient) {}
+  private apiUrl = 'http://localhost:5163/api'; // عدّل حسب API
 
-  getLessonRatings(lessonId: number): Observable<RatingDto[]> {
-    return this.http.get<RatingDto[]>(`${this.baseUrl}/lesson/${lessonId}`);
+  constructor(private http: HttpClient) { }
+
+  addCourseRating(dto: CourseRatingDto): Observable<any> {
+    return this.http.post(`${this.apiUrl}/CourseRating`, dto);
   }
 
-  getLessonAverage(lessonId: number): Observable<LessonAverageRating> {
-    return this.http.get<LessonAverageRating>(
-      `${this.baseUrl}/lesson/${lessonId}/average`
-    );
+  addInstructorRating(dto: InstructorRatingDto): Observable<any> {
+    return this.http.post(`${this.apiUrl}/InstructorRating`, dto);
   }
 
-  getMyRating(lessonId: number): Observable<RatingDto> {
-    return this.http.get<RatingDto>(`${this.baseUrl}/lesson/${lessonId}/me`);
+  getCourseAverage(courseId: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/CourseRating/average/${courseId}`);
   }
 
-  createOrUpdateRating(dto: CreateOrUpdateRatingDto): Observable<RatingDto> {
-    return this.http.post<RatingDto>(this.baseUrl, dto);
+  getInstructorAverage(instructorId: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/InstructorRating/average/${instructorId}`);
   }
 
-  deleteMyRating(lessonId: number): Observable<void> {
-    return this.http.delete<void>(`${this.baseUrl}/lesson/${lessonId}`);
+  getCourseRatings(courseId: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/CourseRating/course/${courseId}`);
   }
+
+  getInstructorRatings(instructorId: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/InstructorRating/instructor/${instructorId}`);
+  }
+  hasUserRatedInstructor(instructorId: number): Observable<HasRatedResponse> {
+  return this.http.get<HasRatedResponse>(`${this.apiUrl}/InstructorRating/hasRated/${instructorId}`);
+}
 }
