@@ -49,13 +49,13 @@
           </a>
         </li>
 
-        <li *ngIf="isAdmin">
+        <li *ngIf="isInstructorOrAdmin">
           <a
             routerLink="/admin"
             routerLinkActive="active"
             [routerLinkActiveOptions]="{ exact: true }"
           >
-            Admin Panel
+            {{ isAdmin ? 'Admin Panel' : 'Instructor Panel' }}
           </a>
         </li>
 

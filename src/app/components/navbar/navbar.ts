@@ -131,5 +131,4 @@ export class Navbar {
       this.isRegisterDropdownOpen = false;
     }
   }
-
 }

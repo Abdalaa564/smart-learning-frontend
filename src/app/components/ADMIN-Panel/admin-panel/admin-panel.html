@@ -12,13 +12,17 @@
         <main class="grow overflow-auto p-3">
             <ng-container [ngSwitch]="activePage">
                 <!-- Dashboard -->
-                <app-admin-dashboard *ngSwitchCase="'dashboard'" [stats]="stats" [activityData]="activityData"
-                    [progressData]="progressData" [recentActivities]="recentActivities"
-                    [barChartOptions]="barChartOptions" [barChartData]="barChartData">
-                </app-admin-dashboard>
+                <ng-container *ngSwitchCase="'dashboard'">
+                    <app-admin-dashboard *ngIf="isAdmin" [stats]="stats" [activityData]="activityData"
+                        [progressData]="progressData" [recentActivities]="recentActivities"
+                        [barChartOptions]="barChartOptions" [barChartData]="barChartData">
+                    </app-admin-dashboard>
+                </ng-container>
 
                 <!-- Admins -->
-                <app-admin-admins *ngSwitchCase="'admins'"></app-admin-admins>
+                <ng-container *ngSwitchCase="'admins'">
+                    <app-admin-admins *ngIf="isAdmin"></app-admin-admins>
+                </ng-container>
 
                 <!-- Students -->
                 <app-admin-students *ngSwitchCase="'students'" [students]="students"
@@ -35,21 +39,29 @@
                     [courseEnrollCounts]="courseEnrollCounts" (add)="onAddCourse()" (view)="onViewCourse($event)"
                     (edit)="onEditCourse($event)" (delete)="onDeleteCourse($event)"></app-admin-courses>
                 <!-- Enrollments -->
-                <app-admin-enrollments *ngSwitchCase="'enrollments'" [enrollments]="enrollments"
-                    [isLoading]="isLoadingEnrollments">
-                </app-admin-enrollments>
+                <ng-container *ngSwitchCase="'enrollments'">
+                    <app-admin-enrollments *ngIf="isAdmin" [enrollments]="enrollments"
+                        [isLoading]="isLoadingEnrollments">
+                    </app-admin-enrollments>
+                </ng-container>
                 <!-- Payments -->
-                <app-admin-payments *ngSwitchCase="'payments'" [payments]="payments" [isLoading]="isLoadingPayments">
-                </app-admin-payments>
+                <ng-container *ngSwitchCase="'payments'">
+                    <app-admin-payments *ngIf="isAdmin" [payments]="payments" [isLoading]="isLoadingPayments">
+                    </app-admin-payments>
+                </ng-container>
 
                 <!-- Instructor Requests -->
-                <app-admin-instructor-requests *ngSwitchCase="'instructorRequests'"
-                    [pendingInstructors]="pendingInstructors" [isLoading]="isLoadingPending"
-                    (approve)="onApproveInstructor($event)" (reject)="onRejectInstructor($event)">
-                </app-admin-instructor-requests>
+                <ng-container *ngSwitchCase="'instructorRequests'">
+                    <app-admin-instructor-requests *ngIf="isAdmin" [pendingInstructors]="pendingInstructors"
+                        [isLoading]="isLoadingPending" (approve)="onApproveInstructor($event)"
+                        (reject)="onRejectInstructor($event)">
+                    </app-admin-instructor-requests>
+                </ng-container>
 
                 <!-- Profile -->
-                <app-admin-profile *ngSwitchCase="'profile'"></app-admin-profile>
+                <ng-container *ngSwitchCase="'profile'">
+                    <app-admin-profile *ngIf="isAdmin"></app-admin-profile>
+                </ng-container>
             </ng-container>
         </main>
     </div>

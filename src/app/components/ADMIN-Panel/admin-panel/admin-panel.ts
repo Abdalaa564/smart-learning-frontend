@@ -3,13 +3,14 @@ import { Component, OnInit } from '@angular/core';
 
 import { AdminSidebarComponent } from '../admin-sidebar/admin-sidebar';
 import { AdminHeaderComponent } from '../admin-header-component/admin-header-component';
-import { AdminDashboardComponent, Stats, Activity, ProgressItem,RecentActivity,} from '../admin-dashboard/admin-dashboard';
+import { AdminDashboardComponent, Stats, Activity, ProgressItem, RecentActivity, } from '../admin-dashboard/admin-dashboard';
 import { AdminStudentsComponent } from '../admin-students/admin-students';
 import { AdminInstructorsComponent } from '../admin-instructors/admin-instructors';
 import { AdminCoursesComponent } from '../admin-courses/admin-courses';
 import { AdminProfileComponent } from '../admin-profile/admin-profile';
-import { AdminInstructorRequestsComponent,} from '../admin-instructor-requests/admin-instructor-requests';
-import {AdminEnrollmentsComponent, AdminEnrollmentRow,} from '../admin-enrollments/admin-enrollments';
+import { AdminInstructorRequestsComponent, } from '../admin-instructor-requests/admin-instructor-requests';
+import { AdminEnrollmentsComponent, AdminEnrollmentRow, } from '../admin-enrollments/admin-enrollments';
+import { AdminAdmins } from '../admin-admins/admin-admins';
 
 // models
 import { Studentprofile } from '../../../models/studentprofile';
@@ -30,7 +31,7 @@ import { map } from 'rxjs/operators';
 import { MenuItem } from '../../../models/Admin';
 import { AdminPaymentRow, AdminPaymentsComponent } from '../admin-payments/admin-payments';
 import { EnrollmentPayment } from '../../../models/EnrollmentPayment';
-import { AdminAdmins } from '../admin-admins/admin-admins';
+import { AuthService } from '../../../Services/auth-service';
 
 @Component({
   selector: 'app-admin-panel',
@@ -50,7 +51,7 @@ import { AdminAdmins } from '../admin-admins/admin-admins';
     AdminEnrollmentsComponent,
     AdminPaymentsComponent,
     AdminAdmins
-],
+  ],
 })
 export class AdminPanelComponent implements OnInit {
   sidebarOpen = true;
@@ -78,7 +79,7 @@ export class AdminPanelComponent implements OnInit {
   studentEnrollCounts: { [studentId: number]: number } = {};
 
   pendingInstructors: Instructor[] = [];
-  isLoadingPending = false; 
+  isLoadingPending = false;
 
   // payment 
   payments: AdminPaymentRow[] = [];
@@ -104,7 +105,9 @@ export class AdminPanelComponent implements OnInit {
     { name: 'Not Started', value: 25, colorClass: 'bg-warning' },
   ];
 
-  menuItems: MenuItem[] = [
+  menuItems: MenuItem[] = [];
+
+  private allMenuItems: MenuItem[] = [
     { id: 'dashboard', label: 'Dashboard', iconClass: 'bi-speedometer2' },
     { id: 'admins', label: 'Admins', iconClass: 'bi-shield-lock' },
     { id: 'students', label: 'Students', iconClass: 'bi-people' },
@@ -147,19 +150,46 @@ export class AdminPanelComponent implements OnInit {
     ],
   };
 
+  // Role checking
+  get isInstructor(): boolean {
+    return this.authService.isInstructor();
+  }
+
+  get isAdmin(): boolean {
+    return this.authService.isAdmin();
+  }
+
   constructor(
     private studentService: StudentService,
     private instructorService: InstructorService,
     private courseService: CourseService,
     private enrollmentService: EnrollmentService,
-    private adminService: AdminService
-  ) {}
+    private adminService: AdminService,
+    private authService: AuthService
+  ) { }
 
   ngOnInit(): void {
     this.loadAdminName();
+    this.filterMenuItems();
     this.loadCounts();
     this.loadTables();
     this.loadPendingInstructors();
+  }
+
+  private filterMenuItems(): void {
+    if (this.isAdmin) {
+      // Admin sees everything
+      this.menuItems = [...this.allMenuItems];
+    } else {
+      // Instructor sees limited view
+      const allowedIds: MenuItem['id'][] = ['courses', 'students', 'instructors', 'quizzes', 'grades'];
+      this.menuItems = this.allMenuItems.filter(item => allowedIds.includes(item.id));
+
+      // If current active page is not allowed, switch to the first allowed one
+      if (!allowedIds.includes(this.activePage)) {
+        this.activePage = allowedIds[0];
+      }
+    }
   }
 
   // ========== load data ==========
@@ -201,10 +231,10 @@ export class AdminPanelComponent implements OnInit {
     });
 
     // 🆕 load total revenue
-     this.enrollmentService.getTotalRevenue().subscribe({
-    next: (rev) => this.stats.totalRevenue = rev,
-    error: (err) => console.error('Error getting total revenue', err),
-  });
+    this.enrollmentService.getTotalRevenue().subscribe({
+      next: (rev) => this.stats.totalRevenue = rev,
+      error: (err) => console.error('Error getting total revenue', err),
+    });
   }
 
   private updateBarChart(): void {
@@ -274,7 +304,7 @@ export class AdminPanelComponent implements OnInit {
     });
   }
 
-   private loadCourseEnrollmentCounts(): void {
+  private loadCourseEnrollmentCounts(): void {
     if (!this.courses || this.courses.length === 0) return;
 
     const requests = this.courses.map((course) =>
@@ -398,10 +428,10 @@ export class AdminPanelComponent implements OnInit {
     }
 
     this.recentActivities = activities;
-  } 
+  }
 
   // to calculate total revenue table of Payments
-    private loadPayments(): void {
+  private loadPayments(): void {
     if (!this.courses || this.courses.length === 0) {
       this.payments = [];
       return;
@@ -449,20 +479,20 @@ export class AdminPanelComponent implements OnInit {
 
   // باقي الـ handlers زي ما عملنا قبل كده (اختياري تسيبهم console.log)
 
-  onAddStudent() {}
-  onViewStudent(stu: Studentprofile) {}
-  onEditStudent(stu: Studentprofile) {}
-  onDeleteStudent(stu: Studentprofile) {}
+  onAddStudent() { }
+  onViewStudent(stu: Studentprofile) { }
+  onEditStudent(stu: Studentprofile) { }
+  onDeleteStudent(stu: Studentprofile) { }
 
-  onAddInstructor() {}
-  onViewInstructor(inst: Instructor) {}
-  onEditInstructor(inst: Instructor) {}
-  onDeleteInstructor(inst: Instructor) {}
+  onAddInstructor() { }
+  onViewInstructor(inst: Instructor) { }
+  onEditInstructor(inst: Instructor) { }
+  onDeleteInstructor(inst: Instructor) { }
 
-  onAddCourse() {}
-  onViewCourse(course: Course) {}
-  onEditCourse(course: Course) {}
-  onDeleteCourse(course: Course) {}
+  onAddCourse() { }
+  onViewCourse(course: Course) { }
+  onEditCourse(course: Course) { }
+  onDeleteCourse(course: Course) { }
 
   onApproveInstructor(inst: Instructor) {
     if (!inst.id) return;

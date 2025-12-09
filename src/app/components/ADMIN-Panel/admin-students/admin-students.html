@@ -1,7 +1,7 @@
 <div class="card">
   <div class="card-header d-flex justify-content-between">
     <h5 class="mb-0">Students Management</h5>
-    <button class="btn btn-primary btn-sm" (click)="add.emit()" >
+    <button class="btn btn-primary btn-sm" (click)="add.emit()">
       <i class="bi bi-plus-lg me-1"></i> Add New
     </button>
   </div>
@@ -32,15 +32,17 @@
             <td>{{ row.phoneNumber }}</td>
             <td>{{ studentEnrollCounts[row.id] || 0 }}</td>
             <td class="text-end">
-              <button class="btn btn-sm btn-outline-primary me-1" (click)="view.emit(row)" >
+              <button class="btn btn-sm btn-outline-primary me-1" (click)="view.emit(row)">
                 <i class="bi bi-eye"></i>
               </button>
-              <button class="btn btn-sm btn-outline-success me-1" (click)="edit.emit(row)" >
-                <i class="bi bi-pencil"></i>
-              </button>
-              <button class="btn btn-sm btn-outline-danger" (click)="delete.emit(row)" >
-                <i class="bi bi-trash"></i>
-              </button>
+              <ng-container *ngIf="isAdmin">
+                <button class="btn btn-sm btn-outline-success me-1" (click)="edit.emit(row)">
+                  <i class="bi bi-pencil"></i>
+                </button>
+                <button class="btn btn-sm btn-outline-danger" (click)="delete.emit(row)">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </ng-container>
             </td>
           </tr>
         </tbody>
