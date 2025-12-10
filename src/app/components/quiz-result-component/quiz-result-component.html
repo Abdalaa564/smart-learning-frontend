@@ -23,10 +23,10 @@
           <i class="bi bi-trophy-fill"></i> Quiz Result
         </h3>
       </div>
-      
+
       <div class="card-body text-center">
         <h4 class="mb-3">{{ result.quiz_Name }}</h4>
-        
+
         <!-- Score Circle -->
         <div class="score-circle mx-auto mb-4" [class]="'border-' + resultClass">
           <div class="score-content">
@@ -51,7 +51,7 @@
               <small class="text-muted">Obtained Marks</small>
             </div>
           </div>
-          
+
           <div class="col-md-3 col-6 mb-3">
             <div class="stat-card">
               <i class="bi bi-star fs-1 text-info"></i>
@@ -59,7 +59,7 @@
               <small class="text-muted">Total Marks</small>
             </div>
           </div>
-          
+
           <div class="col-md-3 col-6 mb-3">
             <div class="stat-card">
               <i class="bi bi-check-circle fs-1 text-success"></i>
@@ -67,7 +67,7 @@
               <small class="text-muted">Correct Answers</small>
             </div>
           </div>
-          
+
           <div class="col-md-3 col-6 mb-3">
             <div class="stat-card">
               <i class="bi bi-x-circle fs-1 text-danger"></i>
@@ -96,12 +96,11 @@
           <i class="bi bi-list-check"></i> Detailed Review
         </h5>
       </div>
-      
+
       <div class="card-body">
-        <div *ngFor="let answer of result.answers; let i = index" class="answer-item mb-4 p-3 rounded" 
-             [class.bg-success-subtle]="answer.is_Correct"
-             [class.bg-danger-subtle]="!answer.is_Correct">
-          
+        <div *ngFor="let answer of result.answers; let i = index" class="answer-item mb-4 p-3 rounded"
+          [class.bg-success-subtle]="answer.is_Correct" [class.bg-danger-subtle]="!answer.is_Correct">
+
           <div class="d-flex justify-content-between align-items-start mb-2">
             <h6 class="mb-0">
               <span class="badge" [class.bg-success]="answer.is_Correct" [class.bg-danger]="!answer.is_Correct">
@@ -109,30 +108,37 @@
               </span>
               <span class="badge bg-secondary ms-2">{{ answer.grade_Point }} Points</span>
             </h6>
-            <i class="bi fs-4" 
-               [class.bi-check-circle-fill]="answer.is_Correct" 
-               [class.text-success]="answer.is_Correct"
-               [class.bi-x-circle-fill]="!answer.is_Correct"
-               [class.text-danger]="!answer.is_Correct">
+            <i class="bi fs-4" [class.bi-check-circle-fill]="answer.is_Correct" [class.text-success]="answer.is_Correct"
+              [class.bi-x-circle-fill]="!answer.is_Correct" [class.text-danger]="!answer.is_Correct">
             </i>
           </div>
 
           <p class="fw-bold mb-2">{{ answer.question_Text }}</p>
-          
+
           <div class="ms-3">
             <p class="mb-1">
-              <strong>Your Answer:</strong> 
+              <strong>Your Answer:</strong>
               <span [class.text-success]="answer.is_Correct" [class.text-danger]="!answer.is_Correct">
                 {{ answer.choice_Text }}
               </span>
             </p>
-            
+
             <p class="mb-0" *ngIf="!answer.is_Correct">
-              <strong class="text-success">Correct Answer:</strong> 
+              <strong class="text-success">Correct Answer:</strong>
               <span class="text-success">{{ answer.correctAnswer }}</span>
             </p>
           </div>
         </div>
+         <div *ngIf="!loading && aiReport" class="card mt-4 shadow-sm">
+            <div class="card-header bg-primary text-white">
+              <h5 class="mb-0">
+                <i class="bi bi-robot"></i> AI Generated Report
+              </h5>
+            </div>
+            <div class="card-body">
+              <pre class="ai-report-text">{{ aiReport }}</pre>
+            </div>
+          </div>
       </div>
     </div>
   </div>
