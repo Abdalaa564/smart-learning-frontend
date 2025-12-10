@@ -3,18 +3,13 @@
   <!-- PHOTO URL -->
   <div class="mb-3 col-md-6">
     <label>Profile Image URL</label>
-   <input
-  placeholder="Profile photo"
-  type="url"
-  class="form-control"
-  formControlName="photoUrl"
-  [class.is-invalid]="submitted && f['photoUrl'].invalid"
-/>
-<small class="text-danger" *ngIf="submitted && f['photoUrl'].errors?.['pattern']">
-  Please enter a valid URL
-</small>
-  </div> 
- 
+    <input placeholder="Profile photo"
+      type="url"
+      class="form-control"
+      formControlName="photoUrl"
+    />
+  </div>
+
   <!-- CERTIFICATE URL -->
   <div class="mb-3 col-md-6">
     <label>Certificate URL</label>

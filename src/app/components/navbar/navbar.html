@@ -95,20 +95,37 @@
       <ng-container *ngIf="!(currentUser$ | async)">
         <!-- Register as dropdown -->
         <div class="dropdown me-2" [class.show]="isRegisterDropdownOpen">
-          <button class="btn-signup dropdown-toggle" type="button" id="registerDropdown"
-            (click)="toggleRegisterDropdown()" [attr.aria-expanded]="isRegisterDropdownOpen">
+          <button
+            class="btn-signup dropdown-toggle"
+            type="button"
+            id="registerDropdown"
+            (click)="toggleRegisterDropdown()"
+            [attr.aria-expanded]="isRegisterDropdownOpen"
+          >
             Register as
           </button>
 
-          <ul class="dropdown-menu" aria-labelledby="registerDropdown" [class.show]="isRegisterDropdownOpen">
+          <ul
+            class="dropdown-menu"
+            aria-labelledby="registerDropdown"
+            [class.show]="isRegisterDropdownOpen"
+          >
             <li>
-              <a class="dropdown-item" routerLink="/register" (click)="isRegisterDropdownOpen = false">
+              <a
+                class="dropdown-item"
+                routerLink="/register"
+                (click)="isRegisterDropdownOpen = false"
+              >
                 Student
               </a>
             </li>
 
             <li>
-              <a class="dropdown-item" routerLink="/register-instructor" (click)="isRegisterDropdownOpen = false">
+              <a
+                class="dropdown-item"
+                routerLink="/register-instructor"
+                (click)="isRegisterDropdownOpen = false"
+              >
                 Instructor
               </a>
             </li>

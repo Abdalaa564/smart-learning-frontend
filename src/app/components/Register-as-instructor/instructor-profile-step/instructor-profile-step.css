@@ -1,0 +1,55 @@
+.form-control {
+  height: 48px;
+  border-radius: 10px;
+ border: 1px solid var(--border-color);
+  background: var(--surface-color);
+  color: var(--heading-color);
+  font-size: 15px;
+  transition: 0.25s ease;
+}
+.register-card {
+  max-width: 750px;
+  padding: 15px 15px !important;
+}
+
+
+
+
+.form-control:focus {
+  border-color: var(--accent-color);
+  background: var(--surface-color);
+ 
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent-color), transparent 80%);
+}
+
+/* Labels */
+label {
+  font-weight: 600;
+ color: var(--heading-color);
+  margin-bottom: 6px;
+  font-size: 15px;
+}
+
+/* Button */
+button[type="submit"] {
+  width: 100%;
+  padding: 12px;
+  border-radius: 12px;
+  font-size: 16px;
+  border: none;
+  background: var(--accent-color);
+  color: white;
+  transition: 0.25s;
+  font-weight: 600;
+  margin-top: 5px;
+}
+
+button[type="submit"]:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--accent-color), black 10%);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px color-mix(in srgb, var(--accent-color), transparent 70%);
+}
+
+button:disabled {
+  opacity: 0.7;
+}
