@@ -109,11 +109,13 @@ export class Courses implements OnInit {
         this.checkingPaymentStatus = false;
         
         if (status.paymentStatus === 'Completed') {
-          this.enrolledCourses.add(status.enrollmentId);
+          this.enrolledCourses.add(status.courseId);
           this.showPaymentResult(true, 'Enrollment successful! Welcome to your course.');
-        } else {
-          this.showPaymentResult(false, `Payment status: ${status.paymentStatus}`);
-        }
+        } else if (status.paymentStatus === 'Pending') {
+        this.showPaymentResult(false, 'Payment is still being processed. Please check back later.');
+      } else {
+        this.showPaymentResult(false, `Payment ${status.paymentStatus.toLowerCase()}. Please try again.`);
+      }
       },
       error: (err) => {
         this.checkingPaymentStatus = false;

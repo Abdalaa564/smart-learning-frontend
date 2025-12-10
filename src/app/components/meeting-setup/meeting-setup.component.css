@@ -1,242 +1,242 @@
 /* Meeting Setup Container */
 .meeting-setup-container {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(135deg, #f0f4ff, #e8f5e9);
-    padding: 20px;
-    font-family: var(--default-font);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--background-color) 0%, var(--surface-color) 100%);
+  padding: 20px;
+  font-family: var(--default-font);
 }
 
 /* Setup Card */
 .setup-card {
-    background: var(--surface-color);
-    border-radius: 20px;
-    padding: 45px 40px;
-    max-width: 520px;
-    width: 100%;
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
-    transition: all 0.3s ease;
-    border: 1px solid rgba(0, 0, 0, 0.05);
+  background: var(--surface-color);
+  border-radius: 20px;
+  padding: 45px 40px;
+  max-width: 520px;
+  width: 100%;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+  transition: all 0.3s ease;
+  border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .setup-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.18);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.18);
 }
 
 /* Title */
 .setup-card h1 {
-    margin: 0 0 35px 0;
-    font-size: 32px;
-    color: var(--heading-color);
-    text-align: center;
-    font-family: var(--heading-font);
-    font-weight: 700;
+  margin: 0 0 35px 0;
+  font-size: 32px;
+  color: var(--heading-color);
+  text-align: center;
+  font-family: var(--heading-font);
+  font-weight: 700;
 }
 
 /* Meeting Type Toggle */
 .meeting-type-toggle {
-    display: flex;
-    gap: 12px;
-    margin-bottom: 32px;
-    background: #f5f5f5;
-    padding: 6px;
-    border-radius: 12px;
+  display: flex;
+  gap: 12px;
+  margin-bottom: 32px;
+  background: var(--background-color);
+  padding: 6px;
+  border-radius: 12px;
 }
 
 .meeting-type-toggle button {
-    flex: 1;
-    padding: 12px 16px;
-    border: none;
-    background: transparent;
-    color: var(--text-muted);
-    border-radius: 8px;
-    font-size: 15px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.25s ease;
-    font-family: var(--default-font);
+  flex: 1;
+  padding: 12px 16px;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  font-family: var(--default-font);
 }
 
 .meeting-type-toggle button.active {
-    background: var(--accent-color);
-    color: var(--contrast-color);
-    box-shadow: 0 4px 12px color-mix(in srgb, var(--accent-color), transparent 70%);
+  background: var(--accent-color);
+  color: var(--contrast-color);
+  box-shadow: 0 4px 12px color-mix(in srgb, var(--accent-color), transparent 70%);
 }
 
 .meeting-type-toggle button:not(.active):hover {
-    background: rgba(0, 0, 0, 0.05);
-    color: var(--accent-color);
+  background: rgba(0, 0, 0, 0.05);
+  color: var(--accent-color);
 }
 
 /* Form */
 .setup-form {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
 
 /* Form Group */
 .form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .form-group label {
-    font-weight: 600;
-    color: var(--heading-color);
-    font-size: 14px;
-    margin-bottom: 2px;
+  font-weight: 600;
+  color: var(--heading-color);
+  font-size: 14px;
+  margin-bottom: 2px;
 }
 
 /* Input Fields */
-.form-group input[type="text"],
-.form-group input[type="password"] {
-    padding: 12px 16px;
-    border: 1px solid #d7d8df;
-    border-radius: 10px;
-    font-size: 15px;
-    background: #fbfbff;
-    transition: all 0.25s ease;
-    font-family: var(--default-font);
-    color: var(--default-color);
+.form-group input[type='text'],
+.form-group input[type='password'] {
+  padding: 12px 16px;
+  border: 1px solid #d7d8df;
+  border-radius: 10px;
+  font-size: 15px;
+  background: var(--background-color);
+  transition: all 0.25s ease;
+  font-family: var(--default-font);
+  color: var(--default-color);
 }
 
-.form-group input[type="text"]:focus,
-.form-group input[type="password"]:focus {
-    outline: none;
-    border-color: var(--accent-color);
-    box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent-color), transparent 80%);
-    background: #fff;
+.form-group input[type='text']:focus,
+.form-group input[type='password']:focus {
+  outline: none;
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent-color), transparent 80%);
+  background: #fff;
 }
 
-.form-group input[type="text"]::placeholder,
-.form-group input[type="password"]::placeholder {
-    color: #a0a0a0;
+.form-group input[type='text']::placeholder,
+.form-group input[type='password']::placeholder {
+  color: #a0a0a0;
 }
 
 /* Room Input Group */
 .room-input-group {
-    display: flex;
-    gap: 10px;
+  display: flex;
+  gap: 10px;
 }
 
 .room-input-group input {
-    flex: 1;
+  flex: 1;
 }
 
 /* Generate Button */
 .generate-btn {
-    padding: 12px 20px;
-    background: var(--secondary-accent);
-    border: none;
-    border-radius: 10px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.25s ease;
-    white-space: nowrap;
-    color: white;
-    font-family: var(--default-font);
-    font-size: 14px;
+  padding: 12px 20px;
+  background: var(--secondary-accent);
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  white-space: nowrap;
+  color: white;
+  font-family: var(--default-font);
+  font-size: 14px;
 }
 
 .generate-btn:hover {
-    background: color-mix(in srgb, var(--secondary-accent), black 10%);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 15px color-mix(in srgb, var(--secondary-accent), transparent 70%);
+  background: color-mix(in srgb, var(--secondary-accent), black 10%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px color-mix(in srgb, var(--secondary-accent), transparent 70%);
 }
 
 .generate-btn:active {
-    transform: translateY(0);
+  transform: translateY(0);
 }
 
 /* Checkbox */
 .checkbox-label {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    cursor: pointer;
-    font-weight: normal !important;
-    padding: 4px 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  font-weight: normal !important;
+  padding: 4px 0;
 }
 
-.checkbox-label input[type="checkbox"] {
-    width: 20px;
-    height: 20px;
-    cursor: pointer;
-    accent-color: var(--accent-color);
+.checkbox-label input[type='checkbox'] {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: var(--accent-color);
 }
 
 .checkbox-label span {
-    font-size: 15px;
-    color: var(--default-color);
-    font-weight: 500;
+  font-size: 15px;
+  color: var(--default-color);
+  font-weight: 500;
 }
 
 /* Help Text */
 .help-text {
-    color: var(--text-muted);
-    font-size: 13px;
-    margin-top: -2px;
-    line-height: 1.4;
+  color: var(--text-muted);
+  font-size: 13px;
+  margin-top: -2px;
+  line-height: 1.4;
 }
 
 /* Join Button */
 .join-btn {
-    padding: 14px 24px;
-    background: var(--accent-color);
-    color: var(--contrast-color);
-    border: none;
-    border-radius: 12px;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.25s ease;
-    margin-top: 8px;
-    font-family: var(--default-font);
+  padding: 14px 24px;
+  background: var(--accent-color);
+  color: var(--contrast-color);
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  margin-top: 8px;
+  font-family: var(--default-font);
 }
 
 .join-btn:hover {
-    background: color-mix(in srgb, var(--accent-color), black 10%);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px color-mix(in srgb, var(--accent-color), transparent 70%);
+  background: color-mix(in srgb, var(--accent-color), black 10%);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px color-mix(in srgb, var(--accent-color), transparent 70%);
 }
 
 .join-btn:active {
-    transform: translateY(0);
+  transform: translateY(0);
 }
 
 .join-btn:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-    transform: none;
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
 }
 
 /* Responsive Design */
 @media (max-width: 576px) {
-    .setup-card {
-        padding: 30px 25px;
-    }
+  .setup-card {
+    padding: 30px 25px;
+  }
 
-    .setup-card h1 {
-        font-size: 26px;
-        margin-bottom: 28px;
-    }
+  .setup-card h1 {
+    font-size: 26px;
+    margin-bottom: 28px;
+  }
 
-    .meeting-type-toggle {
-        flex-direction: column;
-        gap: 8px;
-        padding: 4px;
-    }
+  .meeting-type-toggle {
+    flex-direction: column;
+    gap: 8px;
+    padding: 4px;
+  }
 
-    .room-input-group {
-        flex-direction: column;
-    }
+  .room-input-group {
+    flex-direction: column;
+  }
 
-    .generate-btn {
-        width: 100%;
-    }
+  .generate-btn {
+    width: 100%;
+  }
 }
