@@ -3,31 +3,46 @@
   <!-- PHOTO URL -->
   <div class="mb-3 col-md-6">
     <label>Profile Image URL</label>
-    <input placeholder="Profile phot]"
-      type="url"
-      class="form-control"
-      formControlName="photoUrl"
-    />
-  </div>
-
+   <input
+  placeholder="Profile photo"
+  type="url"
+  class="form-control"
+  formControlName="photoUrl"
+  [class.is-invalid]="submitted && f['photoUrl'].invalid"
+/>
+<small class="text-danger" *ngIf="submitted && f['photoUrl'].errors?.['pattern']">
+  Please enter a valid URL
+</small>
+  </div> 
+ 
   <!-- CERTIFICATE URL -->
   <div class="mb-3 col-md-6">
     <label>Certificate URL</label>
-    <input placeholder="Certificate"
-      type="url"
-      class="form-control"
-      formControlName="certificateUrl"
-    />
+    <input
+  placeholder="Certificate"
+  type="url"
+  class="form-control"
+  formControlName="certificateUrl"
+  [class.is-invalid]="submitted && f['certificateUrl'].invalid"
+/>
+<small class="text-danger" *ngIf="submitted && f['certificateUrl'].errors?.['pattern']">
+  Please enter a valid URL
+</small>
   </div>
 
   <!-- CV URL -->
   <div class="mb-3 col-md-6">
     <label>CV URL</label>
-    <input placeholder="CV"
-      type="url"
-      class="form-control"
-      formControlName="cvUrl"
-    />
+    <input
+  placeholder="CV"
+  type="url"
+  class="form-control"
+  formControlName="cvUrl"
+  [class.is-invalid]="submitted && f['cvUrl'].invalid"
+/>
+<small class="text-danger" *ngIf="submitted && f['cvUrl'].errors?.['pattern']">
+  Please enter a valid URL
+</small>
   </div>
 
   <!-- SPECIALIZATION -->

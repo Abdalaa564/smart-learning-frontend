@@ -160,4 +160,7 @@
 }
 .stars span.filled {
   color: gold;
+} 
+.flex-grow-1 {
+    flex-grow: 1;
 }
