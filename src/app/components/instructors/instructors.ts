@@ -7,6 +7,7 @@ import { Router, RouterLink } from '@angular/router';
 import { SkeletonCardComponent } from '../../shared/Skeleton/skeleton-card/skeleton-card';
 import { PaginationComponent } from '../../shared/pagination/pagination';
 import { AuthService } from '../../Services/auth-service';
+import { RatingService } from '../../Services/rating-service';
 
 @Component({
   selector: 'app-instructors-list',
@@ -49,18 +50,29 @@ export class InstructorsListComponent implements OnInit {
   constructor(
     private service: InstructorService,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private ratingService: RatingService
   ) { }
 
   ngOnInit(): void {
     this.service.getAll().subscribe({
       next: res => {
         this.instructors = res;
-        this.loading = false;
-      },
-      error: err => {
-        console.error(err);
-        this.loading = false;
+            this.instructors.forEach(ins => {
+        if (ins.id) {
+          this.ratingService.getInstructorAverage(ins.id).subscribe({
+            next: avgRes => {
+              ins.rating = avgRes.average; // تحدث المتوسط لكل مدرس
+            },
+            error: err => {
+              console.error('Error loading rating for instructor ' + ins.id, err);
+              ins.rating = 0; // لو فيه مشكلة خليها 0
+            }
+          });
+        }
+      });
+
+      this.loading = false;
       }
     });
   }

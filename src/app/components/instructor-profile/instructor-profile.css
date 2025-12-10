@@ -77,7 +77,6 @@
 }
 
 /* Instructor Info */
-
 .instructor-profile .instructor-hero-banner .hero-content .instructor-info {
   color: var(--contrast-color);
 }
@@ -96,7 +95,6 @@
 }
 
 /* credentials badges (Students / Rating) */
-
 .instructor-profile .credentials {
   display: flex;
   gap: 20px;
@@ -123,7 +121,6 @@
 }
 
 /* Rating overview */
-
 .instructor-profile .rating-overview {
   display: flex;
   align-items: center;
@@ -156,7 +153,6 @@
 }
 
 /* Actions */
-
 .instructor-profile .contact-actions {
   display: flex;
   align-items: center;
@@ -206,7 +202,6 @@
 }
 
 /* Responsive hero */
-
 @media (max-width: 992px) {
   .instructor-profile .instructor-hero-banner .hero-content {
     flex-direction: column;
@@ -231,7 +226,6 @@
 }
 
 /* ===== Tabs Layout ===== */
-
 .instructor-profile .profile-tabs {
   background-color: var(--surface-color);
   border-radius: 18px;
@@ -284,7 +278,6 @@
 }
 
 /* ===== Certifications ===== */
-
 .instructor-profile .cert-grid {
   display: flex;
   flex-direction: column;
@@ -297,7 +290,16 @@
   padding: 16px;
   border-radius: 14px;
   background-color: var(--surface-color);
-  border: 1px solid color-mix(in srgb, var(--accent-color), transparent 85%);
+  border: 2px solid transparent;
+  box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.instructor-profile .cert-card:hover {
+  border-color: var(--accent-color);
+  transform: translateY(-5px);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.12);
 }
 
 .instructor-profile .cert-image-wrapper {
@@ -333,26 +335,8 @@
 .instructor-profile .cert-link i {
   margin-right: 4px;
 }
-.instructor-profile .cert-card {
-  display: flex;
-  gap: 18px;
-  padding: 16px;
-  border-radius: 14px;
-  background-color: var(--surface-color);
-  border: 2px solid transparent;
-  box-shadow: 0 3px 15px rgba(0,0,0,0.08);
-  transition: all 0.3s ease;
-  cursor: pointer;
-}
-
-.instructor-profile .cert-card:hover {
-  border-color: var(--accent-color);
-  transform: translateY(-5px);
-  box-shadow: 0 12px 28px rgba(0,0,0,0.12);
-}
 
 /* ===== Courses ===== */
-
 .instructor-profile .courses-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -410,8 +394,30 @@
   color: color-mix(in srgb, var(--default-color), transparent 30%);
 }
 
-/* ===== Side Widget ===== */
+/* ===== Rating Stars ===== */
+.add-rating .stars {
+  display: flex;
+  gap: 5px;
+  font-size: 28px;
+  cursor: pointer;
+}
 
+.add-rating .stars span {
+  transition: transform 0.2s, color 0.2s;
+  color: #ddd;
+}
+
+.add-rating .stars span.filled {
+  color: #ffc107;
+}
+
+.add-rating .stars span:hover,
+.add-rating .stars span:hover ~ span {
+  transform: scale(1.2);
+  color: #ffca28;
+}
+
+/* ===== Side Widget ===== */
 .instructor-profile .profile-side-widget {
   background-color: var(--surface-color);
   padding: 20px;
@@ -473,12 +479,13 @@
   margin-right: 6px;
 }
 
-/* Responsive tweak */
+/* Responsive tweaks */
 @media (max-width: 992px) {
   .instructor-profile .profile-tabs {
     margin-bottom: 20px;
   }
 }
+
 @media (max-width: 768px) {
   .instructor-profile .cert-card {
     flex-direction: column;
