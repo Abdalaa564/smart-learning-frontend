@@ -14,7 +14,7 @@
     <form 
       [formGroup]="registerForm"
       (ngSubmit)="onSubmit()"
-      class="row g-3"
+      class="row g-3" 
     >
 
       <app-instructor-account-step
@@ -53,6 +53,6 @@
       aria-atomic="true"
       [ngClass]="toastType === 'success' ? 'bg-success text-white' : 'bg-danger text-white'">
       <div class="toast-body">{{ toastMessage }}</div>
-    </div>
+    </div> 
   </div>
 

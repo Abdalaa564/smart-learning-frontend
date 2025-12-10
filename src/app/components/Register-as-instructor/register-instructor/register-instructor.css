@@ -1,6 +1,6 @@
 /* ========== CARD SIZE WITHOUT SCROLL ========== */
 .register-card {
-  max-width: 600px;      /* تصغير العرض */
+  max-width: 650px;      /* تصغير العرض */
   padding: 30px 28px;    /* تقليل البادينج */
   border-radius: 16px;
   background: #fff;
@@ -35,4 +35,12 @@
 /* يمنع أي Scroll ناجم عن max-height سابق */
 .register-card {
   overflow: visible !important;
+} 
+.is-invalid {
+  border: 1px solid red !important;
 }
+
+.text-danger {
+  font-size: 13px;
+}
+
