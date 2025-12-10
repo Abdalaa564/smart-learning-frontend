@@ -47,7 +47,19 @@ export class InstructorProfile implements OnInit {
         },
         error: err => console.error(err)
       });
-    }
+    }else {
+    // ✅ حالة logged-in instructor: /instructor/profile
+    this.instructorService.getMyProfile().subscribe({
+      next: res => {
+        this.instructor = res;
+        if (this.instructor.id) {
+          this.loadRatingAndStudents(this.instructor.id);
+          this.checkIfUserRated(this.instructor.id);
+        }
+      },
+      error: err => console.error(err)
+    });
+  }
   }
 
   setTab(tab: 'about' | 'certifications' | 'courses') {

@@ -304,4 +304,8 @@ export class Courses implements OnInit {
     }
     this.closeResultModal();
   }
+  viewDetails(course: Course): void {
+  if (!course.crs_Id) return;
+  this.router.navigate(['/courses', course.crs_Id, 'details']);
+}
 }

@@ -44,6 +44,7 @@ import { ErrorPage } from './components/error-page/error-page';
 import { enrollmentGuard } from './guard/enrollment-guard';
 import { RegisterInstructorComponent } from './components/Register-as-instructor/register-instructor/register-instructor';
 import { StudentGradesComponent } from './components/student-grades-component/student-grades-component';
+import { CourseDetailsComponent } from './components/course-details/course-details';
 
 
 export const routes: Routes = [
@@ -63,13 +64,15 @@ export const routes: Routes = [
 
   // Instructors
   { path: 'instructors', component: InstructorsListComponent },
-  { path: 'instructor/:id', component: InstructorProfile },
   { path: 'instructors/add', component: AddInstructorComponent },
   { path: 'instructors/edit/:id', component: EditInstructorComponent },
   { path: 'instructors/:id/confirm-delete', component: ConfirmDeleteInstructorComponent },
+  { path: 'instructor/profile', component: InstructorProfile },   
+  { path: 'instructor/:id', component: InstructorProfile },   
 
   // Courses
   { path: 'Courses', component: Courses },
+   { path: 'courses/:id/details', component: CourseDetailsComponent },
   { path: 'courses/add', component: AddCourse },
   { path: 'courses/edit/:id', component: EditCourse },
   { path: 'Courses/delete/:id', component: DeleteCourse },
