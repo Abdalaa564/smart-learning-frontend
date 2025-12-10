@@ -31,6 +31,17 @@ export class LessonDetails implements OnInit {
 
   env = environment;
 
+  // Role checking
+  get isInstructor(): boolean {
+    return this.authService.isInstructor();
+  }
+
+  get isAdmin(): boolean {
+    return this.authService.isAdmin();
+  }
+
+  // End Role checking
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,

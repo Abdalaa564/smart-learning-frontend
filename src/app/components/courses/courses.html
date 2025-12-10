@@ -42,8 +42,8 @@
           </div>
 
           <!-- Edit/Delete Buttons -->
-          <div class="d-flex gap-2 mt-auto" *ngIf="isInstructor || isAdmin">
-            <button *ngIf="isInstructor || isAdmin" class="btn btn-outline-primary btn-sm grow"
+          <div class="d-flex gap-2 mt-auto">
+            <button *ngIf="isAdmin" class="btn btn-outline-primary btn-sm grow"
               [routerLink]="['/courses/edit', course.crs_Id]" (click)="$event.stopPropagation()">
               <i class="fa fa-edit me-1"></i> Edit
             </button>
@@ -52,17 +52,14 @@
               [routerLink]="['/Courses/delete', course.crs_Id]" (click)="$event.stopPropagation()">
               <i class="fa fa-trash me-1"></i> Delete
             </button>
-             <button
-    class="btn btn-outline-secondary w-100 btn-sm"
-    (click)="viewDetails(course)"
-  >
-    <i class="fa fa-eye me-1"></i>
-    View Details
-  </button>
+            <button class="btn btn-outline-secondary w-100 btn-sm" (click)="viewDetails(course)">
+              <i class="fa fa-eye me-1"></i>
+              View Details
+            </button>
           </div>
 
           <!-- Enroll Button -->
-          <div class="enroll-section mt-3" (click)="$event.stopPropagation()">
+          <div class="enroll-section mt-3" (click)="$event.stopPropagation()" *ngIf="isStudent">
             <button *ngIf="!isEnrolledInCourse(course.crs_Id)" class="btn btn-primary w-100" (click)="enroll(course)"
               [disabled]="isEnrolling(course.crs_Id)">
 

@@ -64,6 +64,10 @@ export class Courses implements OnInit {
     return this.authService.isAdmin();
   }
 
+  get isStudent(): boolean {
+    return this.authService.isStudent();
+  }
+
   // End Role checking
 
   onPageChange(page: number): void {

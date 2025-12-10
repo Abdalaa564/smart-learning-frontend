@@ -61,7 +61,7 @@
                 class="icon-btn-new btn btn-sm btn-light"
                 type="button"
                 (click)="goToEdit(ins.id)"
-                title="Edit" *ngIf="isInstructor || isAdmin"
+                title="Edit" *ngIf="isAdmin"
               >
                 <i class="bi bi-pencil-square text-primary"></i>
               </button>
@@ -70,7 +70,6 @@
                 type="button"
                 (click)="goToDeleteConfirm(ins.id)"
                 title="Delete" *ngIf="isAdmin">
-              >
                 <i class="bi bi-trash text-danger"></i>
               </button>
               <a

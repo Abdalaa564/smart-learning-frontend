@@ -9,12 +9,12 @@
         ← Back to Lessons
       </a>
 
-      <a class="btn btn-primary btn-sm"
+      <a class="btn btn-primary btn-sm" *ngIf="isAdmin || isInstructor"
          [routerLink]="['/Courses', courseId, 'units', unitId, 'lessons', lessonId, 'edit']">
         Edit
       </a>
 
-      <a class="btn btn-danger btn-sm"
+      <a class="btn btn-danger btn-sm" *ngIf="isAdmin"
          [routerLink]="['/Courses', courseId, 'units', unitId, 'lessons', lessonId, 'delete']">
         Delete
       </a>
