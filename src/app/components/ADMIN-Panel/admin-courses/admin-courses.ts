@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core
 import { Course } from '../../../models/Course';
 import { CommonModule } from '@angular/common';
 import { SearchBarComponent } from '../../../shared/search-bar/search-bar.component';
+import { AuthService } from '../../../Services/auth-service';
 
 @Component({
   selector: 'app-admin-courses',
@@ -46,6 +47,12 @@ export class AdminCoursesComponent {
       course.instructorName?.toLowerCase().includes(searchLower) ||
       course.crs_Description?.toLowerCase().includes(searchLower)
     );
+  }
+  
+  constructor(private authService: AuthService) { }
+
+  get isAdmin(): boolean {
+    return this.authService.isAdmin();
   }
   // end Search icon implementation
 }

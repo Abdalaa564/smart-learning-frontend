@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core
 import { Studentprofile } from '../../../models/studentprofile';
 import { CommonModule } from '@angular/common';
 import { SearchBarComponent } from '../../../shared/search-bar/search-bar.component';
+import { AuthService } from '../../../Services/auth-service';
 
 @Component({
   selector: 'app-admin-students',
@@ -43,6 +44,12 @@ export class AdminStudentsComponent {
       student.email?.toLowerCase().includes(searchLower) ||
       student.phoneNumber?.toLowerCase().includes(searchLower)
     );
+  }
+
+  constructor(private authService: AuthService) { }
+
+  get isAdmin(): boolean {
+    return this.authService.isAdmin();
   }
   // end Search icon implementation
 }

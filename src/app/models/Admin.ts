@@ -45,6 +45,7 @@ export interface MenuItem {
     | 'grades'
     | 'payments'
     | 'instructorRequests'
+    | 'admins'
     | 'profile';
   label: string;
   iconClass: string;
@@ -94,3 +95,22 @@ export const DEFAULT_MENU_ITEMS: MenuItem[] = [
   },
   { id: 'profile', iconClass: 'bi-gear', label: 'Admin Profile' },
 ];
+
+
+// Admin abdalaa
+export interface AdminUser {
+  id: string;
+  userName: string;
+  email: string;
+}
+
+export interface CreateAdminDto {
+  userName: string;
+  email: string;
+  password?: string;
+}
+
+export interface UpdateAdminDto {
+  userName?: string;
+  email?: string;
+}

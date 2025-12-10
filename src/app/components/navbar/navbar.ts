@@ -1,6 +1,6 @@
 // navbar.component.ts
 
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { Router, RouterLink, RouterModule } from '@angular/router';
 import { Observable } from 'rxjs';
 
@@ -39,6 +39,23 @@ export class Navbar {
 
   get isInstructorOrAdmin(): boolean {
     return this.isInstructor || this.isAdmin;
+  }
+  // End Role checking
+
+  get userRole(): string {
+    if (this.isAdmin) return 'Admin';
+    if (this.isInstructor) return 'Instructor';
+    return 'Student';
+  }
+
+  get profileLink(): any[] {
+    if (this.isInstructor) {
+      return ['/instructor', this.authService.currentUser?.id];
+    } else if (this.isAdmin) {
+      return ['/admin'];
+    } else {
+      return ['/userProfile'];
+    }
   }
 
   constructor(
@@ -81,6 +98,7 @@ export class Navbar {
         this.isProfileDropdownOpen = false;
         this.isRegisterDropdownOpen = false;
 
+        // Close dropdowns when clicking outside
         this.router.navigate(['/login']);
       },
       error: (err) => {
@@ -98,4 +116,19 @@ export class Navbar {
   }
 
 
+  // Close dropdowns when clicking outside
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent) {
+    const target = event.target as HTMLElement;
+    const clickedInsideProfile = target.closest('.profile-dropdown-container');
+    const clickedInsideRegister = target.closest('.dropdown');
+
+    if (!clickedInsideProfile) {
+      this.isProfileDropdownOpen = false;
+    }
+
+    if (!clickedInsideRegister) {
+      this.isRegisterDropdownOpen = false;
+    }
+  }
 }

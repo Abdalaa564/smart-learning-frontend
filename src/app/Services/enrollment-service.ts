@@ -4,6 +4,7 @@ import { EnrollmentRequest } from '../models/EnrollmentRequest';
 import { map, Observable, take } from 'rxjs';
 import { EnrollmentResponse } from '../models/EnrollmentResponse';
 import { Course } from '../models/Course';
+import { EnrollmentPayment } from '../models/EnrollmentPayment';
 
 @Injectable({
   providedIn: 'root',
@@ -56,5 +57,15 @@ export class EnrollmentService {
       .pipe(
         map((res) => res.length) // count by array length
       );
+  }
+  getTotalRevenue(): Observable<number> {
+  return this.http
+    .get<{ totalRevenue: number }>(`${this.baseUrl}/total-revenue`)
+    .pipe(map(res => res.totalRevenue));
+}
+ getCoursePayments(courseId: number): Observable<EnrollmentPayment[]> {
+    return this.http.get<EnrollmentPayment[]>(
+      `${this.baseUrl}/course/${courseId}`
+    );
   }
 }

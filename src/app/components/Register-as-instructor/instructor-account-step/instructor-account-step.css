@@ -73,10 +73,10 @@ button:disabled {
   box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent-color), transparent 80%);
 }
 
-.form-control.is-invalid {
+/* .form-control.is-invalid {
   border-color: #dc2626;
   box-shadow: 0 0 0 1px rgba(220, 38, 38, 0.1);
-}
+} */
 
 .text-danger {
   font-size: 0.78rem;
@@ -101,3 +101,28 @@ button:disabled {
   margin: 0 auto 20px; /* توسيطها وتحتها مسافة */
   display: block;
 }
+
+
+.is-invalid {
+  border: 1px solid red !important;
+} 
+
+.password-input {
+  padding-right: 40px;
+}
+
+.password-icon {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
+  font-size: 18px;
+  color: #6b7280;
+  cursor: pointer;
+}
+
+.password-icon:hover {
+  color: #111827;
+}
+
+

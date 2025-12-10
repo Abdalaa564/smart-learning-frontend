@@ -55,7 +55,7 @@
             routerLinkActive="active"
             [routerLinkActiveOptions]="{ exact: true }"
           >
-            Admin Panel
+            {{ isAdmin ? 'Admin Panel' : 'Instructor Panel' }}
           </a>
         </li>
 
@@ -83,10 +83,8 @@
 
     <div class="header-actions">
       <button class="theme-toggle" (click)="toggleTheme()" title="Toggle Theme">
-        <i
-          class="bi bi-sun-fill"
-          [ngClass]="(isDarkMode$ | async) ? 'bi-sun-fill text-warning' : 'bi-moon-fill text-dark'"
-        ></i>
+        <i class="bi bi-sun-fill"
+        [ngClass]="(isDarkMode$ | async) ? 'bi-sun-fill text-warning' : 'bi-moon-fill text-dark'"></i>
       </button>
 
       <button class="language-selector">
@@ -149,8 +147,8 @@
             <img src="https://randomuser.me/api/portraits/lego/6.jpg" alt="User" />
             <div>
               <h4>{{ user.firstName }} {{ user.lastName }}</h4>
-              <p>Student</p>
-              <a routerLink="/userProfile" (click)="isProfileDropdownOpen = false">View Profile</a>
+              <p>{{ userRole }}</p>
+              <a [routerLink]="profileLink" (click)="isProfileDropdownOpen = false">View Profile</a>
             </div>
           </div>
           <hr />

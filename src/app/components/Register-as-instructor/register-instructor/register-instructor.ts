@@ -39,7 +39,8 @@ export class RegisterInstructorComponent {
   // Toast
   showToast = false;
   toastMessage = '';
-  toastType: 'success' | 'error' = 'success';
+  toastType: 'success' | 'error' = 'success'; 
+  
 
   constructor(
     private fb: FormBuilder,
@@ -49,27 +50,24 @@ export class RegisterInstructorComponent {
     this.registerForm = this.fb.group(
       {
         // STEP 1
-        email: ['', [Validators.required, Validators.email]],
-        password: ['', [Validators.required, Validators.minLength(6)]],
-        confirmPassword: ['', Validators.required],
-        fullName: ['', Validators.required],
-        jobTitle: ['', Validators.required],
-        phoneNumber: ['', [
-          Validators.required,
-          Validators.pattern(/^01[0-2,5]{1}[0-9]{8}$/)
-        ]],
-        youtubeChannelUrl: [''],
+       email: ['', [Validators.required, Validators.email]],
+    password: ['', [Validators.required, Validators.minLength(6)]],
+    confirmPassword: ['', Validators.required],
+    fullName: ['', Validators.required],
+    jobTitle: ['', Validators.required],
+    phoneNumber: ['',[ Validators.required, Validators.pattern(/^01[0-2,5]{1}[0-9]{8}$/) ]],
+    youtubeChannelUrl: [ '', [ Validators.pattern(/^https?:\/\/.+$/)  ]],
 
-        // STEP 2
-        photoUrl: [''],
-        certificateUrl: [''],
-        cvUrl: [''],
-        specialization: ['', Validators.required],
-        universityName: ['', Validators.required],
-        about: ['', [Validators.required, Validators.minLength(20)]]
-      },
-      { validators: this.passwordMatchValidator }
-    );
+    // STEP 2
+    photoUrl: ['',[ Validators.pattern(/^https?:\/\/.+$/)] ],
+    certificateUrl: ['',[ Validators.pattern(/^https?:\/\/.+$/) ]],
+    cvUrl: [ '',[Validators.pattern(/^https?:\/\/.+$/)]],
+    specialization: ['', Validators.required],
+    universityName: ['', Validators.required],
+    about: ['', [Validators.required, Validators.minLength(20)]]
+  },
+  { validators: this.passwordMatchValidator }
+);
   }
 
   // Validator بتاع الباسورد
@@ -120,7 +118,8 @@ export class RegisterInstructorComponent {
 
   onBackToStep1() {
     this.currentStep = 1;
-  }
+  } 
+ 
 
   onSubmit() {
     this.submitted = true;

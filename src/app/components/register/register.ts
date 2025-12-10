@@ -17,6 +17,9 @@ registerForm: FormGroup;
   submitted = false;
   error = '';
   success = '';
+  showPassword = false;
+showConfirmPassword = false;
+
 
   constructor(
     private formBuilder: FormBuilder,
@@ -67,4 +70,11 @@ registerForm: FormGroup;
       }
     });
   }
+  togglePassword() {
+  this.showPassword = !this.showPassword;
+}
+
+toggleConfirmPassword() {
+  this.showConfirmPassword = !this.showConfirmPassword;
+}
 }

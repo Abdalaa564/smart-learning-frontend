@@ -253,6 +253,13 @@ h4 {
   color: #667eea;
 }
 
+.ai-report-text {
+  white-space: pre-wrap; /* للحفاظ على السطور */
+  font-family: monospace;
+  color: #333;
+  line-height: 1.5;
+}
+
 /* Answer Items */
 .answer-item {
   border-left: 5px solid;

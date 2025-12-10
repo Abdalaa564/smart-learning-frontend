@@ -6,7 +6,7 @@ import { AuthService } from '../../Services/auth-service';
 
 @Component({
   selector: 'app-login',
-  imports: [FormsModule,CommonModule,RouterModule,ReactiveFormsModule ],
+  imports: [FormsModule, CommonModule, RouterModule, ReactiveFormsModule ],
   templateUrl: './login.html',
   styleUrl: './login.css'
 })
@@ -45,7 +45,9 @@ loginForm: FormGroup;
       next: res => {
         const role = this.authService.getRoleFromToken();  // 👈 برضو من authService
 
-        if (role === 'Instructor') {
+        if (role === 'Admin') {
+          this.router.navigate(['/admin']);
+        } else if (role === 'Instructor') {
           this.router.navigate(['/instructor/profile']);
         } else {
           this.router.navigate(['/userProfile']);
