@@ -78,6 +78,7 @@ export interface QuizResultDto {
   correctAnswers: number;
   totalQuestions: number;
   answers: StudentAnswerResultDto[];
+   aiReport?: string; 
 }
 
 export interface StudentAnswerResultDto {

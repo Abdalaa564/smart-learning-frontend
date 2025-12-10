@@ -12,6 +12,7 @@ import { CommonModule } from '@angular/common';
 })
 export class QuizResultComponent implements OnInit  {
 result: QuizResultDto | null = null;
+aiReport: string = '';
   loading: boolean = false;
   errorMessage: string = '';
 
@@ -32,6 +33,7 @@ result: QuizResultDto | null = null;
     this.quizService.getQuizResult(quizId).subscribe({
       next: (data) => {
         this.result = data;
+         this.aiReport = data.aiReport || 'No AI report available';
         this.loading = false;
       },
       error: (error) => {
