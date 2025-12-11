@@ -62,6 +62,14 @@ export class LessonDetails implements OnInit {
   checkEnrollment(): void {
     const studentId = this.authService.UserId;
 
+    // If Admin or Instructor -> Allow access immediately
+    if (this.authService.isAdmin() || this.authService.isInstructor()) {
+      this.isEnrolled = true; // Treat as enrolled for UI logic
+      this.canAccessContent = true;
+      this.loadLesson();
+      return;
+    }
+
     if (!studentId) {
       // Not logged in - check if free lesson
       this.checkFreeAccess();

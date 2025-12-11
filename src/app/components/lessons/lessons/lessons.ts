@@ -90,6 +90,11 @@ export class Lessons implements OnInit {
     });
   }
 canAccessLesson(index: number): boolean {
+  // If Admin or Instructor -> Allow full access
+  if (this.authService.isAdmin() || this.authService.isInstructor()) {
+    return true;
+  }
+
   // If enrolled, grant full access
   if (this.isEnrolled) return true;
 
