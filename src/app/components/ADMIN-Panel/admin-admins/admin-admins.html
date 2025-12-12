@@ -85,7 +85,7 @@
 
                     <div class="mb-3">
                         <label class="form-label fw-semibold">User Name</label>
-                        <input type="text" class="form-control" formControlName="userName"
+                        <input placeholder="." type="text" class="form-control" formControlName="userName"
                             [class.is-invalid]="submitted && adminForm.get('userName')?.errors">
                         <div class="invalid-feedback"
                             *ngIf="submitted && adminForm.get('userName')?.errors?.['required']">
@@ -99,7 +99,7 @@
 
                     <div class="mb-3">
                         <label class="form-label fw-semibold">Email</label>
-                        <input type="email" class="form-control" formControlName="email"
+                        <input placeholder="." type="email" class="form-control" formControlName="email"
                             [class.is-invalid]="submitted && adminForm.get('email')?.errors">
                         <div class="invalid-feedback" *ngIf="submitted && adminForm.get('email')?.errors?.['required']">
                             Email is required
@@ -111,7 +111,7 @@
 
                     <div class="mb-4">
                         <label class="form-label fw-semibold">Password</label>
-                        <input type="password" class="form-control" formControlName="password"
+                        <input placeholder="." type="password" class="form-control" formControlName="password"
                             [class.is-invalid]="submitted && adminForm.get('password')?.errors"
                             [placeholder]="isEditMode ? 'Leave blank to keep unchanged' : ''">
                         <div class="invalid-feedback"

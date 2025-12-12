@@ -58,6 +58,11 @@
                     </app-admin-instructor-requests>
                 </ng-container>
 
+                <!-- Attendance -->
+                <ng-container *ngSwitchCase="'attendance'">
+  <app-admin-attendance *ngIf="isInstructor"></app-admin-attendance>
+</ng-container>
+
                 <!-- Profile -->
                 <ng-container *ngSwitchCase="'profile'">
                     <app-admin-profile *ngIf="isAdmin"></app-admin-profile>
