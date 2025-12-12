@@ -87,9 +87,20 @@
         [ngClass]="(isDarkMode$ | async) ? 'bi-sun-fill text-warning' : 'bi-moon-fill text-dark'"></i>
       </button>
 
-      <button class="language-selector">
-        <i class="bi bi-globe"></i>
-      </button>
+            <div class="language-selector-container" [class.show]="isLangDropdownOpen">
+        <button class="language-selector" (click)="toggleLangDropdown()">
+          <i class="bi bi-globe"></i>
+        </button>
+        <div class="lang-dropdown-menu" [class.show]="isLangDropdownOpen">
+          <a (click)="changeLanguage('ar')">Arabic</a>
+          <a (click)="changeLanguage('en')">English</a>
+          <a (click)="changeLanguage('de')">German</a>
+        </div>
+      </div>
+      <!-- Hidden widget necessary for API -->
+      <div id="google_translate_element"
+        style="position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden;"></div>
+
 
       <!-- ========== لو مفيش يوزر (مش لوجين) ========== -->
       <ng-container *ngIf="!(currentUser$ | async)">

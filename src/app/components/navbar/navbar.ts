@@ -1,6 +1,6 @@
 // navbar.component.ts
 
-import { Component, HostListener } from '@angular/core';
+import { AfterViewInit, Component, HostListener } from '@angular/core';
 import { Router, RouterLink, RouterModule } from '@angular/router';
 import { Observable } from 'rxjs';
 
@@ -9,6 +9,7 @@ import { AuthService } from '../../Services/auth-service';
 import { Studentprofile } from '../../models/studentprofile';
 import { CommonModule } from '@angular/common';
 import { Theme } from '../../Services/theme';
+import { TranslationService } from '../../Services/translation.service';
 
 @Component({
   selector: 'app-navbar',
@@ -17,7 +18,7 @@ import { Theme } from '../../Services/theme';
   templateUrl: './navbar.html',
   styleUrl: './navbar.css',
 })
-export class Navbar {
+export class Navbar implements AfterViewInit {
 
   // observable of current user
   currentUser$: Observable<Studentprofile | null>;
@@ -61,11 +62,17 @@ export class Navbar {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private themeService: Theme
+    private themeService: Theme,
+    private translationService: TranslationService
   ) {
     this.currentUser$ = this.authService.currentUser$;
     this.isDarkMode$ = this.themeService.isdarkMode$; 
     this.isAuthenticated$ = this.authService.isAuthenticated$;
+  }
+
+  // Google Translate initialization
+  ngAfterViewInit() {
+    this.translationService.initializeGoogleTranslate();
   }
 
   // toggle profile dropdown
@@ -122,6 +129,7 @@ export class Navbar {
     const target = event.target as HTMLElement;
     const clickedInsideProfile = target.closest('.profile-dropdown-container');
     const clickedInsideRegister = target.closest('.dropdown');
+    const clickedInsideLang = target.closest('.language-selector-container');
 
     if (!clickedInsideProfile) {
       this.isProfileDropdownOpen = false;
@@ -130,5 +138,20 @@ export class Navbar {
     if (!clickedInsideRegister) {
       this.isRegisterDropdownOpen = false;
     }
+
+    if (!clickedInsideLang) {
+      this.isLangDropdownOpen = false;
+    }
+  }
+
+  isLangDropdownOpen: boolean = false;
+
+  toggleLangDropdown() {
+    this.isLangDropdownOpen = !this.isLangDropdownOpen;
+  }
+
+  changeLanguage(langCode: string) {
+    this.isLangDropdownOpen = false;
+    this.translationService.changeLanguage(langCode);
   }
 }
