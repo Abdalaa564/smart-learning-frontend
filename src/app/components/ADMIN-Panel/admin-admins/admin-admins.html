@@ -1,9 +1,9 @@
 <div class="card shadow-sm border-0">
     <div class="card-header bg-white d-flex justify-content-between align-items-center py-3">
-        <h5 class="mb-0 text-primary fw-bold">
+        <h5 class="mb-0 text-accent fw-bold">
             <i class="bi bi-shield-lock me-2"></i>Admins Management
         </h5>
-        <button class="btn btn-primary btn-sm rounded-pill px-3" (click)="openAddModal()">
+        <button class="btn btn-accent btn-sm rounded-pill px-3" (click)="openAddModal()">
             <i class="bi bi-plus-lg me-1"></i> Add New Admin
         </button>
     </div>
@@ -33,7 +33,7 @@
                     <tr *ngFor="let admin of filteredAdmins">
                         <td>
                             <div class="d-flex align-items-center">
-                                <div class="avatar-circle bg-primary-subtle text-primary me-2">
+                                <div class="avatar-circle bg-accent-subtle text-accent me-2">
                                     {{ admin.userName.charAt(0).toUpperCase() }}
                                 </div>
                                 <span [innerHTML]="highlightText(admin.userName)"></span>
@@ -41,7 +41,7 @@
                         </td>
                         <td [innerHTML]="highlightText(admin.email)"></td>
                         <td class="text-end">
-                            <button class="btn btn-sm btn-light text-primary me-2" (click)="openEditModal(admin)"
+                            <button class="btn btn-sm btn-light text-accent me-2" (click)="openEditModal(admin)"
                                 title="Edit">
                                 <i class="bi bi-pencil"></i>
                             </button>
@@ -59,7 +59,7 @@
                     </tr>
                     <tr *ngIf="filteredAdmins.length === 0 && isLoading">
                         <td colspan="3" class="text-center py-5">
-                            <div class="spinner-border text-primary" role="status">
+                            <div class="spinner-border text-accent" role="status">
                                 <span class="visually-hidden">Loading...</span>
                             </div>
                         </td>
@@ -85,7 +85,7 @@
 
                     <div class="mb-3">
                         <label class="form-label fw-semibold">User Name</label>
-                        <input placeholder="." type="text" class="form-control" formControlName="userName"
+                        <input type="text" class="form-control" formControlName="userName"
                             [class.is-invalid]="submitted && adminForm.get('userName')?.errors">
                         <div class="invalid-feedback"
                             *ngIf="submitted && adminForm.get('userName')?.errors?.['required']">
@@ -99,7 +99,7 @@
 
                     <div class="mb-3">
                         <label class="form-label fw-semibold">Email</label>
-                        <input placeholder="." type="email" class="form-control" formControlName="email"
+                        <input type="email" class="form-control" formControlName="email"
                             [class.is-invalid]="submitted && adminForm.get('email')?.errors">
                         <div class="invalid-feedback" *ngIf="submitted && adminForm.get('email')?.errors?.['required']">
                             Email is required
@@ -111,7 +111,7 @@
 
                     <div class="mb-4">
                         <label class="form-label fw-semibold">Password</label>
-                        <input placeholder="." type="password" class="form-control" formControlName="password"
+                        <input type="password" class="form-control" formControlName="password"
                             [class.is-invalid]="submitted && adminForm.get('password')?.errors"
                             [placeholder]="isEditMode ? 'Leave blank to keep unchanged' : ''">
                         <div class="invalid-feedback"
@@ -128,7 +128,7 @@
 
                     <div class="d-flex justify-content-end gap-2">
                         <button type="button" class="btn btn-light" (click)="closeModal()">Cancel</button>
-                        <button type="submit" class="btn btn-primary px-4" [disabled]="isLoading">
+                        <button type="submit" class="btn btn-accent px-4" [disabled]="isLoading">
                             <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-2" role="status"
                                 aria-hidden="true"></span>
                             {{ isLoading ? 'Saving...' : 'Save Changes' }}

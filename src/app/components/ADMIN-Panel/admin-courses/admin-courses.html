@@ -2,7 +2,7 @@
   <div class="card-header d-flex justify-content-between">
     <h5 class="mb-0">Courses Management</h5>
     <ng-container *ngIf="isAdmin">
-      <button class="btn btn-primary btn-sm" (click)="add.emit()">
+      <button class="btn btn-accent btn-sm" (click)="add.emit()">
         <i class="bi bi-plus-lg me-1"></i> Add New
       </button>
     </ng-container>
@@ -36,7 +36,7 @@
             <td>{{ row.crs_Description }}</td>
             <td>{{ getCourseEnrollCount(row.crs_Id) }}</td>
             <td class="text-end">
-              <button class="btn btn-sm btn-outline-primary me-1" (click)="view.emit(row)" >
+              <button class="btn btn-sm btn-outline-accent me-1" (click)="view.emit(row)">
                 <i class="bi bi-eye"></i>
               </button>
               <ng-container *ngIf="isAdmin">

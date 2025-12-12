@@ -148,6 +148,44 @@ h6 {
   cursor: not-allowed;
 }
 
+/* Custom Accent Utilities */
+.text-accent {
+  color: var(--accent-color) !important;
+}
+
+.bg-accent {
+  background-color: var(--accent-color) !important;
+  color: var(--contrast-color);
+}
+
+.bg-accent-subtle {
+  background-color: color-mix(in srgb, var(--accent-color), transparent 85%) !important;
+  color: var(--accent-color) !important;
+}
+
+.btn-outline-accent {
+  color: var(--accent-color);
+  border: 1px solid var(--accent-color);
+  background-color: transparent;
+  border-radius: 8px;
+  /* Match other buttons */
+  padding: 5px 10px;
+  /* Adjust as needed or keep standard */
+  font-weight: 600;
+  transition: all 0.3s;
+}
+
+.btn-outline-accent:hover {
+  background-color: var(--accent-color);
+  color: var(--contrast-color);
+  box-shadow: 0 4px 15px color-mix(in srgb, var(--accent-color), transparent 70%);
+}
+
+.btn-outline-accent:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
 /*--------------------------------------------------------------
 # Sections & Titles
 --------------------------------------------------------------*/
