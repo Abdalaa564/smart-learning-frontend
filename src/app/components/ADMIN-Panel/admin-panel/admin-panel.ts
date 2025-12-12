@@ -11,6 +11,7 @@ import { AdminProfileComponent } from '../admin-profile/admin-profile';
 import { AdminInstructorRequestsComponent, } from '../admin-instructor-requests/admin-instructor-requests';
 import { AdminEnrollmentsComponent, AdminEnrollmentRow, } from '../admin-enrollments/admin-enrollments';
 import { AdminAdmins } from '../admin-admins/admin-admins';
+import { AdminAttendanceComponent } from '../admin-attendance/admin-attendance';
 
 // models
 import { Studentprofile } from '../../../models/studentprofile';
@@ -50,6 +51,7 @@ import { AuthService } from '../../../Services/auth-service';
     AdminProfileComponent,
     AdminEnrollmentsComponent,
     AdminPaymentsComponent,
+    AdminAttendanceComponent,
     AdminAdmins
   ],
 })
@@ -119,6 +121,7 @@ export class AdminPanelComponent implements OnInit {
     { id: 'quizzes', label: 'Quizzes', iconClass: 'bi-file-earmark-text' },
     { id: 'payments', label: 'Payments', iconClass: 'bi-cash-coin' },
     { id: 'grades', label: 'Grades & Results', iconClass: 'bi-award' },
+    { id: 'attendance', label: 'Student Attendance', iconClass: 'bi-calendar-check' },
 
     {
       id: 'instructorRequests',
@@ -176,21 +179,30 @@ export class AdminPanelComponent implements OnInit {
     this.loadPendingInstructors();
   }
 
-  private filterMenuItems(): void {
-    if (this.isAdmin) {
-      // Admin sees everything
-      this.menuItems = [...this.allMenuItems];
-    } else {
-      // Instructor sees limited view
-      const allowedIds: MenuItem['id'][] = ['courses', 'students', 'instructors', 'quizzes', 'grades'];
-      this.menuItems = this.allMenuItems.filter(item => allowedIds.includes(item.id));
+ private filterMenuItems(): void {
+  if (this.isAdmin) {
+    this.menuItems = this.allMenuItems.filter(item => item.id !== 'attendance');
+  } else if (this.isInstructor) {
+    const allowedIds: MenuItem['id'][] = [
+      'courses',
+      'students',
+      'instructors',
+      'quizzes',
+      'grades',
+      'attendance'
+    ];
 
-      // If current active page is not allowed, switch to the first allowed one
-      if (!allowedIds.includes(this.activePage)) {
-        this.activePage = allowedIds[0];
-      }
+    this.menuItems = this.allMenuItems.filter(item => allowedIds.includes(item.id));
+
+    if (!allowedIds.includes(this.activePage)) {
+      this.activePage = allowedIds[0];
     }
+  } else {
+    // أي رول تاني (لو موجود) خليها profile بس مثلاً
+    this.menuItems = this.allMenuItems.filter(item => item.id === 'profile');
+    this.activePage = 'profile';
   }
+}
 
   // ========== load data ==========
 
@@ -441,15 +453,18 @@ export class AdminPanelComponent implements OnInit {
 
     const requests = this.courses.map((course) =>
       this.enrollmentService.getCoursePayments(course.crs_Id).pipe(
-        map((enrollments: EnrollmentPayment[]) =>
-          enrollments.map<AdminPaymentRow>((e) => ({
+        map((enrollments: any) => {
+          if (!Array.isArray(enrollments)) {
+            return [];
+          }
+          return enrollments.map<AdminPaymentRow>((e) => ({
             studentName: e.studentName,
             courseName: e.courseName,
             paidAmount: e.paidAmount ?? e.coursePrice,
             paymentDate: e.paymentDate ?? e.enrollDate,
             paymentStatus: e.paymentStatus,
-          }))
-        )
+          }));
+        })
       )
     );
 

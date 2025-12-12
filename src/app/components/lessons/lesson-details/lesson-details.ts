@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CommonModule, Location } from '@angular/common';
 import { LessonService } from '../../../Services/lesson.service';
@@ -7,6 +7,7 @@ import { EnrollmentService } from '../../../Services/enrollment-service';
 import { AuthService } from '../../../Services/auth-service';
 import { SafePipe } from '../../../pipes/safe-pipe';
 import { Lesson } from '../../../models/LessonResource ';
+import { AttendanceService } from '../../../Services/attendance.service';
 
 @Component({
   selector: 'app-lesson-details',
@@ -14,7 +15,7 @@ import { Lesson } from '../../../models/LessonResource ';
   templateUrl: './lesson-details.html',
   styleUrl: './lesson-details.css',
 })
-export class LessonDetails implements OnInit {
+export class LessonDetails implements OnInit, OnDestroy {
   lesson?: Lesson;
   courseId!: number;
   unitId!: number;
@@ -42,14 +43,19 @@ export class LessonDetails implements OnInit {
 
   // End Role checking
 
+  attendanceLoading = false;
+  attendanceMessage = '';
+  isCheckedIn = false;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private location: Location,
     private lessonService: LessonService,
     private enrollmentService: EnrollmentService,
-    private authService: AuthService
-  ) {}
+    private authService: AuthService,
+    private attendanceService: AttendanceService
+  ) { }
 
   ngOnInit(): void {
     this.courseId = Number(this.route.snapshot.paramMap.get('courseId'));
@@ -57,6 +63,57 @@ export class LessonDetails implements OnInit {
     this.lessonId = Number(this.route.snapshot.paramMap.get('lessonId'));
 
     this.checkEnrollment();
+    // Check initial attendance status
+    // Initial check is now handled by auto check-in in loadLesson
+  }
+
+  ngOnDestroy(): void {
+    if (this.isCheckedIn && !this.isAdmin && !this.isInstructor && this.authService.UserId) {
+      this.attendanceService.checkOut(this.lessonId).subscribe({
+        next: () => console.log('Auto check-out success'),
+        error: (err) => console.error('Auto check-out error', err)
+      });
+    }
+  }
+
+  /* checkAttendanceStatus removed as it's replaced by auto check-in logic */
+
+  onAttendanceChange(event: any): void {
+    const checked = event.target.checked;
+    this.attendanceLoading = true;
+    this.attendanceMessage = '';
+
+    if (checked) {
+      this.attendanceService.checkIn(this.lessonId).subscribe({
+        next: () => {
+          this.isCheckedIn = true;
+          this.attendanceLoading = false;
+          this.attendanceMessage = 'Checked in successfully!';
+        },
+        error: (err) => {
+          console.error('Check-in error', err);
+          this.isCheckedIn = false; // Revert
+          event.target.checked = false;
+          this.attendanceLoading = false;
+          this.attendanceMessage = 'Failed to check in.';
+        }
+      });
+    } else {
+      this.attendanceService.checkOut(this.lessonId).subscribe({
+        next: () => {
+          this.isCheckedIn = false;
+          this.attendanceLoading = false;
+          this.attendanceMessage = 'Checked out successfully!';
+        },
+        error: (err) => {
+          console.error('Check-out error', err);
+          this.isCheckedIn = true; // Revert
+          event.target.checked = true;
+          this.attendanceLoading = false;
+          this.attendanceMessage = 'Failed to check out.';
+        }
+      });
+    }
   }
 
   checkEnrollment(): void {
@@ -144,12 +201,43 @@ export class LessonDetails implements OnInit {
       next: (data) => {
         this.lesson = data;
         this.isLoading = false;
+
+        // Auto Check-in for students
+        if (!this.isAdmin && !this.isInstructor && this.authService.UserId) {
+          this.performAutoCheckIn();
+        }
       },
       error: (err) => {
         console.error('Error loading lesson:', err);
         this.errorMessage = 'An error occurred while loading the lesson.';
         this.isLoading = false;
       },
+    });
+  }
+
+  performAutoCheckIn(): void {
+    this.attendanceLoading = true;
+    this.attendanceService.checkIn(this.lessonId).subscribe({
+      next: (res) => {
+        console.log('Auto check-in success', res);
+        this.isCheckedIn = true;
+        this.attendanceLoading = false;
+        this.attendanceMessage = 'You are checked in automatically.';
+      },
+      error: (err) => {
+        console.error('Auto check-in error', err);
+        // If already checked in (400), treat as success status
+        if (err.status === 400) {
+          // We assume 400 means "already checked in" based on API behavior described
+          this.isCheckedIn = true;
+          this.attendanceMessage = 'You are checked in.';
+        } else {
+          // Other error
+          this.isCheckedIn = false;
+          this.attendanceMessage = 'Could not check in automatically.';
+        }
+        this.attendanceLoading = false;
+      }
     });
   }
 

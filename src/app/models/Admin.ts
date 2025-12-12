@@ -36,17 +36,18 @@ export interface RecentActivity {
 
 export interface MenuItem {
   id:
-    | 'dashboard'
-    | 'students'
-    | 'instructors'
-    | 'courses'
-    | 'quizzes'
-    | 'enrollments'
-    | 'grades'
-    | 'payments'
-    | 'instructorRequests'
-    | 'admins'
-    | 'profile';
+  | 'dashboard'
+  | 'students'
+  | 'instructors'
+  | 'courses'
+  | 'quizzes'
+  | 'enrollments'
+  | 'grades'
+  | 'payments'
+  | 'instructorRequests'
+  | 'admins'
+  | 'attendance'
+  | 'profile';
   label: string;
   iconClass: string;
 }
@@ -88,6 +89,7 @@ export const DEFAULT_MENU_ITEMS: MenuItem[] = [
   { id: 'enrollments', iconClass: 'bi-graph-up', label: 'Enrollments' },
   { id: 'grades', iconClass: 'bi-award', label: 'Grades & Results' },
   { id: 'payments', iconClass: 'bi-cash-coin', label: 'Payments' },
+  { id: 'attendance', iconClass: 'bi-calendar-check', label: 'Student Attendance' },
   {
     id: 'instructorRequests',
     iconClass: 'bi-person-check',
