@@ -58,10 +58,20 @@
                     </app-admin-instructor-requests>
                 </ng-container>
 
+                <!-- Quizzes -->
+                <ng-container *ngSwitchCase="'quizzes'">
+                    <app-admin-quizzes></app-admin-quizzes>
+                </ng-container>
+
+                <!-- Grades -->
+                <ng-container *ngSwitchCase="'grades'">
+                    <app-admin-grades></app-admin-grades>
+                </ng-container>
+
                 <!-- Attendance -->
                 <ng-container *ngSwitchCase="'attendance'">
-  <app-admin-attendance *ngIf="isInstructor"></app-admin-attendance>
-</ng-container>
+                    <app-admin-attendance *ngIf="isInstructor"></app-admin-attendance>
+                </ng-container>
 
                 <!-- Profile -->
                 <ng-container *ngSwitchCase="'profile'">

@@ -9,7 +9,7 @@ import { QuizDetailsDto, StartQuizDto, CreateQuizDto, UpdateQuizDto, CreateQuest
 export class QuizService {
   private apiUrl = 'http://localhost:5163/api/Quiz'; // غير الـ URL حسب الـ API الخاص بك
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   private getHeaders(): HttpHeaders {
     const token = localStorage.getItem('token');
@@ -29,6 +29,13 @@ export class QuizService {
   // Get Quizzes by Lesson ID
   getQuizzesByLessonId(lessonId: number): Observable<QuizDetailsDto[]> {
     return this.http.get<QuizDetailsDto[]>(`${this.apiUrl}/lesson/${lessonId}`, {
+      headers: this.getHeaders()
+    });
+  }
+
+  // Get All Quizzes (Admin)
+  getAllQuizzes(): Observable<QuizDetailsDto[]> {
+    return this.http.get<QuizDetailsDto[]>(`${this.apiUrl}/all`, {
       headers: this.getHeaders()
     });
   }

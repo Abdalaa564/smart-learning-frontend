@@ -135,6 +135,9 @@
 .lesson-content .d-flex.gap-2 button:hover {
   transform: translateY(-2px);
 }
+.flex-grow-1 {
+    flex-grow: 1;
+}
 
 /* ==========================
    Responsive

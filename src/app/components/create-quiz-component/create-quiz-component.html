@@ -119,8 +119,8 @@
                 <div class="row mb-3">
                   <!-- Question Type -->
                   <div class="col-md-6">
-                    <label class="form-label">Question Type</label>
-                    <select class="form-select" formControlName="question_Type">
+                    <label for="Question" class="form-label">Question Type</label>
+                    <select id="Question" class="form-select" formControlName="question_Type">
                       <option [value]="QuestionType.MultipleChoice">Multiple Choice</option>
                       <option [value]="QuestionType.TrueFalse">True/False</option>
                     </select>
@@ -129,7 +129,7 @@
                   <!-- Grade Points -->
                   <div class="col-md-6">
                     <label class="form-label">Points <span class="text-danger">*</span></label>
-                    <input 
+                    <input  placeholder="Number"
                       type="number" 
                       class="form-control" 
                       formControlName="grade_Point"

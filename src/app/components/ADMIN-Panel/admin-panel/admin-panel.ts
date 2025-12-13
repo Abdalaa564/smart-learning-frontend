@@ -12,6 +12,8 @@ import { AdminInstructorRequestsComponent, } from '../admin-instructor-requests/
 import { AdminEnrollmentsComponent, AdminEnrollmentRow, } from '../admin-enrollments/admin-enrollments';
 import { AdminAdmins } from '../admin-admins/admin-admins';
 import { AdminAttendanceComponent } from '../admin-attendance/admin-attendance';
+import { AdminQuizzesComponent } from '../admin-quizzes/admin-quizzes';
+import { AdminGradesComponent } from '../admin-grades/admin-grades';
 
 // models
 import { Studentprofile } from '../../../models/studentprofile';
@@ -52,7 +54,9 @@ import { AuthService } from '../../../Services/auth-service';
     AdminEnrollmentsComponent,
     AdminPaymentsComponent,
     AdminAttendanceComponent,
-    AdminAdmins
+    AdminAdmins,
+    AdminQuizzesComponent,
+    AdminGradesComponent
   ],
 })
 export class AdminPanelComponent implements OnInit {
@@ -179,30 +183,30 @@ export class AdminPanelComponent implements OnInit {
     this.loadPendingInstructors();
   }
 
- private filterMenuItems(): void {
-  if (this.isAdmin) {
-    this.menuItems = this.allMenuItems.filter(item => item.id !== 'attendance');
-  } else if (this.isInstructor) {
-    const allowedIds: MenuItem['id'][] = [
-      'courses',
-      'students',
-      'instructors',
-      'quizzes',
-      'grades',
-      'attendance'
-    ];
+  private filterMenuItems(): void {
+    if (this.isAdmin) {
+      this.menuItems = this.allMenuItems.filter(item => item.id !== 'attendance');
+    } else if (this.isInstructor) {
+      const allowedIds: MenuItem['id'][] = [
+        'courses',
+        'students',
+        'instructors',
+        'quizzes',
+        'grades',
+        'attendance'
+      ];
 
-    this.menuItems = this.allMenuItems.filter(item => allowedIds.includes(item.id));
+      this.menuItems = this.allMenuItems.filter(item => allowedIds.includes(item.id));
 
-    if (!allowedIds.includes(this.activePage)) {
-      this.activePage = allowedIds[0];
+      if (!allowedIds.includes(this.activePage)) {
+        this.activePage = allowedIds[0];
+      }
+    } else {
+      // أي رول تاني (لو موجود) خليها profile بس مثلاً
+      this.menuItems = this.allMenuItems.filter(item => item.id === 'profile');
+      this.activePage = 'profile';
     }
-  } else {
-    // أي رول تاني (لو موجود) خليها profile بس مثلاً
-    this.menuItems = this.allMenuItems.filter(item => item.id === 'profile');
-    this.activePage = 'profile';
   }
-}
 
   // ========== load data ==========
 
