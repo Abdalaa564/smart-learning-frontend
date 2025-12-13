@@ -252,6 +252,64 @@ Front/
 - **Error Page Component**: Error page (404)
 - **Skeleton Demo Component**: Loading Skeletons
 
+## 🌐 Multilingual Support
+
+The application includes a comprehensive **Google Translate Integration** allowing users to access the platform in their preferred language.
+
+- **Dynamic Translation**: Real-time translation of all page content.
+- **Language Persistance**: Saves user language preference.
+- **Supported Languages**: Supports a wide range of global languages.
+
+## 🤖 AI & Smart Features
+
+The project incorporates advanced AI capabilities to enhance learning:
+
+### 🧠 AI Chat Assistant (Chat Room)
+- **Smart Conversations**: Integrated with OpenAI's ChatGPT for intelligent responses.
+- **Context Awareness**: Maintains conversation history for context-aware interactions.
+- **Instant Help**: Students can ask questions and get immediate AI-generated explanations.
+
+### 📄 PDF Chat Analysis
+- **Smart Document Processing**: Upload PDF documents to the chat.
+- **AI Summary**: Automatically generates summaries of uploaded PDFs.
+- **Interactive Q&A**: Users can chat with the AI about the content of the PDF.
+
+### 📝 AI-Enhanced Quizzes
+- **Smart Assessment**: AI algorithms (integrated in Quiz page) to assist in assessment and learning validation.
+- **Detailed AI Reports**: After each quiz, the AI generates a comprehensive performance report:
+  - 📊 **Result Summary**: A detailed overview of exam performance.
+  - ❌ **Mistake Analysis**: Identifies errors and explains why the answer was incorrect.
+  - 💡 **Smart Solutions**: Provides correct answers with detailed explanations.
+  - 📈 **Development Plan**: customized advice for the student to improve in weak areas.
+
+## 💳 Payment & Enrollment System
+
+A secure and robust payment infrastructure:
+- **Enrollment Management**: Seamless course enrollment process.
+- **Payment Processing**: Integration with payment gateways (Stripe/Payment API).
+- **Payment History**: Students can view their payment status.
+- **Admin Oversight**: Administrators can track and verify payments via the **Admin Payment Panel**.
+
+## ⭐ Rating & Reviews
+
+- **Instructor Ratings**: Students can rate and review instructors.
+- **Course Feedback**: Detailed review system for courses.
+- **Quality Assurance**: Helps maintain high-quality content through user feedback.
+
+## 📹 Advanced Meeting System
+
+The platform features a dual-integration meeting system:
+
+### Jitsi Meet Integration
+- **Secure Video Conferences**: High-quality video meetings.
+- **Screen Sharing**: Built-in screen sharing capabilities.
+- **Moderator Controls**: Mute/Unmute and participant management.
+- **Recording**: Meeting recording options.
+
+### Stream.io Video Integration
+- **Live Streaming**: Scalable live streaming for large classes.
+- **Real-time Interaction**: Low-latency video and audio.
+
 ## 🛣️ Routes (Routing)
 
 The application contains a comprehensive routing system:
@@ -316,10 +374,24 @@ The application contains a comprehensive routing system:
 
 ## 🔐 Security and Protection
 
+### 🛡️ Role-Based Access Control (RBAC)
+The application implements strict security policies across all levels:
+
+1.  **User** (Base Level): Basic authenticated access.
+2.  **Student**: Access to enrolled courses, quizzes, and learning materials.
+3.  **Instructor**: content creation, course management, and student tracking.
+4.  **Admin**: Full system control, user management, and sensitive operations.
+
+### ✅ Data Integrity & Validation
+All user inputs are rigorously validated across the application:
+- **Reactive Forms**: Comprehensive use of Angular Reactive Forms for robust state management.
+- **Input Validation**: Real-time validation for all fields (Required, Email, Patterns, Length, Custom Validators).
+- **Sanitization**: All inputs are sanitized to prevent XSS attacks.
+
 ### Route Guards
 - **Enrollment Guard**: Verify student enrollment in course
 - **Auth Guard**: Verify login
-- **Role Guard**: Verify permissions
+- **Role Guard**: Verify specific role permissions (User/Student/Instructor/Admin)
 
 ### HTTP Interceptors
 - **JWT Interceptor**: Add token to requests
@@ -344,6 +416,78 @@ The application contains multiple services for backend communication:
 - **RatingService**: Rating management
 - **StreamService**: Live streaming service
 
+## ⚙️ Setup and Installation
+
+### Prerequisites
+
+- [Node.js](https://nodejs.org/) (version 18 or newer)
+- [npm](https://www.npmjs.com/) (comes with Node.js)
+- [Angular CLI](https://angular.io/cli) (optional but recommended)
+
+### Installation Steps
+
+1. **Clone the repository**
+```bash
+git clone <repository-url>
+cd Front
+```
+
+2. **Install Dependencies**
+```bash
+npm install
+```
+
+3. **Update Environment Settings**
+
+Open `src/app/environment/environment.ts` and update the API URL:
+
+```typescript
+export const environment = {
+  production: false,
+  apiUrl: 'https://localhost:7xxx/api'
+};
+```
+
+4. **Run the Application**
+```bash
+npm start
+# or
+ng serve
+```
+
+5. **Open Browser**
+
+Open browser at: `http://localhost:4200`
+
+## 📜 Available Commands
+
+```bash
+# Run application in development mode
+npm start
+# or
+ng serve
+
+# Build application for production
+npm run build
+# or
+ng build
+
+# Build with watch
+npm run watch
+# or
+ng build --watch --configuration development
+
+# Run tests
+npm test
+# or
+ng test
+
+# Lint code
+ng lint
+
+# Update Angular
+ng update
+```
 
 ## 🎯 Main Features
 
@@ -533,7 +677,7 @@ This project is licensed under the [MIT License](LICENSE).
 ## 📞 Contact
 
 For questions and inquiries:
-- Email: abdalaakhaleel564@gmail.com
+- Email: support@smartlearning.com
 - GitHub Issues: [Project Issues](https://github.com/your-repo/issues)
 
 ## � Team Members
