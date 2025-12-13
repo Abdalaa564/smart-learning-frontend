@@ -9,17 +9,23 @@
         <!-- Filters Row -->
         <div class="row g-3 mb-4">
             <div class="col-md-4">
-                <label class="form-label fw-semibold">Select Course</label>
-                <select class="form-select" [(ngModel)]="selectedCourseId" (change)="onCourseChange()"
-                    [disabled]="isLoadingCourses">
-                    <option [ngValue]="null">Select a course...</option>
-                    <option *ngFor="let c of courses" [value]="c.crs_Id">{{ c.crs_Name }}</option>
-                </select>
+               <label for="courseSelect" class="form-label fw-semibold">Select Course</label>
+
+<select id="courseSelect"
+        class="form-select"
+        [(ngModel)]="selectedCourseId"
+        (change)="onCourseChange()"
+        [disabled]="isLoadingCourses">
+    <option [ngValue]="null">Select a course...</option>
+    <option *ngFor="let c of courses" [value]="c.crs_Id">{{ c.crs_Name }}</option>
+</select>
             </div>
 
             <div class="col-md-4">
-                <label class="form-label fw-semibold">Select Unit</label>
-                <select class="form-select" [(ngModel)]="selectedUnitId" (change)="onUnitChange()"
+                <label for="selectedUnit" class="form-label fw-semibold">Select Unit</label>
+                <select 
+                id="selectedUnit"
+                class="form-select" [(ngModel)]="selectedUnitId" (change)="onUnitChange()"
                     [disabled]="!selectedCourseId || isLoadingUnits">
                     <option [ngValue]="null">Select a unit...</option>
                     <option *ngFor="let u of units" [value]="u.unit_Id">{{ u.unit_Name }}</option>
@@ -27,8 +33,10 @@
             </div>
 
             <div class="col-md-4">
-                <label class="form-label fw-semibold">Select Lesson</label>
-                <select class="form-select" [(ngModel)]="selectedLessonId" (change)="onLessonChange()"
+                <label for="Select Lesson" class="form-label fw-semibold">Select Lesson</label>
+                <select
+                id="Select Lesson"
+                 class="form-select" [(ngModel)]="selectedLessonId" (change)="onLessonChange()"
                     [disabled]="!selectedUnitId || isLoadingLessons">
                     <option [ngValue]="null">Select a lesson...</option>
                     <option *ngFor="let l of lessons" [value]="l.lesson_Id">{{ l.lesson_Name }}</option>
