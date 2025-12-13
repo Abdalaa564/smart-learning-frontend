@@ -42,18 +42,17 @@
           </div>
 
           <!-- Edit/Delete Buttons -->
-          <div class="d-flex gap-2 mt-auto">
-            <button *ngIf="isAdmin" class="btn btn-outline-primary btn-sm grow"
+          <div class="icon-actions d-flex gap-4">
+            <button *ngIf="isAdmin" class="icon-btn-new btn btn-sm btn-light"
               [routerLink]="['/courses/edit', course.crs_Id]" (click)="$event.stopPropagation()">
-              <i class="fa fa-edit me-1"></i> Edit
+              <i class="bi bi-pencil-square text-primary"></i>
             </button>
 
-            <button *ngIf="isAdmin" class="btn btn-outline-danger btn-sm grow"
+            <button *ngIf="isAdmin" class="icon-btn-new btn btn-sm btn-light"
               [routerLink]="['/Courses/delete', course.crs_Id]" (click)="$event.stopPropagation()">
-              <i class="fa fa-trash me-1"></i> Delete
+              <i class="bi bi-trash text-danger"></i>
             </button>
-            <button class="btn btn-outline-secondary w-100 btn-sm" (click)="viewDetails(course)">
-              <i class="fa fa-eye me-1"></i>
+            <button class="btn btn-sm btn-outline-accent grow me-2" (click)="viewDetails(course)">
               View Details
             </button>
           </div>

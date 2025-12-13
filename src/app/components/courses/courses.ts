@@ -206,7 +206,7 @@ export class Courses implements OnInit {
   goToUnits(course: Course): void {
     const studentId = this.authService.currentUserId;
     if (!studentId) {
-      alert('⚠️ Please login to access course content.');
+      // alert('⚠️ Please login to access course content.');
       this.router.navigate(['/login']);
       return;
     }
