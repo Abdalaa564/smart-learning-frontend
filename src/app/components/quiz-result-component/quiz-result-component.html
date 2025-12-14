@@ -130,13 +130,14 @@
           </div>
         </div>
          <div *ngIf="!loading && aiReport" class="card mt-4 shadow-sm">
-            <div class="card-header bg-primary text-white">
+            <div class="card-header  ">
               <h5 class="mb-0">
                 <i class="bi bi-robot"></i> AI Generated Report
               </h5>
             </div>
             <div class="card-body">
-              <pre class="ai-report-text">{{ aiReport }}</pre>
+             <div class="ai-report-text" [innerText]="formattedReport"></div>
+
             </div>
           </div>
       </div>

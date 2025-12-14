@@ -406,3 +406,69 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   border-radius: 10px !important;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
 }
+.dark-mode .table {
+  --bs-table-bg: var(--surface-color);
+  --bs-table-color: var(--default-color);
+  --bs-table-border-color: var(--border-color);
+
+  --bs-table-striped-bg: color-mix(in srgb, var(--surface-color), black 7%);
+  --bs-table-striped-color: var(--default-color);
+
+  --bs-table-hover-bg: color-mix(in srgb, var(--surface-color), black 12%);
+  --bs-table-hover-color: var(--default-color);
+}
+
+
+
+/* رأس الجدول */
+.dark-mode .table-light th {
+    background-color: var(--surface-color) !important; /* سطح البطاقة */
+    color: var(--accent-color) !important;
+    border-bottom: 2px solid var(--accent-color);
+}
+
+/* صفوف الجسم */
+.dark-mode .table tbody tr:nth-child(even) {
+    background-color: color-mix(in srgb, var(--surface-color), black 5%); 
+}
+
+/* تأثير التحويم */
+.dark-mode .table-hover > tbody > tr:hover > * {
+    background-color: color-mix(in srgb, var(--surface-color)); 
+}
+
+/* أزرار الإجراءات (Actions) داخل الجدول */
+.dark-mode .btn-outline-accent, 
+.dark-mode .btn-outline-success, 
+.dark-mode .btn-outline-danger {
+    background-color: transparent !important;
+    border-color: var(--border-color) !important;
+}
+
+.dark-mode .btn-outline-accent {
+    color: var(--accent-color) !important;
+}
+
+.dark-mode .btn-outline-success {
+    color: var(--secondary-accent) !important;
+}
+
+.dark-mode .btn-outline-danger {
+    color: #dc3545 !important;
+}
+
+/* تأثير التحويم على أزرار الإجراءات */
+.dark-mode .btn-outline-accent:hover {
+    background-color: var(--accent-color) !important;
+    color: var(--contrast-color) !important;
+}
+
+.dark-mode .btn-outline-success:hover {
+    background-color: var(--secondary-accent) !important;
+    color: var(--contrast-color) !important;
+}
+
+.dark-mode .btn-outline-danger:hover {
+    background-color: #dc3545 !important;
+    color: var(--contrast-color) !important;
+}
