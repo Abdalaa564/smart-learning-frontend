@@ -1,337 +1,327 @@
-/* ===== COURSE CARD ===== */
-.course-card {
-  border-radius: 16px;
-  overflow: hidden;
-  background:var(--surface-color);
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  transition: all 0.3s ease;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
-  border: 1px solid var(--border-color);
-}
+// courses.component.ts
+import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { Course } from '../../models/Course';
+import { environment } from '../../environment/environment';
+import { CourseService } from '../../Services/course.service';
+import { forkJoin } from 'rxjs/internal/observable/forkJoin';
+import { Instructor } from '../../models/iinstructor';
+import { InstructorService } from '../../Services/instructor-srevices';
+import { Router, RouterLink, ActivatedRoute } from '@angular/router';
+import { AuthService } from '../../Services/auth-service';
+import { EnrollmentService } from '../../Services/enrollment-service';
+import { EnrollmentRequest } from '../../models/EnrollmentRequest';
+import { SkeletonCardComponent } from '../../shared/Skeleton/skeleton-card/skeleton-card';
+import { PaginationComponent } from '../../shared/pagination/pagination';
+import { SafePipe } from '../../pipes/safe-pipe';
+import { Snackbar } from '../../shared/snackbar';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
-.course-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
-  
-}
+@Component({
+  selector: 'app-courses',
+  imports: [FormsModule, CommonModule, RouterLink, SkeletonCardComponent, PaginationComponent, SafePipe,MatSnackBarModule],
+  templateUrl: './courses.html',
+  styleUrl: './courses.css',
+})
+export class Courses implements OnInit {
+  courses: Course[] = [];
+  instructors: Instructor[] = [];
+  imageBase = environment.imageBase;
+  enrolledCourses: Set<number> = new Set();
 
-/* ===== IMAGE ===== */
-.course-image-wrapper {
-  position: relative;
-  height: 180px;
-  overflow: hidden;
-  border-radius: 16px 16px 0 0;
-}
+  showEnrollModal: boolean = false;
+  selectedCourse: Course | null = null;
+  enrollingCourseId: number | null = null;
+  selectedPaymentMethod = 'Paymob';
 
-/* الصورة نفسها */
-.course-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  transition: transform 0.4s ease;
-}
+  showPaymentIframe = false;
+  paymentUrl = '';
+  transactionId = '';
+  enrollmentMessage: string = '';
+  enrollmentSuccess: boolean = false;
+  showResultModal: boolean = false;
 
-/* الـ hover */
-.course-card:hover .course-image {
-  transform: scale(1.05);
-}
+  // For checking payment status
+  checkingPaymentStatus = false;
 
-.course-price {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  background: linear-gradient(90deg, #28a745, #81c784);
-  color: #fff;
-  padding: 6px 14px;
-  border-radius: 25px;
-  font-weight: 600;
-  font-size: 13px;
-  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.2);
-}
+  isLoading = true;
 
-/* ===== CONTENT ===== */
-.course-content {
-  padding: 16px;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
+  // ----Pagination----
+  currentPage: number = 1;
+  itemsPerPage: number = 8;
 
-.course-content h3 {
-  font-size: 1.1rem;
-  font-weight: 700;
-  margin-bottom: 8px;
- color: var(--default-color);
-  transition: color 0.3s ease;
-}
-
-.course-card:hover .course-content h3 {
-  color: var(--accent-color);
-}
-
-.course-content p {
-  font-size: 0.9rem;
-  color:var(--text-muted);
-  line-height: 1.5;
-  flex-shrink: 0;
-}
-
-/* ===== BADGES ===== */
-.course-meta .badge {
-  padding: 5px 12px;
-  border-radius: 20px;
-  font-size: 10px;
-  font-weight: 600;
-  margin-right: 5px;
-  text-transform: uppercase;
-}
-
-.category {
-  background: #e6f4f1;
-  color: #00796b;
-}
-
-.level {
-  background: #f3f9e8;
-  color: #2e7d32;
-}
-
-/* ===== INSTRUCTOR ===== */
-.instructor-info {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-top: 10px;
-}
-
-.instructor-avatar {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  border: 2px solid var(--accent-color);
-  transition: transform 0.3s ease;
-}
-
-.instructor-avatar:hover {
-  transform: scale(1.1);
-}
-
-.instructor-name {
-  color: var(--default-color);
-  font-weight: 600;
-}
-/* ==== Modal Animations ==== */
-.modal.show {
-  animation: fadeIn 0.3s ease;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-.modal-content {
-  border-radius: 16px;
-  border: none;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
-  animation: slideUp 0.4s ease;
-  overflow: hidden;
-  background-color: var(--background-color);
-}
-
-@keyframes slideUp {
-  from { transform: translateY(50px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
-}
-
-
-/* ==== Modal Header Colors ==== */
-.modal-header {
-  border-bottom: none;
-  padding: 20px 25px;
-}
-
-.modal-header.bg-primary {
-  background: var(--accent-color) !important;
-}
-
-.modal-header.bg-success {
-  background: var(--secondary-accent) !important;
-}
-
-.modal-header.bg-danger {
- background: var(--default-color) !important; 
-  color: var(--contrast-color);
-}
-
-.modal-title {
-  font-weight: 700;
-  font-size: 20px;
-  color: var(--contrast-color);
-}
-
-
-/* ==== Modal Body ==== */
-.modal-body {
-  padding: 25px;
-}
-
-.enrollment-details {
-  border-radius: 12px;
-  background: var(--surface-color);
-}
-
-.detail-row:hover {
-  background: rgba(0,0,0,0.04);
-}
-
-
-/* ===== Result Icons Animations ===== */
-.result-icon {
-  animation: scaleIn 0.5s ease;
-}
-
-@keyframes scaleIn {
-  0% { transform: scale(0); opacity: 0; }
-  50% { transform: scale(1.1);}
-  100% { transform: scale(1); opacity: 1; }
-}
-
-.result-icon .fa-check-circle {
-  color: var(--secondary-accent);
-  animation: successPulse 2s ease-in-out infinite;
-}
-
-@keyframes successPulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.7; }
-}
-
-
-/* ==== Alerts ==== */
-.alert {
-  border-radius: 10px;
-  border: none;
-}
-
-.alert-info {
-  background: #e6f4f1;
-  color: var(--accent-color);
-  border-left: 4px solid var(--accent-color);
-}
-
-.alert-success {
-  background: #e7fbe8;
-  color: #0a7a40;
-  border-left: 4px solid var(--secondary-accent);
-}
-
-
-/* ===== BUTTONS ===== */
-.course-actions .btn {
-  font-size: 13px;
-  border-radius: 8px;
-  padding: 6px 10px;
-  transition: all 0.3s ease;
-}
-
-.course-actions .btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
-
-/* ===== ENROLL BUTTON ===== */
-.enroll-section .btn-primary {
-  background: var(--secondary-accent);
-  border: none;
-  color: #fff;
-  font-weight: 600;
- 
-  border-radius: 12px;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 12px color-mix(in srgb, var(--secondary-accent), transparent 70%);
-  padding: 15px 20px;
-}
-
-.enroll-section .btn-primary:hover:not(:disabled) {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
-}
-
-.enroll-section .btn-primary:disabled {
-  opacity: 0.7;
-  cursor: not-allowed;
-}
-
-/* ===== ENROLLED BADGE ===== */
-.enroll-section .alert-success {
-  border-radius: 12px;
-  font-size: 0.9rem;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  
-}
-.form-select {
-  border-radius: 8px;
-  border: 2px solid var(--border-color);
-}
-
-.form-select:focus {
-  border-color: var(--accent-color);
-  box-shadow: 0 0 0 3px rgba(7, 66, 38, 0.2);
-}
-
-
-/* === Backdrop === */
-.modal-backdrop {
-  background-color: rgba(0,0,0,0.6);
-  /* backdrop-filter: blur(4px); */
-}
-/* Icon Buttons */
-.icon-btn-new {
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  border: 1px solid var(--border-color);
-  background-color: var(--surface-color);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-  transition: all 0.15s ease;
-  display: flex; 
-  justify-content: center;
-  align-items: center;
-}
-
-.icon-btn-new:hover {
-  transform: translateY(-1px);
-  border-color: var(--accent-color);
-}
-
-.btn-outline-accent {
-  color: var(--accent-color);
-  border-color: var(--accent-color);
-  border-radius: 20px;
-  font-size: 13px;
-  font-weight: 600;
-  transition: all 0.2s ease;
-}
-
-.btn-outline-accent:hover {
-  background-color: var(--accent-color);
-  color: var(--contrast-color);
-}
-
-.flex-grow-1 {
-    flex-grow: 1;
-}
-
-/* ===== RESPONSIVE FIXES ===== */
-@media (max-width: 768px) {
-  .course-card {
-    margin-bottom: 15px;
+  get paginatedCourses(): Course[] {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    return this.courses.slice(startIndex, startIndex + this.itemsPerPage);
   }
+  // ---- end Pagination----
+  
+  // Role checking
+  get isInstructor(): boolean {
+    return this.authService.isInstructor();
+  }
+
+  get isAdmin(): boolean {
+    return this.authService.isAdmin();
+  }
+
+  get isStudent(): boolean {
+    return this.authService.isStudent();
+  }
+
+  // End Role checking
+
+  onPageChange(page: number): void {
+    this.currentPage = page;
+    window.scrollTo(0, 0);
+  }
+
+  constructor(
+    private courseService: CourseService,
+    private instructorService: InstructorService,
+    private authService: AuthService,
+    private enrollmentService: EnrollmentService,
+    private router: Router,
+    private route: ActivatedRoute,
+   private snackBar: Snackbar
+
+  ) { }
+
+  ngOnInit(): void {
+    this.loadData();
+    this.loadEnrolledCourses();
+    
+    // Check if returning from payment
+    this.checkPaymentCallback();
+  }
+
+  /**
+   * Check if user is returning from Paymob payment
+   */
+  checkPaymentCallback(): void {
+    this.route.queryParams.subscribe(params => {
+      const success = params['success'];
+      const transactionId = params['transactionId'];
+      
+      if (success === 'true' && transactionId) {
+        this.verifyPaymentStatus(transactionId);
+      } else if (success === 'false') {
+        this.showPaymentResult(false, 'Payment was cancelled or failed.');
+      }
+    });
+  }
+
+  /**
+   * Verify payment status with backend
+   */
+  verifyPaymentStatus(transactionId: string): void {
+    this.checkingPaymentStatus = true;
+    
+    this.enrollmentService.getEnrollmentStatus(transactionId).subscribe({
+      next: (status) => {
+        this.checkingPaymentStatus = false;
+        
+        if (status.paymentStatus === 'Completed') {
+          this.enrolledCourses.add(status.courseId);
+          this.showPaymentResult(true, 'Enrollment successful! Welcome to your course.');
+        } else if (status.paymentStatus === 'Pending') {
+        this.showPaymentResult(false, 'Payment is still being processed. Please check back later.');
+      } else {
+        this.showPaymentResult(false, `Payment ${status.paymentStatus.toLowerCase()}. Please try again.`);
+      }
+      },
+      error: (err) => {
+        this.checkingPaymentStatus = false;
+        this.showPaymentResult(false, 'Error verifying payment status.');
+        console.error(err);
+      }
+    });
+  }
+
+  loadData(): void {
+    this.isLoading = true;
+
+    forkJoin({
+      courses: this.courseService.getAllCourses(),
+      instructors: this.instructorService.getAll(),
+    }).subscribe({
+      next: (data) => {
+        this.courses = data.courses;
+        this.instructors = data.instructors;
+        this.isLoading = false;
+      },
+      error: (err) => {
+        console.error('Error loading data:', err);
+        this.isLoading = false;
+         this.snackBar.open('Failed to load courses', 'error');
+      },
+    });
+  }
+
+  getCourseImage(course: Course): string {
+    const url = course.imageUrl;
+    if (!url) return '/assets/img/education/course-1.jpg';
+    if (url.startsWith('http://') || url.startsWith('https://')) return url;
+    return this.imageBase + url;
+  }
+
+  getInstructorImage(course: Course): string {
+    const instructor = this.instructors.find((i) => i.id === course.instructorId);
+    if (!instructor || !instructor.photoUrl) {
+      return '/assets/img/person/person-1.jpg';
+    }
+    return instructor.photoUrl;
+  }
+
+  getInstructorName(course: Course): string {
+    const instructor = this.instructors.find((i) => i.id === course.instructorId);
+    return instructor?.fullName ?? course.instructorName ?? 'Unknown';
+  }
+
+  deleteCourse(course: Course): void {
+    if (!confirm(`Are you sure to delete "${course.crs_Name}" ?`)) return;
+    this.courseService.deleteCourse(course.crs_Id).subscribe({
+      next: (res) => {
+        console.log('Delete response:', res);
+        this.snackBar.open('Course deleted successfully', 'success');
+        this.loadData();
+      },
+      error: (err) => {
+        console.error(err);
+        this.snackBar.open('Failed to delete course', 'error');
+      }
+    });
+  }
+
+  loadEnrolledCourses(): void {
+    const studentId = this.authService.UserId;
+    if (studentId) {
+      this.enrollmentService.getStudentCourses(studentId).subscribe({
+        next: (courses) => {
+          courses.forEach((course) => {
+            this.enrolledCourses.add(course.crs_Id);
+          });
+        },
+        error: (err) => console.error('Error loading enrolled courses:', err),
+      });
+    }
+  }
+
+  isEnrolledInCourse(id: number): boolean {
+    return this.enrolledCourses.has(id);
+  }
+
+  goToUnits(course: Course): void {
+    const studentId = this.authService.currentUserId;
+    if (!studentId) {
+      // alert('⚠️ Please login to access course content.');
+        this.snackBar.open('⚠️ Please login to access course content.', 'error');
+      this.router.navigate(['/login']);
+      return;
+    }
+    if (course.crs_Id == null) {
+      this.snackBar.open('❌ Cannot access units: Course ID is missing.', 'error');
+      return;
+    }
+    this.router.navigate(['/Courses', course.crs_Id, 'units']);
+  }
+
+  enroll(course: Course): void {
+    const studentId = this.authService.currentUserId;
+    if (!studentId) {
+      this.snackBar.open('⚠️ You must be logged in to enroll in a course.', 'error');
+      return;
+    }
+    this.selectedCourse = course;
+    this.selectedPaymentMethod = 'Paymob';
+    this.showEnrollModal = true;
+  }
+
+  /**
+   * Confirm enrollment and get payment URL
+   */
+  confirmEnrollment(): void {
+    if (!this.selectedCourse) return;
+
+    const studentId = this.authService.UserId!;
+    const req: EnrollmentRequest = {
+      studentId,
+      courseId: this.selectedCourse.crs_Id,
+      payment: {
+        amount: this.selectedCourse.price,
+        paymentMethod: this.selectedPaymentMethod,
+      },
+    };
+
+    this.enrollmentService.enrollStudent(req).subscribe({
+      next: (res) => {
+        this.showEnrollModal = false;
+        
+        if (res.success && res.paymentUrl) {
+          this.transactionId = res.transactionId;
+          this.paymentUrl = res.paymentUrl;
+          
+          // Option 1: Show in iframe (current approach)
+          this.showPaymentIframe = true;
+          
+          // Option 2: Redirect directly to Paymob (alternative)
+          // window.location.href = res.paymentUrl;
+        } else {
+          this.snackBar.open(res.message || 'Failed to initiate enrollment', 'error');
+        }
+      },
+      error: (err) => {
+        this.showEnrollModal = false;
+        this.snackBar.open(err.error?.message || 'Failed to enroll', 'error');
+        console.error(err);
+      },
+    });
+  }
+
+  /**
+   * Show payment result modal
+   */
+  showPaymentResult(success: boolean, message: string): void {
+    this.enrollmentSuccess = success;
+    this.enrollmentMessage = message;
+    this.showResultModal = true;
+    this.closePaymentIframe();
+  }
+
+  closeEnrollModal(): void {
+    this.showEnrollModal = false;
+    this.selectedCourse = null;
+    this.enrollingCourseId = null;
+  }
+
+  closePaymentIframe(): void {
+    this.showPaymentIframe = false;
+    this.paymentUrl = '';
+  }
+
+  closeResultModal(): void {
+    this.showResultModal = false;
+    this.enrollmentMessage = '';
+    this.transactionId = '';
+    
+    // Reload enrolled courses
+    this.loadEnrolledCourses();
+  }
+
+  isEnrolling(crs_Id: number): boolean {
+    return this.enrollingCourseId === crs_Id;
+  }
+
+  goToMyCourses(): void {
+    const studentId = this.authService.currentUserId;
+    if (studentId) {
+      this.router.navigate(['/student', studentId, 'courses']);
+    }
+    this.closeResultModal();
+  }
+  viewDetails(course: Course): void {
+  if (!course.crs_Id) return;
+  this.router.navigate(['/courses', course.crs_Id, 'details']);
+}
 }
