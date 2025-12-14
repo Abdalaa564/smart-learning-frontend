@@ -5,11 +5,13 @@ import { SearchBarComponent } from '../../../shared/search-bar/search-bar.compon
 import { AuthService } from '../../../Services/auth-service';
 import { Router } from '@angular/router';
 import { PaginationComponent } from '../../../shared/pagination/pagination';
+import { SortingComponent, SortEvent } from '../../../shared/sorting/sorting.component';
+import { SortUtils } from '../../../shared/utils/sort-utils';
 
 @Component({
   selector: 'app-admin-students',
   standalone: true,
-  imports: [CommonModule, SearchBarComponent, PaginationComponent],
+  imports: [CommonModule, SearchBarComponent, PaginationComponent, SortingComponent],
   templateUrl: './admin-students.html',
   styleUrl: './admin-students.css',
 })
@@ -23,13 +25,36 @@ export class AdminStudentsComponent {
   // Only DELETE is supported as an action (event)
   @Output() delete = new EventEmitter<Studentprofile>();
 
+  // Sorting
+  sortField = 'firstName';
+  sortDirection: 'asc' | 'desc' = 'asc';
+  sortOptions = [
+    { label: 'First Name', value: 'firstName' },
+    { label: 'Last Name', value: 'lastName' },
+    { label: 'Email', value: 'email' },
+    { label: 'Enrollments', value: 'id' } // Approximate using ID or can't sort map easily
+  ];
+
+  handleSortChange(event: SortEvent) {
+    this.sortField = event.field;
+    this.sortDirection = event.direction;
+    this.currentPage = 1; // Reset to first page
+  }
+
   // Pagination
   currentPage: number = 1;
-  itemsPerPage: number = 15;
+  itemsPerPage: number = 10;
 
   get paginatedStudents(): Studentprofile[] {
+    // 1. Filter
+    let processed = this.filteredStudents;
+
+    // 2. Sort
+    processed = SortUtils.sortData(processed, this.sortField, this.sortDirection);
+
+    // 3. Paginate
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-    return this.filteredStudents.slice(startIndex, startIndex + this.itemsPerPage);
+    return processed.slice(startIndex, startIndex + this.itemsPerPage);
   }
 
   onPageChange(page: number): void {
@@ -40,7 +65,7 @@ export class AdminStudentsComponent {
   // Search icon implementation
   onSearchTextChange(searchText: string) {
     this.searchText = searchText;
-    this.currentPage = 1; // Reset to first page
+    this.currentPage = 1; // Reset to first page on search
   }
 
   highlightText(text: string): string {

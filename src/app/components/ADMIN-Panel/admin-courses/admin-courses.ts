@@ -6,11 +6,13 @@ import { SearchBarComponent } from '../../../shared/search-bar/search-bar.compon
 import { AuthService } from '../../../Services/auth-service';
 import { Router } from '@angular/router';
 import { PaginationComponent } from '../../../shared/pagination/pagination';
+import { SortingComponent, SortEvent } from '../../../shared/sorting/sorting.component';
+import { SortUtils } from '../../../shared/utils/sort-utils';
 
 @Component({
   selector: 'app-admin-courses',
   standalone: true,
-  imports: [CommonModule, SearchBarComponent, PaginationComponent],
+  imports: [CommonModule, SearchBarComponent, PaginationComponent, SortingComponent],
   templateUrl: './admin-courses.html',
   styleUrl: './admin-courses.css',
 })
@@ -25,13 +27,35 @@ export class AdminCoursesComponent {
     return this.courseEnrollCounts[courseId] ?? 0;
   }
 
+  // Sorting
+  sortField = 'crs_Name';
+  sortDirection: 'asc' | 'desc' = 'asc';
+  sortOptions = [
+    { label: 'Name', value: 'crs_Name' },
+    { label: 'Price', value: 'price' },
+    { label: 'Description', value: 'crs_Description' }
+  ];
+
+  handleSortChange(event: SortEvent) {
+    this.sortField = event.field;
+    this.sortDirection = event.direction;
+    this.currentPage = 1; // Reset to first page
+  }
+
   // Pagination
   currentPage: number = 1;
   itemsPerPage: number = 10;
 
   get paginatedCourses(): Course[] {
+    // 1. Filter
+    let processed = this.filteredCourses;
+
+    // 2. Sort
+    processed = SortUtils.sortData(processed, this.sortField, this.sortDirection);
+
+    // 3. Paginate
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-    return this.filteredCourses.slice(startIndex, startIndex + this.itemsPerPage);
+    return processed.slice(startIndex, startIndex + this.itemsPerPage);
   }
 
   onPageChange(page: number): void {

@@ -5,11 +5,13 @@ import { SearchBarComponent } from '../../../shared/search-bar/search-bar.compon
 import { AuthService } from '../../../Services/auth-service';
 import { Router } from '@angular/router';
 import { PaginationComponent } from '../../../shared/pagination/pagination';
+import { SortingComponent, SortEvent } from '../../../shared/sorting/sorting.component';
+import { SortUtils } from '../../../shared/utils/sort-utils';
 
 @Component({
   selector: 'app-admin-instructors',
   standalone: true,
-  imports: [CommonModule, SearchBarComponent, PaginationComponent],
+  imports: [CommonModule, SearchBarComponent, PaginationComponent, SortingComponent],
   templateUrl: './admin-instructors.html',
   styleUrl: './admin-instructors.css',
 })
@@ -19,13 +21,36 @@ export class AdminInstructorsComponent {
   @ViewChild(SearchBarComponent) searchBar!: SearchBarComponent;
   searchText = '';
 
+  // Sorting
+  sortField = 'fullName';
+  sortDirection: 'asc' | 'desc' = 'asc';
+  sortOptions = [
+    { label: 'Name', value: 'fullName' },
+    { label: 'Rating', value: 'rating' },
+    { label: 'Job Title', value: 'jobTitle' },
+    { label: 'Students', value: 'numberOfStudents' }
+  ];
+
+  handleSortChange(event: SortEvent) {
+    this.sortField = event.field;
+    this.sortDirection = event.direction;
+    this.currentPage = 1; // Reset to first page
+  }
+
   // Pagination
   currentPage: number = 1;
   itemsPerPage: number = 10;
 
   get paginatedInstructors(): Instructor[] {
+    // 1. Filter
+    let processed = this.filteredInstructors;
+
+    // 2. Sort
+    processed = SortUtils.sortData(processed, this.sortField, this.sortDirection);
+
+    // 3. Paginate
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-    return this.filteredInstructors.slice(startIndex, startIndex + this.itemsPerPage);
+    return processed.slice(startIndex, startIndex + this.itemsPerPage);
   }
 
   onPageChange(page: number): void {
@@ -36,7 +61,7 @@ export class AdminInstructorsComponent {
   // Search icon implementation
   onSearchTextChange(searchText: string) {
     this.searchText = searchText;
-    this.currentPage = 1; // Reset to first page
+    this.currentPage = 1; // Reset to first page on search
   }
 
   highlightText(text: string): string {

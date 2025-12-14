@@ -8,10 +8,12 @@
     </ng-container>
   </div>
   <div class="card-body">
-    <div class="mb-3">
+    <div class="mb-3 d-flex justify-content-between align-items-center">
       <app-search-bar placeholder="Search courses..." [alignRight]="false"
         (searchTextChange)="onSearchTextChange($event)">
       </app-search-bar>
+      <app-sorting [sortOptions]="sortOptions" [initialSortField]="sortField" (sortChange)="handleSortChange($event)">
+      </app-sorting>
     </div>
 
     <div class="table-responsive">

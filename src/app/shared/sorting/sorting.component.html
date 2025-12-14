@@ -1,0 +1,17 @@
+<div class="sorting-container d-flex align-items-center gap-2">
+    <label class="sort-label text-muted small fw-semibold">Sort By:</label>
+
+    <!-- Sort Field Dropdown -->
+    <select class="form-select form-select-sm sort-select" [(ngModel)]="selectedField" (change)="onFieldChange()">
+        <option *ngFor="let option of sortOptions" [value]="option.value">
+            {{ option.label }}
+        </option>
+    </select>
+
+    <!-- Sort Direction Button -->
+    <button class="btn btn-light btn-sm sort-btn" (click)="toggleDirection()"
+        [title]="sortDirection === 'asc' ? 'Ascending' : 'Descending'">
+        <i class="bi" [class.bi-sort-alpha-down]="sortDirection === 'asc'"
+            [class.bi-sort-alpha-down-alt]="sortDirection === 'desc'"></i>
+    </button>
+</div>
