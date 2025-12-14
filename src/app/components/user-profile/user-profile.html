@@ -1,10 +1,9 @@
 <div class="profile-container" *ngIf="profile">
-  
+
   <!-- LEFT PROFILE CARD -->
   <div class="profile-sidebar glass-card">
     <div class="avatar-container">
-      <img alt="" class="avatar-img" 
-           src="https://bootdey.com/img/Content/avatar/avatar7.png">
+      <img alt="" class="avatar-img" src="https://bootdey.com/img/Content/avatar/avatar7.png">
     </div>
 
     <h2 class="profile-name">
@@ -16,13 +15,13 @@
       {{ profile.city }}, {{ profile.address }}
     </p>
 
-    <button class="btn-edit" (click)="toggleEdit()">
+    <button class="btn-edit" (click)="toggleEdit()" *ngIf="!isReadOnly">
       <i class="bi bi-pencil-square"></i> Edit Profile
     </button>
 
-     <button class="btn-courses" (click)="goToMyCourses()">
-    <i class="bi bi-journal-bookmark-fill"></i> My Courses
-  </button>
+    <button class="btn-courses" (click)="goToMyCourses()" *ngIf="!isReadOnly">
+      <i class="bi bi-journal-bookmark-fill"></i> My Courses
+    </button>
   </div>
 
 
@@ -63,7 +62,7 @@
   <div class="modal-content">
 
     <button class="close-btn" (click)="onCancel()">×</button>
-    
+
     <h3 class="modal-title">Edit Profile</h3>
 
     <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
@@ -71,8 +70,7 @@
       <div class="input-group">
         <label>First Name</label>
         <input formControlName="firstName" placeholder="firstName">
-        <small class="text-danger"*ngIf="f['firstName'].touched && f['firstName'].invalid"
->
+        <small class="text-danger" *ngIf="f['firstName'].touched && f['firstName'].invalid">
           First Name is required
         </small>
       </div>
@@ -80,7 +78,7 @@
       <div class="input-group">
         <label>Last Name</label>
         <input formControlName="lastName" placeholder="lastName">
-         <small class="text-danger" *ngIf="f['lastName'].touched && f['lastName'].invalid">
+        <small class="text-danger" *ngIf="f['lastName'].touched && f['lastName'].invalid">
           Last Name is required.
         </small>
       </div>
@@ -88,7 +86,7 @@
       <div class="input-group">
         <label>Phone Number</label>
         <input formControlName="phoneNumber" placeholder="phoneNumber">
-         <small class="text-danger" *ngIf="f['phoneNumber'].touched && f['phoneNumber'].invalid">
+        <small class="text-danger" *ngIf="f['phoneNumber'].touched && f['phoneNumber'].invalid">
           Phone Number is required.
         </small>
       </div>
@@ -104,7 +102,7 @@
       <div class="input-group">
         <label>Address</label>
         <input formControlName="address" placeholder="Address">
-           <small class="text-danger" *ngIf="f['address'].touched && f['address'].invalid">
+        <small class="text-danger" *ngIf="f['address'].touched && f['address'].invalid">
           Address is required.
         </small>
       </div>
@@ -112,7 +110,7 @@
       <div class="input-group">
         <label>City</label>
         <input formControlName="city" placeholder="City">
-         <small class="text-danger" *ngIf="f['city'].touched && f['city'].invalid">
+        <small class="text-danger" *ngIf="f['city'].touched && f['city'].invalid">
           City is required.
         </small>
       </div>
@@ -123,6 +121,6 @@
       </div>
 
     </form>
-     
+
   </div>
 </div>

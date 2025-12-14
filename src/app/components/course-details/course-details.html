@@ -18,17 +18,12 @@
   <div class="row" *ngIf="!isLoading && course">
     <div class="col-md-5 mb-3">
       <div class="image-wrapper shadow-sm">
-        <img alt=""
-          [src]="getCourseImage()"
-          [alt]="course.crs_Name"
-          class="img-fluid rounded"
-        />
+        <img [src]="getCourseImage()" [alt]="course.crs_Name" class="img-fluid rounded" />
       </div>
     </div>
 
     <div class="col-md-7">
       <h2 class="fw-bold mb-3">{{ course.crs_Name }}</h2>
-
       <p class="text-muted">{{ course.crs_Description }}</p>
 
       <div class="mb-3">
@@ -54,6 +49,37 @@
         <button class="btn btn-outline-primary" [routerLink]="['/Courses', course.crs_Id, 'units']">
           <i class="fa fa-book-open me-2"></i> View Units
         </button>
+      </div>
+
+      <!-- Rating Section -->
+      <div class="add-rating mt-4" *ngIf="course">
+        <h5>Rate {{ course.crs_Name }}</h5>
+
+        <div class="stars mb-2">
+          <span *ngFor="let star of [1,2,3,4,5]; let i = index"
+                (click)="!hasRated && setRating(i+1)"
+                (mouseenter)="!hasRated && hoverRating(i+1)"
+                (mouseleave)="!hasRated && hoverRating(0)"
+                [class.filled]="i < (hoveredRating > 0 ? hoveredRating : ratingValue)"
+                [class.disabled]="hasRated">
+            ★
+          </span>
+        </div>
+
+        <textarea [(ngModel)]="feedback"
+                  class="form-control mb-2"
+                  rows="3"
+                  placeholder="Write your feedback"
+                  [disabled]="hasRated"></textarea>
+
+        <button class="btn btn-accent" (click)="submitRating()"
+                [disabled]="hasRated || ratingValue === 0">
+          Submit Rating
+        </button>
+
+        <p *ngIf="hasRated" class="text-success mt-2">
+          You already rated this course. ✅
+        </p>
       </div>
     </div>
   </div>

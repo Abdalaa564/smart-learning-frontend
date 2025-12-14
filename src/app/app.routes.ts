@@ -101,6 +101,7 @@ export const routes: Routes = [
 
   // User
   { path: 'userProfile', component: UserProfile, title: 'User Profile' },
+  { path: 'student-profile/:id', component: UserProfile, title: 'Student Profile' },
   { path: 'student/:id/courses', component: MyCourses },
 
   // Chat

@@ -32,7 +32,16 @@
             <span class="badge category">Programming</span>
             <span class="badge level">All Levels</span>
           </div>
-
+                  <div class="course-rating mb-2">
+          <ng-container *ngFor="let star of getStarsArray()">
+            <i class="bi" [ngClass]="{
+        'bi-star-fill text-warning': star <= (course.rating || 0),
+        'bi-star text-muted': star > (course.rating || 0)
+      }">
+            </i>
+          </ng-container>
+          <small class="ms-1">({{ course.rating || 0 }})</small>
+        </div>
           <h5 class="card-title">{{ course.crs_Name }}</h5>
           <p class="card-text ">{{ course.crs_Description }}</p>
 
@@ -42,19 +51,22 @@
           </div>
 
           <!-- Edit/Delete Buttons -->
-          <div class="icon-actions d-flex gap-4">
-            <button *ngIf="isAdmin" class="icon-btn-new btn btn-sm btn-light"
-              [routerLink]="['/courses/edit', course.crs_Id]" (click)="$event.stopPropagation()">
-              <i class="bi bi-pencil-square text-primary"></i>
-            </button>
-
-            <button *ngIf="isAdmin" class="icon-btn-new btn btn-sm btn-light"
-              [routerLink]="['/Courses/delete', course.crs_Id]" (click)="$event.stopPropagation()">
-              <i class="bi bi-trash text-danger"></i>
-            </button>
+          <div class="d-flex justify-content-between align-items-center mt-auto">
             <button class="btn btn-sm btn-outline-accent grow me-2" (click)="viewDetails(course)">
               View Details
             </button>
+
+            <div class="icon-actions d-flex gap-2">
+              <button *ngIf="isAdmin" class="icon-btn-new btn btn-sm btn-light"
+                [routerLink]="['/courses/edit', course.crs_Id]" (click)="$event.stopPropagation()" title="Edit">
+                <i class="bi bi-pencil-square text-primary"></i>
+              </button>
+
+              <button *ngIf="isAdmin" class="icon-btn-new btn btn-sm btn-light"
+                [routerLink]="['/Courses/delete', course.crs_Id]" (click)="$event.stopPropagation()" title="Delete">
+                <i class="bi bi-trash text-danger"></i>
+              </button>
+            </div>
           </div>
 
           <!-- Enroll Button -->
@@ -76,6 +88,7 @@
             </div>
           </div>
         </div>
+
       </div>
     </div>
   </div>

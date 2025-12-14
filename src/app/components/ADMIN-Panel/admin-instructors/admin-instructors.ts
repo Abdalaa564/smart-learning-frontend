@@ -3,11 +3,15 @@ import { Instructor } from '../../../models/iinstructor';
 import { CommonModule } from '@angular/common';
 import { SearchBarComponent } from '../../../shared/search-bar/search-bar.component';
 import { AuthService } from '../../../Services/auth-service';
+import { Router } from '@angular/router';
+import { PaginationComponent } from '../../../shared/pagination/pagination';
+import { SortingComponent, SortEvent } from '../../../shared/sorting/sorting.component';
+import { SortUtils } from '../../../shared/utils/sort-utils';
 
 @Component({
   selector: 'app-admin-instructors',
   standalone: true,
-  imports: [CommonModule, SearchBarComponent],
+  imports: [CommonModule, SearchBarComponent, PaginationComponent, SortingComponent],
   templateUrl: './admin-instructors.html',
   styleUrl: './admin-instructors.css',
 })
@@ -17,14 +21,47 @@ export class AdminInstructorsComponent {
   @ViewChild(SearchBarComponent) searchBar!: SearchBarComponent;
   searchText = '';
 
-  @Output() add = new EventEmitter<void>();
-  @Output() view = new EventEmitter<Instructor>();
-  @Output() edit = new EventEmitter<Instructor>();
-  @Output() delete = new EventEmitter<Instructor>();
-  
+  // Sorting
+  sortField = 'fullName';
+  sortDirection: 'asc' | 'desc' = 'asc';
+  sortOptions = [
+    { label: 'Name', value: 'fullName' },
+    { label: 'Rating', value: 'rating' },
+    { label: 'Job Title', value: 'jobTitle' },
+    { label: 'Students', value: 'numberOfStudents' }
+  ];
+
+  handleSortChange(event: SortEvent) {
+    this.sortField = event.field;
+    this.sortDirection = event.direction;
+    this.currentPage = 1; // Reset to first page
+  }
+
+  // Pagination
+  currentPage: number = 1;
+  itemsPerPage: number = 10;
+
+  get paginatedInstructors(): Instructor[] {
+    // 1. Filter
+    let processed = this.filteredInstructors;
+
+    // 2. Sort
+    processed = SortUtils.sortData(processed, this.sortField, this.sortDirection);
+
+    // 3. Paginate
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    return processed.slice(startIndex, startIndex + this.itemsPerPage);
+  }
+
+  onPageChange(page: number): void {
+    this.currentPage = page;
+    window.scrollTo(0, 0);
+  }
+
   // Search icon implementation
   onSearchTextChange(searchText: string) {
     this.searchText = searchText;
+    this.currentPage = 1; // Reset to first page on search
   }
 
   highlightText(text: string): string {
@@ -39,14 +76,35 @@ export class AdminInstructorsComponent {
     const searchLower = this.searchText.toLowerCase();
     return this.instructors.filter(instructor =>
       instructor.fullName?.toLowerCase().includes(searchLower) ||
-      instructor.jobTitle?.toLowerCase().includes(searchLower)
+      instructor.email?.toLowerCase().includes(searchLower)
     );
   }
-  
-  constructor(private authService: AuthService) { }
+
+  constructor(
+    private authService: AuthService,
+    private router: Router
+  ) { }
 
   get isAdmin(): boolean {
     return this.authService.isAdmin();
   }
-  // end Search icon implementation
+
+  goToAdd() {
+    this.router.navigate(['/instructors/add']);
+  }
+
+  viewProfile(row: Instructor) {
+    if (!row.id) return;
+    this.router.navigate(['/instructor', row.id, 'profile']);
+  }
+
+  goToEdit(row: Instructor) {
+    if (!row.id) return;
+    this.router.navigate(['/instructors/edit', row.id]);
+  }
+
+  goToDelete(row: Instructor) {
+    if (!row.id) return;
+    this.router.navigate(['/instructors', row.id, 'confirm-delete']);
+  }
 }
