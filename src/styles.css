@@ -240,3 +240,130 @@ h1, h2, h3, h4, h5, h6 {
 :root {
   scroll-behavior: smooth;
 }
+<<<<<<< Updated upstream
+=======
+
+/* Google Translate Widget Overrides */
+
+/* Hide the top banner frame completely */
+.goog-te-banner-frame.skiptranslate {
+  display: none !important;
+}
+
+.goog-te-banner-frame {
+  display: none !important;
+}
+
+/* Prevent body from being pushed down by the banner */
+body {
+  top: 0px !important;
+  position: static !important;
+}
+
+/* Hide all possible banner variations */
+iframe.goog-te-banner-frame {
+  display: none !important;
+}
+
+.goog-te-banner {
+  display: none !important;
+}
+
+/* Hide the Google Translate widget visually but keep it in DOM */
+#google_translate_element {
+  position: absolute !important;
+  left: -9999px !important;
+  width: 1px !important;
+  height: 1px !important;
+  overflow: hidden !important;
+}
+
+/* Hide the gadget inside the element */
+#google_translate_element .goog-te-gadget-simple {
+  background-color: transparent !important;
+  border: none !important;
+  font-family: inherit !important;
+  font-size: 14px !important;
+}
+
+/* Hide the Google Translate toolbar */
+.goog-te-gadget-icon {
+  display: none !important;
+}
+
+.goog-te-gadget-simple .goog-te-menu-value span {
+  display: none !important;
+}
+
+.goog-te-gadget-simple .goog-te-menu-value:before {
+  content: '' !important;
+}
+
+/* Additional rules to hide any Google Translate UI elements */
+.skiptranslate {
+  display: none !important;
+}
+
+/* But keep the translated content visible */
+.translated-ltr {
+  display: block !important;
+}
+
+.translated-rtl {
+  display: block !important;
+}
+
+/* Hide the "Show original" and other toolbar buttons */
+#goog-gt-tt,
+.goog-te-balloon-frame,
+.goog-tooltip {
+  display: none !important;
+}
+
+/* Ensure header stays at top */
+header,
+.modern-header {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 1000 !important;
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+/*--------------------------------------------------------------
+# Angular Material SnackBar
+--------------------------------------------------------------*/
+
+/* Success Snackbar */
+.snackbar-success {
+  background-color: var(--accent-color) !important;
+  color: var(--contrast-color) !important;
+  font-weight: 500;
+}
+
+/* Error Snackbar */
+.snackbar-error {
+  background-color: #d32f2f !important;
+  color: #ffffff !important;
+  font-weight: 500;
+}
+
+/* Dark Mode Support */
+.dark-mode .snackbar-success {
+  background-color: var(--secondary-accent) !important;
+  color: var(--contrast-color) !important;
+}
+
+.dark-mode .snackbar-error {
+  background-color: #b71c1c !important;
+}
+
+/* Shape & Shadow */
+.mat-mdc-snack-bar-container {
+  border-radius: 10px !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+>>>>>>> Stashed changes
