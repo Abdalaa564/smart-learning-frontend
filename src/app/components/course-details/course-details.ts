@@ -28,7 +28,7 @@ export class  CourseDetailsComponent implements OnInit {
     const id = idParam ? +idParam : null;
 
     if (!id) {
-      this.router.navigate(['/courses']);
+      this.router.navigate(['/Courses']);
       return;
     }
 
@@ -52,6 +52,6 @@ export class  CourseDetailsComponent implements OnInit {
   }
 
   goBack(): void {
-    this.router.navigate(['/courses']);
+    this.router.navigate(['/Courses']);
   }
 }

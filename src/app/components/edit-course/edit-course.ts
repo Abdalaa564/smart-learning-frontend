@@ -6,15 +6,16 @@ import { Instructor } from '../../models/iinstructor';
 import { CourseService, UpdateCourseRequest } from '../../Services/course.service';
 import { InstructorService } from '../../Services/instructor-srevices';
 import { Course } from '../../models/Course';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { Snackbar } from '../../shared/snackbar';
 
 @Component({
   selector: 'app-edit-course',
-  imports: [CommonModule, FormsModule, RouterModule,RouterLink],
+  imports: [CommonModule, FormsModule, RouterModule, RouterLink, MatSnackBarModule],
   templateUrl: './edit-course.html',
   styleUrl: './edit-course.css',
 })
 export class EditCourse implements OnInit {
-
   courseId!: number;
   selectedImageFile: File | null = null;
 
@@ -22,10 +23,10 @@ export class EditCourse implements OnInit {
 
   formModel = {
     crs_Name: '',
-  crs_Description: '',
-  price: 0,
-  instructorId: 0,
-  imageUrl: ''
+    crs_Description: '',
+    price: 0,
+    instructorId: 0,
+    imageUrl: '',
   };
 
   isSubmitting = false;
@@ -35,7 +36,8 @@ export class EditCourse implements OnInit {
     private route: ActivatedRoute,
     private courseService: CourseService,
     private instructorService: InstructorService,
-    private router: Router
+    private router: Router,
+    private snackBar: Snackbar
   ) {}
 
   ngOnInit(): void {
@@ -58,7 +60,7 @@ export class EditCourse implements OnInit {
               crs_Description: course.crs_Description,
               price: course.price,
               instructorId: course.instructorId,
-              imageUrl: course.imageUrl || ''
+              imageUrl: course.imageUrl || '',
             };
 
             this.isLoading = false;
@@ -66,10 +68,10 @@ export class EditCourse implements OnInit {
           error: (err) => {
             console.error('Error loading course by id', err);
             this.isLoading = false;
-          }
+          },
         });
       },
-      error: (err) => console.error('Error loading instructors', err)
+      error: (err) => console.error('Error loading instructors', err),
     });
   }
 
@@ -82,14 +84,14 @@ export class EditCourse implements OnInit {
       return;
     }
 
-   const dto: UpdateCourseRequest = {
-  crs_Name: this.formModel.crs_Name,
-  crs_Description: this.formModel.crs_Description,
-  price: this.formModel.price,
-  instructorId: this.formModel.instructorId,
-  imageUrl: this.formModel.imageUrl || null,
-  imageFile: this.selectedImageFile 
-};
+    const dto: UpdateCourseRequest = {
+      crs_Name: this.formModel.crs_Name,
+      crs_Description: this.formModel.crs_Description,
+      price: this.formModel.price,
+      instructorId: this.formModel.instructorId,
+      imageUrl: this.formModel.imageUrl || null,
+      imageFile: this.selectedImageFile,
+    };
 
     console.log('Submitting update dto = ', dto);
 
@@ -97,21 +99,22 @@ export class EditCourse implements OnInit {
       next: (res) => {
         console.log('Update response: ', res);
         this.isSubmitting = false;
-        this.router.navigate(['/Courses']);   // يرجع لليست الكورسات
+        this.snackBar.open('Course updated successfully', 'success');
+        this.router.navigate(['/Courses']); // يرجع لليست الكورسات
       },
       error: (err) => {
         console.error('Error updating course', err);
+        this.snackBar.open(err.error?.message || 'Failed to update course', 'error');
+
         this.isSubmitting = false;
-      }
+      },
     });
-    
   }
   onFileSelected(event: Event): void {
-  const input = event.target as HTMLInputElement;
-  if (input.files && input.files.length > 0) {
-    this.selectedImageFile = input.files[0];
-    console.log("Selected file:", this.selectedImageFile);
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.selectedImageFile = input.files[0];
+      console.log('Selected file:', this.selectedImageFile);
+    }
   }
-}
-
 }

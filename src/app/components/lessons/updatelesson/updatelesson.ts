@@ -4,10 +4,12 @@ import { Lesson } from '../../../models/LessonResource ';
 import { LessonService } from '../../../Services/lesson.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Snackbar } from '../../../shared/snackbar';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-updatelesson',
-  imports: [CommonModule,FormsModule,RouterLink],
+  imports: [CommonModule,FormsModule,RouterLink,MatSnackBarModule],
   templateUrl: './updatelesson.html',
   styleUrl: './updatelesson.css',
 })
@@ -28,7 +30,8 @@ export class EditLesson implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private lessonService: LessonService
+    private lessonService: LessonService,
+    private snackBar: Snackbar
   ) {}
 
   ngOnInit(): void {
@@ -75,6 +78,9 @@ export class EditLesson implements OnInit {
     this.lessonService.updateLesson(this.lessonId, body).subscribe({
       next: () => {
         this.isSubmitting = false;
+        this.successMessage = 'Lesson updated successfully.';
+        this.snackBar.open(this.successMessage, 'success');
+
         // تقدر تعرض رسالة أو ترجع لصفحة التفاصيل
          this.router.navigate([
           '/Courses',
@@ -88,6 +94,7 @@ export class EditLesson implements OnInit {
         console.error(err);
         this.isSubmitting = false;
         this.errorMessage = 'Error while updating lesson.';
+        this.snackBar.open(this.errorMessage, 'error');
       }
     });
   }

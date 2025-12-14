@@ -11,27 +11,31 @@
           class="form-control"
           [(ngModel)]="formModel.crs_Name"
           name="crs_Name"
+           #crsName="ngModel"
           required
-        >
+        />
+        <small class="text-danger" *ngIf="crsName.invalid && (crsName.touched || isSubmitting)">
+          Course name is required
+        </small>
       </div>
 
       <div class="col-md-4 mb-3">
         <label class="form-label" for="instructorId">Instructor *</label>
         <select
-        id="instructorId"
+          id="instructorId"
           class="form-select"
           [(ngModel)]="formModel.instructorId"
           name="instructorId"
           required
         >
           <option [ngValue]="0">Choose instructor</option>
-          <option
-            *ngFor="let inst of instructors"
-            [ngValue]="inst.id"
-          >
+          <option *ngFor="let inst of instructors" [ngValue]="inst.id">
             {{ inst.fullName }}
           </option>
         </select>
+        <small class="text-danger" *ngIf="formModel.instructorId === 0 && isSubmitting">
+          Instructor is required
+        </small>
       </div>
 
       <div class="col-md-4 mb-3">
@@ -42,7 +46,8 @@
           class="form-control"
           [(ngModel)]="formModel.price"
           name="price"
-        >
+        />
+ 
       </div>
     </div>
 
@@ -57,35 +62,23 @@
       ></textarea>
     </div>
     <div class="mb-3">
-  <label class="form-label">Upload New Image</label>
-  <input  placeholder="UploadImage"
-    type="file" 
-    class="form-control"
-    (change)="onFileSelected($event)"
-  >
-</div>
+      <label class="form-label">Upload New Image</label>
+      <input
+        placeholder="UploadImage"
+        type="file"
+        class="form-control"
+        (change)="onFileSelected($event)"
+      />
+    </div>
 
-
-    <button
-      type="submit"
-      class="btn btn-primary me-2"
-      [disabled]="isSubmitting"
-    >
+    <button type="submit" class="btn btn-primary me-2" [disabled]="isSubmitting">
       Save Changes
     </button>
 
-    <button
-      type="button"
-      class="btn btn-secondary"
-      [routerLink]="['/Courses']"
-    >
-      Cancel
-    </button>
+    <button type="button" class="btn btn-secondary" [routerLink]="['/Courses']">Cancel</button>
   </form>
 </div>
 
 <ng-template #loadingTpl>
-  <div class="container py-4">
-    Loading...
-  </div>
+  <div class="container py-4">Loading...</div>
 </ng-template>

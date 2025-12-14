@@ -3,10 +3,12 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { LessonService } from '../../../Services/lesson.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { Snackbar } from '../../../shared/snackbar';
 
 @Component({
   selector: 'app-add-lesson',
-  imports: [CommonModule, FormsModule, RouterLink],
+  imports: [CommonModule, FormsModule, RouterLink,MatSnackBarModule],
   templateUrl: './add-lesson.html',
   styleUrl: './add-lesson.css',
 })
@@ -27,7 +29,8 @@ export class AddLesson implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private lessonService: LessonService
+    private lessonService: LessonService,
+    private snackBar: Snackbar
   ) {}
 
   ngOnInit(): void {
@@ -68,7 +71,8 @@ export class AddLesson implements OnInit {
     this.lessonService.createLesson(formData).subscribe({
       next: (res) => {
         this.isSubmitting = false;
-        this.successMessage = 'Lesson created successfully.';
+        //this.successMessage = 'Lesson created successfully.';
+        this.snackBar.open('Lesson created successfully.', 'success');
 
         // ✅ بعد النجاح رجّع المستخدم لصفحة الـ lessons
         this.router.navigate([
@@ -82,7 +86,8 @@ export class AddLesson implements OnInit {
       error: (err) => {
         console.error(err);
         this.isSubmitting = false;
-        this.errorMessage = 'Error while creating lesson.';
+        // this.errorMessage = 'Error while creating lesson.';
+        this.snackBar.open( 'Error while creating lesson.', 'error');
       }
     });
   }

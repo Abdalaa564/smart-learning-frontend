@@ -8,10 +8,12 @@ import { AuthService } from '../../../Services/auth-service';
 import { SafePipe } from '../../../pipes/safe-pipe';
 import { Lesson } from '../../../models/LessonResource ';
 import { AttendanceService } from '../../../Services/attendance.service';
+import { Snackbar } from '../../../shared/snackbar';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-lesson-details',
-  imports: [CommonModule, RouterLink, SafePipe],
+  imports: [CommonModule, RouterLink, SafePipe,MatSnackBarModule],
   templateUrl: './lesson-details.html',
   styleUrl: './lesson-details.css',
 })
@@ -54,7 +56,8 @@ export class LessonDetails implements OnInit, OnDestroy {
     private lessonService: LessonService,
     private enrollmentService: EnrollmentService,
     private authService: AuthService,
-    private attendanceService: AttendanceService
+    private attendanceService: AttendanceService,
+    private snackBar: Snackbar
   ) { }
 
   ngOnInit(): void {
@@ -89,6 +92,8 @@ export class LessonDetails implements OnInit, OnDestroy {
           this.isCheckedIn = true;
           this.attendanceLoading = false;
           this.attendanceMessage = 'Checked in successfully!';
+          this.snackBar.open(this.attendanceMessage, 'success');
+         
         },
         error: (err) => {
           console.error('Check-in error', err);
@@ -96,6 +101,7 @@ export class LessonDetails implements OnInit, OnDestroy {
           event.target.checked = false;
           this.attendanceLoading = false;
           this.attendanceMessage = 'Failed to check in.';
+          this.snackBar.open( this.attendanceMessage, 'error');
         }
       });
     } else {
@@ -104,13 +110,16 @@ export class LessonDetails implements OnInit, OnDestroy {
           this.isCheckedIn = false;
           this.attendanceLoading = false;
           this.attendanceMessage = 'Checked out successfully!';
+          this.snackBar.open( this.attendanceMessage, 'success');
+
         },
         error: (err) => {
           console.error('Check-out error', err);
           this.isCheckedIn = true; // Revert
           event.target.checked = true;
           this.attendanceLoading = false;
-          this.attendanceMessage = 'Failed to check out.';
+         this.attendanceMessage = 'Failed to check out.';
+          this.snackBar.open( this.attendanceMessage, 'error');
         }
       });
     }
@@ -146,6 +155,7 @@ export class LessonDetails implements OnInit, OnDestroy {
       },
       error: (err) => {
         console.error('Enrollment check error:', err);
+
         this.checkFreeAccess();
       },
     });
@@ -186,9 +196,10 @@ export class LessonDetails implements OnInit, OnDestroy {
   }
   denyAccess(message?: string): void {
     this.canAccessContent = false;
-    this.errorMessage =
+     this.errorMessage =
       message ||
       'This lesson requires enrollment. Please enroll in the course to access this content.';
+      this.snackBar.open(this.errorMessage, 'error');
   }
   loadLesson(): void {
     if (!this.canAccessContent) {
@@ -210,6 +221,7 @@ export class LessonDetails implements OnInit, OnDestroy {
       error: (err) => {
         console.error('Error loading lesson:', err);
         this.errorMessage = 'An error occurred while loading the lesson.';
+       this.snackBar.open(this.errorMessage, 'error');
         this.isLoading = false;
       },
     });
