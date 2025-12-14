@@ -7,4 +7,5 @@ export interface Course {
   instructorName: string;
   imageUrl: string | null;
   instructorPhoto?: string | null;
+  rating?: number;
 }

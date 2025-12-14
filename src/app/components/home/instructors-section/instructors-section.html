@@ -13,14 +13,19 @@
           <div class="card-body text-center">
             <h5 class="card-title">{{ ins.fullName }}</h5>
             <!-- <p class="card-text">{{ ins.specialty }} <br> {{ ins.experience }} yrs experience</p> -->
-              <div class="d-flex justify-content-center align-items-center gap-2 mb-2">
-        <ng-container *ngFor="let star of [1,2,3,4,5]">
-          <i class="bi" 
-             [ngClass]="star <= ins.rating ? 'bi-star-fill text-warning' : 'bi-star'">
-          </i>
-        </ng-container>
-        <span>({{ ins.rating }})</span>
-      </div>
+  <div class="d-flex justify-content-center align-items-center gap-2 mb-2">
+  <ng-container *ngFor="let star of [1,2,3,4,5]">
+    <i class="bi"
+       [ngClass]="
+         star <= (ins.rating || 0)
+         ? 'bi-star-fill text-warning'
+         : 'bi-star text-muted'
+       ">
+    </i>
+  </ng-container>
+
+  <span>({{ ins.rating || 0 | number:'1.1-1' }})</span>
+</div>
       <div class="mb-2">
         <i class="bi bi-people-fill me-1"></i>{{ ins.numberOfStudents }} Students
       </div>

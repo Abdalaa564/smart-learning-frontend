@@ -56,4 +56,7 @@ export class RatingService {
   hasUserRatedInstructor(instructorId: number): Observable<HasRatedResponse> {
   return this.http.get<HasRatedResponse>(`${this.apiUrl}/InstructorRating/hasRated/${instructorId}`);
 }
+  hasUserRatedCourse(courseId: number): Observable<HasRatedResponse> {
+  return this.http.get<HasRatedResponse>(`${this.apiUrl}/CourseRating/hasRated/${courseId}`);
+}
 }
