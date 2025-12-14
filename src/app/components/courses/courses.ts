@@ -17,6 +17,7 @@ import { PaginationComponent } from '../../shared/pagination/pagination';
 import { SafePipe } from '../../pipes/safe-pipe';
 import { Snackbar } from '../../shared/snackbar';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { RatingService } from '../../Services/rating-service';
 
 @Component({
   selector: 'app-courses',
@@ -84,7 +85,8 @@ export class Courses implements OnInit {
     private enrollmentService: EnrollmentService,
     private router: Router,
     private route: ActivatedRoute,
-   private snackBar: Snackbar
+   private snackBar: Snackbar,
+   private ratingService: RatingService  
 
   ) { }
 
@@ -95,7 +97,9 @@ export class Courses implements OnInit {
     // Check if returning from payment
     this.checkPaymentCallback();
   }
-
+ getStarsArray(): number[] {
+  return [1, 2, 3, 4, 5];
+}
   /**
    * Check if user is returning from Paymob payment
    */
@@ -142,21 +146,35 @@ export class Courses implements OnInit {
   loadData(): void {
     this.isLoading = true;
 
-    forkJoin({
-      courses: this.courseService.getAllCourses(),
-      instructors: this.instructorService.getAll(),
-    }).subscribe({
-      next: (data) => {
-        this.courses = data.courses;
-        this.instructors = data.instructors;
-        this.isLoading = false;
-      },
-      error: (err) => {
-        console.error('Error loading data:', err);
-        this.isLoading = false;
-         this.snackBar.open('Failed to load courses', 'error');
-      },
-    });
+  forkJoin({
+    courses: this.courseService.getAllCourses(),
+    instructors: this.instructorService.getAll(),
+  }).subscribe({
+    next: (data) => {
+      this.courses = data.courses;
+      this.instructors = data.instructors;
+
+      // ⭐ تحميل Rating لكل Course
+      this.courses.forEach(course => {
+        if (course.crs_Id) {
+          this.ratingService.getCourseAverage(course.crs_Id).subscribe({
+            next: res => {
+              course.rating = res.average;
+            },
+            error: () => {
+              course.rating = 0;
+            }
+          });
+        }
+      });
+
+      this.isLoading = false;
+    },
+    error: () => {
+      this.isLoading = false;
+      this.snackBar.open('Failed to load courses', 'error');
+    },
+  });
   }
 
   getCourseImage(course: Course): string {

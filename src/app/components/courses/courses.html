@@ -32,7 +32,16 @@
             <span class="badge category">Programming</span>
             <span class="badge level">All Levels</span>
           </div>
-
+                  <div class="course-rating mb-2">
+          <ng-container *ngFor="let star of getStarsArray()">
+            <i class="bi" [ngClass]="{
+        'bi-star-fill text-warning': star <= (course.rating || 0),
+        'bi-star text-muted': star > (course.rating || 0)
+      }">
+            </i>
+          </ng-container>
+          <small class="ms-1">({{ course.rating || 0 }})</small>
+        </div>
           <h5 class="card-title">{{ course.crs_Name }}</h5>
           <p class="card-text ">{{ course.crs_Description }}</p>
 
@@ -79,6 +88,7 @@
             </div>
           </div>
         </div>
+
       </div>
     </div>
   </div>
