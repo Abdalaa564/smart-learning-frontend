@@ -5,10 +5,12 @@ import { AuthService } from '../../../Services/auth-service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { environment } from '../../../environment/environment';
+import {  MatSnackBarModule } from '@angular/material/snack-bar';
+import { Snackbar } from '../../../shared/snackbar';
 
 @Component({
   selector: 'app-my-courses',
-  imports: [CommonModule],
+  imports: [CommonModule,MatSnackBarModule],
   templateUrl: './my-courses.html',
   styleUrl: './my-courses.css',
 })
@@ -19,14 +21,16 @@ export class MyCourses implements OnInit {
   constructor(
     private enrollmentService: EnrollmentService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private snackbar:Snackbar
   ) {}
 
   ngOnInit(): void {
   this.studentId = this.authService.UserId!;
 
   if (!this.studentId) {
-    alert("Please login first.");
+   // alert("Please login first.");
+    this.snackbar.open("Please login first.",'error');
     this.router.navigate(['/login']);
     return;
   }
@@ -41,7 +45,8 @@ export class MyCourses implements OnInit {
       },
       error: (err) => {
         console.error(err);
-        alert("Failed to load your courses.");
+        this.snackbar.open("Failed to load your courses.",'error');
+        //alert("Failed to load your courses.");
       }
     });
   }

@@ -69,7 +69,7 @@
           </a>
         </li>
 
-        <li *ngIf="isInstructorOrAdmin">
+        <!-- <li *ngIf="isInstructorOrAdmin">
           <a
             routerLink="/lesson/1/create-quiz"
             routerLinkActive="active"
@@ -77,7 +77,7 @@
           >
             Quiz
           </a>
-        </li>
+        </li> -->
       </ul>
     </nav>
 
@@ -87,28 +87,56 @@
         [ngClass]="(isDarkMode$ | async) ? 'bi-sun-fill text-warning' : 'bi-moon-fill text-dark'"></i>
       </button>
 
-      <button class="language-selector">
-        <i class="bi bi-globe"></i>
-      </button>
+            <div class="language-selector-container" [class.show]="isLangDropdownOpen">
+        <button class="language-selector" (click)="toggleLangDropdown()">
+          <i class="bi bi-globe"></i>
+        </button>
+        <div class="lang-dropdown-menu" [class.show]="isLangDropdownOpen">
+          <a (click)="changeLanguage('ar')">Arabic</a>
+          <a (click)="changeLanguage('en')">English</a>
+          <a (click)="changeLanguage('de')">German</a>
+        </div>
+      </div>
+      <!-- Hidden widget necessary for API -->
+      <div id="google_translate_element"
+        style="position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden;"></div>
+
 
       <!-- ========== لو مفيش يوزر (مش لوجين) ========== -->
       <ng-container *ngIf="!(currentUser$ | async)">
         <!-- Register as dropdown -->
         <div class="dropdown me-2" [class.show]="isRegisterDropdownOpen">
-          <button class="btn-signup dropdown-toggle" type="button" id="registerDropdown"
-            (click)="toggleRegisterDropdown()" [attr.aria-expanded]="isRegisterDropdownOpen">
+          <button
+            class="btn-signup dropdown-toggle"
+            type="button"
+            id="registerDropdown"
+            (click)="toggleRegisterDropdown()"
+            [attr.aria-expanded]="isRegisterDropdownOpen"
+          >
             Register as
           </button>
 
-          <ul class="dropdown-menu" aria-labelledby="registerDropdown" [class.show]="isRegisterDropdownOpen">
+          <ul
+            class="dropdown-menu"
+            aria-labelledby="registerDropdown"
+            [class.show]="isRegisterDropdownOpen"
+          >
             <li>
-              <a class="dropdown-item" routerLink="/register" (click)="isRegisterDropdownOpen = false">
+              <a
+                class="dropdown-item"
+                routerLink="/register"
+                (click)="isRegisterDropdownOpen = false"
+              >
                 Student
               </a>
             </li>
 
             <li>
-              <a class="dropdown-item" routerLink="/register-instructor" (click)="isRegisterDropdownOpen = false">
+              <a
+                class="dropdown-item"
+                routerLink="/register-instructor"
+                (click)="isRegisterDropdownOpen = false"
+              >
                 Instructor
               </a>
             </li>

@@ -1,18 +1,14 @@
 <!-- Profile header -->
 <div class="card mb-3">
-  <div
-    class="card-img-top"
-    style="
+  <div class="card-img-top" style="
       height: 120px;
-      background: linear-gradient(90deg, #0d6efd, #6f42c1);
-    "
-  ></div>
+      background: linear-gradient(90deg, var(--accent-color), var(--secondary-accent));
+    "></div>
   <div class="card-body">
     <div class="d-flex align-items-end" style="margin-top: -60px">
       <div
         class="rounded-circle bg-light border border-white shadow d-flex align-items-center justify-content-center me-3"
-        style="width: 100px; height: 100px"
-      >
+        style="width: 100px; height: 100px">
         <span class="fs-1 fw-bold text-secondary">
           {{ getInitials(adminName) }}
         </span>
@@ -66,40 +62,23 @@
       <div class="row g-3">
         <div class="col-12 col-md-6">
           <label class="form-label">Full Name</label>
-          <input placeholder="name"
-            class="form-control"
-            type="text"
-            [value]="adminName"
-          />
+          <input placeholder="name" class="form-control" type="text" [value]="adminName" />
         </div>
         <div class="col-12 col-md-6">
           <label class="form-label">Email</label>
-          <input placeholder="email"
-            class="form-control"
-            type="email"
-            value="admin@learnzie.com"
-          />
+          <input placeholder="email" class="form-control" type="email" value="admin@learnzie.com" />
         </div>
         <div class="col-12 col-md-6">
           <label class="form-label">Phone</label>
-          <input placeholder="tel"
-            class="form-control"
-            type="tel"
-            value="+1 234 567 8900"
-          />
+          <input placeholder="tel" class="form-control" type="tel" value="+1 234 567 8900" />
         </div>
         <div class="col-12 col-md-6">
           <label class="form-label">Role</label>
-          <input placeholder="tel"
-            class="form-control"
-            type="text"
-            value="Super Administrator"
-            disabled
-          />
+          <input placeholder="tel" class="form-control" type="text" value="Super Administrator" disabled />
         </div>
       </div>
 
-      <button type="button" class="btn btn-primary mt-3">
+      <button type="button" class="btn btn-accent mt-3">
         Save Changes
       </button>
     </form>

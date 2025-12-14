@@ -12,7 +12,7 @@ import { RatingService } from '../../Services/rating-service';
 @Component({
   selector: 'app-instructors-list',
   standalone: true,
-  imports: [CommonModule, RouterLink, SkeletonCardComponent, PaginationComponent],
+  imports: [CommonModule,  SkeletonCardComponent, PaginationComponent],
   templateUrl: './instructors.html',
   styleUrls: ['./instructors.css']
 })

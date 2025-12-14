@@ -1,13 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { Instructor } from '../../../models/iinstructor';
 import { InstructorService } from '../../../Services/instructor-srevices';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Snackbar } from '../../../shared/snackbar';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-edit-instructor',
-  imports:[CommonModule, FormsModule],
+  imports:[CommonModule, FormsModule,MatSnackBarModule],
   templateUrl: './edit-instructor.html',
   styleUrl: './edit-instructor.css',
 })
@@ -16,11 +18,14 @@ export class EditInstructorComponent implements OnInit {
   model: Partial<Instructor> = {};
   id!: number;
   loading = true;
+  isSubmitting = false;
 
   constructor(
     private service: InstructorService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+        private snackBar: Snackbar
+
   ) {}
 
   ngOnInit(): void {
@@ -38,15 +43,26 @@ export class EditInstructorComponent implements OnInit {
     });
   }
 
-  save() {
-  this.service.update(this.id, this.model).subscribe({
-    next: (msg) => {
-      console.log('Update response:', msg); // Instructor updated successfully
-      this.router.navigate(['/instructors']); // ← يرجع لصفحة الإنستراكتورز
-    },
-    error: (err) => {
-      console.error('ERROR FROM UPDATE:', err);
+    save(form: NgForm) {
+    this.isSubmitting = true;
+
+    if (form.invalid) {
+      this.snackBar.open('Please fill in all required fields correctly', 'error');
+      this.isSubmitting = false;
+      return;
     }
-  });
+
+    this.service.update(this.id, this.model).subscribe({
+      next: msg => {
+        this.snackBar.open('Instructor updated successfully', 'success');
+        this.isSubmitting = false;
+        this.router.navigate(['/instructors']);
+      },
+      error: err => {
+        console.error('ERROR FROM UPDATE:', err);
+        this.snackBar.open(err.error?.message || 'Failed to update instructor', 'error');
+        this.isSubmitting = false;
+      }
+    });
   }
 }

@@ -1,0 +1,45 @@
+/*--------------------------------------------------------------
+# Why Us Section
+--------------------------------------------------------------*/
+.why-us {
+  background-color: var(--background-color);
+}
+
+.why-card {
+  background-color: var(--surface-color);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  transition: all 0.3s ease;
+}
+
+.why-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 10px 30px color-mix(in srgb, var(--accent-color), transparent 80%);
+}
+
+.why-card .icon {
+  width: 70px;
+  height: 70px;
+  margin: 0 auto;
+  border-radius: 50%;
+  background-color: color-mix(in srgb, var(--accent-color), transparent 85%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.why-card .icon i {
+  font-size: 28px;
+  color: var(--accent-color);
+}
+
+.why-card h5 {
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.why-card p {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin-bottom: 0;
+}

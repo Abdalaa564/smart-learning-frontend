@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <title>SmartLearningAng</title>
@@ -8,9 +9,70 @@
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
 
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
+
 <body>
   <app-root></app-root>
 </body>
+<!-- Google Translate -->
+<script type="text/javascript">
+  function googleTranslateElementInit() {
+    new google.translate.TranslateElement({
+      pageLanguage: 'en',
+      includedLanguages: 'ar,en,de',
+      autoDisplay: false
+    }, 'google_translate_element');
+  }
+</script>
+<script type="text/javascript"
+  src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+<script type="text/javascript">
+  // Force hide Google Translate banner
+  window.addEventListener('load', function () {
+    // Hide banner immediately with inline styles
+    var style = document.createElement('style');
+    style.innerHTML = `
+      .goog-te-banner-frame,
+      .goog-te-banner-frame.skiptranslate,
+      iframe.goog-te-banner-frame {
+        display: none !important;
+      }
+      body {
+        top: 0px !important;
+        position: static !important;
+      }
+    `;
+    document.head.appendChild(style);
+
+    // Monitor for banner and remove it immediately
+    var observer = new MutationObserver(function (mutations) {
+      mutations.forEach(function (mutation) {
+        mutation.addedNodes.forEach(function (node) {
+          if (node.nodeType === 1) {
+            // Check if it's the banner frame
+            if (node.classList && (node.classList.contains('goog-te-banner-frame') ||
+              node.classList.contains('skiptranslate'))) {
+              node.style.display = 'none';
+            }
+            // Check if it's an iframe banner
+            if (node.tagName === 'IFRAME' && node.className.includes('goog-te-banner')) {
+              node.style.display = 'none';
+            }
+          }
+        });
+      });
+    });
+
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true
+    });
+  });
+</script>
+<!-- End Google Translate -->
+
 <script src="https://meet.jit.si/external_api.js"></script>
+
 </html>

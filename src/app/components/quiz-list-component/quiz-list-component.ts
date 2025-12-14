@@ -4,10 +4,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { QuizService } from '../../Services/quiz-service';
 import { CommonModule } from '@angular/common';
 import { SkeletonCardComponent } from '../../shared/Skeleton/skeleton-card/skeleton-card';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { Snackbar } from '../../shared/snackbar';
 
 @Component({
   selector: 'app-quiz-list-component',
-  imports: [CommonModule, SkeletonCardComponent],
+  imports: [CommonModule, SkeletonCardComponent,MatSnackBarModule],
   templateUrl: './quiz-list-component.html',
   styleUrl: './quiz-list-component.css',
 })
@@ -20,7 +22,8 @@ export class QuizListComponent implements OnInit {
   constructor(
     private quizService: QuizService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private snackBar: Snackbar
   ) {}
 
   ngOnInit(): void {
@@ -62,10 +65,12 @@ export class QuizListComponent implements OnInit {
       this.quizService.deleteQuiz(quizId).subscribe({
         next: () => {
           this.loadQuizzes();
+          this.snackBar.open('Quiz deleted successfully', 'success');
         },
         error: (error) => {
           console.error('Error deleting quiz:', error);
-          alert('Failed to delete quiz');
+          //alert('Failed to delete quiz');
+          this.snackBar.open('Failed to delete quiz', 'error');
         }
       });
     }

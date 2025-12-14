@@ -1,30 +1,42 @@
-<!-- <section id="featured-instructors" class="featured-instructors section">
-  <div class="container section-title" data-aos="fade-up">
-    <h2>Featured Instructors</h2>
-    <p>Learn from the best instructors in the industry</p>
-  </div>
+<!-- Our Teachers Section -->
+<section id="our-teachers" class="py-5 ">
+  <div class="container" data-aos="fade-up">
+    <div class="section-title text-center mb-4">
+      <h2>Our Expert Instructors</h2>
+      <p>Meet our experienced instructors who will guide your learning journey</p>
+    </div>
 
-  <div class="container" data-aos="fade-up" data-aos-delay="100">
-    <div class="row gy-4">
-      <div class="col-xl-3 col-lg-4 col-md-6" *ngFor="let ins of instructors">
-        <app-card [img]="ins.avatarUrl" [title]="ins.name" [subtitle]="ins.title" [clickable]="true">
-          <p class="badge" *ngIf="ins.verified">✔ Verified</p>
-
-          <p class="meta">
-            ⭐ {{ ins.rating }} ({{ ins.reviewsCount | number }}) • {{ ins.studentsTotal | number }} students
-          </p>
-
-          <app-button variant="primary" size="sm" [routerLink]="['/instructors', ins.id]">
-            View Profile
-          </app-button>
-
-          <div class="social-links" *ngIf="ins.socials">
-            <a *ngFor="let key of (ins.socials | keyvalue)" [href]="key.value" target="_blank">
-              <i class="bi" [ngClass]="'bi-' + key.key"></i>
-            </a>
+    <div class="row g-4">
+      <div class="col-lg-3 col-md-6" *ngFor="let ins of instructors | slice:0:4">
+        <div class="card h-100 shadow-sm">
+          <img [src]="ins.photoUrl || 'assets/images/default-instructor.jpg'" class="card-img-top" alt="{{ins.fullName}}">
+          <div class="card-body text-center">
+            <h5 class="card-title">{{ ins.fullName }}</h5>
+            <!-- <p class="card-text">{{ ins.specialty }} <br> {{ ins.experience }} yrs experience</p> -->
+              <div class="d-flex justify-content-center align-items-center gap-2 mb-2">
+        <ng-container *ngFor="let star of [1,2,3,4,5]">
+          <i class="bi" 
+             [ngClass]="star <= ins.rating ? 'bi-star-fill text-warning' : 'bi-star'">
+          </i>
+        </ng-container>
+        <span>({{ ins.rating }})</span>
+      </div>
+      <div class="mb-2">
+        <i class="bi bi-people-fill me-1"></i>{{ ins.numberOfStudents }} Students
+      </div>
+            <button class="btn btn-outline-accent btn-sm" (click)="goToProfile(ins.id)">
+              View Profile
+            </button>
           </div>
-        </app-card>
+        </div>
       </div>
     </div>
   </div>
-</section> -->
+<div class="text-center mt-4">
+  <button class="btn btn-view-all" routerLink="/instructors">
+    View All Instructors
+  </button>
+</div>
+
+
+</section>

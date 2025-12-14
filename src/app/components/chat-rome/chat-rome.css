@@ -13,7 +13,7 @@
 .chat-wrapper {
   display: flex;
   height: 100%;
-  background: white;
+  background:var(--background-color);
   border-radius: 16px;
   overflow: hidden;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
@@ -25,7 +25,7 @@
 
 .chat-sidebar {
   width: 320px;
-  background: white;
+  background:var(--background-color);
   border-right: 1px solid #e5e7eb;
   display: flex;
   flex-direction: column;
@@ -59,7 +59,7 @@
   border-radius: 50%;
   border: none;
   background: var(--accent-color, #074226);
-  color: white;
+  color: var(--background-color);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -96,7 +96,7 @@
 }
 
 .session-item.active {
-  background: linear-gradient(90deg, #f0fdf4 0%, #dcfce7 100%);
+  background: linear-gradient(90deg, var(--background-color) 0%, var(--default-color) 100%);
   border-left: 3px solid var(--accent-color, #074226);
 }
 
@@ -108,7 +108,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
+  color: var(--background-color);
   font-size: 1.5rem;
   flex-shrink: 0;
 }
@@ -120,14 +120,14 @@
 
 .session-name {
   font-weight: 600;
-  color: var(--heading-color, #223a58);
+  color: var(--heading-color);
   margin-bottom: 0.25rem;
   font-size: 0.95rem;
 }
 
 .session-preview {
   font-size: 0.85rem;
-  color: var(--text-muted, #666666);
+  color: var(--text-muted);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -142,7 +142,7 @@
 
 .message-count {
   background: var(--accent-color, #074226);
-  color: white;
+  color:var(--background-color);
   font-size: 0.75rem;
   padding: 0.25rem 0.5rem;
   border-radius: 12px;
@@ -184,13 +184,13 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  background: #fafbfc;
+  background: var(--background-color);
 }
 
 /* Chat Header */
 .chat-header {
   padding: 0.75rem;
-  background: white;
+  background:var(--background-color);
   border-bottom: 1px solid #e5e7eb;
   display: flex;
   align-items: center;
@@ -211,7 +211,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
+  color:var(--background-color);
   font-size: 1.5rem;
 }
 
@@ -259,7 +259,7 @@
   width: 36px;
   /* Start collapsed */
   border-radius: 20px;
-  background: white;
+  background: var(--background-color);
   border: 1px solid transparent;
   padding: 0;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -290,7 +290,7 @@
   height: 36px;
   border-radius: 50%;
   border: none;
-  background: #f3f4f6;
+  background:var(--background-color);
   color: var(--default-color, #394450);
   display: flex;
   align-items: center;
@@ -435,12 +435,12 @@
 
 .message-user .message-text {
   background: var(--accent-color, #074226);
-  color: white;
+  color:var(--background-color);
   border-bottom-right-radius: 4px;
 }
 
 .message-bot .message-text {
-  background: white;
+  background:var(--background-color);
   color: var(--default-color, #394450);
   border: 1px solid #e5e7eb;
   border-bottom-left-radius: 4px;
@@ -459,7 +459,7 @@ mark.highlight {
 
 .message-user mark.highlight {
   background-color: rgba(255, 255, 255, 0.3);
-  color: white;
+  color: var(--background-color);
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
@@ -469,14 +469,14 @@ mark.highlight {
 
 .chat-input-wrapper {
   padding: 0rem 1rem 0.5rem 1rem;
-  background: #ffffff00;;
+  background:var(--background-color);
 }
 
 .chat-input-container {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  background: #f9fafb;
+  background: var(--background-color);
   padding: 0.5rem;
   border-radius: 24px;
   border: 1px solid #e5e7eb;

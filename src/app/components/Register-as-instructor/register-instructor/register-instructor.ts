@@ -14,6 +14,8 @@ import { AuthService } from '../../../Services/auth-service';
 import { RegisterInstructorRequest } from '../../../models/iinstructor';
 import { InstructorAccountStepComponent } from '../instructor-account-step/instructor-account-step';
 import { InstructorProfileStepComponent } from '../instructor-profile-step/instructor-profile-step';
+import {  MatSnackBarModule } from '@angular/material/snack-bar';
+import { Snackbar } from '../../../shared/snackbar';
 
 
 @Component({
@@ -24,7 +26,8 @@ import { InstructorProfileStepComponent } from '../instructor-profile-step/instr
     ReactiveFormsModule,
     RouterModule,
     InstructorAccountStepComponent,
-    InstructorProfileStepComponent
+    InstructorProfileStepComponent,
+    MatSnackBarModule
   ],
   templateUrl: './register-instructor.html',
   styleUrl: './register-instructor.css'
@@ -39,37 +42,36 @@ export class RegisterInstructorComponent {
   // Toast
   showToast = false;
   toastMessage = '';
-  toastType: 'success' | 'error' = 'success';
+  toastType: 'success' | 'error' = 'success'; 
+  
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private snackBar: Snackbar
   ) {
     this.registerForm = this.fb.group(
       {
         // STEP 1
-        email: ['', [Validators.required, Validators.email]],
-        password: ['', [Validators.required, Validators.minLength(6)]],
-        confirmPassword: ['', Validators.required],
-        fullName: ['', Validators.required],
-        jobTitle: ['', Validators.required],
-        phoneNumber: ['', [
-          Validators.required,
-          Validators.pattern(/^01[0-2,5]{1}[0-9]{8}$/)
-        ]],
-        youtubeChannelUrl: [''],
+       email: ['', [Validators.required, Validators.email]],
+    password: ['', [Validators.required, Validators.minLength(6)]],
+    confirmPassword: ['', Validators.required],
+    fullName: ['', Validators.required],
+    jobTitle: ['', Validators.required],
+    phoneNumber: ['',[ Validators.required, Validators.pattern(/^01[0-2,5]{1}[0-9]{8}$/) ]],
+    youtubeChannelUrl: [ '', [ Validators.pattern(/^https?:\/\/.+$/)  ]],
 
-        // STEP 2
-        photoUrl: [''],
-        certificateUrl: [''],
-        cvUrl: [''],
-        specialization: ['', Validators.required],
-        universityName: ['', Validators.required],
-        about: ['', [Validators.required, Validators.minLength(20)]]
-      },
-      { validators: this.passwordMatchValidator }
-    );
+    // STEP 2
+    photoUrl: ['',[ Validators.pattern(/^https?:\/\/.+$/)] ],
+    certificateUrl: ['',[ Validators.pattern(/^https?:\/\/.+$/) ]],
+    cvUrl: [ '',[Validators.pattern(/^https?:\/\/.+$/)]],
+    specialization: ['', Validators.required],
+    universityName: ['', Validators.required],
+    about: ['', [Validators.required, Validators.minLength(20)]]
+  },
+  { validators: this.passwordMatchValidator }
+);
   }
 
   // Validator بتاع الباسورد
@@ -120,12 +122,14 @@ export class RegisterInstructorComponent {
 
   onBackToStep1() {
     this.currentStep = 1;
-  }
+  } 
+ 
 
   onSubmit() {
     this.submitted = true;
 
     if (this.registerForm.invalid) {
+      this.snackBar.open('Please correct the errors in the form.', 'error');
       return;
     }
 
@@ -137,9 +141,10 @@ export class RegisterInstructorComponent {
     this.authService.registerInstructor(payload).subscribe({
       next: () => {
         this.loading = false;
-        this.toastType = 'success';
-        this.toastMessage = 'Wait until admin approve your profile';
-        this.showToast = true;
+        // this.toastType = 'success';
+        // this.toastMessage = 'Wait until admin approve your profile';
+        // this.showToast = true;
+        this.snackBar.open('Wait until admin approve your profile', 'success');
 
         setTimeout(() => {
           this.showToast = false;
@@ -148,10 +153,10 @@ export class RegisterInstructorComponent {
       },
       error: (err) => {
         this.loading = false;
-        this.toastType = 'error';
-        this.toastMessage =
+       
+        const message =
           err.error?.message || 'Registration failed, please try again';
-        this.showToast = true;
+     this.snackBar.open(message, 'error');
 
         setTimeout(() => {
           this.showToast = false;

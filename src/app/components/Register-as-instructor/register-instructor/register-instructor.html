@@ -1,4 +1,4 @@
- <div class="bg-light d-flex align-items-center justify-content-center min-vh-100 py-4">
+ <div class=" d-flex align-items-center justify-content-center min-vh-100 py-4">
 
   <div class="card shadow-lg register-card my-4 w-100">
     
@@ -14,7 +14,7 @@
     <form 
       [formGroup]="registerForm"
       (ngSubmit)="onSubmit()"
-      class="row g-3"
+      class="row g-3" 
     >
 
       <app-instructor-account-step
@@ -32,7 +32,7 @@
 
     </form>
 
-    <p class="text-center mt-3 mb-0 text-muted">
+    <p class="text-center mt-3 mb-0 ">
       Already have an instructor account?
       <a routerLink="/login" class="text-decoration-none accent-link">Login</a>
     </p>
@@ -53,6 +53,6 @@
       aria-atomic="true"
       [ngClass]="toastType === 'success' ? 'bg-success text-white' : 'bg-danger text-white'">
       <div class="toast-body">{{ toastMessage }}</div>
-    </div>
+    </div> 
   </div>
 

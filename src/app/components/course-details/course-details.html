@@ -1,0 +1,60 @@
+<div class="container py-4">
+  <button class="btn btn-outline-secondary mb-3" (click)="goBack()">
+    <i class="fa fa-arrow-left me-2"></i> Back to Courses
+  </button>
+
+  <!-- Skeleton -->
+  <div *ngIf="isLoading">
+    <app-skeleton-card
+      [showImage]="true"
+      [lines]="4"
+      [showActions]="true"
+      imageHeight="260px"
+      animation="wave"
+    ></app-skeleton-card>
+  </div>
+
+  <!-- Content -->
+  <div class="row" *ngIf="!isLoading && course">
+    <div class="col-md-5 mb-3">
+      <div class="image-wrapper shadow-sm">
+        <img alt=""
+          [src]="getCourseImage()"
+          [alt]="course.crs_Name"
+          class="img-fluid rounded"
+        />
+      </div>
+    </div>
+
+    <div class="col-md-7">
+      <h2 class="fw-bold mb-3">{{ course.crs_Name }}</h2>
+
+      <p class="text-muted">{{ course.crs_Description }}</p>
+
+      <div class="mb-3">
+        <span class="badge bg-success me-2">
+          <i class="fa fa-money-bill me-1"></i>
+          {{ course.price }} EGP
+        </span>
+      </div>
+
+      <div class="mt-4">
+        <h5>What you will learn</h5>
+        <ul class="list-unstyled">
+          <li><i class="fa fa-check text-success me-2"></i> Topic 1</li>
+          <li><i class="fa fa-check text-success me-2"></i> Topic 2</li>
+          <li><i class="fa fa-check text-success me-2"></i> Topic 3</li>
+        </ul>
+      </div>
+
+      <div class="mt-4 d-flex gap-2">
+        <button class="btn btn-primary">
+          <i class="fa fa-graduation-cap me-2"></i> Enroll Now
+        </button>
+        <button class="btn btn-outline-primary" [routerLink]="['/Courses', course.crs_Id, 'units']">
+          <i class="fa fa-book-open me-2"></i> View Units
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

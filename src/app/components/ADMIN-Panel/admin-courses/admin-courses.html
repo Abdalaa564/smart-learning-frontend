@@ -2,7 +2,7 @@
   <div class="card-header d-flex justify-content-between">
     <h5 class="mb-0">Courses Management</h5>
     <ng-container *ngIf="isAdmin">
-      <button class="btn btn-primary btn-sm" (click)="add.emit()">
+      <button class="btn btn-accent btn-sm rounded-pill px-3" (click)="add.emit()">
         <i class="bi bi-plus-lg me-1"></i> Add New
       </button>
     </ng-container>
@@ -36,17 +36,19 @@
             <td>{{ row.crs_Description }}</td>
             <td>{{ getCourseEnrollCount(row.crs_Id) }}</td>
             <td class="text-end">
-              <button class="btn btn-sm btn-outline-primary me-1" (click)="view.emit(row)" >
-                <i class="bi bi-eye"></i>
-              </button>
-              <ng-container *ngIf="isAdmin">
-                <button class="btn btn-sm btn-outline-success me-1" (click)="edit.emit(row)">
-                  <i class="bi bi-pencil"></i>
+              <div class="d-flex gap-2 justify-content-end">
+                <button class="icon-btn-new btn btn-sm btn-light" (click)="view.emit(row)" title="View Details">
+                  <i class="bi bi-eye text-secondary"></i>
                 </button>
-                <button class="btn btn-sm btn-outline-danger" (click)="delete.emit(row)">
-                  <i class="bi bi-trash"></i>
-                </button>
-              </ng-container>
+                <ng-container *ngIf="isAdmin">
+                  <button class="icon-btn-new btn btn-sm btn-light" (click)="edit.emit(row)" title="Edit">
+                    <i class="bi bi-pencil-square text-primary"></i>
+                  </button>
+                  <button class="icon-btn-new btn btn-sm btn-light" (click)="delete.emit(row)" title="Delete">
+                    <i class="bi bi-trash text-danger"></i>
+                  </button>
+                </ng-container>
+              </div>
             </td>
           </tr>
         </tbody>

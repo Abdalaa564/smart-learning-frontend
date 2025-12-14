@@ -4,11 +4,13 @@ import { AddCourseRequest, CourseService } from '../../Services/course.service';
 import { InstructorService } from '../../Services/instructor-srevices';
 import { Router, RouterLink, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { Snackbar } from '../../shared/snackbar';
 
 @Component({
   selector: 'app-add-course',
-  imports: [CommonModule, FormsModule, RouterModule,RouterLink],
+  imports: [CommonModule, FormsModule, RouterModule,RouterLink,MatSnackBarModule],
   templateUrl: './add-course.html',
   styleUrl: './add-course.css',
 })
@@ -30,7 +32,8 @@ export class AddCourse implements OnInit {
   constructor(
     private courseService: CourseService,
     private instructorService: InstructorService,
-    private router: Router
+    private router: Router,
+     private snackBar: Snackbar
   ) {}
 
   ngOnInit(): void {
@@ -49,14 +52,15 @@ export class AddCourse implements OnInit {
     }
   }
 
-  onSubmit(): void {
+  onSubmit(form: NgForm): void {
     this.isSubmitting = true;
 
-    if (!this.formModel.crs_Name || !this.formModel.instructorId) {
-      alert('Instructor and Course Name are required');
+       if (form.invalid || this.formModel.instructorId===0) {
+      this.snackBar.open('Please fill in required fields', 'error');
       this.isSubmitting = false;
       return;
     }
+
 
     const request: AddCourseRequest = {
       crs_Name: this.formModel.crs_Name,
@@ -70,10 +74,12 @@ export class AddCourse implements OnInit {
     this.courseService.addCourse(request).subscribe({
       next: () => {
         this.isSubmitting = false;
+         this.snackBar.open('Course added successfully', 'success');
         this.router.navigate(['/Courses']); // يرجّعك لليست الكورسات
       },
       error: (err) => {
         console.error(err);
+         this.snackBar.open(err.error?.message || 'Failed to add course', 'error');
         this.isSubmitting = false;
       }
     });

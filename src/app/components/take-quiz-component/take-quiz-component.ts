@@ -3,11 +3,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription, interval } from 'rxjs';
 import { StartQuizDto, QuestionDto, SubmitAnswerDto } from '../../models/exam-question';
 import { QuizService } from '../../Services/quiz-service';
+import {  MatSnackBarModule } from '@angular/material/snack-bar';
+import { Snackbar } from '../../shared/snackbar';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-take-quiz-component',
-  imports: [CommonModule],
+  imports: [CommonModule,MatSnackBarModule],
   templateUrl: './take-quiz-component.html',
   styleUrl: './take-quiz-component.css',
 })
@@ -24,7 +26,8 @@ export class TakeQuizComponent implements OnInit, OnDestroy {
   constructor(
     private quizService: QuizService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private snackBar: Snackbar
   ) {}
 
   ngOnInit(): void {
@@ -52,7 +55,10 @@ export class TakeQuizComponent implements OnInit, OnDestroy {
       console.error('Error loading quiz:', error);
 
       if (error.status === 400 && error.error?.message?.includes("already taken")) {
-  alert('You have already taken this quiz. Redirecting to results.');
+
+  //alert('You have already taken this quiz. Redirecting to results.');
+  this.snackBar.open('You have already taken this quiz. Redirecting to results.', 'info');
+
   this.router.navigate(['/quiz/result', quizId]);
 } 
 

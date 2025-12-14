@@ -14,15 +14,15 @@
   --nav-font: "Ubuntu", sans-serif;
 
   /* Global Colors */
---background-color: #ffffff; 
---default-color:  #074226; 
---heading-color: #000000;
---accent-color: #074226; 
---secondary-accent: #4ade80;
- --surface-color: #ffffff; 
- --contrast-color: #ffffff;
+  --background-color: #ffffff;
+  --default-color: #074226;
+  --heading-color: #000000;
+  --accent-color: #074226;
+  --secondary-accent: #4ade80;
+  --surface-color: #ffffff;
+  --contrast-color: #ffffff;
   --border-color: #e0e0e0;
-   --text-muted: #666666;
+  --text-muted: #666666;
 
   /* Nav Colors */
   --nav-color: #4a4a4a;
@@ -67,6 +67,7 @@
 
 
 }
+
 .dark-mode footer {
   background-color: var(--secondary-accent) !important;
   color: unset !important;
@@ -93,7 +94,12 @@ a:hover {
 }
 
 /* Headings */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--heading-font);
   color: var(--heading-color);
 }
@@ -136,7 +142,46 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* Disabled Buttons */
-.btn-accent:disabled, .btn-secondary:disabled {
+.btn-accent:disabled,
+.btn-secondary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Custom Accent Utilities */
+.text-accent {
+  color: var(--accent-color) !important;
+}
+
+.bg-accent {
+  background-color: var(--accent-color) !important;
+  color: var(--contrast-color);
+}
+
+.bg-accent-subtle {
+  background-color: color-mix(in srgb, var(--accent-color), transparent 85%) !important;
+  color: var(--accent-color) !important;
+}
+
+.btn-outline-accent {
+  color: var(--accent-color);
+  border: 1px solid var(--accent-color);
+  background-color: transparent;
+  border-radius: 8px;
+  /* Match other buttons */
+  padding: 5px 10px;
+  /* Adjust as needed or keep standard */
+  font-weight: 600;
+  transition: all 0.3s;
+}
+
+.btn-outline-accent:hover {
+  background-color: var(--accent-color);
+  color: var(--contrast-color);
+  box-shadow: 0 4px 15px color-mix(in srgb, var(--accent-color), transparent 70%);
+}
+
+.btn-outline-accent:disabled {
   opacity: 0.6;
   cursor: not-allowed;
 }
@@ -240,8 +285,6 @@ h1, h2, h3, h4, h5, h6 {
 :root {
   scroll-behavior: smooth;
 }
-<<<<<<< Updated upstream
-=======
 
 /* Google Translate Widget Overrides */
 
@@ -366,4 +409,3 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
->>>>>>> Stashed changes

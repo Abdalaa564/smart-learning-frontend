@@ -1,14 +1,16 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Studentprofile } from '../../models/studentprofile';
 import { StudentprofileService } from '../../Services/studentprofile-service';
 import { CommonModule, DatePipe } from '@angular/common';
 import { AuthService } from '../../Services/auth-service';
 import { Router } from '@angular/router';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { Snackbar } from '../../shared/snackbar';
 
 @Component({
   selector: 'app-user-profile',
-  imports: [ReactiveFormsModule,CommonModule, DatePipe],
+  imports: [ReactiveFormsModule,CommonModule, DatePipe,MatSnackBarModule],
   templateUrl: './user-profile.html',
   styleUrl: './user-profile.css',
   providers: [DatePipe],
@@ -28,13 +30,14 @@ export class UserProfile implements OnInit {
     private formBuilder: FormBuilder,
     private student: StudentprofileService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private snackbar:Snackbar
   ) {
     this.profileForm = this.formBuilder.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
-      phoneNumber: ['', Validators.required],
-      dateOfBirth: ['', Validators.required],
+      phoneNumber: ['', [Validators.required, Validators.pattern('^[0-9]{11}$')]],
+      dateOfBirth: ['', [Validators.required,this.pastDateValidator]],
       address: ['', Validators.required],
       city: ['', Validators.required]
     });
@@ -87,6 +90,7 @@ onSubmit() {
   this.student.updateProfile(this.profileForm.value).subscribe({
     next: () => {
       this.success = 'Profile updated successfully!';
+      this.snackbar.open( this.success ,'success');
 
     
       this.profile = {
@@ -101,6 +105,7 @@ onSubmit() {
     },
     error: (error) => {
       this.error = error.error?.message || 'Failed to update profile';
+      this.snackbar.open( this.error ,'error');
       this.loading = false;
     }
   });
@@ -119,9 +124,15 @@ onSubmit() {
   }
 
   goToMyCourses() {
-  const studentId = this.authService.currentUserId;
+  const studentId = this.authService.UserId;
+  console.log('Current User ID:', this.authService.UserId);
+
   this.router.navigate(['/student', studentId, 'courses']);
 
+}
+pastDateValidator(control: AbstractControl) {
+  const date = new Date(control.value);
+  return date > new Date() ? { futureDate: true } : null;
 }
 
   // ngAfterViewInit() {

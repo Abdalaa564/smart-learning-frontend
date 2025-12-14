@@ -5,10 +5,12 @@ import { Unit } from '../../../models/Unit ';
 import { UnitService } from '../../../Services/unit.service';
 import { CourseService } from '../../../Services/course.service';
 import { AuthService } from '../../../Services/auth-service';
+import { Snackbar } from '../../../shared/snackbar';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-units',
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink,MatSnackBarModule],
   templateUrl: './units.html',
   styleUrl: './units.css',
 })
@@ -35,7 +37,8 @@ export class Units implements OnInit {
     private route: ActivatedRoute,
     private unitService: UnitService,
     private courseService: CourseService,
-    private authService: AuthService
+    private authService: AuthService,
+    private snackbar: Snackbar
   ) { }
 
   ngOnInit(): void {
@@ -73,9 +76,11 @@ export class Units implements OnInit {
       next: () => {
         // إعادة تحميل الليست بعد الحذف
         this.loadUnits();
+        this.snackbar.open('Unit deleted successfully.', 'info');
       },
       error: (err) => {
         console.error('Error deleting unit:', err);
+        this.snackbar.open('Failed to delete unit.', 'error');
       }
     });
   }
