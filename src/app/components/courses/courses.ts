@@ -15,10 +15,12 @@ import { EnrollmentRequest } from '../../models/EnrollmentRequest';
 import { SkeletonCardComponent } from '../../shared/Skeleton/skeleton-card/skeleton-card';
 import { PaginationComponent } from '../../shared/pagination/pagination';
 import { SafePipe } from '../../pipes/safe-pipe';
+import { Snackbar } from '../../shared/snackbar';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-courses',
-  imports: [FormsModule, CommonModule, RouterLink, SkeletonCardComponent, PaginationComponent, SafePipe],
+  imports: [FormsModule, CommonModule, RouterLink, SkeletonCardComponent, PaginationComponent, SafePipe,MatSnackBarModule],
   templateUrl: './courses.html',
   styleUrl: './courses.css',
 })
@@ -81,7 +83,9 @@ export class Courses implements OnInit {
     private authService: AuthService,
     private enrollmentService: EnrollmentService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+   private snackBar: Snackbar
+
   ) { }
 
   ngOnInit(): void {
@@ -150,6 +154,7 @@ export class Courses implements OnInit {
       error: (err) => {
         console.error('Error loading data:', err);
         this.isLoading = false;
+         this.snackBar.open('Failed to load courses', 'error');
       },
     });
   }
@@ -179,9 +184,13 @@ export class Courses implements OnInit {
     this.courseService.deleteCourse(course.crs_Id).subscribe({
       next: (res) => {
         console.log('Delete response:', res);
+        this.snackBar.open('Course deleted successfully', 'success');
         this.loadData();
       },
-      error: (err) => console.error(err),
+      error: (err) => {
+        console.error(err);
+        this.snackBar.open('Failed to delete course', 'error');
+      }
     });
   }
 
@@ -207,11 +216,12 @@ export class Courses implements OnInit {
     const studentId = this.authService.currentUserId;
     if (!studentId) {
       // alert('⚠️ Please login to access course content.');
+        this.snackBar.open('⚠️ Please login to access course content.', 'error');
       this.router.navigate(['/login']);
       return;
     }
     if (course.crs_Id == null) {
-      alert('❌ Cannot access units: Course ID is missing.');
+      this.snackBar.open('❌ Cannot access units: Course ID is missing.', 'error');
       return;
     }
     this.router.navigate(['/Courses', course.crs_Id, 'units']);
@@ -220,7 +230,7 @@ export class Courses implements OnInit {
   enroll(course: Course): void {
     const studentId = this.authService.currentUserId;
     if (!studentId) {
-      alert('⚠️ You must be logged in to enroll in a course.');
+      this.snackBar.open('⚠️ You must be logged in to enroll in a course.', 'error');
       return;
     }
     this.selectedCourse = course;
@@ -258,12 +268,12 @@ export class Courses implements OnInit {
           // Option 2: Redirect directly to Paymob (alternative)
           // window.location.href = res.paymentUrl;
         } else {
-          alert(res.message || 'Failed to initiate enrollment.');
+          this.snackBar.open(res.message || 'Failed to initiate enrollment', 'error');
         }
       },
       error: (err) => {
         this.showEnrollModal = false;
-        alert(err.error?.message || 'Failed to enroll.');
+        this.snackBar.open(err.error?.message || 'Failed to enroll', 'error');
         console.error(err);
       },
     });

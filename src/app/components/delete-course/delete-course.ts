@@ -4,10 +4,12 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { environment } from '../../environment/environment';
 import { CourseService } from '../../Services/course.service';
 import { CommonModule } from '@angular/common';
+import { Snackbar } from '../../shared/snackbar';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-delete-course',
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink,MatSnackBarModule],
   templateUrl: './delete-course.html',
   styleUrl: './delete-course.css',
 })
@@ -22,7 +24,9 @@ export class DeleteCourse  implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private courseService: CourseService,
-    private router: Router
+    private router: Router,
+     private snackBar: Snackbar
+
   ) {}
 
   ngOnInit(): void {
@@ -36,6 +40,7 @@ export class DeleteCourse  implements OnInit {
       error: (err) => {
         console.error(err);
         this.isLoading = false;
+        this.snackBar.open('Failed to load course', 'error');
       }
     });
   }
@@ -63,10 +68,12 @@ export class DeleteCourse  implements OnInit {
     this.courseService.deleteCourse(this.courseId).subscribe({
       next: () => {
         this.isDeleting = false;
+          this.snackBar.open('Course deleted successfully', 'success');
         this.router.navigate(['/Courses']);
       },
       error: (err) => {
         console.error(err);
+         this.snackBar.open('Failed to delete course', 'error');
         this.isDeleting = false;
       }
     });

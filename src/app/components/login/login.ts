@@ -1,17 +1,23 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../Services/auth-service';
-
+import { Snackbar } from '../../shared/snackbar';
 @Component({
   selector: 'app-login',
-  imports: [FormsModule, CommonModule, RouterModule, ReactiveFormsModule ],
+  imports: [FormsModule, CommonModule, RouterModule, ReactiveFormsModule],
   templateUrl: './login.html',
-  styleUrl: './login.css'
+  styleUrl: './login.css',
 })
 export class Login {
-loginForm: FormGroup;
+  loginForm: FormGroup;
   loading = false;
   submitted = false;
   error = '';
@@ -19,11 +25,18 @@ loginForm: FormGroup;
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+      private snackbar: Snackbar
+
+
   ) {
     this.loginForm = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]]
+      email: [
+        '',
+        [Validators.required, Validators.email],
+        Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/),
+      ],
+      password: ['', [Validators.required, Validators.minLength(6)]],
     });
   }
 
@@ -33,18 +46,19 @@ loginForm: FormGroup;
 
   onSubmit() {
     this.submitted = true;
-    this.error = '';
+    //  this.error = '';
 
     if (this.loginForm.invalid) {
+      this.snackbar.open('Please fix validation errors', 'error');
       return;
     }
 
     this.loading = true;
-    
-    this.authService.login(this.loginForm.value).subscribe({
-      next: res => {
-        const role = this.authService.getRoleFromToken();  // 👈 برضو من authService
 
+    this.authService.login(this.loginForm.value).subscribe({
+      next: (res) => {
+        const role = this.authService.getRoleFromToken(); // 👈 برضو من authService
+        this.snackbar.open('Login successful ', 'success');
         if (role === 'Admin') {
           this.router.navigate(['/admin']);
         } else if (role === 'Instructor') {
@@ -55,11 +69,18 @@ loginForm: FormGroup;
 
         this.loading = false;
       },
-      error: err => {
-        console.error(err);
-        this.error = err.error?.message || 'Login failed';
-        this.loading = false;
+      error: (err) => {
+       this.loading = false;
+
+      if (err.status === 401) {
+        this.snackbar.open('Invalid email or password', 'error');
+      } else if (err.status === 404) {
+        this.snackbar.open('User not found', 'error');
+      } else {
+        this.snackbar.open('Something went wrong, try again', 'error');
       }
+    }
     });
   }
+
 }

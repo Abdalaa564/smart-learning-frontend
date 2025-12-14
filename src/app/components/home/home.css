@@ -280,3 +280,51 @@
     align-items: flex-start;
   }
 }
+/* Chatbot Section */
+#chatbot {
+  background-color: var(--contrast-color);
+}
+
+#chatbot .chatbot-card {
+  max-width: 500px;
+  background-color: var(--background-color);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  padding: 30px 20px;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+#chatbot .chatbot-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+#chatbot .chatbot-icon {
+  font-size: 50px;
+  color: var(--accent-color);
+  margin-bottom: 20px;
+}
+
+#chatbot .chatbot-features li {
+  margin-bottom: 10px;
+  text-align: left;
+}
+
+/* Dark Mode */
+.dark-mode #chatbot {
+  background-color: var(--card-background);
+}
+
+.dark-mode #chatbot .chatbot-card {
+  background-color: var(--surface-color);
+  border-color: var(--border-color);
+}
+
+.dark-mode #chatbot .chatbot-icon {
+  color: var(--secondary-accent);
+}
+
+.dark-mode #chatbot .chatbot-features {
+  color: var(--text-muted);
+}
+

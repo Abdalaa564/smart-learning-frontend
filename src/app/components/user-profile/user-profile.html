@@ -71,31 +71,50 @@
       <div class="input-group">
         <label>First Name</label>
         <input formControlName="firstName" placeholder="firstName">
+        <small class="text-danger"*ngIf="f['firstName'].touched && f['firstName'].invalid"
+>
+          First Name is required
+        </small>
       </div>
 
       <div class="input-group">
         <label>Last Name</label>
         <input formControlName="lastName" placeholder="lastName">
+         <small class="text-danger" *ngIf="f['lastName'].touched && f['lastName'].invalid">
+          Last Name is required.
+        </small>
       </div>
 
       <div class="input-group">
         <label>Phone Number</label>
         <input formControlName="phoneNumber" placeholder="phoneNumber">
+         <small class="text-danger" *ngIf="f['phoneNumber'].touched && f['phoneNumber'].invalid">
+          Phone Number is required.
+        </small>
       </div>
 
       <div class="input-group">
         <label>Date of Birth</label>
         <input type="date" formControlName="dateOfBirth" placeholder="dateOfBirth">
+        <small class="text-danger" *ngIf="f['dateOfBirth'].touched && f['dateOfBirth'].invalid">
+          Date of Birth is required.
+        </small>
       </div>
 
       <div class="input-group">
         <label>Address</label>
         <input formControlName="address" placeholder="Address">
+           <small class="text-danger" *ngIf="f['address'].touched && f['address'].invalid">
+          Address is required.
+        </small>
       </div>
 
       <div class="input-group">
         <label>City</label>
         <input formControlName="city" placeholder="City">
+         <small class="text-danger" *ngIf="f['city'].touched && f['city'].invalid">
+          City is required.
+        </small>
       </div>
 
       <div class="modal-actions">
@@ -104,5 +123,6 @@
       </div>
 
     </form>
+     
   </div>
 </div>

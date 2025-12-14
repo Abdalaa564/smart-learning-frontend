@@ -4,10 +4,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { QuestionType, CreateQuizDto, CreateQuestionDto } from '../../models/exam-question';
 import { QuizService } from '../../Services/quiz-service';
 import { CommonModule } from '@angular/common';
+import { Snackbar } from '../../shared/snackbar';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-create-quiz-component',
-  imports: [CommonModule , ReactiveFormsModule],
+  imports: [CommonModule , ReactiveFormsModule,MatSnackBarModule],
   // standalone: true,
   templateUrl: './create-quiz-component.html',
   styleUrl: './create-quiz-component.css',
@@ -24,7 +26,9 @@ export class CreateQuizComponent implements OnInit {
     private fb: FormBuilder,
     private quizService: QuizService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private snackBar: Snackbar
+
   ) {}
 
   ngOnInit(): void {
@@ -107,8 +111,8 @@ export class CreateQuizComponent implements OnInit {
       if (this.quizForm.get('quiz_Name')?.invalid || 
           this.quizForm.get('duration')?.invalid || 
           this.quizForm.get('totalMarks')?.invalid) {
-        alert('Please fill in all quiz details');
-        return;
+      this.snackBar.open('Please fill in all quiz details', 'error'); 
+             return;
       }
 
       this.submitting = true;
@@ -127,7 +131,7 @@ export class CreateQuizComponent implements OnInit {
         },
         error: (error) => {
           console.error('Error creating quiz:', error);
-          alert('Failed to create quiz');
+          this.snackBar.open('Failed to create quiz', 'error');
           this.submitting = false;
         }
       });
@@ -136,12 +140,12 @@ export class CreateQuizComponent implements OnInit {
 
   submitQuestions(): void {
     if (this.questions.length === 0) {
-      alert('Please add at least one question');
+      this.snackBar.open('Please add at least one question', 'error');
       return;
     }
 
     if (this.quizForm.get('questions')?.invalid) {
-      alert('Please fill in all question details');
+        this.snackBar.open('Please fill in all question details', 'error');
       return;
     }
 
@@ -164,7 +168,7 @@ export class CreateQuizComponent implements OnInit {
           completedRequests++;
           if (completedRequests === totalQuestions) {
             this.submitting = false;
-            alert('Quiz created successfully!');
+          this.snackBar.open('Quiz created successfully!', 'success');
             this.router.navigate(['/lesson', this.lessonId, 'quizzes']);
           }
         },
@@ -173,7 +177,7 @@ export class CreateQuizComponent implements OnInit {
           completedRequests++;
           if (completedRequests === totalQuestions) {
             this.submitting = false;
-            alert('Some questions failed to save');
+            this.snackBar.open('Some questions failed to save', 'error');
           }
         }
       });

@@ -370,3 +370,39 @@ header,
   top: 0 !important;
   z-index: 1000 !important;
 }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+/*--------------------------------------------------------------
+# Angular Material SnackBar
+--------------------------------------------------------------*/
+
+/* Success Snackbar */
+.snackbar-success {
+  background-color: var(--accent-color) !important;
+  color: var(--contrast-color) !important;
+  font-weight: 500;
+}
+
+/* Error Snackbar */
+.snackbar-error {
+  background-color: #d32f2f !important;
+  color: #ffffff !important;
+  font-weight: 500;
+}
+
+/* Dark Mode Support */
+.dark-mode .snackbar-success {
+  background-color: var(--secondary-accent) !important;
+  color: var(--contrast-color) !important;
+}
+
+.dark-mode .snackbar-error {
+  background-color: #b71c1c !important;
+}
+
+/* Shape & Shadow */
+.mat-mdc-snack-bar-container {
+  border-radius: 10px !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+}

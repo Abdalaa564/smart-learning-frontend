@@ -1,0 +1,51 @@
+/*--------------------------------------------------------------
+# Live Meetings Section
+--------------------------------------------------------------*/
+#live-meetings {
+  background-color: var(--surface-color);
+}
+
+#live-meetings .section-title h2 {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--heading-color);
+}
+
+#live-meetings .section-title p {
+  color: var(--text-muted);
+  font-size: 16px;
+}
+
+#live-meetings .feature-box {
+  background-color: var(--card-background);
+  transition: transform 0.3s, box-shadow 0.3s;
+  border: 1px solid var(--border-color);
+}
+
+#live-meetings .feature-box:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+#live-meetings .feature-box i {
+  color: var(--accent-color);
+}
+
+#live-meetings .feature-box h5 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-top: 15px;
+  margin-bottom: 10px;
+  color: var(--heading-color);
+}
+
+#live-meetings .feature-box p {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+#live-meetings .btn-accent {
+  margin-top: 30px;
+  padding: 10px 25px;
+  font-weight: 600;
+}

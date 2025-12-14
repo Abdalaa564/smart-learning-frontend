@@ -1,34 +1,57 @@
 <div class="form-container">
   <h2>Add Instructor</h2>
 
-  <form (ngSubmit)="submit()">
-       <label>Email</label>
-    <input type="email" [(ngModel)]="model.email" name="email" required placeholder="Email" />
+  <form #instructorForm="ngForm" (ngSubmit)="submit(instructorForm)">
 
-    <label>Password</label>
-    <input type="password" [(ngModel)]="model.password" name="password" required placeholder="Password" />
+    <label>Email *</label>
+    <input type="email" [(ngModel)]="model.email" name="email" required email #email="ngModel" placeholder="Email" />
+    <small class="text-danger" *ngIf="email.invalid && (email.touched || isSubmitting)">
+      Valid email is required
+    </small>
 
-    <label>Full Name</label>
-    <input type="text" [(ngModel)]="model.fullName" name="fullName" required placeholder="fullName" />
+    <label>Password *</label>
+    <input type="password" [(ngModel)]="model.password" name="password" required minlength="6" #password="ngModel" placeholder="Password" />
+    <small class="text-danger" *ngIf="password.invalid && (password.touched || isSubmitting)">
+      Password is required (min 6 characters)
+    </small>
 
-    <label>Job Title</label>
-    <input type="text" [(ngModel)]="model.jobTitle" name="jobTitle" required placeholder="jobTitle" />
+    <label>Full Name *</label>
+    <input type="text" [(ngModel)]="model.fullName" name="fullName" required #fullName="ngModel" placeholder="Full Name" />
+    <small class="text-danger" *ngIf="fullName.invalid && (fullName.touched || isSubmitting)">
+      Full Name is required
+    </small>
+
+    <label>Job Title *</label>
+    <input type="text" [(ngModel)]="model.jobTitle" name="jobTitle" required #jobTitle="ngModel" placeholder="Job Title" />
+    <small class="text-danger" *ngIf="jobTitle.invalid && (jobTitle.touched || isSubmitting)">
+      Job Title is required
+    </small>
 
     <label>Rating</label>
-    <input type="number" [(ngModel)]="model.rating" name="rating" min="1" max="5" placeholder="Rating" />
+    <input type="number" [(ngModel)]="model.rating" name="rating" min="1" max="5" #rating="ngModel" placeholder="Rating" />
+    <small class="text-danger" *ngIf="rating.invalid && (rating.touched || isSubmitting)">
+      Rating must be between 1 and 5
+    </small>
 
-    <label>Phone Number</label>
-    <input type="text" [(ngModel)]="model.phoneNumber" name="phoneNumber" required  placeholder="PhoneNumber"/>
+    <label>Phone Number *</label>
+    <input type="text" [(ngModel)]="model.phoneNumber" name="phoneNumber" required #phone="ngModel" placeholder="Phone Number"/>
+    <small class="text-danger" *ngIf="phone.invalid && (phone.touched || isSubmitting)">
+      Phone number is required
+    </small>
 
     <label>Youtube Channel</label>
-    <input type="text" [(ngModel)]="model.youtubeChannelUrl" name="youtubeChannelUrl" placeholder="youtubeChannelUrl"/>
+    <input type="text" [(ngModel)]="model.youtubeChannelUrl" name="youtubeChannelUrl" placeholder="Youtube Channel URL"/>
 
     <label>Photo URL</label>
-    <input type="text" [(ngModel)]="model.photoUrl" name="photoUrl" placeholder="imagesUrl"/>
+    <input type="text" [(ngModel)]="model.photoUrl" name="photoUrl" placeholder="Photo URL"/>
 
     <label>Certificate URL</label>
-    <input type="text" [(ngModel)]="model.certificateUrl" name="certificateUrl" placeholder="certificateUrl"/>
+    <input type="text" [(ngModel)]="model.certificateUrl" name="certificateUrl" placeholder="Certificate URL"/>
 
-    <button type="submit" class="btn-save">Save</button>
+    <button type="submit" class="btn-save" [disabled]="isSubmitting">
+      <span *ngIf="isSubmitting" class="spinner-border spinner-border-sm me-1"></span>
+      Save
+    </button>
+
   </form>
 </div>
