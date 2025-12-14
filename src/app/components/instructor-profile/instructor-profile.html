@@ -106,14 +106,14 @@
 
   <!-- النجوم -->
 <div class="stars mb-2">
-  <span *ngFor="let star of [1,2,3,4,5]; let i = index"
-        (click)="setRating(i+1)"
-        (mouseenter)="hoverRating(i+1)"
-        (mouseleave)="hoverRating(0)"
-        [class.filled]="i < (hoveredRating > 0 ? hoveredRating : ratingValue)"
-        [class.disabled]="hasRated">
-    ★
-  </span>
+ <span *ngFor="let star of [1,2,3,4,5]; let i = index"
+      (click)="!hasRated && setRating(i+1)"
+      (mouseenter)="!hasRated && hoverRating(i+1)"
+      (mouseleave)="!hasRated && hoverRating(0)"
+      [class.filled]="i < (hoveredRating > 0 ? hoveredRating : ratingValue)"
+      [class.disabled]="hasRated">
+  ★
+</span>
 </div>
 
   <!-- feedback -->
