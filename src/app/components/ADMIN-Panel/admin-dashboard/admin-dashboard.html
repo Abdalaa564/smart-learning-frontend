@@ -15,42 +15,6 @@
     </div>
   </div>
 
-  <!-- 1) Learning Activity (ng2-charts) -->
-  <div class="card mb-3">
-    <div class="card-body">
-      <div
-        class="d-flex justify-content-between align-items-center mb-3"
-      >
-        <div>
-          <h5 class="card-title mb-1">Students vs Courses</h5>
-          <p class="text-muted small mb-0">
-            Live counts from backend (total students & courses)
-          </p>
-        </div>
-        <div class="d-flex align-items-center gap-2 small">
-          <span
-            class="badge rounded-pill bg-accent-subtle text-accent"
-            >Students</span
-          >
-          <span
-            class="badge rounded-pill bg-danger-subtle text-danger"
-            >Courses</span
-          >
-        </div>
-      </div>
-
-      <div style="height: 320px">
-        <canvas
-          baseChart
-          [data]="barChartData"
-          [options]="barChartOptions"
-          type="bar"
-        >
-        </canvas>
-      </div>
-    </div>
-  </div>
-
   <!-- 2) Course Progress Overview -->
   <div class="card mb-3">
     <div class="card-body">
@@ -362,6 +326,42 @@
             </div>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- 1) Learning Activity (ng2-charts) -->
+  <div class="card mb-3">
+    <div class="card-body">
+      <div
+        class="d-flex justify-content-between align-items-center mb-3"
+      >
+        <div>
+          <h5 class="card-title mb-1">Students vs Courses</h5>
+          <p class="text-muted small mb-0">
+            Live counts from backend (total students & courses)
+          </p>
+        </div>
+        <div class="d-flex align-items-center gap-2 small">
+          <span
+            class="badge rounded-pill bg-accent-subtle text-accent"
+            >Students</span
+          >
+          <span
+            class="badge rounded-pill bg-danger-subtle text-danger"
+            >Courses</span
+          >
+        </div>
+      </div>
+
+      <div style="height: 320px">
+        <canvas
+          baseChart
+          [data]="barChartData"
+          [options]="barChartOptions"
+          type="bar"
+        >
+        </canvas>
       </div>
     </div>
   </div>
