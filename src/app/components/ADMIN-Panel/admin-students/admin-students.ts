@@ -3,6 +3,7 @@ import { Studentprofile } from '../../../models/studentprofile';
 import { CommonModule } from '@angular/common';
 import { SearchBarComponent } from '../../../shared/search-bar/search-bar.component';
 import { AuthService } from '../../../Services/auth-service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin-students',
@@ -17,12 +18,10 @@ export class AdminStudentsComponent {
 
   @ViewChild(SearchBarComponent) searchBar!: SearchBarComponent;
   searchText = '';
-  
-  @Output() add = new EventEmitter<void>();
-  @Output() view = new EventEmitter<Studentprofile>();
-  @Output() edit = new EventEmitter<Studentprofile>();
+
+  // Only DELETE is supported as an action (event)
   @Output() delete = new EventEmitter<Studentprofile>();
-  
+
   // Search icon implementation
   onSearchTextChange(searchText: string) {
     this.searchText = searchText;
@@ -46,10 +45,19 @@ export class AdminStudentsComponent {
     );
   }
 
-  constructor(private authService: AuthService) { }
+  constructor(
+    private authService: AuthService,
+    private router: Router
+  ) { }
 
   get isAdmin(): boolean {
     return this.authService.isAdmin();
   }
+
+  goToStudentProfile(id?: number) {
+    if (!id) return;
+    this.router.navigate(['/student-profile', id]);
+  }
+
   // end Search icon implementation
 }

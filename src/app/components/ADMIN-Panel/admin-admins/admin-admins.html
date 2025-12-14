@@ -41,14 +41,16 @@
                         </td>
                         <td [innerHTML]="highlightText(admin.email)"></td>
                         <td class="text-end">
-                            <button class="btn btn-sm btn-light text-accent me-2" (click)="openEditModal(admin)"
-                                title="Edit">
-                                <i class="bi bi-pencil"></i>
-                            </button>
-                            <button class="btn btn-sm btn-light text-danger" (click)="deleteAdmin(admin)"
-                                title="Delete">
-                                <i class="bi bi-trash"></i>
-                            </button>
+                            <div class="d-flex gap-2 justify-content-end">
+                                <button class="icon-btn-new btn btn-sm btn-light" (click)="openEditModal(admin)"
+                                    title="Edit">
+                                    <i class="bi bi-pencil-square text-primary"></i>
+                                </button>
+                                <button class="icon-btn-new btn btn-sm btn-light" (click)="deleteAdmin(admin)"
+                                    title="Delete">
+                                    <i class="bi bi-trash text-danger"></i>
+                                </button>
+                            </div>
                         </td>
                     </tr>
                     <tr *ngIf="filteredAdmins.length === 0 && !isLoading">

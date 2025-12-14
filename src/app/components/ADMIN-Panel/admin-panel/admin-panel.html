@@ -26,18 +26,15 @@
 
                 <!-- Students -->
                 <app-admin-students *ngSwitchCase="'students'" [students]="students"
-                    [studentEnrollCounts]="studentEnrollCounts" (add)="onAddStudent()" (view)="onViewStudent($event)"
-                    (edit)="onEditStudent($event)" (delete)="onDeleteStudent($event)"></app-admin-students>
+                    [studentEnrollCounts]="studentEnrollCounts" (delete)="onDeleteStudent($event)"></app-admin-students>
 
                 <!-- Instructors -->
-                <app-admin-instructors *ngSwitchCase="'instructors'" [instructors]="instructors"
-                    (add)="onAddInstructor()" (view)="onViewInstructor($event)" (edit)="onEditInstructor($event)"
-                    (delete)="onDeleteInstructor($event)"></app-admin-instructors>
+                <app-admin-instructors *ngSwitchCase="'instructors'"
+                    [instructors]="instructors"></app-admin-instructors>
 
                 <!-- Courses -->
                 <app-admin-courses *ngSwitchCase="'courses'" [courses]="courses"
-                    [courseEnrollCounts]="courseEnrollCounts" (add)="onAddCourse()" (view)="onViewCourse($event)"
-                    (edit)="onEditCourse($event)" (delete)="onDeleteCourse($event)"></app-admin-courses>
+                    [courseEnrollCounts]="courseEnrollCounts"></app-admin-courses>
                 <!-- Enrollments -->
                 <ng-container *ngSwitchCase="'enrollments'">
                     <app-admin-enrollments *ngIf="isAdmin" [enrollments]="enrollments"

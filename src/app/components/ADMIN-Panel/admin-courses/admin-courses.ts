@@ -1,8 +1,9 @@
-import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { Course } from '../../../models/Course';
 import { CommonModule } from '@angular/common';
 import { SearchBarComponent } from '../../../shared/search-bar/search-bar.component';
 import { AuthService } from '../../../Services/auth-service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin-courses',
@@ -18,15 +19,10 @@ export class AdminCoursesComponent {
   @ViewChild(SearchBarComponent) searchBar!: SearchBarComponent;
   searchText = '';
 
-  @Output() add = new EventEmitter<void>();
-  @Output() view = new EventEmitter<Course>();
-  @Output() edit = new EventEmitter<Course>();
-  @Output() delete = new EventEmitter<Course>();
-
   getCourseEnrollCount(courseId: number): number {
     return this.courseEnrollCounts[courseId] ?? 0;
   }
-  
+
   // Search icon implementation
   onSearchTextChange(searchText: string) {
     this.searchText = searchText;
@@ -48,11 +44,35 @@ export class AdminCoursesComponent {
       course.crs_Description?.toLowerCase().includes(searchLower)
     );
   }
-  
-  constructor(private authService: AuthService) { }
+
+  constructor(
+    private authService: AuthService,
+    private router: Router
+  ) { }
 
   get isAdmin(): boolean {
     return this.authService.isAdmin();
   }
+
+  // Actions matching Courses component
+  goToAdd() {
+    this.router.navigate(['/courses/add']);
+  }
+
+  viewDetails(course: Course) {
+    if (!course.crs_Id) return;
+    this.router.navigate(['/courses', course.crs_Id, 'details']);
+  }
+
+  goToEdit(course: Course) {
+    if (!course.crs_Id) return;
+    this.router.navigate(['/courses/edit', course.crs_Id]);
+  }
+
+  goToDelete(course: Course) {
+    if (!course.crs_Id) return;
+    this.router.navigate(['/Courses/delete', course.crs_Id]);
+  }
+
   // end Search icon implementation
 }

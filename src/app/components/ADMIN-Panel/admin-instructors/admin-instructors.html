@@ -2,7 +2,7 @@
   <div class="card-header d-flex justify-content-between">
     <h5 class="mb-0">Instructors Management</h5>
     <ng-container *ngIf="isAdmin">
-      <button class="btn btn-accent btn-sm rounded-pill px-3" (click)="add.emit()">
+      <button class="btn btn-accent btn-sm rounded-pill px-3" (click)="goToAdd()">
         <i class="bi bi-plus-lg me-1"></i> Add New
       </button>
     </ng-container>
@@ -35,14 +35,14 @@
             <td>{{ row.rating }}</td>
             <td class="text-end">
               <div class="d-flex gap-2 justify-content-end">
-                <button class="icon-btn-new btn btn-sm btn-light" (click)="view.emit(row)" title="View Profile">
+                <button class="icon-btn-new btn btn-sm btn-light" (click)="goToProfile(row.id)" title="View Profile">
                   <i class="bi bi-eye text-secondary"></i>
                 </button>
                 <ng-container *ngIf="isAdmin">
-                  <button class="icon-btn-new btn btn-sm btn-light" (click)="edit.emit(row)" title="Edit">
+                  <button class="icon-btn-new btn btn-sm btn-light" (click)="goToEdit(row.id)" title="Edit">
                     <i class="bi bi-pencil-square text-primary"></i>
                   </button>
-                  <button class="icon-btn-new btn btn-sm btn-light" (click)="delete.emit(row)" title="Delete">
+                  <button class="icon-btn-new btn btn-sm btn-light" (click)="goToDeleteConfirm(row.id)" title="Delete">
                     <i class="bi bi-trash text-danger"></i>
                   </button>
                 </ng-container>

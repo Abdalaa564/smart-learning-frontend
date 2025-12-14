@@ -1,8 +1,9 @@
-import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { Instructor } from '../../../models/iinstructor';
 import { CommonModule } from '@angular/common';
 import { SearchBarComponent } from '../../../shared/search-bar/search-bar.component';
 import { AuthService } from '../../../Services/auth-service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin-instructors',
@@ -17,11 +18,6 @@ export class AdminInstructorsComponent {
   @ViewChild(SearchBarComponent) searchBar!: SearchBarComponent;
   searchText = '';
 
-  @Output() add = new EventEmitter<void>();
-  @Output() view = new EventEmitter<Instructor>();
-  @Output() edit = new EventEmitter<Instructor>();
-  @Output() delete = new EventEmitter<Instructor>();
-  
   // Search icon implementation
   onSearchTextChange(searchText: string) {
     this.searchText = searchText;
@@ -42,11 +38,33 @@ export class AdminInstructorsComponent {
       instructor.jobTitle?.toLowerCase().includes(searchLower)
     );
   }
-  
-  constructor(private authService: AuthService) { }
+
+  constructor(
+    private authService: AuthService,
+    private router: Router
+  ) { }
 
   get isAdmin(): boolean {
     return this.authService.isAdmin();
   }
-  // end Search icon implementation
+
+  // Actions matching InstructorsListComponent
+  goToProfile(id?: number) {
+    if (!id) return;
+    this.router.navigate(['/instructor', id]);
+  }
+
+  goToAdd() {
+    this.router.navigate(['/instructors/add']);
+  }
+
+  goToEdit(id?: number) {
+    if (!id) return;
+    this.router.navigate(['/instructors/edit', id]);
+  }
+
+  goToDeleteConfirm(id?: number) {
+    if (!id) return;
+    this.router.navigate(['/instructors', id, 'confirm-delete']);
+  }
 }

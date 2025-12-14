@@ -1,9 +1,7 @@
 <div class="card">
   <div class="card-header d-flex justify-content-between">
     <h5 class="mb-0">Students Management</h5>
-    <button class="btn btn-accent btn-sm rounded-pill px-3" (click)="add.emit()">
-      <i class="bi bi-plus-lg me-1"></i> Add New
-    </button>
+
   </div>
   <div class="card-body">
     <div class="mb-3">
@@ -33,13 +31,11 @@
             <td>{{ studentEnrollCounts[row.id] || 0 }}</td>
             <td class="text-end">
               <div class="d-flex gap-2 justify-content-end">
-                <button class="icon-btn-new btn btn-sm btn-light" (click)="view.emit(row)" title="View Profile">
-                  <i class="bi bi-eye text-secondary"></i>
+                <button class="icon-btn-new btn btn-sm btn-light" (click)="goToStudentProfile(row.id)"
+                  title="View Profile">
+                  <i class="bi bi-person text-secondary"></i>
                 </button>
                 <ng-container *ngIf="isAdmin">
-                  <button class="icon-btn-new btn btn-sm btn-light" (click)="edit.emit(row)" title="Edit">
-                    <i class="bi bi-pencil-square text-primary"></i>
-                  </button>
                   <button class="icon-btn-new btn btn-sm btn-light" (click)="delete.emit(row)" title="Delete">
                     <i class="bi bi-trash text-danger"></i>
                   </button>
