@@ -1,14 +1,16 @@
+
 import { Component, Input, ViewChild } from '@angular/core';
 import { Course } from '../../../models/Course';
 import { CommonModule } from '@angular/common';
 import { SearchBarComponent } from '../../../shared/search-bar/search-bar.component';
 import { AuthService } from '../../../Services/auth-service';
 import { Router } from '@angular/router';
+import { PaginationComponent } from '../../../shared/pagination/pagination';
 
 @Component({
   selector: 'app-admin-courses',
   standalone: true,
-  imports: [CommonModule, SearchBarComponent],
+  imports: [CommonModule, SearchBarComponent, PaginationComponent],
   templateUrl: './admin-courses.html',
   styleUrl: './admin-courses.css',
 })
@@ -23,9 +25,24 @@ export class AdminCoursesComponent {
     return this.courseEnrollCounts[courseId] ?? 0;
   }
 
+  // Pagination
+  currentPage: number = 1;
+  itemsPerPage: number = 10;
+
+  get paginatedCourses(): Course[] {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    return this.filteredCourses.slice(startIndex, startIndex + this.itemsPerPage);
+  }
+
+  onPageChange(page: number): void {
+    this.currentPage = page;
+    window.scrollTo(0, 0);
+  }
+
   // Search icon implementation
   onSearchTextChange(searchText: string) {
     this.searchText = searchText;
+    this.currentPage = 1; // Reset to first page on search
   }
 
   highlightText(text: string): string {
@@ -40,7 +57,6 @@ export class AdminCoursesComponent {
     const searchLower = this.searchText.toLowerCase();
     return this.courses.filter(course =>
       course.crs_Name?.toLowerCase().includes(searchLower) ||
-      course.instructorName?.toLowerCase().includes(searchLower) ||
       course.crs_Description?.toLowerCase().includes(searchLower)
     );
   }
@@ -76,3 +92,4 @@ export class AdminCoursesComponent {
 
   // end Search icon implementation
 }
+

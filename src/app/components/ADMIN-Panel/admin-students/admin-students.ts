@@ -4,11 +4,12 @@ import { CommonModule } from '@angular/common';
 import { SearchBarComponent } from '../../../shared/search-bar/search-bar.component';
 import { AuthService } from '../../../Services/auth-service';
 import { Router } from '@angular/router';
+import { PaginationComponent } from '../../../shared/pagination/pagination';
 
 @Component({
   selector: 'app-admin-students',
   standalone: true,
-  imports: [CommonModule, SearchBarComponent],
+  imports: [CommonModule, SearchBarComponent, PaginationComponent],
   templateUrl: './admin-students.html',
   styleUrl: './admin-students.css',
 })
@@ -22,9 +23,24 @@ export class AdminStudentsComponent {
   // Only DELETE is supported as an action (event)
   @Output() delete = new EventEmitter<Studentprofile>();
 
+  // Pagination
+  currentPage: number = 1;
+  itemsPerPage: number = 15;
+
+  get paginatedStudents(): Studentprofile[] {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    return this.filteredStudents.slice(startIndex, startIndex + this.itemsPerPage);
+  }
+
+  onPageChange(page: number): void {
+    this.currentPage = page;
+    window.scrollTo(0, 0);
+  }
+
   // Search icon implementation
   onSearchTextChange(searchText: string) {
     this.searchText = searchText;
+    this.currentPage = 1; // Reset to first page
   }
 
   highlightText(text: string): string {

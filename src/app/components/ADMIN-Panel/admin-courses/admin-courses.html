@@ -28,12 +28,22 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let row of filteredCourses">
+          <tr *ngFor="let row of paginatedCourses">
             <td>{{ row.crs_Id }}</td>
-            <td>{{ row.crs_Name }}</td>
+            <td>
+              <ng-container *ngIf="searchText; else defaultName">
+                <span [innerHTML]="highlightText(row.crs_Name)"></span>
+              </ng-container>
+              <ng-template #defaultName>{{ row.crs_Name }}</ng-template>
+            </td>
             <td>{{ row.instructorName }}</td>
             <td>{{ row.price | currency }}</td>
-            <td>{{ row.crs_Description }}</td>
+            <td>
+              <ng-container *ngIf="searchText; else defaultDesc">
+                <span [innerHTML]="highlightText(row.crs_Description)"></span>
+              </ng-container>
+              <ng-template #defaultDesc>{{ row.crs_Description }}</ng-template>
+            </td>
             <td>{{ getCourseEnrollCount(row.crs_Id) }}</td>
             <td class="text-end">
               <div class="d-flex gap-2 justify-content-end">
@@ -53,6 +63,13 @@
           </tr>
         </tbody>
       </table>
+    </div>
+
+    <!-- Pagination -->
+    <div class="mt-3">
+      <app-pagination [currentPage]="currentPage" [totalItems]="filteredCourses.length" [itemsPerPage]="itemsPerPage"
+        (pageChange)="onPageChange($event)">
+      </app-pagination>
     </div>
   </div>
 </div>
