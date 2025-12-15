@@ -14,6 +14,7 @@ import { CourseService } from '../../Services/course.service';
 import { forkJoin } from 'rxjs';
 import { Instructor } from '../../models/iinstructor';
 import { MeatingSection } from './meating-section/meating-section';
+import { environment } from '../../environment/environment';
 
 @Component({
   selector: 'app-home',
@@ -35,6 +36,8 @@ import { MeatingSection } from './meating-section/meating-section';
 export class Home implements OnInit {
   courses: Course[] = [];
   instructors: Instructor[] = [];
+    imageBase = environment.imageBase;
+  
   featuredCourses: Course[] = [];
   isLoading: boolean = true;
   constructor(
@@ -66,10 +69,15 @@ export class Home implements OnInit {
     });
   }
 
+  // getCourseImage(course: Course): string {
+  //   return course.imageUrl || '/assets/img/education/course-1.jpg';
+  // }
   getCourseImage(course: Course): string {
-    return course.imageUrl || '/assets/img/education/course-1.jpg';
+    const url = course.imageUrl;
+    if (!url) return '/assets/img/education/course-1.jpg';
+    if (url.startsWith('http://') || url.startsWith('https://')) return url;
+    return this.imageBase + url;
   }
-
   getInstructorName(course: Course): string {
     const instructor = this.instructors.find((i) => i.id === course.instructorId);
     return instructor?.fullName || 'Unknown';
