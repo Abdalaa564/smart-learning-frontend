@@ -44,7 +44,7 @@ export class AdminAttendanceComponent implements OnInit {
         this.loadCourses();
     }
 
-    loadCourses(): void {
+   loadCourses(): void {
         this.isLoadingCourses = true;
         this.courseService.getAllCourses().subscribe({
             next: (data) => {
