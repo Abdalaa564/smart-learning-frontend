@@ -415,10 +415,6 @@ body {
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
 }
 
-<<<<<<< HEAD
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-=======
 .dark-mode .table {
   --bs-table-bg: var(--surface-color);
   --bs-table-color: var(--default-color);
@@ -492,4 +488,3 @@ body {
   margin: 0;
   font-family: Roboto, 'Helvetica Neue', sans-serif;
 }
->>>>>>> d7fdf7b3a011b48b0e7c7f9ff18825415a2ae2c1
