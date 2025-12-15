@@ -1,28 +1,19 @@
 <div class="card">
   <div class="card-header d-flex justify-content-between">
     <h5 class="mb-0">Students Management</h5>
+
   </div>
-
   <div class="card-body">
-
-    <!-- Search + Sorting -->
     <div class="mb-3 d-flex justify-content-between align-items-center">
-      <app-search-bar
-        placeholder="Search students..."
-        [alignRight]="false"
+      <app-search-bar placeholder="Search students..." [alignRight]="false"
         (searchTextChange)="onSearchTextChange($event)">
       </app-search-bar>
-
-      <app-sorting
-        [sortOptions]="sortOptions"
-        [initialSortField]="sortField"
-        (sortChange)="handleSortChange($event)">
+      <app-sorting [sortOptions]="sortOptions" [initialSortField]="sortField" (sortChange)="handleSortChange($event)">
       </app-sorting>
     </div>
 
-    <!-- Table -->
     <div class="table-responsive">
-      <table class="table align-middle table-hover table-striped">
+      <table class="table align-middle">
         <thead class="table-light">
           <tr>
             <th>ID</th>
@@ -33,52 +24,39 @@
             <th class="text-end">Actions</th>
           </tr>
         </thead>
-
         <tbody>
           <tr *ngFor="let row of paginatedStudents">
             <td>{{ row.id }}</td>
-
             <td>
-              <ng-container *ngIf="searchText; else name">
+              <ng-container *ngIf="searchText; else defaultName">
                 <span [innerHTML]="highlightText(row.firstName + ' ' + row.lastName)"></span>
               </ng-container>
-              <ng-template #name>
-                {{ row.firstName }} {{ row.lastName }}
-              </ng-template>
+              <ng-template #defaultName>{{ row.firstName }} {{ row.lastName }}</ng-template>
             </td>
-
             <td>
-              <ng-container *ngIf="searchText; else email">
+              <ng-container *ngIf="searchText; else defaultEmail">
                 <span [innerHTML]="highlightText(row.email)"></span>
               </ng-container>
-              <ng-template #email>{{ row.email }}</ng-template>
+              <ng-template #defaultEmail>{{ row.email }}</ng-template>
             </td>
-
             <td>
-              <ng-container *ngIf="searchText; else phone">
+              <ng-container *ngIf="searchText; else defaultPhone">
                 <span [innerHTML]="highlightText(row.phoneNumber)"></span>
               </ng-container>
-              <ng-template #phone>{{ row.phoneNumber }}</ng-template>
+              <ng-template #defaultPhone>{{ row.phoneNumber }}</ng-template>
             </td>
-
             <td>{{ studentEnrollCounts[row.id] || 0 }}</td>
-
             <td class="text-end">
               <div class="d-flex gap-2 justify-content-end">
-                <button
-                  class="btn btn-sm btn-light"
-                  title="View Profile"
-                  (click)="goToStudentProfile(row.id)">
-                  <i class="bi bi-person"></i>
+                <button class="icon-btn-new btn btn-sm btn-light" (click)="goToStudentProfile(row.userId)"
+                  title="View Profile">
+                  <i class="bi bi-person text-secondary"></i>
                 </button>
-
-                <button
-                  *ngIf="isAdmin"
-                  class="btn btn-sm btn-light"
-                  title="Delete"
-                  (click)="onDeleteStudent(row)">
-                  <i class="bi bi-trash text-danger"></i>
-                </button>
+                <ng-container *ngIf="isAdmin">
+                  <button class="icon-btn-new btn btn-sm btn-light" (click)="delete.emit(row)" title="Delete">
+                    <i class="bi bi-trash text-danger"></i>
+                  </button>
+                </ng-container>
               </div>
             </td>
           </tr>
@@ -88,13 +66,9 @@
 
     <!-- Pagination -->
     <div class="mt-3">
-      <app-pagination
-        [currentPage]="currentPage"
-        [totalItems]="filteredStudents.length"
-        [itemsPerPage]="itemsPerPage"
+      <app-pagination [currentPage]="currentPage" [totalItems]="filteredStudents.length" [itemsPerPage]="itemsPerPage"
         (pageChange)="onPageChange($event)">
       </app-pagination>
     </div>
-
   </div>
 </div>

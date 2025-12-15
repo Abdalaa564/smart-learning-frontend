@@ -12,12 +12,11 @@ import { RatingService } from '../../Services/rating-service';
 @Component({
   selector: 'app-instructors-list',
   standalone: true,
-  imports: [CommonModule,  SkeletonCardComponent, PaginationComponent],
+  imports: [CommonModule, SkeletonCardComponent, PaginationComponent],
   templateUrl: './instructors.html',
-  styleUrls: ['./instructors.css']
+  styleUrls: ['./instructors.css'],
 })
 export class InstructorsListComponent implements OnInit {
-
   instructors: Instructor[] = [];
   loading = true;
 
@@ -40,40 +39,40 @@ export class InstructorsListComponent implements OnInit {
   get isInstructor(): boolean {
     return this.authService.isInstructor();
   }
-  
+
   get isAdmin(): boolean {
     return this.authService.isAdmin();
   }
 
-    // End Role checking
+  // End Role checking
 
   constructor(
     private service: InstructorService,
     private router: Router,
     private authService: AuthService,
     private ratingService: RatingService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.service.getAll().subscribe({
-      next: res => {
+      next: (res) => {
         this.instructors = res;
-            this.instructors.forEach(ins => {
-        if (ins.id) {
-          this.ratingService.getInstructorAverage(ins.id).subscribe({
-            next: avgRes => {
-              ins.rating = avgRes.average; // تحدث المتوسط لكل مدرس
-            },
-            error: err => {
-              console.error('Error loading rating for instructor ' + ins.id, err);
-              ins.rating = 0; // لو فيه مشكلة خليها 0
-            }
-          });
-        }
-      });
+        this.instructors.forEach((ins) => {
+          if (ins.id) {
+            this.ratingService.getInstructorAverage(ins.id).subscribe({
+              next: (avgRes) => {
+                ins.rating = avgRes.average; // تحدث المتوسط لكل مدرس
+              },
+              error: (err) => {
+                console.error('Error loading rating for instructor ' + ins.id, err);
+                ins.rating = 0; // لو فيه مشكلة خليها 0
+              },
+            });
+          }
+        });
 
-      this.loading = false;
-      }
+        this.loading = false;
+      },
     });
   }
 
