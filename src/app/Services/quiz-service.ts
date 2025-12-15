@@ -7,7 +7,7 @@ import { QuizDetailsDto, StartQuizDto, CreateQuizDto, UpdateQuizDto, CreateQuest
   providedIn: 'root',
 })
 export class QuizService {
-  private apiUrl = 'http://localhost:5163/api/Quiz'; // غير الـ URL حسب الـ API الخاص بك
+  private apiUrl = 'http://elearningg.runasp.net/api/Quiz'; // غير الـ URL حسب الـ API الخاص بك
 
   constructor(private http: HttpClient) { }
 
