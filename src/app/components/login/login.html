@@ -1,15 +1,14 @@
-<div class=" d-flex align-items-center justify-content-center vh-100">
+<div class="d-flex align-items-center justify-content-center vh-100">
   <div class="card shadow-lg p-5 login-card">
     <div class="text-center mb-4">
       <div class="logo-image mx-auto mb-3 logo-circle">
         <img src="assets/img/logo-removebg-preview.png" alt="Logo" />
       </div>
       <h3 class="fw-bold">Welcome Back!</h3>
-      <p >Login to access your courses</p>
+      <p>Login to access your courses</p>
     </div>
 
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-      
       <!-- EMAIL -->
       <div class="mb-3">
         <label>Email</label>
@@ -18,29 +17,52 @@
           type="email"
           class="form-control"
           formControlName="email"
-          [class.is-invalid]="(f['email'].touched || f['email'].dirty || submitted) && f['email'].invalid"
+          [class.is-invalid]="
+            (f['email'].touched || f['email'].dirty || submitted) && f['email'].invalid
+          "
         />
 
-        <div class="invalid-feedback"
-          *ngIf="(f['email'].touched || f['email'].dirty || submitted) && f['email'].errors">
+        <div
+          class="invalid-feedback"
+          *ngIf="(f['email'].touched || f['email'].dirty || submitted) && f['email'].errors"
+        >
           <span *ngIf="f['email'].errors['required']">Email is required</span>
           <span *ngIf="f['email'].errors['email']">Please enter a valid email</span>
         </div>
       </div>
 
       <!-- PASSWORD -->
+      <!-- PASSWORD -->
       <div class="mb-3">
         <label>Password</label>
-        <input
-          placeholder="enter Password"
-          type="password"
-          class="form-control"
-          formControlName="password"
-          [class.is-invalid]="(f['password'].touched || f['password'].dirty || submitted) && f['password'].invalid"
-        />
 
-        <div class="invalid-feedback"
-          *ngIf="(f['password'].touched || f['password'].dirty || submitted) && f['password'].errors">
+        <div class="input-group">
+          <input
+            placeholder="Enter password"
+            [type]="showPassword ? 'text' : 'password'"
+            class="form-control"
+            formControlName="password"
+            [class.is-invalid]="
+              (f['password'].touched || f['password'].dirty || submitted) && f['password'].invalid
+            "
+          />
+
+          <button
+            type="button"
+            class="btn btn-outline-secondary"
+            (click)="togglePassword()"
+            tabindex="-1"
+          >
+            <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'"></i>
+          </button>
+        </div>
+
+        <div
+          class="invalid-feedback d-block"
+          *ngIf="
+            (f['password'].touched || f['password'].dirty || submitted) && f['password'].errors
+          "
+        >
           <span *ngIf="f['password'].errors['required']">Password is required</span>
           <span *ngIf="f['password'].errors['minlength']">Minimum 6 characters required</span>
         </div>
@@ -52,7 +74,7 @@
       </button>
     </form>
 
-    <p class="text-center mt-4 mb-0 ">
+    <p class="text-center mt-4 mb-0">
       Don’t have an account?
       <a routerLink="/register" class="text-decoration-none accent-link">Sign up</a>
     </p>

@@ -12,9 +12,9 @@
       </div>
 
       <!-- Error Message -->
-      <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
-        {{ errorMessage }}
-      </div>
+     <div *ngIf="errorMessage" class="text-danger text-center fw-bold mt-3">
+  {{ errorMessage }}
+</div>
 
       <!-- Quiz List -->
       <div *ngIf="!loading && quizzes.length > 0" class="row">
@@ -66,7 +66,7 @@
       </div>
 
       <!-- No Quizzes Message -->
-      <div *ngIf="!loading && quizzes.length === 0" class="alert alert-info" role="alert">
+      <div *ngIf="!loading && quizzes.length === 0" >
         <i class="bi bi-info-circle"></i> No quizzes available for this lesson yet.
       </div>
     </div>

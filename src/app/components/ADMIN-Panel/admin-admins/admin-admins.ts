@@ -4,11 +4,13 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { AdminService } from '../../../Services/admin';
 import { AdminUser } from '../../../models/Admin';
 import { SearchBarComponent } from '../../../shared/search-bar/search-bar.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { Snackbar } from '../../../shared/snackbar';
 
 @Component({
   selector: 'app-admin-admins',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, SearchBarComponent],
+  imports: [CommonModule, ReactiveFormsModule, SearchBarComponent,MatSnackBarModule],
   templateUrl: './admin-admins.html',
   styleUrl: './admin-admins.css',
 })
@@ -29,7 +31,8 @@ export class AdminAdmins implements OnInit {
 
   constructor(
     private adminService: AdminService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private snackBar: Snackbar
   ) {
     this.adminForm = this.fb.group({
       userName: ['', [Validators.required, Validators.maxLength(100)]],
@@ -133,7 +136,8 @@ export class AdminAdmins implements OnInit {
         error: (err) => {
           console.error(err);
           this.isLoading = false;
-          alert('Failed to update admin');
+         // alert('Failed to update admin');
+          this.snackBar.open(err.error?.message || 'Failed to update admin', 'error');
         }
       });
     } else {
@@ -152,7 +156,8 @@ export class AdminAdmins implements OnInit {
         error: (err) => {
           console.error(err);
           this.isLoading = false;
-          alert(err.error?.message || 'Failed to create admin');
+         // alert(err.error?.message || 'Failed to create admin');
+          this.snackBar.open(err.error?.message || 'Failed to create admin', 'error');
         }
       });
     }
@@ -170,7 +175,8 @@ export class AdminAdmins implements OnInit {
       error: (err) => {
         console.error(err);
         this.isLoading = false;
-        alert(err.error?.message || 'Failed to delete admin');
+       // alert(err.error?.message || 'Failed to delete admin');
+        this.snackBar.open(err.error?.message || 'Failed to delete admin', 'error');
       }
     });
   }
