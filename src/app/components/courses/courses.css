@@ -17,6 +17,13 @@
   
 }
 
+.btn-accent.btn-add {
+  border-radius: 999px;
+  padding: 8px 20px;
+  font-size: 15px;
+  transition: all 0.2s ease-in-out;
+}
+
 /* ===== IMAGE ===== */
 .course-image-wrapper {
   position: relative;
@@ -301,4 +308,11 @@
   .course-card {
     margin-bottom: 15px;
   }
+}
+
+
+.lesson-desc {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

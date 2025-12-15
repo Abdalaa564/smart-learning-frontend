@@ -7,6 +7,9 @@ import { RatingService } from '../../Services/rating-service';
 import { SkeletonCardComponent } from '../../shared/Skeleton/skeleton-card/skeleton-card';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { UnitService } from '../../Services/unit.service';
+import { LessonService } from '../../Services/lesson.service';
+import { Unit } from '../../models/Unit ';
 
 @Component({
   selector: 'app-course-details',
@@ -17,6 +20,9 @@ import { FormsModule } from '@angular/forms';
 })
 export class CourseDetailsComponent implements OnInit {
   course: Course | null = null;
+  units: Unit[] = [];
+  lessonCounts: { [unitId: number]: number } = {};
+
   imageBase = environment.imageBase;
   isLoading = true;
 
@@ -29,9 +35,11 @@ export class CourseDetailsComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private courseService: CourseService,
+    private unitService: UnitService,
+    private lessonService: LessonService,
     private ratingService: RatingService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     const idParam = this.route.snapshot.paramMap.get('id');
@@ -46,9 +54,11 @@ export class CourseDetailsComponent implements OnInit {
       next: (res) => {
         this.course = res;
         this.isLoading = false;
+
         if (this.course?.crs_Id) {
           this.checkIfUserRated(this.course.crs_Id);
           this.loadCourseAverage(this.course.crs_Id);
+          this.loadUnits(this.course.crs_Id);
         }
       },
       error: (err) => {
@@ -58,11 +68,39 @@ export class CourseDetailsComponent implements OnInit {
     });
   }
 
+  loadUnits(courseId: number) {
+    this.unitService.getByCourse(courseId).subscribe({
+      next: (units) => {
+        this.units = units;
+        // Fetch lesson counts for each unit
+        units.forEach(unit => {
+          this.loadLessonCount(unit.unit_Id);
+        });
+      },
+      error: (err) => console.error('Failed to load units', err)
+    });
+  }
+
+  loadLessonCount(unitId: number) {
+    this.lessonService.getLessonsByUnit(unitId).subscribe({
+      next: (lessons) => {
+        this.lessonCounts[unitId] = lessons.length;
+      },
+      error: (err) => console.error(`Failed to load lessons for unit ${unitId}`, err)
+    });
+  }
+
   getCourseImage(): string {
     if (!this.course?.imageUrl) return '/assets/img/education/course-1.jpg';
     const url = this.course.imageUrl;
     if (url.startsWith('http://') || url.startsWith('https://')) return url;
     return this.imageBase + url;
+  }
+
+  getInstructorImage(): string {
+    // Use a placeholder if no instructor photo is available 
+    // (Model might need update if we want real photos, but keeping it simple for now)
+    return 'https://ui-avatars.com/api/?name=' + (this.course?.instructorName || 'Instructor') + '&background=random';
   }
 
   goBack(): void {

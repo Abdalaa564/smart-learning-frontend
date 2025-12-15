@@ -16,6 +16,12 @@
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
 }
 
+.btn-add {
+  border-radius: 999px;
+  padding: 7px 20px;
+  font-size: 15px;
+  transition: all 0.2s ease-in-out;
+}
 /* ==========================
    Lesson Image
 ========================== */
@@ -163,4 +169,11 @@
     font-size: 0.75rem;
     padding: 6px 12px;
   }
+}
+
+
+.lesson-desc {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
