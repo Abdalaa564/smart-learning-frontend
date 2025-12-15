@@ -3,11 +3,15 @@ import { Studentprofile } from '../../../models/studentprofile';
 import { CommonModule } from '@angular/common';
 import { SearchBarComponent } from '../../../shared/search-bar/search-bar.component';
 import { AuthService } from '../../../Services/auth-service';
+import { Router } from '@angular/router';
+import { PaginationComponent } from '../../../shared/pagination/pagination';
+import { SortingComponent, SortEvent } from '../../../shared/sorting/sorting.component';
+import { SortUtils } from '../../../shared/utils/sort-utils';
 
 @Component({
   selector: 'app-admin-students',
   standalone: true,
-  imports: [CommonModule, SearchBarComponent],
+  imports: [CommonModule, SearchBarComponent, PaginationComponent, SortingComponent],
   templateUrl: './admin-students.html',
   styleUrl: './admin-students.css',
 })
@@ -17,15 +21,51 @@ export class AdminStudentsComponent {
 
   @ViewChild(SearchBarComponent) searchBar!: SearchBarComponent;
   searchText = '';
-  
-  @Output() add = new EventEmitter<void>();
-  @Output() view = new EventEmitter<Studentprofile>();
-  @Output() edit = new EventEmitter<Studentprofile>();
+
+  // Only DELETE is supported as an action (event)
   @Output() delete = new EventEmitter<Studentprofile>();
-  
+
+  // Sorting
+  sortField = 'firstName';
+  sortDirection: 'asc' | 'desc' = 'asc';
+  sortOptions = [
+    { label: 'First Name', value: 'firstName' },
+    { label: 'Last Name', value: 'lastName' },
+    { label: 'Email', value: 'email' },
+    { label: 'Enrollments', value: 'id' } // Approximate using ID or can't sort map easily
+  ];
+
+  handleSortChange(event: SortEvent) {
+    this.sortField = event.field;
+    this.sortDirection = event.direction;
+    this.currentPage = 1; // Reset to first page
+  }
+
+  // Pagination
+  currentPage: number = 1;
+  itemsPerPage: number = 10;
+
+  get paginatedStudents(): Studentprofile[] {
+    // 1. Filter
+    let processed = this.filteredStudents;
+
+    // 2. Sort
+    processed = SortUtils.sortData(processed, this.sortField, this.sortDirection);
+
+    // 3. Paginate
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    return processed.slice(startIndex, startIndex + this.itemsPerPage);
+  }
+
+  onPageChange(page: number): void {
+    this.currentPage = page;
+    window.scrollTo(0, 0);
+  }
+
   // Search icon implementation
   onSearchTextChange(searchText: string) {
     this.searchText = searchText;
+    this.currentPage = 1; // Reset to first page on search
   }
 
   highlightText(text: string): string {
@@ -46,10 +86,21 @@ export class AdminStudentsComponent {
     );
   }
 
-  constructor(private authService: AuthService) { }
+  constructor(
+    private authService: AuthService,
+    private router: Router
+  ) { }
 
   get isAdmin(): boolean {
     return this.authService.isAdmin();
   }
+
+goToStudentProfile(userId?: string) {
+  if (!userId) return;
+  
+  console.log('Student User ID:', userId);
+  this.router.navigate(['/student-profile', userId]);
+}
+
   // end Search icon implementation
 }

@@ -66,5 +66,21 @@ aiReport: string = '';
     this.router.navigate(['/lesson/1/quizzes']);
   }
 
-  
+  get formattedReport(): string {
+  if (!this.aiReport) return '';
+
+  return this.aiReport
+    // Divider
+    .replace(/^\s*---\s*$/gm, '\n──────────────────────────\n')
+
+    // Head title
+    .replace(/^\*\*(Exam Performance Report)\*\*/m, '📊 $1')
+
+    // Section titles
+    .replace(/^\*\*(.+?)\*\*$/gm, '\n$1\n')
+
+    // Remove markdown ** but keep text
+    .replace(/\*\*(.*?)\*\*/g, '$1');
+}
+
 }

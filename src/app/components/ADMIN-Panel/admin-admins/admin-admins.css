@@ -1,3 +1,22 @@
+/* ===== Icon Buttons ===== */
+.icon-btn-new {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid var(--border-color);
+  background-color: var(--surface-color);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: all 0.15s ease;
+  display: flex; 
+  justify-content: center;
+  align-items: center;
+}
+
+.icon-btn-new:hover {
+  transform: translateY(-1px);
+  border-color: var(--accent-color);
+}
+
 .avatar-circle {
     width: 32px;
     height: 32px;
@@ -7,4 +26,77 @@
     justify-content: center;
     font-weight: bold;
     font-size: 14px;
+}
+.card {
+  border-radius: 10px;
+  background-color: var(--background-color);
+  color: var(--default-color);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.card-header {
+  background-color: var(--surface-color);
+  border-bottom: 1px solid var(--border-color);
+}
+/*--------------------------------------------------------------
+# Modal
+--------------------------------------------------------------*/
+.modal-backdrop {
+  background-color: rgba(0,0,0,0.5);
+}
+
+.modal-content {
+  background-color: var(--surface-color);
+  color: var(--default-color);
+  border-radius: 10px;
+  box-shadow: var(--card-shadow);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.modal-header {
+  border-bottom: 1px solid var(--border-color);
+}
+
+.modal-body input,
+.modal-body select,
+.modal-body textarea {
+  background-color: var(--surface-color);
+  color: var(--default-color);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+}
+
+.invalid-feedback {
+  color: #dc3545;
+}
+
+/*--------------------------------------------------------------
+# Dark Mode
+--------------------------------------------------------------*/
+
+
+.dark-mode .card,
+.dark-mode .modal-content {
+  background-color: var(--surface-color);
+  color: var(--default-color);
+  border-color: var(--border-color);
+}
+
+.dark-mode .btn-light {
+  background-color: var(--btn-light-bg);
+  color: var(--default-color);
+  border-color: var(--border-color);
+}
+
+.dark-mode .table-hover tbody tr:hover {
+  background-color: color-mix(in srgb, var(--surface-color), black 12%);
+}
+
+.dark-mode .table-dark th {
+  color: var(--accent-color);
+}
+
+.dark-mode .avatar-circle {
+  color: var(--accent-color);
 }

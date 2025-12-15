@@ -11,7 +11,7 @@ export class Snackbar {
     this.snackBar.open(message, 'Close', {
       duration: 5000,
       horizontalPosition: 'right',
-      verticalPosition: 'top',
+      verticalPosition: 'bottom',
       panelClass: type === 'success'
         ? 'snackbar-success'
         : 'snackbar-error'
