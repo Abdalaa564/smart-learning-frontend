@@ -18,5 +18,7 @@ export class StudentService {
   getAll(): Observable<{ totalStudents: number, data: Studentprofile[] }> {
   return this.http.get<{ totalStudents: number, data: Studentprofile[] }>(`${this.baseUrl}/all`);
 }
-
+deleteStudent(userId: string): Observable<any> {
+  return this.http.delete(`${this.baseUrl}/${userId}`);
+}
 }
