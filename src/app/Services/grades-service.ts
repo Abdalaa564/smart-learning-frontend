@@ -7,7 +7,7 @@ import { StudentGrade } from '../models/student-grade';
   providedIn: 'root',
 })
 export class GradesService {
-  private apiUrl = 'http://elearningg.runasp.net/api/Quiz'; // عدّل الـ URL حسب المشروع
+  private apiUrl = 'https://elearningg.runasp.net/api/Quiz'; // عدّل الـ URL حسب المشروع
 
   constructor(private http: HttpClient) {}
 

@@ -14,7 +14,7 @@ export interface ChatRequest {
   providedIn: 'root',
 })
 export class ChatService {
-  private apiUrl = 'http://elearningg.runasp.net/api/chat';
+  private apiUrl = 'https://elearningg.runasp.net/api/chat';
 
   constructor(private http: HttpClient) {}
 

@@ -10,7 +10,7 @@ import { EnrollmentPayment } from '../models/EnrollmentPayment';
   providedIn: 'root',
 })
 export class EnrollmentService {
-  private baseUrl = 'http://elearningg.runasp.net/api/Enrollment';
+  private baseUrl = 'https://elearningg.runasp.net/api/Enrollment';
 
   constructor(private http: HttpClient) {}
 
