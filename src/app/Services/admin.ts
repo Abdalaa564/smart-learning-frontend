@@ -9,7 +9,7 @@ import { AdminUser, CreateAdminDto, UpdateAdminDto } from '../models/Admin';
   providedIn: 'root',
 })
 export class AdminService {
-  private apiUrl = 'http://localhost:5163/api/Admin';
+  private apiUrl = 'http://elearningg.runasp.net/api/Admin';
 
   constructor(private http: HttpClient) { }
 

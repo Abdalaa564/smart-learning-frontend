@@ -11,7 +11,7 @@ import { RegisterInstructorRequest } from '../models/iinstructor';
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:5163/api';
+  private apiUrl = 'http://elearningg.runasp.net/api';
   private tokenKey = 'access_token';
   private userKey = 'current_user';
 

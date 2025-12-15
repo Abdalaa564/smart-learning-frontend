@@ -7,7 +7,7 @@ import { BehaviorSubject, Observable, tap } from 'rxjs';
   providedIn: 'root',
 })
 export class StudentprofileService {
-  private apiUrl = 'http://localhost:5163/api';
+  private apiUrl = 'http://elearningg.runasp.net/api';
   private tokenKey = 'access_token';
   private userKey = 'current_user';
 
