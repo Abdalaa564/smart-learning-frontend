@@ -21,6 +21,7 @@
             <table class="table table-hover align-middle mb-0">
                 <thead class="bg-light">
                     <tr>
+                        <th class="ps-4">Student Email</th>
                         <th class="ps-4">Quiz Name</th>
                         <th>Course</th>
                         <th class="text-center">Grade</th>
@@ -34,6 +35,9 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let grade of grades">
+                          <td class="ps-4">
+                            <span class="fw-semibold text-dark">{{ grade.studentName }}</span>
+                        </td>
                         <td class="ps-4">
                             <span class="fw-semibold text-dark">{{ grade.quizName }}</span>
                         </td>

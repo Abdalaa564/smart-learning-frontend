@@ -15,4 +15,8 @@ export class GradesService {
     // هيدخل userId من الـ JWT Token في الـ Backend
     return this.http.get<StudentGrade[]>(`${this.apiUrl}/StudentGrades`);
   }
+    getAllStudentGrades(): Observable<StudentGrade[]> {
+    // هيدخل userId من الـ JWT Token في الـ Backend
+    return this.http.get<StudentGrade[]>(`${this.apiUrl}/GetAllGrades`);
+  }
 }

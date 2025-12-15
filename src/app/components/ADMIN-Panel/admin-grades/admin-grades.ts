@@ -22,7 +22,7 @@ export class AdminGradesComponent implements OnInit {
 
     loadGrades(): void {
         this.isLoading = true;
-        this.gradesService.getStudentGrades().subscribe({
+        this.gradesService.getAllStudentGrades().subscribe({
             next: (data) => {
                 this.grades = data;
                 this.isLoading = false;
