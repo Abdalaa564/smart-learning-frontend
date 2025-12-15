@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { AdminSidebarComponent } from '../admin-sidebar/admin-sidebar';
 import { AdminHeaderComponent } from '../admin-header-component/admin-header-component';
@@ -26,6 +27,7 @@ import { InstructorService } from '../../../Services/instructor-srevices';
 import { CourseService } from '../../../Services/course.service';
 import { EnrollmentService } from '../../../Services/enrollment-service';
 import { AdminService } from '../../../Services/admin';
+import { StudentprofileService } from '../../../Services/studentprofile-service';
 
 import { BaseChartDirective } from 'ng2-charts';
 import { ChartConfiguration, ChartOptions } from 'chart.js';
@@ -172,7 +174,9 @@ export class AdminPanelComponent implements OnInit {
     private courseService: CourseService,
     private enrollmentService: EnrollmentService,
     private adminService: AdminService,
-    private authService: AuthService
+    private authService: AuthService,
+    private studentProfileService: StudentprofileService,
+    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
@@ -489,8 +493,6 @@ export class AdminPanelComponent implements OnInit {
   // ===== UI =====
 
   setActivePage(page: MenuItem['id']) {
-      console.log('Active Page:', page);
-
     this.activePage = page;
   }
 
@@ -503,7 +505,44 @@ export class AdminPanelComponent implements OnInit {
   onAddStudent() { }
   onViewStudent(stu: Studentprofile) { }
   onEditStudent(stu: Studentprofile) { }
-  onDeleteStudent(stu: Studentprofile) { }
+
+  onDeleteStudent(stu: Studentprofile) {
+    // Check if userId exists (this is what the backend expects)
+    if (!stu.userId) {
+      console.error('Student userId is missing');
+      this.showErrorMessage('Cannot delete student: User ID is missing');
+      return;
+    }
+
+    const confirmDelete = confirm(
+      `Are you sure you want to delete ${stu.firstName} ${stu.lastName}? This action cannot be undone.`
+    );
+
+    if (!confirmDelete) return;
+
+    // Use userId (string) instead of id (number) - this matches the backend API
+    this.studentProfileService.deleteStudent(stu.userId).subscribe({
+      next: (response) => {
+        console.log('Student deleted successfully:', response);
+
+        // Remove from local array
+        this.students = this.students.filter(s => s.userId !== stu.userId);
+
+        // Reload counts and enrollments
+        this.loadCounts();
+        this.loadStudentEnrollmentCounts();
+        this.loadAllEnrollments();
+        this.buildRecentActivities();
+
+        // Show success message
+        this.showSuccessMessage('Student deleted successfully');
+      },
+      error: (err) => {
+        console.error('Error deleting student:', err);
+        this.showErrorMessage('Failed to delete student. Please try again.');
+      }
+    });
+  }
 
   onAddInstructor() { }
   onViewInstructor(inst: Instructor) { }
@@ -528,6 +567,25 @@ export class AdminPanelComponent implements OnInit {
     this.adminService.rejectInstructor(inst.id).subscribe({
       next: () => this.loadPendingInstructors(),
       error: (err) => console.error('Error rejecting instructor', err),
+    });
+  }
+
+  // Helper methods for user feedback
+  private showSuccessMessage(message: string): void {
+    this.snackBar.open(message, 'Close', {
+      duration: 3000,
+      panelClass: ['snackbar-success'],
+      horizontalPosition: 'end',
+      verticalPosition: 'top'
+    });
+  }
+
+  private showErrorMessage(message: string): void {
+    this.snackBar.open(message, 'Close', {
+      duration: 5000,
+      panelClass: ['snackbar-error'],
+      horizontalPosition: 'end',
+      verticalPosition: 'top'
     });
   }
 }

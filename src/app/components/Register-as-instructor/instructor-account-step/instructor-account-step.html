@@ -1,128 +1,137 @@
 <!-- STEP 1: ACCOUNT INFO -->
 
-  <div class="step-header">
-    <!-- <h5>Account Information</h5>
-    <p>Please fill in your basic account details.</p> -->
-  </div>
+<div class="step-header">
+  <!-- <h5>Account Information</h5>
+  <p>Please fill in your basic account details.</p> -->
+</div>
 
-  <!-- Important: formGroup جاي من الـ parent عن طريق FormGroupDirective -->
-  <div class="row g-3">
-    <!-- FULL NAME -->
-    <div class="col-md-6">
-      <div class="mb-3">
-        <label class="form-label">Full Name</label>
-        <input type="text" class="form-control" placeholder="Enter your full name" formControlName="fullName"
-          [class.is-invalid]="submitted && f['fullName'].invalid" />
-        <small class="text-danger" *ngIf="submitted && f['fullName'].invalid">
-          Full name is required
-        </small>
-      </div>
-    </div>
-
-    <!-- JOB TITLE -->
-    <div class="col-md-6">
-      <div class="mb-3">
-        <label class="form-label">Job Title</label>
-        <input type="text" class="form-control" placeholder="e.g. Senior Instructor" formControlName="jobTitle"
-          [class.is-invalid]="submitted && f['jobTitle'].invalid" />
-        <small class="text-danger" *ngIf="submitted && f['jobTitle'].invalid">
-          Job title is required
-        </small>
-      </div>
-    </div>
-
-    <!-- EMAIL -->
-    <div class="col-md-6">
-      <div class="mb-3">
-        <label class="form-label">Email</label>
-        <input type="email" class="form-control" placeholder="example@mail.com" formControlName="email"
-          [class.is-invalid]="submitted && f['email'].invalid" />
-        <!-- <small class="text-danger" *ngIf="submitted && f['email'].errors">
-          Valid email is required
-        </small> -->
-        <small class="text-danger" *ngIf="submitted && f['email'].errors?.['email']">
-          Invalid email format
-        </small>
-
-      </div>
-    </div>
-
-    <!-- PHONE -->
-    <div class="col-md-6">
-      <div class="mb-3">
-        <label class="form-label">Phone Number</label>
-        <input type="tel" class="form-control" placeholder="01xxxxxxxxx" formControlName="phoneNumber"
-          [class.is-invalid]="submitted && f['phoneNumber'].invalid" />
-        <!-- <small class="text-danger" *ngIf="submitted && f['phoneNumber'].errors?.['required']">
-          Phone number is required
-        </small> -->
-        <small class="text-danger" *ngIf="submitted && f['phoneNumber'].errors?.['pattern']">
-          Enter a valid Egyptian phone number (e.g., 010xxxxxxxx)
-        </small>
-      </div>
-    </div>
-
-    <!-- PASSWORD -->
-    <div class="col-md-6">
-      <div class="mb-3">
-        <label class="form-label">Password</label>
-
-        <div class="position-relative">
-          <input [type]="showPassword ? 'text' : 'password'" class="form-control password-input"
-            placeholder="Minimum 6 characters" formControlName="password"
-            [class.is-invalid]="submitted && f['password'].invalid" />
-
-          <!-- 👁 الأيقونة جوا الفيلد -->
-          <i class="bi password-icon" [ngClass]="{ 'bi-eye': !showPassword, 'bi-eye-slash': showPassword }"
-            (click)="togglePassword()"></i>
-        </div>
-
-        <small class="text-danger" *ngIf="submitted && f['password'].errors">
-          Minimum 6 characters required
-        </small>
-      </div> 
-    </div>
- 
-    <!-- CONFIRM PASSWORD -->
-    <div class="col-md-6">
-      <div class="mb-3">
-        <label class="form-label">Confirm Password</label>
-
-        <div class="position-relative">
-          <input [type]="showConfirmPassword ? 'text' : 'password'" class="form-control password-input"
-            placeholder="Re-enter your password" formControlName="confirmPassword" [class.is-invalid]="
-          submitted &&
-          (f['confirmPassword'].invalid || formGroupDirective.form.errors?.['passwordMismatch'])
-        " />
-
-          <i class="bi password-icon"
-            [ngClass]="{ 'bi-eye': !showConfirmPassword, 'bi-eye-slash': showConfirmPassword }"
-            (click)="toggleConfirmPassword()"></i>
-        </div>
-
-        <small class="text-danger" *ngIf="submitted && formGroupDirective.form.errors?.['passwordMismatch']">
-          Passwords do not match
-        </small>
-      </div>
-    </div>
-
-
-    <!-- YOUTUBE -->
-    <div class="col-12">
-      <div class="mb-3">
-        <label class="form-label">Youtube Channel URL (optional)</label>
-        <input type="url" class="form-control" placeholder="https://youtube.com/your-channel"
-          formControlName="youtubeChannelUrl" />
-        <small class="text-danger" *ngIf="submitted && f['youtubeChannelUrl'].errors?.['pattern']">
-          Please enter a valid URL (starting with http or https)
-        </small>
-      </div>
-    </div>
-
-    <!-- NEXT BUTTON -->
-    <div class="col-12 d-flex justify-content-end">
-      <button type="button" class="btn btn-primary px-4" (click)="onNextClick()">
-        Next
-      </button>
+<!-- Important: formGroup جاي من الـ parent عن طريق FormGroupDirective -->
+<div class="row g-3">
+  <!-- FULL NAME -->
+  <div class="col-md-6">
+    <div class="mb-3">
+      <label class="form-label">Full Name</label>
+      <input type="text" class="form-control" placeholder="Enter your full name" formControlName="fullName"
+        [class.is-invalid]="submitted && f['fullName'].invalid" />
+      <small class="text-danger" *ngIf="submitted && f['fullName'].invalid">
+        Full name is required
+      </small>
     </div>
   </div>
+
+  <!-- JOB TITLE -->
+  <div class="col-md-6">
+    <div class="mb-3">
+      <label class="form-label">Job Title</label>
+      <input type="text" class="form-control" placeholder="e.g. Senior Instructor" formControlName="jobTitle"
+        [class.is-invalid]="submitted && f['jobTitle'].invalid" />
+      <small class="text-danger" *ngIf="submitted && f['jobTitle'].invalid">
+        Job title is required
+      </small>
+    </div>
+  </div>
+
+  <!-- EMAIL -->
+  <div class="col-md-6">
+    <div class="mb-3">
+      <label class="form-label">Email</label>
+      <input type="email" class="form-control" placeholder="example@mail.com" formControlName="email"
+        [class.is-invalid]="submitted && f['email'].invalid" />
+      <small class="text-danger" *ngIf="submitted && f['email'].errors?.['required']">
+        Email is required
+      </small>
+      <small class="text-danger" *ngIf="submitted && f['email'].errors?.['email']">
+        Invalid email format
+      </small>
+    </div>
+  </div>
+
+  <!-- PHONE -->
+  <div class="col-md-6">
+    <div class="mb-3">
+      <label class="form-label">Phone Number</label>
+      <input type="tel" class="form-control" placeholder="01xxxxxxxxx" formControlName="phoneNumber"
+        [class.is-invalid]="submitted && f['phoneNumber'].invalid" />
+      <small class="text-danger" *ngIf="submitted && f['phoneNumber'].errors?.['required']">
+        Phone number is required
+      </small>
+      <small class="text-danger" *ngIf="submitted && f['phoneNumber'].errors?.['pattern']">
+        Enter a valid Egyptian phone number (e.g., 010xxxxxxxx)
+      </small>
+    </div>
+  </div>
+
+  <!-- PASSWORD -->
+  <div class="col-md-6">
+    <div class="mb-3">
+      <label class="form-label">Password</label>
+
+      <div class="position-relative">
+        <input [type]="showPassword ? 'text' : 'password'" class="form-control password-input"
+          placeholder="Minimum 6 characters" formControlName="password"
+          [class.is-invalid]="submitted && f['password'].invalid" />
+
+        <!-- 👁 الأيقونة جوا الفيلد -->
+        <i class="bi password-icon" [ngClass]="{ 'bi-eye': !showPassword, 'bi-eye-slash': showPassword }"
+          (click)="togglePassword()"></i>
+      </div>
+
+      <small class="text-danger" *ngIf="submitted && f['password'].errors?.['required']">
+        Password is required
+      </small>
+      <small class="text-danger" *ngIf="submitted && f['password'].errors?.['minlength']">
+        Minimum 6 characters required
+      </small>
+    </div> 
+  </div>
+
+  <!-- CONFIRM PASSWORD -->
+  <div class="col-md-6">
+    <div class="mb-3">
+      <label class="form-label">Confirm Password</label>
+
+      <div class="position-relative">
+        <input [type]="showConfirmPassword ? 'text' : 'password'" class="form-control password-input"
+          placeholder="Re-enter your password" formControlName="confirmPassword" [class.is-invalid]="
+        submitted &&
+        (f['confirmPassword'].invalid || formGroupDirective.form.errors?.['passwordMismatch'])
+      " />
+
+        <i class="bi password-icon"
+          [ngClass]="{ 'bi-eye': !showConfirmPassword, 'bi-eye-slash': showConfirmPassword }"
+          (click)="toggleConfirmPassword()"></i>
+      </div>
+
+      <small class="text-danger" *ngIf="submitted && f['confirmPassword'].errors?.['required']">
+        Please confirm your password
+      </small>
+      <small class="text-danger" *ngIf="submitted && formGroupDirective.form.errors?.['passwordMismatch'] && !f['confirmPassword'].errors?.['required']">
+        Passwords do not match
+      </small>
+    </div>
+  </div>
+
+
+  <!-- YOUTUBE -->
+  <div class="col-12">
+    <div class="mb-3">
+      <label class="form-label">Youtube Channel URL</label>
+      <input type="url" class="form-control" placeholder="https://youtube.com/your-channel"
+        formControlName="youtubeChannelUrl" 
+        [class.is-invalid]="submitted && f['youtubeChannelUrl'].invalid" />
+      <small class="text-danger" *ngIf="submitted && f['youtubeChannelUrl'].errors?.['required']">
+        Youtube channel URL is required
+      </small>
+      <small class="text-danger" *ngIf="submitted && f['youtubeChannelUrl'].errors?.['pattern']">
+        Please enter a valid URL (starting with http or https)
+      </small>
+    </div>
+  </div>
+
+  <!-- NEXT BUTTON -->
+  <div class="col-12 d-flex justify-content-end">
+    <button type="button" class="btn btn-primary px-4" (click)="onNextClick()">
+      Next
+    </button>
+  </div>
+</div>
