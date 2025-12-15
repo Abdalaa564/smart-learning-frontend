@@ -26,7 +26,7 @@ interface HasRatedResponse {
 })
 export class RatingService {
 
-  private apiUrl = 'http://localhost:5163/api'; // عدّل حسب API
+  private apiUrl = 'http://elearningg.runasp.net/api'; // عدّل حسب API
 
   constructor(private http: HttpClient) { }
 

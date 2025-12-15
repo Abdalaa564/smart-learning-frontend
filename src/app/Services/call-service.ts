@@ -50,7 +50,7 @@ export class CallService {
       'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json'
     });
-    return this.http.post('http://localhost:5163/api/Meetings', 
+    return this.http.post('http://elearningg.runasp.net/Meetings', 
       {startsAt, description }, { headers });
   }
 }

@@ -1,5 +1,5 @@
 export const environment = {
   production: false,
-  apiBase: 'http://localhost:5163/api',
-   imageBase: 'http://localhost:5163'
+  apiBase: 'http://elearningg.runasp.net/api',
+   imageBase: 'http://elearningg.runasp.net'
 };
