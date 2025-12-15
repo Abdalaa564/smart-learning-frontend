@@ -60,7 +60,7 @@ export class RegisterInstructorComponent {
     fullName: ['', Validators.required],
     jobTitle: ['', Validators.required],
     phoneNumber: ['',[ Validators.required, Validators.pattern(/^01[0-2,5]{1}[0-9]{8}$/) ]],
-    youtubeChannelUrl: [ '', [ Validators.pattern(/^https?:\/\/.+$/)  ]],
+     youtubeChannelUrl: ['', [Validators.required, Validators.pattern(/^https?:\/\/.+$/)]],
 
     // STEP 2
     photoUrl: ['',[ Validators.pattern(/^https?:\/\/.+$/)] ],
@@ -97,7 +97,8 @@ export class RegisterInstructorComponent {
       'confirmPassword',
       'fullName',
       'jobTitle',
-      'phoneNumber'
+      'phoneNumber',
+       'youtubeChannelUrl'
     ];
 
     let step1Valid = true;
