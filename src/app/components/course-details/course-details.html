@@ -1,86 +1,156 @@
-<div class="container py-4">
-  <button class="btn btn-outline-secondary mb-3" (click)="goBack()">
-    <i class="fa fa-arrow-left me-2"></i> Back to Courses
-  </button>
-
-  <!-- Skeleton -->
-  <div *ngIf="isLoading">
-    <app-skeleton-card
-      [showImage]="true"
-      [lines]="4"
-      [showActions]="true"
-      imageHeight="260px"
-      animation="wave"
-    ></app-skeleton-card>
+<div class="container py-3">
+  <!-- Back Button & Header -->
+  <div class="mb-4">
+    <button class="btn btn-link text-decoration-none ps-0 text-muted back-btn" (click)="goBack()">
+      <i class="bi bi-arrow-left me-2"></i> Back to Courses
+    </button>
   </div>
 
-  <!-- Content -->
-  <div class="row" *ngIf="!isLoading && course">
-    <div class="col-md-5 mb-3">
-      <div class="image-wrapper shadow-sm">
-        <img [src]="getCourseImage()" [alt]="course.crs_Name" class="img-fluid rounded" />
+  <!-- Skeleton Loading -->
+  <div *ngIf="isLoading">
+    <app-skeleton-card [showImage]="true" [lines]="4" [showActions]="true" imageHeight="300px" animation="wave">
+    </app-skeleton-card>
+  </div>
+
+  <div class="row g-5" *ngIf="!isLoading && course">
+    <!-- LEFT COLUMN: Main Content -->
+    <div class="col-lg-8">
+      <!-- Course Title & Meta -->
+      <div class="mb-4">
+        <h1 class="display-6 fw-bold text-heading">{{ course.crs_Name }}</h1>
+        <div class="d-flex align-items-center gap-3 mt-3 text-muted">
+          <span><i class="bi bi-star-fill text-warning me-1"></i> {{ course.rating || 0 | number:'1.1-1' }}
+            Rating</span>
+          <span><i class="bi bi-people-fill me-1"></i> {{ units.length }} Units</span>
+        </div>
       </div>
+
+      <!-- About Course -->
+      <div class="mb-5">
+        <h4 class="fw-bold mb-3 section-title">About Course</h4>
+        <p class="text-muted lead fs-6">{{ course.crs_Description }}</p>
+      </div>
+
+      <!-- Instructor Section -->
+      <div class="mb-5">
+        <h4 class="fw-bold mb-3 section-title">Instructor</h4>
+        <div class="d-flex align-items-center gap-3 p-4 bg-white rounded-4 shadow-sm borderInstructor instructor-card">
+          <img [src]="getInstructorImage()" class="rounded-circle border-accent p-1" width="70" height="70"
+            alt="Instructor">
+          <div>
+            <h5 class="fw-bold mb-1">{{ course.instructorName || 'Unknown Instructor' }}</h5>
+            <p class="text-muted mb-0 small">Course Instructor</p>
+          </div>
+          <div class="ms-auto">
+            <a [routerLink]="['/instructor', course.instructorId]"
+              class="btn btn-outline-accent btn-sm rounded-pill px-4 fw-semibold custom-btn">
+              View Profile
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Curriculum / Units -->
+      <div class="mb-5">
+        <h4 class="fw-bold mb-3 section-title">Curriculum</h4>
+        <div class="d-flex flex-column gap-3">
+          <div *ngFor="let unit of units"
+            class="unit-item p-3 bg-white rounded-3 shadow-sm border d-flex justify-content-between align-items-center scale-hover">
+
+            <div class="d-flex align-items-center gap-3">
+              <div
+                class="unit-icon bg-accent-subtle text-accent rounded-circle d-flex align-items-center justify-content-center">
+                <i class="bi bi-journal-bookmark-fill"></i>
+              </div>
+              <div>
+                <h6 class="fw-bold mb-0 text-heading">{{ unit.unit_Name }}</h6>
+                <small class="text-muted">{{ unit.unit_Description }}</small>
+              </div>
+            </div>
+
+            <div class="d-flex align-items-center gap-3">
+              <span class="badge bg-light text-secondary border rounded-pill px-3 py-2 fw-normal">
+                <i class="bi bi-play-circle-fill me-1 text-accent"></i>
+                {{ lessonCounts[unit.unit_Id] || 0 }} Lessons
+              </span>
+              <a [routerLink]="['/Courses', course.crs_Id, 'units', unit.unit_Id, 'lessons']"
+                class="btn btn-light btn-sm rounded-circle icon-btn-new">
+                <i class="bi bi-chevron-right"></i>
+              </a>
+            </div>
+
+          </div>
+
+          <div *ngIf="units.length === 0" class="text-center py-4 bg-light rounded-3 border-dashed">
+            <p class="text-muted mb-0">No units added yet.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Reviews -->
+      <div class="mb-5">
+        <div class="add-rating p-4 bg-white rounded-3 shadow-sm border">
+          <h5 class="fw-bold mb-3 section-title">Leave a Rating</h5>
+          <div class="stars mb-3 fs-3 text-warning" style="cursor: pointer;">
+            <span *ngFor="let star of [1,2,3,4,5]; let i = index" (click)="!hasRated && setRating(i+1)"
+              (mouseenter)="!hasRated && hoverRating(i+1)" (mouseleave)="!hasRated && hoverRating(0)"
+              [class.text-muted]="i >= (hoveredRating > 0 ? hoveredRating : ratingValue)" [class.opacity-50]="hasRated">
+              ★
+            </span>
+          </div>
+
+          <textarea [(ngModel)]="feedback" class="form-control mb-3 bg-light border-0" rows="3"
+            placeholder="Write your feedback..." [disabled]="hasRated"></textarea>
+
+          <div class="d-flex justify-content-between align-items-center">
+            <span *ngIf="hasRated" class="text-success fw-bold"><i class="bi bi-check-circle-fill me-1"></i>
+              Talked!</span>
+            <button class="btn btn-accent px-4 rounded-pill shadow-accent custom-btn" (click)="submitRating()"
+              [disabled]="hasRated || ratingValue === 0">
+              Submit Review
+            </button>
+          </div>
+        </div>
+      </div>
+
     </div>
 
-    <div class="col-md-7">
-      <h2 class="fw-bold mb-3">{{ course.crs_Name }}</h2>
-      <p class="text-muted">{{ course.crs_Description }}</p>
-
-      <div class="mb-3">
-        <span class="badge bg-success me-2">
-          <i class="fa fa-money-bill me-1"></i>
-          {{ course.price }} EGP
-        </span>
-      </div>
-
-      <div class="mt-4">
-        <h5>What you will learn</h5>
-        <ul class="list-unstyled">
-          <li><i class="fa fa-check text-success me-2"></i> Topic 1</li>
-          <li><i class="fa fa-check text-success me-2"></i> Topic 2</li>
-          <li><i class="fa fa-check text-success me-2"></i> Topic 3</li>
-        </ul>
-      </div>
-
-      <div class="mt-4 d-flex gap-2">
-        <button class="btn btn-primary">
-          <i class="fa fa-graduation-cap me-2"></i> Enroll Now
-        </button>
-        <button class="btn btn-outline-primary" [routerLink]="['/Courses', course.crs_Id, 'units']">
-          <i class="fa fa-book-open me-2"></i> View Units
-        </button>
-      </div>
-
-      <!-- Rating Section -->
-      <div class="add-rating mt-4" *ngIf="course">
-        <h5>Rate {{ course.crs_Name }}</h5>
-
-        <div class="stars mb-2">
-          <span *ngFor="let star of [1,2,3,4,5]; let i = index"
-                (click)="!hasRated && setRating(i+1)"
-                (mouseenter)="!hasRated && hoverRating(i+1)"
-                (mouseleave)="!hasRated && hoverRating(0)"
-                [class.filled]="i < (hoveredRating > 0 ? hoveredRating : ratingValue)"
-                [class.disabled]="hasRated">
-            ★
-          </span>
+    <!-- RIGHT COLUMN: Sticky Sidebar -->
+    <div class="col-lg-4 mt-0">
+      <div class="card shadow-lg border-0 sticky-top course-sidebar" style="top: 100px;">
+        <div class="position-relative">
+          <img [src]="getCourseImage()" class="card-img-top" style="height: 220px; object-fit: cover;"
+            alt="Course Image">
+          <div class="position-absolute top-0 end-0 m-3 px-3 py-1 bg-white rounded-pill shadow-sm fw-bold text-success">
+            {{ course.price | currency:'EGP ' }}
+          </div>
         </div>
 
-        <textarea [(ngModel)]="feedback"
-                  class="form-control mb-2"
-                  rows="3"
-                  placeholder="Write your feedback"
-                  [disabled]="hasRated"></textarea>
+        <div class="card-body p-4">
+          <div class="d-grid gap-3 mb-4">
+            <button class="btn btn-accent btn-lg rounded-pill fw-bold shadow-accent custom-btn">
+              <i class="bi bi-cart-plus me-2"></i> Enroll Now
+            </button>
+            <button class="btn btn-outline-secondary rounded-pill fw-semibold custom-btn"
+              [routerLink]="['/Courses', course.crs_Id, 'units']">
+              Preview Content
+            </button>
+          </div>
 
-        <button class="btn btn-accent" (click)="submitRating()"
-                [disabled]="hasRated || ratingValue === 0">
-          Submit Rating
-        </button>
-
-        <p *ngIf="hasRated" class="text-success mt-2">
-          You already rated this course. ✅
-        </p>
+          <h6 class="fw-bold mb-3 section-title">This course includes:</h6>
+          <ul class="list-unstyled d-flex flex-column gap-2 text-muted small">
+            <li class="d-flex align-items-center"><i class="bi bi-play-btn me-2 text-accent"></i> Video Lessons</li>
+            <li class="d-flex align-items-center"><i class="bi bi-file-earmark-pdf me-2 text-accent"></i> Downloadable
+              Resources</li>
+            <li class="d-flex align-items-center"><i class="bi bi-award me-2 text-accent"></i> Certificate of Completion
+            </li>
+            <li class="d-flex align-items-center"><i class="bi bi-phone me-2 text-accent"></i> Access on Mobile</li>
+            <li class="d-flex align-items-center"><i class="bi bi-infinity me-2 text-accent"></i> Full Lifetime Access
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
+
   </div>
 </div>

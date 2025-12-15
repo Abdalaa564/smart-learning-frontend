@@ -2,8 +2,10 @@
   <!-- Add Course Button -->
   <div class="d-flex justify-content-between align-items-center mb-3">
     <h3 class="fw-bold">Courses</h3>
-    <button class="btn btn-success btn-sm" [routerLink]="['/courses/add']" *ngIf="isAdmin">
-      + Add New Course</button>
+    <button class="btn btn-accent btn-add" [routerLink]="['/courses/add']" *ngIf="isAdmin">
+      <i class="bi bi-plus-lg me-1"></i>
+      <span>Add New Course</span>
+    </button>
   </div>
 
   <!-- ===== Skeleton Loading State ===== -->
@@ -43,7 +45,7 @@
           <small class="ms-1">({{ course.rating || 0 }})</small>
         </div>
           <h5 class="card-title">{{ course.crs_Name }}</h5>
-          <p class="card-text ">{{ course.crs_Description }}</p>
+          <p class="card-text lesson-desc">{{ course.crs_Description }}</p>
 
           <div class="instructor-info mb-3">
             <img [src]="getInstructorImage(course)" alt="Instructor" class="instructor-avatar" />

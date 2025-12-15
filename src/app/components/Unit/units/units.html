@@ -3,10 +3,11 @@
   <div class="d-flex justify-content-between align-items-center mb-4">
     <h3 class="fw-bold mb-0">Units for Course {{ courseName }} (#{{ courseId }})</h3>
     <div class="d-flex gap-2">
-      <a class="btn btn-success btn-sm" [routerLink]="['/Courses', courseId, 'units', 'add']" *ngIf="isAdmin">
-        + Add Unit
+      <a class="btn btn-success btn-sm btn-add" [routerLink]="['/Courses', courseId, 'units', 'add']" *ngIf="isAdmin">
+        <i class="bi bi-plus-lg me-1"></i> 
+        <span>Add Unit</span>
       </a>
-      <a class="btn btn-outline-secondary btn-sm" [routerLink]="['/Courses']">
+      <a class="btn btn-outline-secondary btn-sm btn-add" [routerLink]="['/Courses']">
         ← Back to Courses
       </a>
     </div>
@@ -39,7 +40,7 @@
           </div>
 
           <h5 class="card-title mb-2">{{ u.unit_Name }}</h5>
-          <p class="card-text  mb-3">{{ u.unit_Description }}</p>
+          <p class="card-text mb-3 lesson-desc">{{ u.unit_Description }}</p>
 
           <div *ngIf="u.instructorName" class="mb-3">
             <small class="text-secondary">Instructor: {{ u.instructorName }}</small>

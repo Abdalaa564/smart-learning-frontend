@@ -12,12 +12,13 @@
     </div>
 
     <div class="d-flex gap-2">
-      <a class="btn btn-success btn-sm px-3" *ngIf="isAdmin"
+      <a class="btn btn-success btn-sm px-3 btn-add" *ngIf="isAdmin"
         [routerLink]="['/Courses', courseId, 'units', unitId, 'lessons', 'add']">
-        + Add Lesson
+        <i class="bi bi-plus-lg me-1"></i> 
+        <span>Add Lesson</span>
       </a>
 
-      <a class="btn btn-outline-secondary btn-sm px-3" [routerLink]="['/Courses', courseId, 'units']">
+      <a class="btn btn-outline-secondary btn-sm px-3 btn-add" [routerLink]="['/Courses', courseId, 'units']">
         ← Back to Units
       </a>
     </div>
@@ -43,7 +44,7 @@
           </div>
 
           <h5 class="card-title mb-2">{{ lesson.lesson_Name }}</h5>
-          <p class="card-text mb-2">{{ lesson.lessonDescription }}</p>
+          <p class="card-text mb-2 lesson-desc">{{ lesson.lessonDescription }}</p>
 
           <p class="text-secondary small mb-3">
             <strong>Unit:</strong> {{ unit?.unit_Name }}
