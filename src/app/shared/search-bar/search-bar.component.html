@@ -1,7 +1,0 @@
-<div class="search-container" [class.active]="isSearchOpen" [ngClass]="{'align-left': !alignRight}">
-  <input type="text" class="search-input" [placeholder]="placeholder" [(ngModel)]="searchText"
-    (ngModelChange)="onSearchChange()">
-  <button class="btn-icon" title="Search" (click)="toggleSearch()">
-    <i class="fas" [ngClass]="isSearchOpen ? 'fa-times' : 'fa-search'"></i>
-  </button>
-</div>
