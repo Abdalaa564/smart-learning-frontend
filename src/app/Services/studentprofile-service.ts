@@ -20,8 +20,8 @@ export class StudentprofileService {
     return this.http.get<Studentprofile>(`${this.apiUrl}/Account/profile`);
   }
 
-  getStudentById(id: number): Observable<Studentprofile> {
-    return this.http.get<Studentprofile>(`${this.apiUrl}/Student/${id}`);
+  getStudentById(id: string): Observable<Studentprofile> {
+    return this.http.get<Studentprofile>(`${this.apiUrl}/Student/profile/${id}`);
   }
 
   updateProfile(data: Partial<Studentprofile>): Observable<Studentprofile> {

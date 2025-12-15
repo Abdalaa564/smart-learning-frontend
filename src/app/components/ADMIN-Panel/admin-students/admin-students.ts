@@ -95,10 +95,12 @@ export class AdminStudentsComponent {
     return this.authService.isAdmin();
   }
 
-  goToStudentProfile(id?: number) {
-    if (!id) return;
-    this.router.navigate(['/student-profile', id]);
-  }
+goToStudentProfile(userId?: string) {
+  if (!userId) return;
+  
+  console.log('Student User ID:', userId);
+  this.router.navigate(['/student-profile', userId]);
+}
 
   // end Search icon implementation
 }

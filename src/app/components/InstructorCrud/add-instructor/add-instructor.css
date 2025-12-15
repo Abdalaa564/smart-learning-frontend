@@ -1,10 +1,10 @@
 .form-container {
   max-width: 500px;
   margin: 30px auto;
-  background: #fff;
+  background: var(--background-color);
   padding: 20px 24px;
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.716);
 }
 
 .form-container h2 {
@@ -22,7 +22,7 @@ input {
   width: 100%;
   padding: 8px 10px;
   border-radius: 8px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--border-color);
   margin-top: 4px;
 }
 

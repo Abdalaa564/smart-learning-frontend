@@ -10,7 +10,7 @@
   </div>
 
   <!-- Error Message -->
-  <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+  <div *ngIf="errorMessage" class="text-danger text-center fw-bold mt-3">
     {{ errorMessage }}
   </div>
 
@@ -19,9 +19,7 @@
     <!-- Result Summary Card -->
     <div class="card shadow-lg mb-4" [class]="'border-' + resultClass">
       <div class="card-header text-center" [class]="'bg-' + resultClass + ' text-white'">
-        <h3 class="mb-0">
-          <i class="bi bi-trophy-fill"></i> Quiz Result
-        </h3>
+        <h3 class="mb-0"><i class="bi bi-trophy-fill"></i> Quiz Result</h3>
       </div>
 
       <div class="card-body text-center">
@@ -31,14 +29,19 @@
         <div class="score-circle mx-auto mb-4" [class]="'border-' + resultClass">
           <div class="score-content">
             <h1 class="display-3 fw-bold mb-0" [class]="'text-' + resultClass">
-              {{ result.percentage | number:'1.0-1' }}%
+              {{ result.percentage | number : '1.0-1' }}%
             </h1>
             <p class="text-muted mb-0">Your Score</p>
           </div>
         </div>
 
         <!-- Result Message -->
-        <div class="alert" [class]="'alert-' + resultClass" role="alert">
+        <div
+          class="fw-semibold mt-3"
+          [class.text-success]="resultClass === 'success'"
+          [class.text-danger]="resultClass === 'danger'"
+          [class.text-warning]="resultClass === 'warning'"
+        >
           <i class="bi bi-info-circle"></i> {{ resultMessage }}
         </div>
 
@@ -92,24 +95,34 @@
     <!-- Detailed Answers -->
     <div class="card shadow-sm">
       <div class="card-header bg-light">
-        <h5 class="mb-0">
-          <i class="bi bi-list-check"></i> Detailed Review
-        </h5>
+        <h5 class="mb-0"><i class="bi bi-list-check"></i> Detailed Review</h5>
       </div>
 
       <div class="card-body">
-        <div *ngFor="let answer of result.answers; let i = index" class="answer-item mb-4 p-3 rounded"
-          [class.bg-success-subtle]="answer.is_Correct" [class.bg-danger-subtle]="!answer.is_Correct">
-
+        <div
+          *ngFor="let answer of result.answers; let i = index"
+          class="answer-item mb-4 p-3 rounded"
+          [class.bg-success-subtle]="answer.is_Correct"
+          [class.bg-danger-subtle]="!answer.is_Correct"
+        >
           <div class="d-flex justify-content-between align-items-start mb-2">
             <h6 class="mb-0">
-              <span class="badge" [class.bg-success]="answer.is_Correct" [class.bg-danger]="!answer.is_Correct">
+              <span
+                class="badge"
+                [class.bg-success]="answer.is_Correct"
+                [class.bg-danger]="!answer.is_Correct"
+              >
                 Question {{ i + 1 }}
               </span>
               <span class="badge bg-secondary ms-2">{{ answer.grade_Point }} Points</span>
             </h6>
-            <i class="bi fs-4" [class.bi-check-circle-fill]="answer.is_Correct" [class.text-success]="answer.is_Correct"
-              [class.bi-x-circle-fill]="!answer.is_Correct" [class.text-danger]="!answer.is_Correct">
+            <i
+              class="bi fs-4"
+              [class.bi-check-circle-fill]="answer.is_Correct"
+              [class.text-success]="answer.is_Correct"
+              [class.bi-x-circle-fill]="!answer.is_Correct"
+              [class.text-danger]="!answer.is_Correct"
+            >
             </i>
           </div>
 
@@ -118,7 +131,10 @@
           <div class="ms-3">
             <p class="mb-1">
               <strong>Your Answer:</strong>
-              <span [class.text-success]="answer.is_Correct" [class.text-danger]="!answer.is_Correct">
+              <span
+                [class.text-success]="answer.is_Correct"
+                [class.text-danger]="!answer.is_Correct"
+              >
                 {{ answer.choice_Text }}
               </span>
             </p>
@@ -129,17 +145,14 @@
             </p>
           </div>
         </div>
-         <div *ngIf="!loading && aiReport" class="card mt-4 shadow-sm">
-            <div class="card-header  ">
-              <h5 class="mb-0">
-                <i class="bi bi-robot"></i> AI Generated Report
-              </h5>
-            </div>
-            <div class="card-body">
-             <div class="ai-report-text" [innerText]="formattedReport"></div>
-
-            </div>
+        <div *ngIf="!loading && aiReport" class="card mt-4 shadow-sm">
+          <div class="card-header">
+            <h5 class="mb-0"><i class="bi bi-robot"></i> AI Generated Report</h5>
           </div>
+          <div class="card-body">
+            <div class="ai-report-text" [innerText]="formattedReport"></div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

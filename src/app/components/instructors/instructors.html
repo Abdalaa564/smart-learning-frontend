@@ -23,6 +23,7 @@
         <div class="instructor-image">
           <img [src]="ins.photoUrl || 'assets/images/default-instructor.jpg'" alt="Instructor Photo"
             class="img-fluid w-100 h-100 object-fit-cover" />
+            
           <div class="overlay-content p-3">
             <div class="rating-badge bg-white text-dark px-3 py-1 rounded-pill d-flex align-items-center">
               <ng-container *ngFor="let star of getStarsArray()">
@@ -38,6 +39,9 @@
         </div>
 
         <div class="instructor-info p-3 d-flex flex-column grow">
+           <h5 class="text-center fw-bold mb-2 instructor-name">
+    {{ ins.fullName }}
+  </h5>
           <div class="stats-grid-new row g-2 text-center my-2">
             <div class="col-6 stat border-end">
               <span class="number d-block fw-bold fs-5 text-accent">
