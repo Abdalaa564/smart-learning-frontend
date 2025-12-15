@@ -35,6 +35,10 @@ export class StudentprofileService {
       );
   }
 
+  deleteStudent(userId: string): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/Student/${userId}`);
+  }
+
 
   private saveUser(user: Studentprofile): void {
     localStorage.setItem(this.userKey, JSON.stringify(user));
