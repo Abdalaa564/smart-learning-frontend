@@ -63,9 +63,9 @@ export class RegisterInstructorComponent {
      youtubeChannelUrl: ['', [Validators.required, Validators.pattern(/^https?:\/\/.+$/)]],
 
     // STEP 2
-    photoUrl: ['',[ Validators.pattern(/^https?:\/\/.+$/)] ],
-    certificateUrl: ['',[ Validators.pattern(/^https?:\/\/.+$/) ]],
-    cvUrl: [ '',[Validators.pattern(/^https?:\/\/.+$/)]],
+    photoUrl: ['', [Validators.required, Validators.pattern(/^https?:\/\/.+$/)]],
+    certificateUrl: ['', [Validators.required, Validators.pattern(/^https?:\/\/.+$/)]],
+    cvUrl: ['', [Validators.required, Validators.pattern(/^https?:\/\/.+$/)]],
     specialization: ['', Validators.required],
     universityName: ['', Validators.required],
     about: ['', [Validators.required, Validators.minLength(20)]]
@@ -127,42 +127,54 @@ export class RegisterInstructorComponent {
  
 
   onSubmit() {
-    this.submitted = true;
+  this.submitted = true;
 
-    if (this.registerForm.invalid) {
-      this.snackBar.open('Please correct the errors in the form.', 'error');
-      return;
+  // Mark all Step 2 fields as touched
+  const step2Controls = [
+    'photoUrl',
+    'certificateUrl', 
+    'cvUrl',
+    'specialization',
+    'universityName',
+    'about'
+  ];
+
+  step2Controls.forEach(controlName => {
+    const control = this.registerForm.get(controlName);
+    control?.markAsTouched();
+    control?.updateValueAndValidity();
+  });
+
+  if (this.registerForm.invalid) {
+    this.snackBar.open('Please correct the errors in the form.', 'error');
+    return;
+  }
+
+  const payload: RegisterInstructorRequest =
+    this.registerForm.value as RegisterInstructorRequest;
+
+  this.loading = true;
+
+  this.authService.registerInstructor(payload).subscribe({
+    next: () => {
+      this.loading = false;
+      this.snackBar.open('Wait until admin approve your profile', 'success');
+
+      setTimeout(() => {
+        this.showToast = false;
+        this.router.navigate(['/login']);
+      }, 2500);
+    },
+    error: (err) => {
+      this.loading = false;
+      const message =
+        err.error?.message || 'Registration failed, please try again';
+      this.snackBar.open(message, 'error');
+
+      setTimeout(() => {
+        this.showToast = false;
+      }, 3000);
     }
-
-    const payload: RegisterInstructorRequest =
-      this.registerForm.value as RegisterInstructorRequest;
-
-    this.loading = true;
-
-    this.authService.registerInstructor(payload).subscribe({
-      next: () => {
-        this.loading = false;
-        // this.toastType = 'success';
-        // this.toastMessage = 'Wait until admin approve your profile';
-        // this.showToast = true;
-        this.snackBar.open('Wait until admin approve your profile', 'success');
-
-        setTimeout(() => {
-          this.showToast = false;
-          this.router.navigate(['/login']);
-        }, 2500);
-      },
-      error: (err) => {
-        this.loading = false;
-       
-        const message =
-          err.error?.message || 'Registration failed, please try again';
-     this.snackBar.open(message, 'error');
-
-        setTimeout(() => {
-          this.showToast = false;
-        }, 3000);
-      }
-    });
+  });
   }
 }
