@@ -176,5 +176,5 @@ export class RegisterInstructorComponent {
       }, 3000);
     }
   });
-}
+  }
 }
