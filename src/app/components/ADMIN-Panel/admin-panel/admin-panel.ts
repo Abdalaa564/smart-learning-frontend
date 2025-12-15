@@ -489,6 +489,8 @@ export class AdminPanelComponent implements OnInit {
   // ===== UI =====
 
   setActivePage(page: MenuItem['id']) {
+      console.log('Active Page:', page);
+
     this.activePage = page;
   }
 

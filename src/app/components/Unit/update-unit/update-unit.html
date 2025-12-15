@@ -1,48 +1,69 @@
 <div class="container py-4">
-
   <div class="d-flex justify-content-between align-items-center mb-3">
     <h3>Edit Unit #{{ unitId }}</h3>
 
-    <a class="btn btn-secondary btn-sm"
-       [routerLink]="['/Courses', courseId, 'units']">
-      ← Back
-    </a>
+    <a class="btn btn-secondary btn-sm" [routerLink]="['/Courses', courseId, 'units']"> ← Back </a>
   </div>
 
   <div class="card p-3">
-    <form (ngSubmit)="save()">
-
+    <form #unitForm="ngForm" (ngSubmit)="save()" novalidate>
       <div class="mb-3">
         <label class="form-label">Unit Name</label>
-        <input placeholder="unit_Name" type="text" class="form-control"
-               [(ngModel)]="model.unit_Name" name="unit_Name" required />
+        <input
+          type="text"
+          class="form-control"
+          name="unit_Name"
+          [(ngModel)]="model.unit_Name"
+          required
+          minlength="3"
+          #unitName="ngModel"
+          [class.is-invalid]="unitName.invalid && unitName.touched"
+        />
+
+        <div class="invalid-feedback" *ngIf="unitName.errors?.['required']">
+          Unit name is required
+        </div>
+
+        <div class="invalid-feedback" *ngIf="unitName.errors?.['minlength']">
+          Unit name must be at least 3 characters
+        </div>
       </div>
 
       <div class="mb-3">
         <label class="form-label">Description</label>
-        <textarea placeholder="Description" class="form-control"
-                  [(ngModel)]="model.unit_Description"
-                  name="unit_Description"></textarea>
+        <textarea
+          placeholder="Description"
+          class="form-control"
+          [(ngModel)]="model.unit_Description"
+          name="unit_Description"
+        ></textarea>
       </div>
 
       <div class="mb-3">
         <label class="form-label">Order Index</label>
-        <input placeholder="Order" type="number" class="form-control"
-               [(ngModel)]="model.orderIndex" name="orderIndex" required />
+        <input
+          placeholder="Order"
+          type="number"
+          class="form-control"
+          [(ngModel)]="model.orderIndex"
+          name="orderIndex"
+          required
+        />
       </div>
 
       <div class="mb-3">
         <label class="form-label">Image URL</label>
-        <input placeholder="ImageUrl" type="text" class="form-control"
-               [(ngModel)]="model.imageUrl" name="imageUrl" />
+        <input
+          placeholder="ImageUrl"
+          type="text"
+          class="form-control"
+          [(ngModel)]="model.imageUrl"
+          name="imageUrl"
+        />
       </div>
 
       <button type="submit" class="btn btn-primary me-2">Save</button>
-      <button type="button" class="btn btn-outline-secondary" (click)="cancel()">
-        Cancel
-      </button>
-
+      <button type="button" class="btn btn-outline-secondary" (click)="cancel()">Cancel</button>
     </form>
   </div>
-
 </div>

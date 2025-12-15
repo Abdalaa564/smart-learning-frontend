@@ -2,16 +2,18 @@
 # Import Libraries
 --------------------------------------------------------------*/
 @import url(../node_modules/bootstrap/dist/css/bootstrap.min.css);
-@import "@fortawesome/fontawesome-free/css/all.min.css";
+@import '@fortawesome/fontawesome-free/css/all.min.css';
 
 /*--------------------------------------------------------------
 # Font & Color Variables
 --------------------------------------------------------------*/
 :root {
   /* Fonts */
-  --default-font: "Roboto", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  --heading-font: "Raleway", sans-serif;
-  --nav-font: "Ubuntu", sans-serif;
+  --default-font: 'Roboto', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+    'Noto Sans', 'Liberation Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+    'Segoe UI Symbol', 'Noto Color Emoji';
+  --heading-font: 'Raleway', sans-serif;
+  --nav-font: 'Ubuntu', sans-serif;
 
   /* Global Colors */
   --background-color: #ffffff;
@@ -64,8 +66,6 @@
   --nav-dropdown-background-color: #252525;
   --nav-dropdown-color: #e0e0e0;
   --nav-dropdown-hover-color: #4ade80;
-
-
 }
 
 .dark-mode footer {
@@ -203,7 +203,7 @@ h6 {
 
 .section-title h2:before,
 .section-title h2:after {
-  content: "";
+  content: '';
   width: 50px;
   height: 2px;
   background: var(--accent-color);
@@ -261,7 +261,9 @@ h6 {
   border: 1px solid var(--border-color);
 }
 
-.dark-mode input, .dark-mode textarea, .dark-mode select {
+.dark-mode input,
+.dark-mode textarea,
+.dark-mode select {
   background-color: var(--surface-color);
   color: var(--default-color);
   border-color: var(--border-color);
@@ -371,8 +373,14 @@ header,
   z-index: 1000 !important;
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+}
 /*--------------------------------------------------------------
 # Angular Material SnackBar
 --------------------------------------------------------------*/
@@ -407,5 +415,76 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.dark-mode .table {
+  --bs-table-bg: var(--surface-color);
+  --bs-table-color: var(--default-color);
+  --bs-table-border-color: var(--border-color);
+
+  --bs-table-striped-bg: color-mix(in srgb, var(--surface-color), black 7%);
+  --bs-table-striped-color: var(--default-color);
+
+  --bs-table-hover-bg: color-mix(in srgb, var(--surface-color), black 12%);
+  --bs-table-hover-color: var(--default-color);
+}
+
+/* رأس الجدول */
+.dark-mode .table-light th {
+  background-color: var(--surface-color) !important; /* سطح البطاقة */
+  color: var(--accent-color) !important;
+  border-bottom: 2px solid var(--accent-color);
+}
+
+/* صفوف الجسم */
+.dark-mode .table tbody tr:nth-child(even) {
+  background-color: color-mix(in srgb, var(--surface-color), black 5%);
+}
+
+/* تأثير التحويم */
+.dark-mode .table-hover > tbody > tr:hover > * {
+  background-color: color-mix(in srgb, var(--surface-color));
+}
+
+/* أزرار الإجراءات (Actions) داخل الجدول */
+.dark-mode .btn-outline-accent,
+.dark-mode .btn-outline-success,
+.dark-mode .btn-outline-danger {
+  background-color: transparent !important;
+  border-color: var(--border-color) !important;
+}
+
+.dark-mode .btn-outline-accent {
+  color: var(--accent-color) !important;
+}
+
+.dark-mode .btn-outline-success {
+  color: var(--secondary-accent) !important;
+}
+
+.dark-mode .btn-outline-danger {
+  color: #dc3545 !important;
+}
+
+/* تأثير التحويم على أزرار الإجراءات */
+.dark-mode .btn-outline-accent:hover {
+  background-color: var(--accent-color) !important;
+  color: var(--contrast-color) !important;
+}
+
+.dark-mode .btn-outline-success:hover {
+  background-color: var(--secondary-accent) !important;
+  color: var(--contrast-color) !important;
+}
+
+.dark-mode .btn-outline-danger:hover {
+  background-color: #dc3545 !important;
+  color: var(--contrast-color) !important;
+}
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+}
