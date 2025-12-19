@@ -75,7 +75,7 @@ export class Register {
         this.success = 'Registration successful! ';
         this.loading = false;
         this.snackBar.open(this.success, 'success');
-        setTimeout(() => this.router.navigate(['/login']), 1500);
+        setTimeout(() => this.router.navigate(['/Courses']), 1500);
       },
       error: (error) => {
         this.loading = false;
